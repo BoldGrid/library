@@ -12,7 +12,7 @@
 namespace Boldgrid\Library\Util;
 
 /**
- * Responsible for determining current version installed of Library.
+ * Responsible for determining current version installed of a dependency.
  *
  * This will check the installed composer packages for the version
  * that was used for a particular dependency.
