@@ -1,22 +1,30 @@
 <?php
 /**
- * BoldGrid Source Code
+ * BoldGrid Library Filter Utility
  *
- * @package Boldgrid\Premium
- * @copyright BoldGrid.com
+ * @package Boldgrid\Library
+ * @subpackage \Util
+ *
  * @version 1.0.0
- * @author BoldGrid <support@boldgrid.com>
+ * @author BoldGrid <wpb@boldgrid.com>
  */
 
 namespace Boldgrid\Library\Util;
 
 /**
  * BoldGrid Library Filter Class.
+ *
+ * This class is responsible for filter/action related methods used within
+ * the BoldGrid Library.
+ *
+ * @since 1.0.0
  */
 class Filter {
 
 	/**
 	 * Removes an anonymous object filter.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @global $wp_filter WordPress filter global.
 	 *
