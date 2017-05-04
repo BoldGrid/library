@@ -23,5 +23,10 @@
             "name": "bwmarkle",
             "role": "Developer"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Boldgrid\\Library\\Util\\": "src/Util"
+        }
+    }
 }
