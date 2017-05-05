@@ -60,7 +60,8 @@ class Version {
 		}
 
 		// Get installed composer package data.
-		$file = $wp_filesystem->get_contents( wp_normalize_path( plugin_dir_path( __FILE__ ) ) . 'vendor/composer/installed.json' );
+		$vendor = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) );
+		$file = $wp_filesystem->get_contents(  $vendor . '/composer/installed.json' );
 		$installed = json_decode( $file, true );
 
 		// Check for dep's installed version.
