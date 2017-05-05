@@ -12,7 +12,7 @@
 namespace Boldgrid\Library\Util;
 
 /**
- * Responsible for determining current version installed of Library.
+ * Responsible for determining current version installed of a dependency.
  *
  * This will check the installed composer packages for the version
  * that was used for a particular dependency.
@@ -60,9 +60,8 @@ class Version {
 		}
 
 		// Get installed composer package data.
-		$part = explode( '/', plugin_basename( __FILE__ ) );
-		$slug = $part[0];
-		$file = $wp_filesystem->get_contents( WP_PLUGIN_DIR . "/$slug/vendor/composer/installed.json" );
+		$vendor = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) );
+		$file = $wp_filesystem->get_contents(  $vendor . '/composer/installed.json' );
 		$installed = json_decode( $file, true );
 
 		// Check for dep's installed version.
