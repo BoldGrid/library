@@ -124,11 +124,11 @@ class Load {
 	 */
 	public function load( $loader ) {
 		if ( $this->getPath() ) {
-			$library = $this->getPath() . '/vendor/boldgrid/library/src';
+			$library = $this->getPath() . '/vendor/boldgrid/library/src/Library';
 
 			// Check dir and add PSR-4 dir to library to autoload.
 			if ( is_dir( $library ) ) {
-				$loader->addPsr4( 'Boldgrid\\Library\\', $library );
+				$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
 
 				return self::$success = true;
 			}
