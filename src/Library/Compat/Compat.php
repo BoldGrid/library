@@ -1,13 +1,13 @@
 <?php
 /**
-* BoldGrid Library Compatibility Class
-*
-* @package Boldgrid\Library
-* @subpackage \Library\Compat
-*
-* @version 1.0.0
-* @author BoldGrid <wpb@boldgrid.com>
-*/
+ * BoldGrid Library Compatibility Class
+ *
+ * @package Boldgrid\Library
+ * @subpackage \Library\Compat
+ *
+ * @version 1.0.0
+ * @author BoldGrid <wpb@boldgrid.com>
+ */
 
 namespace Boldgrid\Library\Library\Compat;
 
