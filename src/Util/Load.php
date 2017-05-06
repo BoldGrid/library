@@ -129,8 +129,9 @@ class Load {
 			// Check dir and add PSR-4 dir to library to autoload.
 			if ( is_dir( $library ) ) {
 				$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
+				$load = new \Boldgrid\Library\Library\Start;
 
-				return self::$success = true;
+				return self::$success = $load;
 			}
 		}
 
