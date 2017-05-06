@@ -44,11 +44,11 @@ class Load {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( $loader ) {
+	public function __construct( $loader, $configs = null ) {
 		$this->libraries = Option::get( 'library' );
 		$this->setLoad( $this->getLibraries() );
 		$this->setPath();
-		$this->load( $loader );
+		$this->load( $loader, $configs );
 	}
 
 	/**
@@ -122,14 +122,14 @@ class Load {
 	 *
 	 * @return bool           Has library been successfully loaded?
 	 */
-	public function load( $loader ) {
+	public function load( $loader, $configs ) {
 		if ( $this->getPath() ) {
 			$library = $this->getPath() . '/vendor/boldgrid/library/src/Library';
 
 			// Check dir and add PSR-4 dir to library to autoload.
 			if ( is_dir( $library ) ) {
 				$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
-				$load = new \Boldgrid\Library\Library\Start;
+				$load = new \Boldgrid\Library\Library\Start( $configs );
 
 				return self::$success = $load;
 			}
