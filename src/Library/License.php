@@ -11,9 +11,6 @@
 
 namespace Boldgrid\Library\Library;
 
-use Boldgrid\Library\Library\Configs;
-use Boldgrid\Library\Library\Api\Call;
-
 /**
  * BoldGrid Library License Class.
  *
@@ -27,8 +24,10 @@ class License {
 	/**
 	 * @access private
 	 *
-	 * @var array  $configs Configuration array.
-	 * @var object $license BoldGrid license information.
+	 * @since 1.0.0
+	 *
+	 * @var array  $key     Transient data key.
+	 * @var object $license BoldGrid license details.
 	 * @var object $data    BoldGrid license data.
 	 */
 	private
@@ -44,9 +43,13 @@ class License {
 	public function __construct() {
 		$this->key = $this->setKey();
 		$this->license = $this->setLicense();
-		$this->data = $this->setData();
-		$this->setTransient( $this->getData() );
-		$this->checkLicense();
+		if ( is_object( $this->getLicense() ) ) {
+			$this->data = $this->setData();
+			$this->setTransient( $this->getData() );
+		} else {
+			Filter::add( $this );
+			$this->licenseNotice();
+		}
 	}
 
 	/**
@@ -58,19 +61,8 @@ class License {
 	 *
 	 * @return string $key The key class property.
 	 */
-	public function setKey() {
+	private function setKey() {
 		return $this->key = sanitize_key( 'bg_license_data' );
-	}
-
-	/**
-	 * Sets the transient for the license data.
-	 *
-	 * @since  1.0.0
-	 *
-	 * @return bool  Was the transient successfully set?
-	 */
-	public function setTransient() {
-		return ! $this->getTransient() && set_site_transient( $this->getKey(), $this->getLicense(), $this->getExpiration( $this->getData() ) );
 	}
 
 	/**
@@ -89,16 +81,27 @@ class License {
 	}
 
 	/**
+	 * Sets the transient for the license data.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @return bool  Was the transient successfully set?
+	 */
+	private function setTransient() {
+		return ! $this->getTransient() && set_site_transient( $this->getKey(), $this->getLicense(), $this->getExpiration( $this->getData() ) );
+	}
+
+	/**
 	 * Check if the current license is valid.
 	 *
 	 * Is valid if the refresh-by timestamp is not more than 1 day past due.
 	 *
 	 * @since  1.0.0
 	 *
-	 * @return bool  Checks if the license data is expired.
+	 * @return mixed  Checks if the license data is available.
 	 */
-	public function isValid() {
-		return ( bool ) $this->getTransient();
+	private function isValid() {
+		return is_object( $this->getTransient() ) && property_exists( $this->getTransient(), 'key' );
 	}
 
 	/**
@@ -125,26 +128,31 @@ class License {
 	}
 
 	/**
-	 * Checks the license data.
+	 * Displays the license notice in the WordPress admin.
 	 *
 	 * @since 1.0.0
 	 */
-	public function checkLicense() {
+	protected function licenseNotice() {
 		if ( ! $this->isValid() ) {
-			deactivate_plugins( Configs::get( 'pluginFile' ) );
-			if ( is_admin() ) {
-				add_action( 'admin_notices', array( $this, 'licenseNotice' ) );
+			new Notice( 'invalidLicense' );
+			// Disables the activate message.
+			if ( isset( $_GET['activate'] ) ) {
+				unset( $_GET['activate'] );
 			}
 		}
 	}
 
 	/**
-	 * Displays the license notice in the WordPress admin.
+	 * Runs plugin deactivation when deactivate_plugins is available.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @hook: admin_init
 	 */
-	public function licenseNotice() {
-		include dirname( __DIR__ ) . '/Views/License.php';
+	public function deactivate() {
+		if ( ! $this->isValid() ) {
+			deactivate_plugins( 'boldgrid-ninja-forms/ninja-forms.php' );
+		}
 	}
 
 	/**
@@ -155,8 +163,7 @@ class License {
 	 * @return mixed $response The remote license data object or error string.
 	 */
 	private function getRemoteLicense() {
-		$call = new Call( Configs::get( 'api' ) . '/api/plugin/get-license' );
-
+		$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/get-licghense' );
 		if ( ! $response = $call->getError() ) {
 			$response = $call->getResponse()->result->data;
 		}
@@ -171,7 +178,7 @@ class License {
 	 *
 	 * @return string $key The key class property.
 	 */
-	public function getKey() {
+	protected function getKey() {
 		return $this->key;
 	}
 
@@ -182,7 +189,7 @@ class License {
 	 *
 	 * @return mixed The API license data from the WordPress transient.
 	 */
-	public function getTransient() {
+	protected function getTransient() {
 		return get_site_transient( $this->getKey() );
 	}
 
@@ -206,7 +213,7 @@ class License {
 	 *
 	 * @return mixed $license The license class property.
 	 */
-	public function getLicense() {
+	protected function getLicense() {
 		return $this->license;
 	}
 
@@ -217,7 +224,7 @@ class License {
 	 *
 	 * @return $data The data class property.
 	 */
-	public function getData() {
+	protected function getData() {
 		return $this->data;
 	}
 }
