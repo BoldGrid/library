@@ -75,28 +75,21 @@ class Availability {
 	 * @return bool
 	 */
 	private function checkAvailability() {
+
+		// Get the boldgrid_available transient.
 		$available = get_site_transient( 'boldgrid_available' );
 
 		// No transient was found.
-		if ( $available === false ) {
-			$available = 0;
-			$wp_http = new WP_Http();
-			$url = $this->getUrl();
+		$wp_http = new WP_Http();
+		$url = $this->getUrl();
 
-			// Check that calling server is not blocked locally.
-			if ( $wp_http->block_request( $url ) === false ) {
-				$available = 1;
-			}
-
-			// Check that the API is callable.
-			if ( $available === 1 ) {
-				$api = wp_remote_get( $url . '/api/open/ping', array( 'timeout' => 30 ) );
-				$code = wp_remote_retrieve_response_code( $api );
-				$available = $code === 200 ? 1 : 0;
-			}
-
-			set_site_transient( 'boldgrid_available', $available, HOUR_IN_SECONDS );
+		// Check that calling server is not blocked locally.
+		if ( $wp_http->block_request( $url ) === false ) {
+			$available = 1;
 		}
+
+		// Update the boldgrid_available transient.
+		set_site_transient( 'boldgrid_available', ( int ) $available, HOUR_IN_SECONDS );
 
 		return $available;
 	}
