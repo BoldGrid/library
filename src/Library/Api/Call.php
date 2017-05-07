@@ -169,7 +169,7 @@ class Call {
 		$responseCode = wp_remote_retrieve_response_code( $response );
 		if ( false === strstr( $responseCode, '200' ) ) {
 			$responseMessage = wp_remote_retrieve_response_message( $response );
-			$this->error = "{$response_code} {$responseMessage}";
+			$this->error = "{$responseCode} {$responseMessage}";
 			return false;
 		}
 
