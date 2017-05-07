@@ -24,6 +24,9 @@ class Validate {
 
 	/**
 	 * @access private
+	 *
+	 * @since 1.0.0
+	 *
 	 * @var string $key   User entered API key.
 	 * @var string $hash  API key hash that will be stored.
 	 * @var bool   $valid Is API key correctly formatted?
@@ -38,7 +41,7 @@ class Validate {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $configs Plugin configuration array.
+	 * @param array $key The API key to validate.
 	 */
 	public function __construct( $key ) {
 		$this->setKey( $key );
