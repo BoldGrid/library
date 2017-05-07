@@ -109,9 +109,13 @@ class Call {
 	 * @return array $args The args class property.
 	 */
 	protected function setArgs( $args ) {
+
+		// Check for an API key being stored.
 		if ( $this->getKey() ) {
 			$args = wp_parse_args( $args, array( 'key' => $this->getKey() ) );
 		}
+
+		// Check for a site hash being stored.
 		if ( $this->getSiteHash() ) {
 			$args = wp_parse_args( $args, array( 'site_hash' => $this->getSiteHash() ) );
 		}
