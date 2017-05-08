@@ -9,19 +9,17 @@
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
-namespace Boldgrid\Library\Util\Registration;
-
-use Boldgrid\Library\Util;
+namespace Boldgrid\Library\Util;
 
 /**
- * BoldGrid Library Abstract Registration Class.
+ * BoldGrid Library Registration Class.
  *
  * This class is responsible for handling the registration of
  * a product and it's associated dependency version.
  *
  * @since 1.0.0
  */
-abstract class AbstractRegistration implements RegistrationInterface {
+class Registration implements Registration\RegistrationInterface {
 
 	/**
 	 * @access protected
@@ -36,11 +34,18 @@ abstract class AbstractRegistration implements RegistrationInterface {
 	/**
 	 * Initialize class and set class properties.
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 *
-	 * @param string $product The path of the product.
+	 * @param  string $product     The path of the product.
+	 * @param  string $dependency The dependency relied on by the product.
+	 *
+	 * @return null
 	 */
-	abstract public function __construct( $product, $dependency );
+	protected function init( $product, $dependency = 'boldgrid/library' ) {
+		$this->product = $product;
+		$this->dependency = $dependency;
+		Option::init();
+	}
 
 	/**
 	 * Register the product in WordPress options.
@@ -50,9 +55,10 @@ abstract class AbstractRegistration implements RegistrationInterface {
 	 * @return null
 	 */
 	public function register() {
+
 		// Check the dependency version.
-		$version = new Util\Version( $this->getDependency() );
-		Util\Option::set( $this->getProduct(), $version->getVersion() );
+		$version = new Version( $this->getDependency() );
+		Option::set( $this->getProduct(), $version->getVersion() );
 	}
 
 	/**
@@ -63,7 +69,7 @@ abstract class AbstractRegistration implements RegistrationInterface {
 	 * @return null
 	 */
 	public function deregister() {
-		Util\Option::delete( $this->getProduct() );
+		Option::delete( $this->getProduct() );
 	}
 
 	/**
