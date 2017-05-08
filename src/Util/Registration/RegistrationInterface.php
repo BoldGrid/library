@@ -20,11 +20,6 @@ namespace Boldgrid\Library\Util\Registration;
 interface RegistrationInterface {
 
 	/**
-	 * Initialize the class and set class properties.
-	 */
-	public function __construct( $product, $dependency );
-
-	/**
 	 * Register the product in WordPress options.
 	 *
 	 * @since  1.0.0
