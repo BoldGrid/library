@@ -21,7 +21,7 @@ use Boldgrid\Library\Util;
  *
  * @since 1.0.0
  */
-class Plugin extends AbstractRegistration {
+class Plugin extends Util\Registration {
 
 	/**
 	 * Initialize class and set class properties.
@@ -30,10 +30,8 @@ class Plugin extends AbstractRegistration {
 	 *
 	 * @param string $product The path of the product.
 	 */
-	public function __construct( $product, $dependency = 'boldgrid/library' ) {
-		Util\Option::init();
-		$this->product = plugin_basename( $product );
-		$this->dependency = $dependency;
+	public function __construct( $product ) {
+		parent::init( $product );
 		register_activation_hook( $this->getProduct(), array( $this, 'register' ) );
 		register_deactivation_hook( $this->getProduct(), array( $this, 'deregister' ) );
 	}
