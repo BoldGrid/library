@@ -24,16 +24,23 @@ class Load {
 	/**
 	 * @access private
 	 *
-	 * @var array  $libraries Available library versions.
-	 * @var object $load      Highest library version found to load.
+	 * @since 1.0.0
+	 *
+	 * @var array  $configs   BoldGrid Library configurations.
+	 * @var array  $libraries Available BoldGrid Library versions.
+	 * @var object $load      Highest BoldGrid Library version found to load.
+	 * @var string $path      The path to the BoldGrid Library to load.
 	 */
 	private
+		$configs,
 		$libraries,
 		$load,
 		$path;
 
 	/**
 	 * @access public
+	 *
+	 * @since 1.0.0
 	 *
 	 * @var bool $success Was library successfully loaded?
 	 */
@@ -43,12 +50,31 @@ class Load {
 	 * Initialize class and set class properties.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param array $configs BoldGrid Library configurations.
 	 */
-	public function __construct( $loader, $configs = null ) {
+	public function __construct( array $configs = array() ) {
+
+		// Set the configuration array.
+		$this->configs = $configs;
+
+		// Build the registration class.
+		$class = __NAMESPACE__ . '\\Registration\\' . ucfirst( $this->configs['type'] );
+
+		// Add hooks for registration.
+		$this->registration = new $class( $this->configs['file'] );
+
+		// Gets the available Library versions that can be loaded.
 		$this->libraries = Option::get( 'library' );
+
+		// Sets the BoldGrid Library version to load.
 		$this->setLoad( $this->getLibraries() );
+
+		// Sets the path to the Library files to load for themes/plugins.
 		$this->setPath();
-		$this->load( $loader, $configs );
+
+		// Initialize BoldGrid Library.
+		$this->load( $this->configs['loader'] );
 	}
 
 	/**
@@ -122,15 +148,14 @@ class Load {
 	 *
 	 * @return bool           Has library been successfully loaded?
 	 */
-	public function load( $loader, $configs ) {
+	public function load( $loader ) {
 		if ( $this->getPath() ) {
 			$library = $this->getPath() . '/vendor/boldgrid/library/src/Library';
 
-			// Check dir and add PSR-4 dir to library to autoload.
+			// Check dir and add PSR-4 dir of the BoldGrid Library to autoload.
 			if ( is_dir( $library ) ) {
 				$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
-				$load = new \Boldgrid\Library\Library\Start( $configs );
-
+				$load = new \Boldgrid\Library\Library\Start( $this->configs );
 				return self::$success = $load;
 			}
 		}
