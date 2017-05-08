@@ -1,30 +1,56 @@
 <?php
 /**
- * BoldGrid Library Filter Utility
+ * BoldGrid Library Filter
  *
  * @package Boldgrid\Library
- * @subpackage \Util
+ * @subpackage \Library
  *
  * @version 1.0.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
-namespace Boldgrid\Library\Util;
+namespace Boldgrid\Library\Library;
 
 /**
  * BoldGrid Library Filter Class.
  *
  * This class is responsible for filter/action related methods used within
- * the BoldGrid Library.
+ * the BoldGrid Library. Special thanks to rarst and scribu for filter ideas.
  *
  * @since 1.0.0
  */
 class Filter {
 
 	/**
+	 * Adds hooks.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  string $class Class to add hooks for.
+	 *
+	 * @return null
+	 */
+	public static function add( $class ) {
+		self::do( 'add_filter', $class );
+	}
+
+	/**
+	 * Remove hooks.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  string $class Class to remove hooks from.
+	 *
+	 * @return null
+	 */
+	public static function remove( $class ) {
+		self::do( 'remove_filter', $class );
+	}
+
+	/**
 	 * Removes an anonymous object filter.
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 *
 	 * @global $wp_filter WordPress filter global.
 	 *
@@ -35,7 +61,7 @@ class Filter {
 	 *
 	 * @return bool             Success of removing filter.
 	 */
-	public static function remove( $tag, $class, $name, $priority = 10 ) {
+	public static function removeHook( $tag, $class, $name, $priority = 10 ) {
 		global $wp_filter;
 
 		// Check that filter exists.
@@ -109,5 +135,47 @@ class Filter {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Process hooks.
+	 *
+	 * This sets up our automatic filter binding.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @param  string $action Action name.
+	 * @param  string $class  Class name.
+	 *
+	 * @return null
+	 */
+	private static function do( $action, $class ) {
+		$reflection = new \ReflectionClass( $class );
+		foreach ( $reflection->getMethods() as $method ) {
+			if ( $method->isPublic() && ! $method->isConstructor() ) {
+				$comment = $method->getDocComment();
+
+				// No hooks.
+				if ( preg_match( '/@nohook[ \t\*\n]+/', $comment ) ) {
+					continue;
+				}
+
+				// Set hook.
+				preg_match_all( '/@hook:?\s+([^\s]+)/', $comment, $matches ) ? $matches[1] : $method->name;
+				if ( empty( $matches[1] ) ) {
+					$hooks = array( $method->name );
+				} else {
+					$hooks = $matches[1];
+				}
+
+				// Allow setting priority.
+				$priority = preg_match( '/@priority:?\s+(\d+)/', $comment, $matches ) ? $matches[1] : 10;
+
+				// Fire.
+				foreach ( $hooks as $hook ) {
+					call_user_func( $action, $hook, array( $class, $method->name ), $priority, $method->getNumberOfParameters() );
+				}
+			}
+		}
 	}
 }
