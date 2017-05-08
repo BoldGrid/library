@@ -101,7 +101,14 @@ class License {
 	 * @return mixed  Checks if the license data is available.
 	 */
 	private function isValid() {
-		return is_object( $this->getTransient() ) && property_exists( $this->getTransient(), 'key' );
+		$data = $this->getTransient();
+		$valid = array( 'key', 'cipher', 'iv', 'data' );
+		if ( is_object( $data ) ) {
+			$props = array_keys( get_object_vars( $data ) );
+			$valid = array_diff( $valid, $props );
+		}
+
+		return empty( $valid );
 	}
 
 	/**
@@ -151,6 +158,7 @@ class License {
 	 */
 	public function deactivate() {
 		if ( ! $this->isValid() ) {
+			delete_site_transient( $this->getKey() );
 			deactivate_plugins( 'boldgrid-ninja-forms/ninja-forms.php' );
 		}
 	}
@@ -163,7 +171,7 @@ class License {
 	 * @return mixed $response The remote license data object or error string.
 	 */
 	private function getRemoteLicense() {
-		$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/get-licghense' );
+		$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/get-license' );
 		if ( ! $response = $call->getError() ) {
 			$response = $call->getResponse()->result->data;
 		}

@@ -12,15 +12,20 @@
 namespace Boldgrid\Library\Util;
 
 /**
- * Responsible for determining current version installed of a dependency.
+ * BoldGrid Library Version Utility Class.
  *
- * This will check the installed composer packages for the version
+ * This class is responsible for determining current version installed of a
+ * dependency. This will check the installed composer packages for the version
  * that was used for a particular dependency.
+ *
+ * @since 1.0.0
  */
 class Version {
 
 	/**
 	 * @access private
+	 *
+	 * @since 1.0.0
 	 *
 	 * @var string $dependency The dependency to get the normalized version of.
 	 * @var mixed  $version    Normalized version number if found, or null.

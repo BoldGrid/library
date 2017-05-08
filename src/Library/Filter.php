@@ -3,7 +3,7 @@
  * BoldGrid Library Filter
  *
  * @package Boldgrid\Library
- * @subpackage \Util
+ * @subpackage \Library
  *
  * @version 1.0.0
  * @author BoldGrid <wpb@boldgrid.com>
