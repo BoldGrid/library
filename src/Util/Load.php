@@ -124,19 +124,30 @@ class Load {
 	 */
 	public function setPath() {
 		$found = $this->getLoad();
+		$path = false;
 
-		// Loading from a theme or a plugin?
-		if ( strpos( get_stylesheet_directory(), $found->product ) !== false ) {
-			$path = get_stylesheet_directory() . '/inc/boldgrid-theme-framework/theme';
-		} else {
+		if ( ! empty( $found->product ) ) {
+
+			// Loading from must use plugin directory?
 			if ( ! is_file( $path = trailingslashit( WPMU_PLUGIN_DIR ) . $found->product ) ) {
+
+				// Loading from plugin directory?
 				if ( ! is_file( $path = trailingslashit( WP_PLUGIN_DIR ) . $found->product ) ) {
-					$path = null;
+
+					// Loading from a parent theme directory?
+					$path = get_template_directory() . '/inc/boldgrid-theme-framework/includes/theme';
 				}
 			}
+
+			// Loading from framework path override directory?
+			if ( defined( 'BGTFW_PATH' ) ) {
+				$path = ABSPATH . BGTFW_PATH . '/includes/theme';
+			}
+
+			$path = dirname( $path );
 		}
 
-		return $this->path = dirname( $path );
+		return $this->path = $path;
 	}
 
 	/**
@@ -156,6 +167,7 @@ class Load {
 			if ( is_dir( $library ) ) {
 				$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
 				$load = new \Boldgrid\Library\Library\Start( $this->configs );
+
 				return self::$success = $load;
 			}
 		}
