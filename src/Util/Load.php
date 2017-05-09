@@ -38,15 +38,6 @@ class Load {
 		$path;
 
 	/**
-	 * @access public
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var bool $success Was library successfully loaded?
-	 */
-	public static $success;
-
-	/**
 	 * Initialize class and set class properties.
 	 *
 	 * @since 1.0.0
@@ -153,26 +144,26 @@ class Load {
 	/**
 	 * Adds the Library paths to the autoloader.
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
 	 *
 	 * @param  object $loader Autoloader instance.
 	 *
-	 * @return bool           Has library been successfully loaded?
+	 * @return null
 	 */
 	public function load( $loader ) {
 		if ( $this->getPath() ) {
 			$library = $this->getPath() . '/vendor/boldgrid/library/src/Library';
 
-			// Check dir and add PSR-4 dir of the BoldGrid Library to autoload.
-			if ( is_dir( $library ) ) {
-				$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
-				$load = new \Boldgrid\Library\Library\Start( $this->configs );
-
-				return self::$success = $load;
+			// Only create a single instance of the BoldGrid Library Start.
+			if ( did_action( 'Boldgrid\Library\Library\Start' ) === 0 ) {
+				do_action( 'Boldgrid\Library\Library\Start', $library );
+				// Check dir and add PSR-4 dir of the BoldGrid Library to autoload.
+				if ( is_dir( $library ) ) {
+					$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
+					$load = new \Boldgrid\Library\Library\Start( $this->configs );
+				}
 			}
 		}
-
-		return self::$success = false;
 	}
 
 	/**
