@@ -40,6 +40,8 @@ class Start {
 	 */
 	public function __construct( $configs = null ) {
 		new Configs( $configs );
-		$this->key = new Key();
+		if ( Configs::get( 'keyValidate' ) ) {
+			$this->key = new Key();
+		}
 	}
 }
