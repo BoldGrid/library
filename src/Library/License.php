@@ -47,8 +47,10 @@ class License {
 			$this->data = $this->setData();
 			$this->setTransient( $this->getData() );
 		} else {
-			Filter::add( $this );
-			$this->licenseNotice();
+			if ( Configs::get( 'licenseActivate' ) ) {
+				Filter::add( $this );
+				$this->licenseNotice();
+			}
 		}
 	}
 

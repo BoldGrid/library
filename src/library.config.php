@@ -16,4 +16,5 @@ return array(
 	'key' => get_site_option( 'boldgrid_api_key', null ),
 	'apiData' => get_site_transient( 'boldgrid_api_data' ),
 	'keyValidate' => true,
+	'licenseActivate' => true,
 );
