@@ -237,4 +237,15 @@ class License {
 	protected function getData() {
 		return $this->data;
 	}
+
+	/**
+	 * Get license validation.
+	 *
+	 * @nohook
+	 *
+	 * @return [type] [description]
+	 */
+	public function getValid() {
+		return $this->isValid();
+	}
 }
