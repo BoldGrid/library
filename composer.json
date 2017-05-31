@@ -28,8 +28,5 @@
         "psr-4": {
             "Boldgrid\\Library\\Util\\": "src/Util"
         }
-    },
-    "require": {
-        "timelsass/wp-php-version-check": "^1.0.0"
     }
 }
