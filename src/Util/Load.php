@@ -132,7 +132,10 @@ class Load {
 
 			// Loading from framework path override directory?
 			if ( defined( 'BGTFW_PATH' ) ) {
-				$path = ABSPATH . BGTFW_PATH . '/includes/theme';
+				$dir = ABSPATH. trim( BGTFW_PATH, '/' ) . '/includes';
+				if ( is_dir( $dir . '/vendor/boldgrid/library' ) ) {
+					$path = $dir . '/theme';
+				}
 			}
 
 			$path = dirname( $path );
