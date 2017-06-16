@@ -31,7 +31,7 @@ class Filter {
 	 * @return null
 	 */
 	public static function add( $class ) {
-		self::do( 'add_filter', $class );
+		self::doFilter( 'add_filter', $class );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Filter {
 	 * @return null
 	 */
 	public static function remove( $class ) {
-		self::do( 'remove_filter', $class );
+		self::doFilter( 'remove_filter', $class );
 	}
 
 	/**
@@ -149,7 +149,7 @@ class Filter {
 	 *
 	 * @return null
 	 */
-	private static function do( $action, $class ) {
+	private static function doFilter( $action, $class ) {
 		$reflection = new \ReflectionClass( $class );
 		foreach ( $reflection->getMethods() as $method ) {
 			if ( $method->isPublic() && ! $method->isConstructor() ) {
