@@ -76,6 +76,7 @@ class Filter {
 			 * @see https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/
 			 */
 			if ( is_object( $wp_filter[ $tag ] ) && isset( $wp_filter[ $tag ]->callbacks ) ) {
+
 				// Create $fob object from filter tag, to use below.
 				$fob = $wp_filter[ $tag ];
 				$callbacks = &$wp_filter[ $tag ]->callbacks;
@@ -115,16 +116,20 @@ class Filter {
 						// Handles removing filter, reseting callback priority keys mid-iteration, etc.
 						$fob->remove_filter( $tag, $filter['function'], $priority );
 					} else {
+
 						// Use legacy removal process (pre 4.7).
 						unset( $callbacks[ $priority ][ $filter_id ] );
+
 						// If it was the only filter in that priority, unset that priority.
 						if ( empty( $callbacks[ $priority ] ) ) {
 							unset( $callbacks[ $priority ] );
 						}
+
 						// If the only filter for that tag, set the tag to an empty array.
 						if ( empty( $callbacks ) ) {
 							$callbacks = array();
 						}
+
 						// Remove this filter from merged_filters, which specifies if filters have been sorted.
 						unset( $GLOBALS['merged_filters'][ $tag ] );
 					}
