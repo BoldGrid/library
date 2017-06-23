@@ -64,6 +64,12 @@ class Load {
 		// Sets the path to the Library files to load for themes/plugins.
 		$this->setPath();
 
+		// Add loaded Library path to configs.
+		$this->configs['libraryDir'] = trailingslashit( $this->getPath() ) . 'vendor/boldgrid/library/';
+
+		// Add loaded Library URL to configs.
+		$this->configs['libraryUrl'] = plugin_dir_url( $this->configs['libraryDir'] ) . 'library/';
+
 		// Initialize BoldGrid Library.
 		$this->load( $this->configs['loader'] );
 	}
@@ -132,7 +138,7 @@ class Load {
 
 			// Loading from framework path override directory?
 			if ( defined( 'BGTFW_PATH' ) ) {
-				$dir = ABSPATH. trim( BGTFW_PATH, '/' ) . '/includes';
+				$dir = ABSPATH . trim( BGTFW_PATH, '/' ) . '/includes';
 				if ( is_dir( $dir . '/vendor/boldgrid/library' ) ) {
 					$path = $dir . '/theme';
 				}
@@ -154,12 +160,13 @@ class Load {
 	 * @return null
 	 */
 	public function load( $loader ) {
-		if ( $this->getPath() ) {
-			$library = $this->getPath() . '/vendor/boldgrid/library/src/Library';
+		if ( ! empty( $this->configs['libraryDir'] ) ) {
+			$library = $this->configs['libraryDir'] . 'src/Library';
 
 			// Only create a single instance of the BoldGrid Library Start.
 			if ( did_action( 'Boldgrid\Library\Library\Start' ) === 0 ) {
 				do_action( 'Boldgrid\Library\Library\Start', $library );
+
 				// Check dir and add PSR-4 dir of the BoldGrid Library to autoload.
 				if ( is_dir( $library ) ) {
 					$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
