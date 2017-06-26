@@ -21,13 +21,13 @@ namespace Boldgrid\Library\Library;
 class Start {
 
 	/**
-	 * @access private
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var object $key Library Key Object.
+	 * @var object $configs         Library Configuration Object.
+	 * @var object $pluginInstaller Library Plugin Installer Object.
+	 * @var object $key             Library Key Object.
 	 */
 	private
+		$configs,
+		$pluginInstaller,
 		$key;
 
 
@@ -39,9 +39,10 @@ class Start {
 	 * @param array $configs Plugin configuration array.
 	 */
 	public function __construct( $configs = null ) {
-		new Configs( $configs );
+		$this->configs = new Configs( $configs );
 		if ( Configs::get( 'keyValidate' ) ) {
 			$this->key = new Key();
 		}
+		$this->pluginInstaller = new Plugin\Installer( Configs::get( 'pluginInstaller' ) );
 	}
 }
