@@ -65,10 +65,17 @@ class KeyPrompt {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @hook: admin_footer
+	 * @hook: admin_enqueue_scripts
 	 */
 	public function enqueue() {
-		require_once dirname( __DIR__ ) . '/Views/Api.php';
+		wp_enqueue_style(
+			'bglib-api-notice-css',
+			Library\Configs::get( 'libraryUrl' ) .  'src/assets/css/api-notice.css'
+		);
+		wp_enqueue_script(
+			'bglib-api-notice-js',
+			Library\Configs::get( 'libraryUrl' ) .  'src/assets/js/api-notice.js'
+		);
 	}
 
 	/**
