@@ -113,7 +113,7 @@ var IMHWPB = IMHWPB || {};
 
 IMHWPB.Api = function( configs ) {
 	( function( $ ) {
-		var self = this;
+		var notice, self = this;
 
 		/**
 		 * Set key if parameter is set.
