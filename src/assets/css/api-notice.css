@@ -1,0 +1,90 @@
+#container_boldgrid_api_key_notice .dashicons-before:before {
+	padding-right: .8em !important;
+	font-size: 58px !important;
+	color: #ff6600;
+}
+#container_boldgrid_api_key_notice {
+	width: 563px;
+	padding: 1.4em;
+}
+#requestKeyForm input {
+	width: 83%;
+	margin: .5em 0;
+}
+#requestKeyForm label {
+	display: block;
+}
+#boldgrid_api_key_notice_message,
+.tos-box,
+.key-request-content,
+.enterKeyLink,
+.boldgridApiKeyLink {
+	margin-left: 66px;
+}
+#requestKeyMessage {
+	margin-right: 66px;
+}
+.error-alerts {
+	color: red;
+}
+.error-color::before {
+	content: '*';
+	padding-right: 5px;
+}
+.error-color {
+	color: red;
+}
+input#boldgrid_api_key {
+	margin-left: 66px !important;
+	width: 59%;
+}
+.boldgrid-wp-spin {
+	width: 20px;
+	height: 20px;
+	float: left;
+	border-radius: 100%;
+	background-color: #a3a3a3;
+	-webkit-animation: rotation 1.5s infinite linear;
+	-moz-animation: rotation 1.5s infinite linear;
+	-animation: rotation 1.5s infinite linear;
+}
+.boldgrid-wp-spin::after {
+	width: 4px;
+	height: 4px;
+	border-radius: 100%;
+	background-color: #fff;
+	position: relative;
+	left: 10px;
+	top: 5px;
+	display: block;
+	content: '';
+}
+@ -webkit-keyframes rotation {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(359deg);
+	}
+}
+@ -moz-keyframes rotation {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(359deg);
+	}
+}
+@ -keyframes rotation {
+	from {
+		-transform: rotate(0deg);
+	}
+	to {
+		-transform: rotate(359deg);
+	}
+}
+#boldgrid-api-loading {
+	margin-left: 423px;
+	margin-top: -2em;
+	display: none;
+}
