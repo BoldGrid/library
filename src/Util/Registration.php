@@ -26,10 +26,12 @@ class Registration implements Registration\RegistrationInterface {
 	 *
 	 * @var string $product    The product identifier.
 	 * @var string $dependency The dependency to get the version of.
+	 * @var array  $libraries  Libraries stored in options.
 	 */
 	protected
 		$product,
-		$dependency;
+		$dependency,
+		$libraries;
 
 	/**
 	 * Initialize class and set class properties.
@@ -45,6 +47,8 @@ class Registration implements Registration\RegistrationInterface {
 		$this->product = $product;
 		$this->dependency = $dependency;
 		Option::init();
+		$this->libraries = Option::get( 'library' );
+		$this->verify();
 	}
 
 	/**
@@ -70,6 +74,20 @@ class Registration implements Registration\RegistrationInterface {
 	 */
 	public function deregister() {
 		Option::delete( $this->getProduct() );
+	}
+
+	/**
+	 * Verify the product is found in the library option, or register it
+	 * if it's not found.
+	 *
+	 * @since  1.0.0
+	 *
+	 * @return null
+	 */
+	public function verify() {
+		if ( ! isset( $this->libraries[ $this->getProduct() ] ) ) {
+			$this->register();
+		}
 	}
 
 	/**
