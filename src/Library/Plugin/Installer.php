@@ -539,9 +539,9 @@ class Installer {
 					// format for these files.  The same approach can be taken for the banners as well.
 					// @todo: imgs were uploaded to repo-dev. temporarily for testing. This should be updated to repo.
 					$responses->{$plugin}->icons = array(
-						'1x' => "https://repo-dev.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.png",
-						'2x' => "https://repo-dev.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-256x256.png",
-						'svg' => "https://repo-dev.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.svg",
+						'1x' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.png",
+						'2x' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-256x256.png",
+						'svg' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.svg",
 					);
 
 					// This seems hardcoded in based on looking at our plugins in the update class.
