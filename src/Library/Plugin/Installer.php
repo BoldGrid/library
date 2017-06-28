@@ -458,6 +458,7 @@ class Installer {
 					'installed' => __( 'Activated', 'boldgrid-library' ),
 					'activate' => __( 'Activate', 'boldgrid-library' ),
 					'activating' => __( 'Activating', 'boldgrid-library' ),
+					'upgrading' => __( 'Upgrading', 'boldgrid-library' ),
 				)
 			);
 
