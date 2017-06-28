@@ -59,7 +59,8 @@ class Install {
 
 		// Validate nonce.
 		if ( ! wp_verify_nonce( $nonce, 'bglibPluginInstallerNonce' ) ) {
-			wp_die( __( 'Error - unable to verify nonce, please try again.', 'boldgrid-library') );
+			$msg = __( 'Error - unable to verify nonce, please try again.', 'boldgrid-library' );
+			wp_send_json_error( array( 'message' => $msg ) );
 		}
 
 		// Include required WordPress Files.
@@ -92,21 +93,14 @@ class Install {
 
 		$skin = new WP_Ajax_Upgrader_Skin();
 		$upgrader = new Plugin_Upgrader( $skin );
-		$upgrader->install( $api->download_link );
+		$result = $upgrader->install( $api->download_link );
 
-		if ( $api->name ) {
-			$status = 'success';
-			$msg = sprintf( __( '%s successfully installed.', 'boldgrid-library' ),  $api->name );
-		} else {
-			$status = 'failed';
+		if ( is_wp_error( $result ) ) {
 			$msg = sprintf( __( 'There was an error installing %s.', 'boldgrid-library' ), $api->name );
+			wp_send_json_error( array( 'message' => $msg ) );
+		} else {
+			$msg = sprintf( __( '%s successfully installed.', 'boldgrid-library' ),  $api->name );
+			wp_send_json_success( array( 'message' => $msg ) );
 		}
-
-		$json = array(
-			'status' => $status,
-			'message' => $msg,
-		);
-
-		wp_send_json( $json );
 	}
 }
