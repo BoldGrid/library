@@ -62,27 +62,24 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					nonce: self.i18n.nonce,
 					dataType: 'json'
 				},
-				success: function( data ) {
-					if ( data ) {
-						if ( data.status === 'success' ) {
-							el.attr( 'class', 'activate button button-primary' );
-							el.html( self.i18n.activate );
-							el.closest( '.plugin' )
-								.find( '.installer-messages' )
-								.attr( 'class', 'installer-messages notice updated-message notice-success notice-alt' )
-								.find( 'p' )
-								.text( data.message );
-						} else {
-							el.removeClass( 'installing' );
-						}
-					} else {
-						el.removeClass( 'installing' );
-					}
+				success: function( response ) {
+					el.attr( 'class', 'installed button disabled' );
+					el.html( self.i18n.installed );
+					el.removeClass( 'installing' );
+					el.closest( '.plugin' )
+						.find( '.installer-messages' )
+						.addClass( 'notice updated-message notice-success notice-alt' )
+						.find( 'p' )
+						.text( response.data.message );
 					self.loading = false;
 				},
 				error: function( xhr, status, error ) {
-					console.log( status );
 					el.removeClass( 'installing' );
+					el.closest( '.plugin' )
+						.find( '.installer-messages' )
+						.addClass( 'notice update-message notice-error notice-alt is-dismissible' )
+						.find( 'p' )
+						.text( error );
 					self.loading = false;
 				}
 			} );
