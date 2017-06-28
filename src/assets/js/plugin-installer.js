@@ -26,7 +26,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		i18n : _bglibPluginInstaller,
 
 		/**
-		 * Initialize SEO Headings Analysis.
+		 * Initialize the PluginInstaller.
 		 *
 		 * @since 0.1.0
 		 */
