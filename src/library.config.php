@@ -13,7 +13,7 @@ return array(
 	'keyValidate' => true,
 
 	// Enable license activation/deactivation in library.
-	'licenseActivate' => true,
+	'licenseActivate' => false,
 
 	// Library's Plugin Installer for "Plugins > Add New" in WordPress Dashboard.
 	'pluginInstaller' => array(
