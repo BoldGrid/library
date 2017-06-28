@@ -104,7 +104,7 @@ class Installer {
 	 * @return object $transient The transient class property.
 	 */
 	protected function setTransient() {
-		return $this->transient = get_site_transient( 'boldgrid_plugins', null ) ? get_site_transient( 'boldgrid_site_transient' ) : $this->getPluginInformation( $this->configs['plugins'] );
+		return $this->transient = get_site_transient( 'boldgrid_plugins', null ) ? get_site_transient( 'boldgrid_plugins' ) : $this->getPluginInformation( $this->configs['plugins'] );
 	}
 
 	/**
