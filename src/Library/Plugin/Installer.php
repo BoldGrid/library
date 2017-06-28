@@ -616,7 +616,6 @@ class Installer {
 
 					// Just creating the links by having the file naming standardized.  WordPress also expects this same
 					// format for these files.  The same approach can be taken for the banners as well.
-					// @todo: imgs were uploaded to repo-dev. temporarily for testing. This should be updated to repo.
 					$responses->{$plugin}->icons = array(
 						'1x' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.png",
 						'2x' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-256x256.png",
