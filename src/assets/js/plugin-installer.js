@@ -178,7 +178,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			} );
 		},
 
-		
 		/**
 		 * Upgrade Links event handler.
 		 *
