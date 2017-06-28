@@ -28,7 +28,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Initialize SEO Headings Analysis.
 		 *
-		 * @since 1.0.0
+		 * @since 0.1.0
 		 */
 		init : function () {
 			$( document ).ready( self.onReady );
@@ -37,7 +37,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Sets up event listeners on document ready.
 		 *
-		 * @since 1.0.0
+		 * @since 0.1.0
 		 */
 		onReady : function() {
 			self._buttons();
@@ -47,7 +47,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Install a WordPress plugin.
 		 *
-		 * @since 1.0.0
+		 * @since 0.1.0
 		 *
 		 * @param {Object} el     The install button element.
 		 * @param {string} plugin The plugin slug to install.
@@ -91,7 +91,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Activate a WordPress plugin.
 		 *
-		 * @since 1.0.0
+		 * @since 0.1.0
 		 *
 		 * @param {Object} el     The activate button element.
 		 * @param {string} plugin The plugin slug to activate.
@@ -132,7 +132,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Upgrades a WordPress plugin.
 		 *
-		 * @since 1.0.0
+		 * @since 0.1.0
 		 *
 		 * @param {Object} el     The upgrade link element.
 		 * @param {string} plugin The plugin slug to upgrade.
@@ -178,6 +178,12 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			} );
 		},
 
+		
+		/**
+		 * Upgrade Links event handler.
+		 *
+		 *  @since 0.1.0
+		 */
 		_upgradeLinks : function() {
 			$( '.update-link' ).on( 'click', function( e ) {
 				var el, plugin, slug, title;
@@ -209,7 +215,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Install/Activate buttons event handler.
 		 *
-		 *  @since 1.0.0
+		 *  @since 0.1.0
 		 */
 		_buttons : function() {
 			$( '.bglib-plugin-installer' ).on( 'click', 'a.button', function( e ) {
@@ -247,6 +253,65 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				}
 			} );
 		},
+
+		/**
+		 * Search event handler.
+		 *
+		 *  @since 0.2.0
+		 */
+		_search : function() {
+			var $pluginFilter        = $( '#plugin-filter' ),
+				$pluginInstallSearch = $( '.plugin-install-php .wp-filter-search' );
+
+			// Unbind existing events attached to search form.
+			$pluginInstallSearch.unbind();
+
+			/**
+			 * Handles changes to the plugin search box for our tab.
+			 *
+			 * @since 0.2.0
+			 */
+			$pluginInstallSearch.on( 'keyup input', _.debounce( function( event, eventtype ) {
+				var $searchTab = $( '.plugin-install-search' ), data, searchLocation;
+
+				// Query data.
+				data = {
+					s:           event.target.value,
+					tab:         'search',
+					type:        $( '#typeselector' ).val(),
+				};
+
+				// Build the new browser location search query.
+				searchLocation = location.href.split( '?' )[ 0 ] + '?' + $.param(  data );
+
+				// Clear on escape.
+				if ( 'keyup' === event.type && 27 === event.which ) {
+					event.target.value = '';
+				}
+
+				// Listen for search type input dropdown change and empty search field if type changes.
+				if ( wp.updates.searchTerm === data.s && 'typechange' !== eventtype ) {
+					return;
+				} else {
+					$pluginFilter.empty();
+					wp.updates.searchTerm = data.s;
+				}
+
+				// Update the URL in the browser.
+				if ( window.history && window.history.replaceState ) {
+					window.history.replaceState( null, '', searchLocation );
+				}
+
+				// Abort if not defined.
+				if ( ! _.isUndefined( wp.updates.searchRequest ) ) {
+					wp.updates.searchRequest.abort();
+				}
+
+				// Reload the page with the added search query.
+				window.location.reload( true );
+
+			}, 500 ) );
+		}
 	};
 
 	self = api.PluginInstaller;
