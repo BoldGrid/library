@@ -218,7 +218,7 @@ class Installer {
 
 		// Allow BoldGrid ( + variations of ) as a search option to show all plugins.
 		} else if ( $action === 'query_plugins' ) {
-			if ( strpos( strtolower( $args->search ), 'boldgrid' ) !== false ) {
+			if ( ! empty( $args->search ) && strpos( strtolower( $args->search ), 'boldgrid' ) !== false ) {
 
 				// Add all boldgrid plugins.
 				$result->plugins = ( object ) array_merge( ( array ) $boldgrid_plugins, ( array ) $result->plugins );
