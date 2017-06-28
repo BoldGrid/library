@@ -204,7 +204,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				// Remove any current messages displayed.
 				el.addClass( 'updating-message' )
 					.find( 'p' )
-					.text( 'Updating...' );
+					.html( self.i18n.updating + ' &hellip;' );
 
 				// Send ajax request to upgrade plugin.
 				self.upgrade( el, plugin, slug, title );
