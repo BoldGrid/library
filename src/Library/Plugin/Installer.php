@@ -567,9 +567,10 @@ class Installer {
 						trim( $responses->{$plugin}->sections )
 					);
 
-					// This part is json encoded on the asset server.  It might be better to just json_encode the
-					// entire response, because it's hard to work with parts of this response.
 					$responses->{$plugin}->sections = json_decode( $responses->{$plugin}->sections, true );
+
+					// Decode tags for searches.
+					$responses->{$plugin}->tags = json_decode( $responses->{$plugin}->tags, true );
 
 					// Loop through the decoded sections and then add to sections array.
 					foreach ( $responses->{$plugin}->sections as $section => $section_data ) {
