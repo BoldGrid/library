@@ -290,7 +290,7 @@ class Installer {
 
 					// Main plugin file.
 					$file = $this->configs['plugins'][ $plugin ]['file'];
-					if ( $this->get_plugin_file( $plugin ) ) {
+					if ( $this->getPluginFile( $plugin ) ) {
 						// Has activation already occured? Disable button if so.
 						if ( is_plugin_active( $file ) ) {
 							$button_classes = 'button disabled';
@@ -382,23 +382,21 @@ class Installer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param  string $plugin_slug Slug of the plugin to get main file for.
+	 * @param  string $slug Slug of the plugin to get main file for.
 	 *
-	 * @return mixed  $plugin_file Main plugin file of slug or null if not found.
+	 * @return mixed  $file Main plugin file of slug or null if not found.
 	 */
-	public function get_plugin_file( $plugin_slug ) {
+	public function getPluginFile( $slug ) {
 
 		// Load plugin.php if not already included by core.
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		$plugins = get_plugins();
-		foreach ( $plugins as $plugin_file => $plugin_info ) {
+		foreach ( $plugins as $file => $info ) {
 
 			// Get the basename of the plugin.
-			$slug = dirname( plugin_basename( $plugin_file ) );
-			if ( $slug ) {
-				if ( $slug == $plugin_slug ) {
-					return $plugin_file;
-				}
+			$basename = dirname( plugin_basename( $file ) );
+			if ( $basename === $slug ) {
+				return $file;
 			}
 		}
 
