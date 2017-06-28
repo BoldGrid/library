@@ -470,6 +470,33 @@ class Installer {
 	}
 
 	/**
+	 * Hides inaccurate info on plugin search results loaded from
+	 * external sources.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @hook: admin_head-plugin-install.php
+	 */
+	public function hideInfo() {
+		$boldgrid_plugins = get_site_transient( 'boldgrid_plugins' );
+
+		$css = '<style>';
+
+		foreach ( $boldgrid_plugins as $plugin => $details ) {
+
+			// Feedback/rating details.
+			$css .= ".plugin-card-{$plugin} .vers.column-rating{display:none;}";
+
+			// Active install counts.
+			$css .= ".plugin-card-{$plugin} .column-downloaded{display:none;}";
+		}
+
+		$css .= '</style>';
+
+		echo $css;
+	}
+
+	/**
 	 * Prepares the data for the WordPress Plugins API.
 	 *
 	 * @return [type] [description]
