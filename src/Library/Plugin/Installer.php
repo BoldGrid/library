@@ -209,7 +209,7 @@ class Installer {
 	 */
 	public function result( $result, $action, $args ) {
 		$boldgrid_plugins = get_site_transient( 'boldgrid_plugins' );
-		
+
 		// Add data for plugin info tabs in results.
 		if ( $action === 'plugin_information' ) {
 			if ( ! empty( $boldgrid_plugins->{$args->slug} ) ) {
