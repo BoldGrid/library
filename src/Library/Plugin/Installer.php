@@ -429,12 +429,40 @@ class Installer {
 	 * @hook: admin_enqueue_scripts
 	 */
 	public function enqueue( $filter ) {
+		$this->css( $filter );
+		$this->js( $filter );
+	}
 
-		// Check that we are on the plugin install page and in the BoldGrid tab before loading scripts.
-		if ( $filter === 'plugin-install.php' && ( ! isset( $_GET['tab'] ) || isset( $_GET['tab'] ) && $_GET['tab'] === 'boldgrid' ) ) {
+	/**
+	 * CSS to load for functionality.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  string $filter pagenow.
+	 */
+	public function css( $filter ) {
+		if ( $filter === 'plugin-install.php' && ( ! isset( $_GET['tab'] ) || isset( $_GET['tab'] ) && ( $_GET['tab'] === 'boldgrid' || $_GET['tab'] === 'plugin-information' ) ) ) {
+			wp_register_style(
+				'bglib-plugin-installer',
+				Library\Configs::get( 'libraryUrl' ) .  'src/assets/css/plugin-installer.css',
+				array( 'common' )
+			);
 
+			wp_enqueue_style( 'bglib-plugin-installer' );
+		}
+	}
+
+	/**
+	 * JS to load for functionality.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param  string $filter pagenow.
+	 */
+	public function js( $filter ) {
+		if ( $filter === 'plugin-install.php' && ( ! isset( $_GET['tab'] ) || ( isset( $_GET['tab'] ) && $_GET['tab'] === 'boldgrid' ) ) ) {
 			// Enqueue Javascript.
-			wp_enqueue_script(
+			wp_register_script(
 				'bglib-plugin-installer',
 				Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/plugin-installer.js',
 				array(
@@ -460,11 +488,16 @@ class Installer {
 				)
 			);
 
-			// Enqueue CSS.
-			wp_enqueue_style(
-				'bglib-plugin-installer',
-				Library\Configs::get( 'libraryUrl' ) .  'src/assets/css/plugin-installer.css'
+			// Send over update data.
+			wp_localize_script(
+				'updates',
+				'_wpUpdatesItemCounts',
+				array(
+					'totals' => wp_get_update_data(),
+				)
 			);
+
+			wp_enqueue_script( 'bglib-plugin-installer' );
 		}
 	}
 
