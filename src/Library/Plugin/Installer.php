@@ -637,11 +637,7 @@ class Installer {
 					$responses->{$plugin}->last_updated = $responses->{$plugin}->release_date;
 
 					// Create the author URL based on the siteurl and author name of plugin library is being ran in.
-					// @todo: This should be handled by the API call as well.
 					$responses->{$plugin}->author = '<a href="' . $responses->{$plugin}->siteurl . '">' . $data['Author'] . '</a>';
-
-					// The filtering on the plugins add new expects download count to be present and errors out without it.
-					$responses->{$plugin}->active_installs = $responses->{$plugin}->downloads;
 
 					// This has to be json decoded since this array is json encoded for whatever reason.
 					$responses->{$plugin}->banners = json_decode( $responses->{$plugin}->banners, true );
