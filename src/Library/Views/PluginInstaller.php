@@ -18,6 +18,7 @@
 		</p>
 	</div>
 	<ul class="activation-row">
+		<?php echo $premiumLink; ?>
 		<li>
 			<a href="<?php echo $button['link']; ?>" class="<?php echo $button['classes']; ?>" aria-label="<?php printf( __( 'Install %1$s now', 'boldgrid-library' ), $name ); ?>" data-slug="<?php echo $api->slug; ?>" data-name="<?php echo $name; ?>">
 				<?php echo $button['text']; ?>

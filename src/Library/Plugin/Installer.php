@@ -332,9 +332,16 @@ class Installer {
 
 					$premiumSlug = $api->slug . '-premium';
 					$pluginClasses = $api->slug;
+
+					$premiumLink = '';
+					$premiumUrl = $this->getPremiumUrl();
+
 					if ( isset( $this->license->{$premiumSlug} ) || isset( $this->license->{$api->slug} ) ) {
 						$pluginClasses = "plugin-card-{$api->slug} premium";
+					} else {
+						$premiumLink = '<li><a href="' . $premiumUrl . '" class="button get-premium" aria-label="' . sprintf( __( 'Upgrade %s to premium', 'boldgrid-library' ), $api->name ) . '">' . sprintf( __( 'Get Premium!' ), 'boldgrid-library' ) . '</a></li>';
 					}
+
 					$messageClasses = 'installer-messages';
 					$message = '';
 
@@ -354,7 +361,7 @@ class Installer {
 					}
 
 					// Send plugin data to template.
-					$this->renderTemplate( $plugin, $pluginClasses, $message, $messageClasses, $api, $name, $button, $modal );
+					$this->renderTemplate( $plugin, $pluginClasses, $message, $messageClasses, $api, $name, $button, $modal, $premiumLink );
 				}
 			}
 			?>
@@ -404,6 +411,27 @@ class Installer {
 	}
 
 	/**
+	 * Get the premium URL for a users to login and upgrade with.
+	 *
+	 * This checks the 'boldgrid_reseller' option to see if an
+	 * Account Management Panel link has been saved for a user's
+	 * key, so they can upgrade that way.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string $url The url for a user to login to upgrade through.
+	 */
+	private function getPremiumUrl() {
+		$option = get_site_option( 'boldgrid_reseller' );
+		$url = 'https://www.boldgrid.com/connect-keys/';
+		if ( $option && ! empty( $option['reseller_amp_url'] ) ) {
+			$url = $option['reseller_amp_url'];
+		}
+
+		return $url;
+	}
+
+	/**
 	 * Renders template for each plugin card.
 	 *
 	 * @since 1.0.0
@@ -417,7 +445,7 @@ class Installer {
 	 * @param array  $button         Contains button link, text and classes.
 	 * @param string $modal          Modal link for thickbox plugin-information tabs.
 	 */
-	public function renderTemplate( $plugin, $pluginClasses, $message, $messageClasses, $api, $name, $button, $modal ) {
+	public function renderTemplate( $plugin, $pluginClasses, $message, $messageClasses, $api, $name, $button, $modal, $premiumLink ) {
 		include Library\Configs::get( 'libraryDir' ) . 'src/Library/Views/PluginInstaller.php';
 	}
 
