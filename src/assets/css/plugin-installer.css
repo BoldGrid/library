@@ -106,11 +106,13 @@
 	border-radius: 0 0 2px 2px;
 	text-align: left;
 }
+.bglib-plugin-installer .activation-row li:last-child {
+	float: right;
+}
 .bglib-plugin-installer .activation-row li {
 	display: inline-block;
 	vertical-align: top;
 	margin: 0;
-	float: right;
 	font-size: 13px;
 	line-height: 27px;
 }
@@ -193,4 +195,24 @@
 		left: -10px;
 		bottom: 64px;
 	}
+}
+
+/* Upgrade Free Key to Premium Key Button */
+.plugin-install-tab-boldgrid .activation-row .button.get-premium {
+	background: #f95b26;
+	border-color: #ff4f13 #f75620 #ff4a0e;
+	-webkit-box-shadow: 0 1px 0 #f75620;
+	box-shadow: 0 1px 0 #f75620;
+	color: #fff;
+	text-decoration: none;
+	text-shadow: 0 -1px 1px #f75620, 1px 0 1px #f75620, 0 1px 1px #f75620, -1px 0 1px #f75620;
+}
+.plugin-install-tab-boldgrid .activation-row .button.get-premium:hover {
+	background: #ed440c;
+}
+
+/* Plugin Information Modal Styles */
+#plugin-information .fyi-description,
+#plugin-information .fyi a[href^="https://wordpress.org/plugins/boldgrid"] {
+	display: none;
 }
