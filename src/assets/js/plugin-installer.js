@@ -42,6 +42,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		onReady : function() {
 			self._buttons();
 			self._upgradeLinks();
+			self._search();
 		},
 
 		/**
