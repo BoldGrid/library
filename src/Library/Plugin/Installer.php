@@ -339,7 +339,7 @@ class Installer {
 					if ( isset( $this->license->{$premiumSlug} ) || isset( $this->license->{$api->slug} ) ) {
 						$pluginClasses = "plugin-card-{$api->slug} premium";
 					} else {
-						$premiumLink = '<li><a href="' . $premiumUrl . '" class="button get-premium" aria-label="' . sprintf( __( 'Upgrade %s to premium', 'boldgrid-library' ), $api->name ) . '">' . sprintf( __( 'Get Premium!' ), 'boldgrid-library' ) . '</a></li>';
+						$premiumLink = '<li><a href="' . $premiumUrl . '" class="button get-premium" target="_blank" aria-label="' . sprintf( __( 'Upgrade %s to premium', 'boldgrid-library' ), $api->name ) . '">' . sprintf( __( 'Get Premium!' ), 'boldgrid-library' ) . '</a></li>';
 					}
 
 					$messageClasses = 'installer-messages';
@@ -665,7 +665,7 @@ class Installer {
 					$responses->{$plugin}->last_updated = $responses->{$plugin}->release_date;
 
 					// Create the author URL based on the siteurl and author name of plugin library is being ran in.
-					$responses->{$plugin}->author = '<a href="' . $responses->{$plugin}->siteurl . '">' . $data['Author'] . '</a>';
+					$responses->{$plugin}->author = '<a href="' . $responses->{$plugin}->siteurl . '" target="_blank">' . $data['Author'] . '</a>';
 
 					// This has to be json decoded since this array is json encoded for whatever reason.
 					$responses->{$plugin}->banners = json_decode( $responses->{$plugin}->banners, true );
