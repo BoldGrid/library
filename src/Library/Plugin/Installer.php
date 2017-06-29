@@ -607,9 +607,8 @@ class Installer {
 
 					// Loop through the decoded sections and then add to sections array.
 					foreach ( $responses->{$plugin}->sections as $section => $section_data ) {
-						$responses->{$plugin}->sections[ $section ] = html_entity_decode(
-							$section_data,
-							ENT_QUOTES
+						$responses->{$plugin}->sections[ $section ] = preg_replace( '/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n",
+							html_entity_decode( $section_data, ENT_QUOTES )
 						);
 					}
 
