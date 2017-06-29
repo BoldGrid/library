@@ -338,7 +338,7 @@ class Installer {
 					$messageClasses = 'installer-messages';
 					$message = '';
 
-					if ( isset( $this->updates[ $file ] ) && version_compare( $this->updates[ $file ]->Version, $this->updates[ $file ]->update->new_version, '<' ) ) {
+					if ( isset( $this->updates[ $file ] ) && ( $this->updates[ $file ]->Version !== $this->updates[ $file ]->update->new_version ) ) {
 						$messageClasses = "{$messageClasses} update-now update-message notice inline notice-warning notice-alt";
 						$updateUrl = add_query_arg(
 							array(
@@ -649,6 +649,50 @@ class Installer {
 				set_site_transient( 'boldgrid_plugins', $responses, 7 * DAY_IN_SECONDS );
 			}
 		}
+	}
+
+	/**
+	 * Filters the WordPress Updates Available.
+	 *
+	 * This is set to priority 12 to override the individual plugin
+	 * update classes that set priority at 11 in this filter.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @hook: pre_set_site_transient_update_plugins
+	 *
+	 * @priority: 12
+	 *
+	 * @return object $updates Updates available.
+	 */
+	public function filterUpdates( $updates ) {
+		$plugins = $this->getTransient();
+
+		foreach( $plugins as $plugin => $details ) {
+			$file = $this->getPluginFile( $plugin );
+			$data = trailingslashit( WP_PLUGIN_DIR ) . $file;
+			if ( file_exists( $data ) && is_readable( $data ) ) {
+				$data = get_plugin_data( $data, false );
+			}
+			if ( is_array( $data ) ) {
+				$update = new \stdClass();
+				$update->plugin = $file;
+				$update->slug = $details->slug;
+				$update->new_version = $details->new_version;
+				$update->url = $details->url;
+				$update->package = $details->download_link;
+
+				if ( $data['Version'] !== $details->new_version ) {
+					$update->tested = $details->tested_wp_version;
+					$update->compatibility = $details->compatibility;
+					$updates->response[ $file ] = $update;
+				} else {
+					$updates->no_update[ $file ] = $update;
+				}
+			}
+		}
+
+		return $updates;
 	}
 
 	/**
