@@ -771,6 +771,7 @@ class Installer {
 					Library\Filter::removeHook( 'custom_plugins_transient_update', $class, 'custom_plugins_transient_update', 11 );
 					Library\Filter::removeHook( 'pre_set_site_transient_update_plugins', $class, 'custom_plugins_transient_update', 11 );
 					Library\Filter::removeHook( 'site_transient_update_plugins', $class, 'site_transient_update_plugins', 11 );
+					delete_site_transient( "{$p}_version_data" );
 				}
 			}
 		}
