@@ -378,8 +378,6 @@ class Installer {
 	protected function ajax() {
 		$activate = new Installer\Activate( $this->configs );
 		$activate->init();
-		$upgrade = new Installer\Upgrade( $this->configs );
-		$upgrade->init();
 		$install = new Installer\Install( $this->configs );
 		$install->init();
 	}
@@ -707,6 +705,7 @@ class Installer {
 		}
 	}
 
+
 	/**
 	 * Filters the WordPress Updates Available.
 	 *
@@ -717,6 +716,8 @@ class Installer {
 	 *
 	 * @hook: pre_set_site_transient_update_plugins
 	 *
+	 * @hook: site_transient_update_plugins
+	 *
 	 * @priority: 12
 	 *
 	 * @return object $updates Updates available.
@@ -724,26 +725,28 @@ class Installer {
 	public function filterUpdates( $updates ) {
 		$plugins = $this->getTransient();
 
-		foreach( $plugins as $plugin => $details ) {
-			$file = $this->getPluginFile( $plugin );
-			$data = trailingslashit( WP_PLUGIN_DIR ) . $file;
-			if ( file_exists( $data ) && is_readable( $data ) ) {
-				$data = get_plugin_data( $data, false );
-			}
-			if ( is_array( $data ) ) {
-				$update = new \stdClass();
-				$update->plugin = $file;
-				$update->slug = $details->slug;
-				$update->new_version = $details->new_version;
-				$update->url = $details->url;
-				$update->package = $details->download_link;
+		if ( ! empty( $plugins ) ) {
+			foreach( $plugins as $plugin => $details ) {
+				$file = $this->getPluginFile( $plugin );
+				$data = trailingslashit( WP_PLUGIN_DIR ) . $file;
+				if ( file_exists( $data ) && is_readable( $data ) ) {
+					$data = get_plugin_data( $data, false );
+				}
+				if ( is_array( $data ) ) {
+					$update = new \stdClass();
+					$update->plugin = $file;
+					$update->slug = $details->slug;
+					$update->new_version = $details->new_version;
+					$update->url = $details->url;
+					$update->package = $details->download_link;
 
-				if ( $data['Version'] !== $details->new_version ) {
-					$update->tested = $details->tested_wp_version;
-					$update->compatibility = $details->compatibility;
-					$updates->response[ $file ] = $update;
-				} else {
-					$updates->no_update[ $file ] = $update;
+					if ( $data['Version'] !== $details->new_version ) {
+						$update->tested = $details->tested_wp_version;
+						$update->compatibility = $details->compatibility;
+						$updates->response[ $file ] = $update;
+					} else {
+						$updates->no_update[ $file ] = $update;
+					}
 				}
 			}
 		}
