@@ -714,10 +714,7 @@ class Installer {
 	 * @since 1.0.0
 	 *
 	 * @hook: pre_set_site_transient_update_plugins
-	 *
 	 * @hook: site_transient_update_plugins
-	 *
-	 * @priority: 12
 	 *
 	 * @return object $updates Updates available.
 	 */
