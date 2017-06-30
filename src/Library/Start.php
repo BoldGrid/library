@@ -22,11 +22,13 @@ class Start {
 
 	/**
 	 * @var object $configs         Library Configuration Object.
+	 * @var object $releaseChannel  Library ReleaseChannel Object.
 	 * @var object $pluginInstaller Library Plugin Installer Object.
 	 * @var object $key             Library Key Object.
 	 */
 	private
 		$configs,
+		$releaseChannel,
 		$pluginInstaller,
 		$key;
 
@@ -43,6 +45,7 @@ class Start {
 		if ( Configs::get( 'keyValidate' ) ) {
 			$this->key = new Key();
 		}
+		$this->releaseChannel = new ReleaseChannel;
 		$this->pluginInstaller = new Plugin\Installer( Configs::get( 'pluginInstaller' ) );
 	}
 }
