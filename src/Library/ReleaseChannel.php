@@ -67,7 +67,8 @@ class ReleaseChannel {
 	/**
 	 * Update Plugin Channel
 	 *
-	 * This methods fires when an option is being modified for boldgrid_settings.
+	 * This methods fires when boldgrid_settings is updated.  We check the values
+	 * for the new plugin release channel to see if it changed here.
 	 *
 	 * @since 1.0.0
 	 *
@@ -80,9 +81,7 @@ class ReleaseChannel {
 	 * @return mixed $new    The new option being set.
 	 */
 	public function updateChannel( $option, $new, $old ) {
-		// Exists.
 		if ( ! empty( $old['release_channel'] ) || ! empty( $new['release_channel'] ) ) {
-			// Compares.
 			if ( $old['release_channel'] !== $new['release_channel'] ) {
 				delete_site_transient( 'boldgrid_plugins' );
 				delete_site_transient('update_plugins');
