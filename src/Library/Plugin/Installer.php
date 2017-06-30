@@ -346,7 +346,7 @@ class Installer {
 					$message = '';
 
 					if ( isset( $this->updates[ $file ] ) && ( $this->updates[ $file ]->Version !== $this->updates[ $file ]->update->new_version ) ) {
-						$messageClasses = "{$messageClasses} update-now update-message notice inline notice-warning notice-alt";
+						$messageClasses = "{$messageClasses} update-message notice inline notice-warning notice-alt";
 						$updateUrl = add_query_arg(
 							array(
 								'action' => 'upgrade-plugin',
