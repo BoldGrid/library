@@ -39,6 +39,7 @@ class ReleaseChannel {
 	public function __construct() {
 		$this->setPluginChannel();
 		$this->setThemeChannel();
+		Filter::add( $this );
 	}
 
 	/**
@@ -64,9 +65,40 @@ class ReleaseChannel {
 	}
 
 	/**
+	 * Update Plugin Channel
+	 *
+	 * This methods fires when an option is being modified for boldgrid_settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @hook: update_site_option_boldgrid_settings
+	 *
+	 * @param string $option The option name.
+	 * @param mixed  $new    New option value being set.
+	 * @param mixed  $old    Old option value being set.
+	 *
+	 * @return mixed $new    The new option being set.
+	 */
+	public function updateChannel( $option, $new, $old ) {
+		// Exists.
+		if ( ! empty( $old['release_channel'] ) || ! empty( $new['release_channel'] ) ) {
+			// Compares.
+			if ( $old['release_channel'] !== $new['release_channel'] ) {
+				delete_site_transient( 'boldgrid_plugins' );
+				delete_site_transient('update_plugins');
+				wp_update_plugins();
+			}
+		}
+
+		return $new;
+	}
+
+	/**
 	 * Gets the pluginChannel class property.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @nohook
 	 *
 	 * @return string $pluginChannel Plugin Channel that is set.
 	 */
@@ -78,6 +110,8 @@ class ReleaseChannel {
 	 * Gets the themeChannel class property.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @nohook
 	 *
 	 * @return string $themeChannel Theme Channel that is set.
 	 */
