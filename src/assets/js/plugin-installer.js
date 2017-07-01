@@ -173,7 +173,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					// Add processing message.
 					el.addClass( 'updating-message' )
 						.find( 'p' )
-						.text( wp.updates.l10n.updating );
+						.text( wp.updates.l10n.updatingMsg );
 				}
 			} );
 		},
@@ -240,7 +240,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				// Remove any current messages displayed.
 				el.addClass( 'updating-message' )
 					.find( 'p' )
-					.html( self.i18n.updating + ' &hellip;' );
+					.html( wp.updates.l10n.updatingMsg );
 
 				// Send ajax request to upgrade plugin.
 				wp.updates.updatePlugin( {
