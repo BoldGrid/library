@@ -84,7 +84,7 @@ class ReleaseChannel {
 		if ( ! empty( $old['release_channel'] ) || ! empty( $new['release_channel'] ) ) {
 			if ( $old['release_channel'] !== $new['release_channel'] ) {
 				delete_site_transient( 'boldgrid_plugins' );
-				delete_site_transient('update_plugins');
+				delete_site_transient( 'update_plugins' );
 				wp_update_plugins();
 			}
 		}
