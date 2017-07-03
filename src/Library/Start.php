@@ -32,7 +32,6 @@ class Start {
 		$pluginInstaller,
 		$key;
 
-
 	/**
 	 * Initialize class and set class properties.
 	 *
@@ -46,6 +45,17 @@ class Start {
 			$this->key = new Key();
 		}
 		$this->releaseChannel = new ReleaseChannel;
-		$this->pluginInstaller = new Plugin\Installer( Configs::get( 'pluginInstaller' ) );
+		$this->pluginInstaller = new Plugin\Installer( Configs::get( 'pluginInstaller' ), $this->getReleaseChannel() );
+	}
+
+	/**
+	 * Get releaseChannel class property.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return object $releaseChannel Library\ReleaseChannel object.
+	 */
+	public function getReleaseChannel() {
+		return $this->releaseChannel;
 	}
 }
