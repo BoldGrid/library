@@ -32,8 +32,8 @@ class Installer {
 	 */
 	protected
 		$configs,
-		$transient,
-		$updates;
+		$releaseChannel,
+		$transient;
 
 	/**
 	 * Initialize class and set class properties.
@@ -42,13 +42,14 @@ class Installer {
 	 *
 	 * @param array $configs Array of configuration options for the BG Library.
 	 */
-	public function __construct( $configs ) {
+	public function __construct( $configs, Library\ReleaseChannel $releaseChannel ) {
 		$this->setConfigs( $configs );
-		if ( $this->configs['enabled'] ) {
+		$this->releaseChannel = $releaseChannel;
+		if ( $this->configs['enabled'] && ! empty( $this->configs['plugins'] ) ) {
+			$this->setPluginData( $this->configs['plugins'] );
 			$this->setTransient();
 			$license = new Library\License;
 			$this->license = Library\Configs::get( 'licenseData' );
-			$this->setUpdates();
 			$this->ajax();
 			Library\Filter::add( $this );
 		}
@@ -68,35 +69,6 @@ class Installer {
 	}
 
 	/**
-	 * Set the updates class property.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $updates Available updates for plugin installer.
-	 *
-	 * @return object $updates The updates class property.
-	 */
-	protected function setUpdates() {
-		if ( ! function_exists( 'get_plugin_updates' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/update.php';
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-
-		return $this->updates = get_plugin_updates();
-	}
-
-	/**
-	 * Get available plugin updates.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return [type] [description]
-	 */
-	protected function getUpdates() {
-		return $this->updates;
-	}
-
-	/**
 	 * Set the transient class property.
 	 *
 	 * @since 1.0.0
@@ -105,6 +77,37 @@ class Installer {
 	 */
 	protected function setTransient() {
 		return $this->transient = get_site_transient( 'boldgrid_plugins', null ) ? get_site_transient( 'boldgrid_plugins' ) : $this->getPluginInformation( $this->configs['plugins'] );
+	}
+
+	/**
+	 * Sets local plugin data for plugin configs to use in class.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $plugins Array of plugins to get data for.
+	 */
+	protected function setPluginData( $plugins ) {
+
+		// Load plugin.php if necessary so method doesn't cause errors.
+		if ( ! function_exists( 'get_plugin_data' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		// Default data to use if plugin isn't loaded locally.
+		$data = array(
+			'Author' => 'BoldGrid.com',
+			'Version' => null,
+		);
+
+		foreach( $plugins as $plugin => $details ) {
+			$file = trailingslashit( WP_PLUGIN_DIR ) . $details['file'];
+
+			if ( file_exists( $file ) && is_readable( $file ) ) {
+				$data = get_plugin_data( $file, false );
+			}
+
+			$this->configs['plugins'][ $plugin ] = wp_parse_args( $data, $details );
+		}
 	}
 
 	/**
@@ -121,6 +124,7 @@ class Installer {
 	public function addTab( $tabs ) {
 		$boldgrid = array( 'boldgrid' => __( 'BoldGrid', 'boldgrid-library' ) );
 		$tabs = array_merge( $boldgrid, $tabs );
+
 		return $tabs;
 	}
 
@@ -168,14 +172,14 @@ class Installer {
 	 * @return array $args WordPress Plugins API arguments.
 	 */
 	public function pluginsApi( $results, $action, $args ) {
-		$boldgrid_plugins = get_site_transient( 'boldgrid_plugins' );
+		$boldgrid_plugins = $this->getTransient();
 
 		// Check if we are hooked to query_plugins and browsing 'boldgrid' sorted plugins.
 		if ( isset( $args->browse ) && $args->browse === 'boldgrid' ) {
 
 			// Query plugins action.
 			if ( $action === 'query_plugins' ) {
-				$results = new stdClass();
+				$results = new \stdClass();
 
 				// Set the results for query.
 				$results->plugins = array_values( ( array ) $boldgrid_plugins );
@@ -208,11 +212,12 @@ class Installer {
 	 * @return array $result WordPress Plugins API result.
 	 */
 	public function result( $result, $action, $args ) {
-		$boldgrid_plugins = get_site_transient( 'boldgrid_plugins' );
+		$boldgrid_plugins = $this->getTransient();
 
 		// Add data for plugin info tabs in results.
 		if ( $action === 'plugin_information' ) {
 			if ( ! empty( $boldgrid_plugins->{$args->slug} ) ) {
+				unset( $boldgrid_plugins->{$args->slug}->active_installs );
 				$result = $boldgrid_plugins->{$args->slug};
 			}
 
@@ -252,45 +257,23 @@ class Installer {
 	 * @hook: install_plugins_boldgrid
 	 */
 	public function init() {
-
+		$plugins = $this->getTransient();
 		// Abort if we don't have any plugins to list.
-		if ( ! $this->configs['plugins'] ) {
+		if ( ! $plugins ) {
 			return;
 		}
 
 		?>
 		<div class="bglib-plugin-installer">
 		<?php
-			foreach ( $this->configs['plugins'] as $plugin => $details ) {
+			foreach ( $plugins as $api ) {
 				$button_classes = 'install button';
 				$button_text = __( 'Install Now', 'boldgrid-library' );
 
-				$api = plugins_api(
-					'plugin_information',
-					array(
-						'slug' => $plugin,
-						'fields' => array(
-							'short_description' => true,
-							'sections' => false,
-							'requires' => false,
-							'downloaded' => true,
-							'last_updated' => false,
-							'added' => false,
-							'tags' => false,
-							'compatibility' => false,
-							'homepage' => false,
-							'donate_link' => false,
-							'icons' => true,
-							'banners' => true,
-						),
-					)
-				);
-
-				if ( ! is_wp_error( $api ) ) {
-
 					// Main plugin file.
-					$file = $this->configs['plugins'][ $plugin ]['file'];
-					if ( $this->getPluginFile( $plugin ) ) {
+					$file = $this->configs['plugins'][ $api->slug ]['file'];
+					if ( $this->getPluginFile( $api->slug ) ) {
+
 						// Has activation already occured? Disable button if so.
 						if ( is_plugin_active( $file ) ) {
 							$button_classes = 'button disabled';
@@ -344,8 +327,7 @@ class Installer {
 
 					$messageClasses = 'installer-messages';
 					$message = '';
-
-					if ( isset( $this->updates[ $file ] ) && ( $this->updates[ $file ]->Version !== $this->updates[ $file ]->update->new_version ) ) {
+					if ( $this->configs['plugins'][ $api->slug ]['Version'] !== $api->new_version ) {
 						$messageClasses = "{$messageClasses} update-message notice inline notice-warning notice-alt";
 						$updateUrl = add_query_arg(
 							array(
@@ -361,9 +343,8 @@ class Installer {
 					}
 
 					// Send plugin data to template.
-					$this->renderTemplate( $plugin, $pluginClasses, $message, $messageClasses, $api, $name, $button, $modal, $premiumLink );
+					$this->renderTemplate( $pluginClasses, $message, $messageClasses, $api, $name, $button, $modal, $premiumLink );
 				}
-			}
 			?>
 		</div>
 		<?php
@@ -443,7 +424,7 @@ class Installer {
 	 * @param array  $button         Contains button link, text and classes.
 	 * @param string $modal          Modal link for thickbox plugin-information tabs.
 	 */
-	public function renderTemplate( $plugin, $pluginClasses, $message, $messageClasses, $api, $name, $button, $modal, $premiumLink ) {
+	public function renderTemplate( $pluginClasses, $message, $messageClasses, $api, $name, $button, $modal, $premiumLink ) {
 		include Library\Configs::get( 'libraryDir' ) . 'src/Library/Views/PluginInstaller.php';
 	}
 
@@ -505,6 +486,7 @@ class Installer {
 				array(
 					'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 					'nonce' => wp_create_nonce( 'bglibPluginInstallerNonce' ),
+					'status' => ( bool ) $this->getTransient(),
 					'install' => __( 'Install Now', 'boldgrid-library' ),
 					'installing' => __( 'Installing', 'boldgrid-library' ),
 					'installed' => __( 'Activated', 'boldgrid-library' ),
@@ -522,6 +504,7 @@ class Installer {
 				)
 			);
 
+			wp_enqueue_script( 'updates' );
 			wp_enqueue_script( 'bglib-plugin-installer' );
 		}
 	}
@@ -534,12 +517,11 @@ class Installer {
 	 *
 	 * @hook: admin_head-plugin-install.php
 	 */
-	public function hideInfo() {
-		$boldgrid_plugins = get_site_transient( 'boldgrid_plugins' );
+	public function hideInfo( $array ) {
 
 		$css = '<style>';
 
-		foreach ( $boldgrid_plugins as $plugin => $details ) {
+		foreach ( $this->configs['plugins'] as $plugin => $details ) {
 
 			// Feedback/rating details.
 			$css .= ".plugin-card-{$plugin} .vers.column-rating{display:none;}";
@@ -551,6 +533,7 @@ class Installer {
 		$css .= '</style>';
 
 		echo $css;
+		return $array;
 	}
 
 	/**
@@ -561,147 +544,120 @@ class Installer {
 	public function getPluginInformation( $plugins ) {
 		global $wp_version;
 
-		// If we don't find any data in our transient storage, make remote request.
-		if ( ! $this->getTransient() ) {
+		// Get the API URL and Endpoint to call for requests.
+		$api = Library\Configs::get( 'api' );
+		$endpoint = '/api/open/getPluginVersion';
 
-			// Load plugin.php if necessary so method doesn't cause errors.
-			if ( ! function_exists( 'get_plugin_data' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/plugin.php';
-			}
+		// Each call will be stored in the $responses object before saving transient.
+		$responses = new \stdClass();
 
-			// Get the API URL and Endpoint to call for requests.
-			$api = Library\Configs::get( 'api' );
-			$endpoint = '/api/open/getPluginVersion';
+		// Loop through plugins and save the data to transient.
+		foreach ( $plugins as $plugin => $details ) {
 
-			// Each call will be stored in the $responses object before saving transient.
-			$responses = new \stdClass();
+			// Params to pass to remote API call.
+			$params = array(
+				'key' => $details['key'],
+				'channel' => $this->releaseChannel->getPluginChannel(),
+				'installed_' . $details['key'] . '_version' => $details['Version'],
+				'installed_wp_version' => $wp_version,
+			);
 
-			// Loop through plugins and save the data to transient.
-			foreach ( $plugins as $plugin => $details ) {
+			// Make API Call.
+			$call = new Library\Api\Call( $api . $endpoint, $params );
 
-				// Default data to use if plugin isn't loaded locally.
-				$data = array(
-					'Author' => 'BoldGrid.com',
-					'Version' => null,
+			if ( ! $call->getError() ) {
+
+				// Add the actual data to our $responses object.
+				$responses->{$plugin} = $call->getResponse()->result->data;
+
+				// Newest version of plugin (?).
+				$responses->{$plugin}->new_version = $responses->{$plugin}->version;
+
+				// Name is the expected value for the plugins_api, but we are returned title.
+				$responses->{$plugin}->name = $responses->{$plugin}->title;
+
+				// Slug is never returned from remote call, so we will create slug based on the title.
+				$responses->{$plugin}->slug = sanitize_title( $responses->{$plugin}->title );
+
+				// This was in the update class, but with/without it - it seemed to work.  Not sure if this
+				// is really necessary to do as the data should be prepared on the asset server first.
+				$responses->{$plugin}->sections = preg_replace(
+					'/\s+/', ' ',
+					trim( $responses->{$plugin}->sections )
 				);
 
-				// Check that file exists and is readable before getting plugin data.
-				$file = trailingslashit( WP_PLUGIN_DIR ) . $details['file'];
-				if ( file_exists( $file ) && is_readable( $file ) ) {
-					$data = get_plugin_data( $file, false );
+				$responses->{$plugin}->sections = json_decode( $responses->{$plugin}->sections, true );
+
+				// Decode tags for searches.
+				$responses->{$plugin}->tags = json_decode( $responses->{$plugin}->tags, true );
+
+				// Loop through the decoded sections and then add to sections array.
+				foreach ( $responses->{$plugin}->sections as $section => $section_data ) {
+					$responses->{$plugin}->sections[ $section ] = html_entity_decode(
+						preg_replace( '/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $section_data ), ENT_QUOTES
+					);
 				}
 
-				$releaseChannel = new Library\ReleaseChannel;
+				// Set the short_description as the description before preparing.
+				$responses->{$plugin}->short_description = $responses->{$plugin}->sections['description'];
 
-				// Params to pass to remote API call.
-				$params = array(
-					'key' => $details['key'],
-					'channel' => $releaseChannel->getPluginChannel(),
-					'installed_' . $details['key'] . '_version' => $data['Version'],
-					'installed_wp_version' => $wp_version,
+				// Now generate the short_description from the standard description automatically.
+				if ( mb_strlen( $responses->{$plugin}->short_description ) > 150 ) {
+					$responses->{$plugin}->short_description = mb_substr( $responses->{$plugin}->short_description, 0, 150 ) . ' &hellip;';
+
+					// If not a full sentence, and one ends within 20% of the end, trim it to that.
+					if ( function_exists( 'mb_strrpos' ) ) {
+						$pos = mb_strrpos( $responses->{$plugin}->short_description, '.' );
+					} else {
+						$pos = strrpos( $responses->{$plugin}->short_description, '.' );
+					}
+					if ( '.' !== mb_substr( $responses->{$plugin}->short_description, - 1 ) && $pos > ( 0.8 * 150 ) ) {
+						$responses->{$plugin}->short_description = mb_substr( $responses->{$plugin}->short_description, 0, $pos + 1 );
+					}
+				}
+
+				// Remove any remaining markup from short_description.
+				$responses->{$plugin}->short_description = wp_strip_all_tags( $responses->{$plugin}->short_description );
+
+				// Returned release date === last_updated (?)
+				$responses->{$plugin}->last_updated = $responses->{$plugin}->release_date;
+
+				// Create the author URL based on the siteurl and author name of plugin library is being ran in.
+				$responses->{$plugin}->author = '<a href="' . $responses->{$plugin}->siteurl . '" target="_blank">' . $details['Author'] . '</a>';
+
+				// This has to be json decoded since this array is json encoded for whatever reason.
+				$responses->{$plugin}->banners = json_decode( $responses->{$plugin}->banners, true );
+
+				// Just creating the links by having the file naming standardized.  WordPress also expects this same
+				// format for these files.  The same approach can be taken for the banners as well.
+				$responses->{$plugin}->icons = array(
+					'1x' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.png",
+					'2x' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-256x256.png",
+					'svg' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.svg",
 				);
 
-				// Make API Call.
-				$call = new Library\Api\Call( $api . $endpoint, $params );
+				// This seems hardcoded in based on looking at our plugins in the update class.
+				$responses->{$plugin}->added = '2015-03-19';
 
-				// ** NOTE ** The next 95 lines are only here because we don't have the data
-				// being returned that the WordPress Plugins API expects.
-				// No errors when making remote request so begin preparing data for save.
-				if ( ! $call->getError() ) {
+				// Setting the returned siteurl as the expected url param.
+				$responses->{$plugin}->url = $responses->{$plugin}->siteurl;
+				$responses->{$plugin}->active_installs = true;
 
-					// Add the actual data to our $responses object.
-					$responses->{$plugin} = $call->getResponse()->result->data;
-
-					// Name is the expected value for the plugins_api, but we are returned title.
-					$responses->{$plugin}->name = $responses->{$plugin}->title;
-
-					// Slug is never returned from remote call, so we will create slug based on the title.
-					$responses->{$plugin}->slug = sanitize_title( $responses->{$plugin}->title );
-
-					// This was in the update class, but with/without it - it seemed to work.  Not sure if this
-					// is really necessary to do as the data should be prepared on the asset server first.
-					$responses->{$plugin}->sections = preg_replace(
-						'/\s+/', ' ',
-						trim( $responses->{$plugin}->sections )
-					);
-
-					$responses->{$plugin}->sections = json_decode( $responses->{$plugin}->sections, true );
-
-					// Decode tags for searches.
-					$responses->{$plugin}->tags = json_decode( $responses->{$plugin}->tags, true );
-
-					// Loop through the decoded sections and then add to sections array.
-					foreach ( $responses->{$plugin}->sections as $section => $section_data ) {
-						$responses->{$plugin}->sections[ $section ] = preg_replace( '/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n",
-							html_entity_decode( $section_data, ENT_QUOTES )
-						);
-					}
-
-					// Set the short_description as the description before preparing.
-					$responses->{$plugin}->short_description = $responses->{$plugin}->sections['description'];
-
-					// Now generate the short_description from the standard description automatically.
-					if ( mb_strlen( $responses->{$plugin}->short_description ) > 150 ) {
-						$responses->{$plugin}->short_description = mb_substr( $responses->{$plugin}->short_description, 0, 150 ) . ' &hellip;';
-
-						// If not a full sentence, and one ends within 20% of the end, trim it to that.
-						if ( function_exists( 'mb_strrpos' ) ) {
-							$pos = mb_strrpos( $responses->{$plugin}->short_description, '.' );
-						} else {
-							$pos = strrpos( $responses->{$plugin}->short_description, '.' );
-						}
-						if ( '.' !== mb_substr( $responses->{$plugin}->short_description, - 1 ) && $pos > ( 0.8 * 150 ) ) {
-							$responses->{$plugin}->short_description = mb_substr( $responses->{$plugin}->short_description, 0, $pos + 1 );
-						}
-					}
-
-					// Remove any remaining markup from short_description.
-					$responses->{$plugin}->short_description = wp_strip_all_tags( $responses->{$plugin}->short_description );
-
-					// Returned release date === last_updated (?)
-					$responses->{$plugin}->last_updated = $responses->{$plugin}->release_date;
-
-					// Create the author URL based on the siteurl and author name of plugin library is being ran in.
-					$responses->{$plugin}->author = '<a href="' . $responses->{$plugin}->siteurl . '" target="_blank">' . $data['Author'] . '</a>';
-
-					// This has to be json decoded since this array is json encoded for whatever reason.
-					$responses->{$plugin}->banners = json_decode( $responses->{$plugin}->banners, true );
-
-					// Just creating the links by having the file naming standardized.  WordPress also expects this same
-					// format for these files.  The same approach can be taken for the banners as well.
-					$responses->{$plugin}->icons = array(
-						'1x' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.png",
-						'2x' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-256x256.png",
-						'svg' => "https://repo.boldgrid.com/assets/icon-{$responses->{$plugin}->slug}-128x128.svg",
-					);
-
-					// This seems hardcoded in based on looking at our plugins in the update class.
-					$responses->{$plugin}->added = '2015-03-19';
-
-					// Newest version of plugin (?).
-					$responses->{$plugin}->new_version = $responses->{$plugin}->version;
-
-					// Setting the returned siteurl as the expected url param.
-					$responses->{$plugin}->url = $responses->{$plugin}->siteurl;
-
-					// Build the URL for the plugin download from the asset server.
-					$responses->{$plugin}->download_link = add_query_arg(
-						array(
-							'key' => Library\Configs::get( 'key' ),
-							'id' => $responses->{$plugin}->asset_id,
-							'installed_plugin_version' => $data['Version'],
-							'installed_wp_version' => $wp_version,
-						),
-						$api . '/api/asset/get'
-					);
-				}
-			}
-
-			// Now we have the correct data so save it in the boldgrid_plugins transient.  Expiry set to 1 week.
-			if ( ! empty( $responses ) ) {
-				set_site_transient( 'boldgrid_plugins', $responses, 7 * DAY_IN_SECONDS );
+				// Build the URL for the plugin download from the asset server.
+				$responses->{$plugin}->download_link = add_query_arg(
+					array(
+						'key' => Library\Configs::get( 'key' ),
+						'id' => $responses->{$plugin}->asset_id,
+						'installed_plugin_version' => $details['Version'],
+						'installed_wp_version' => $wp_version,
+					),
+					$api . '/api/asset/get'
+				);
 			}
 		}
+
+		// Update transient.  Expiry set to 1 week.
+		set_site_transient( 'boldgrid_plugins', $responses, 7 * DAY_IN_SECONDS );
 	}
 
 
@@ -723,26 +679,19 @@ class Installer {
 
 		if ( ! empty( $plugins ) ) {
 			foreach( $plugins as $plugin => $details ) {
-				$file = $this->getPluginFile( $plugin );
-				$data = trailingslashit( WP_PLUGIN_DIR ) . $file;
-				if ( file_exists( $data ) && is_readable( $data ) ) {
-					$data = get_plugin_data( $data, false );
-				}
-				if ( is_array( $data ) ) {
-					$update = new \stdClass();
-					$update->plugin = $file;
-					$update->slug = $details->slug;
-					$update->new_version = $details->new_version;
-					$update->url = $details->url;
-					$update->package = $details->download_link;
+				$update = new \stdClass();
+				$update->plugin = $this->configs['plugins'][ $plugin ]['file'];
+				$update->slug = $details->slug;
+				$update->new_version = $details->new_version;
+				$update->url = $details->url;
+				$update->package = $details->download_link;
 
-					if ( $data['Version'] !== $details->new_version ) {
-						$update->tested = $details->tested_wp_version;
-						$update->compatibility = $details->compatibility;
-						$updates->response[ $file ] = $update;
-					} else {
-						$updates->no_update[ $file ] = $update;
-					}
+				if ( $this->configs['plugins'][ $plugin ]['Version'] !== $details->new_version ) {
+					$update->tested = $details->tested_wp_version;
+					$update->compatibility = new \stdClass();
+					$updates->response[ $update->plugin ] = $update;
+				} else {
+					$updates->no_update[ $update->plugin ] = $update;
 				}
 			}
 		}
