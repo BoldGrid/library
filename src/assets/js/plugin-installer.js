@@ -40,9 +40,22 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 0.1.0
 		 */
 		onReady : function() {
+			self.status();
 			self._buttons();
 			self._updates();
 			self._search();
+		},
+
+		/**
+		 * Check that data has been updated when user immediately updates
+		 * release channels.
+		 *
+		 * @since 0.2.0
+		 */
+		status : function() {
+			if ( ! _bglibPluginInstaller.status && ~ document.referrer.indexOf( 'boldgrid-settings' ) ) {
+				window.location.reload( true );
+			}
 		},
 
 		/**
