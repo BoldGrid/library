@@ -77,8 +77,8 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					dataType: 'json'
 				},
 				success: function( response ) {
-					el.attr( 'class', 'installed button disabled' );
-					el.html( self.i18n.installed );
+					el.attr( 'class', 'activate button button-primary' );
+					el.html( wp.updates.l10n.activatePlugin );
 					el.removeClass( 'installing' );
 					el.closest( '.plugin' )
 						.find( '.installer-messages' )
@@ -291,7 +291,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 				// Installation of plugins.
 				if ( el.hasClass( 'install' ) ) {
-					el.html( self.i18n.installing );
+					el.html( wp.updates.l10n.installingMsg );
 					el.attr( 'class', 'installing button disabled' );
 					self.install( el, plugin );
 				}
