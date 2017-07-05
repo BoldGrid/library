@@ -41,8 +41,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		onReady : function() {
 			self.status();
-			self._buttons();
+			self._installs();
 			self._updates();
+			self._processing();
 			self._search();
 		},
 
@@ -59,84 +60,55 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		},
 
 		/**
-		 * Install a WordPress plugin.
+		 * Install event handlers.
 		 *
-		 * @since 0.1.0
-		 *
-		 * @param {Object} el     The install button element.
-		 * @param {string} plugin The plugin slug to install.
+		 * @since 0.2.0
 		 */
-		install : function( el, plugin ) {
-			$.ajax( {
-				type: 'POST',
-				url: self.i18n.ajaxUrl,
-				data: {
-					action: 'installation',
-					plugin: plugin,
-					nonce: self.i18n.nonce,
-					dataType: 'json'
-				},
-				success: function( response ) {
-					el.attr( 'class', 'activate button button-primary' );
-					el.html( wp.updates.l10n.activatePlugin );
-					el.removeClass( 'installing' );
-					el.closest( '.plugin' )
-						.find( '.installer-messages' )
-						.addClass( 'notice updated-message notice-success notice-alt' )
-						.find( 'p' )
-						.text( response.data.message );
-					self.loading = false;
-				},
-				error: function( xhr, status, error ) {
-					el.removeClass( 'installing' );
-					el.closest( '.plugin' )
-						.find( '.installer-messages' )
-						.addClass( 'notice update-message notice-error notice-alt is-dismissible' )
-						.find( 'p' )
-						.text( error );
-					self.loading = false;
-				}
+		_installs : function() {
+			self._buttons();
+			self._installSuccess();
+			self._installError();
+		},
+
+		/**
+		 * Upgrade success event handler.
+		 *
+		 * @since 0.2.0
+		 */
+		_installSuccess : function() {
+			$( document).on ( 'wp-plugin-install-success', function( event, response ) {
+				console.log( response );
+				var button, notice, card = $( '.plugin-card-' + response.slug );
+					notice = card.find( '.installer-messages' );
+					button = card.find( '.button' );
+
+				notice.removeClass( 'installing' );
+
+				// Update the button to activation button.
+				button.attr( 'class', 'activate button button-primary' );
+				button.text( wp.updates.l10n.activatePlugin );
+
+				// Update success message.
+				notice.attr( 'class', 'notice updated-message notice-success notice-alt' )
+					.find( 'p' )
+					.text( wp.updates.l10n.installedMsg );
+
+				// Clear loading process indicator.
+				self.loading = false;
 			} );
 		},
 
 		/**
-		 * Activate a WordPress plugin.
+		 * Update error event handler.
 		 *
-		 * @since 0.1.0
-		 *
-		 * @param {Object} el     The activate button element.
-		 * @param {string} plugin The plugin slug to activate.
+		 * @since 0.2.0
 		 */
-		activate : function( el, plugin ) {
-			$.ajax( {
-				type: 'POST',
-				url: self.i18n.ajaxUrl,
-				data: {
-					action: 'activation',
-					plugin: plugin,
-					nonce: self.i18n.nonce,
-					dataType: 'json'
-				},
-				success: function( response ) {
-					el.attr( 'class', 'installed button disabled' );
-					el.html( self.i18n.installed );
-					el.removeClass( 'installing' );
-					el.closest( '.plugin' )
-						.find( '.installer-messages' )
-						.addClass( 'notice updated-message notice-success notice-alt' )
-						.find( 'p' )
-						.text( response.data.message );
-					self.loading = false;
-				},
-				error: function( xhr, status, error ) {
-					el.removeClass( 'installing' );
-					el.closest( '.plugin' )
-						.find( '.installer-messages' )
-						.addClass( 'notice update-message notice-error notice-alt is-dismissible' )
-						.find( 'p' )
-						.text( error );
-					self.loading = false;
-				}
+		_installError : function() {
+			$( document).on( 'wp-plugin-install-error', function() {
+				var card = $('.plugin-card-update-failed' );
+				card.find( '.installer-messages')
+					.replaceWith( card.find( '.notice.update-message.notice-error.notice-alt.is-dismissible' ) );
+				card.find( '.notice' ).addClass( 'installer-messages' ).show();
 			} );
 		},
 
@@ -147,7 +119,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		_updates : function() {
 			self._updateLinks();
-			self._updateProcessing();
 			self._updateSuccess();
 			self._updateError();
 		},
@@ -157,7 +128,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *
 		 * @since 0.2.0
 		 */
-		_updateProcessing: function() {
+		_processing: function() {
 			$( window ).on( 'message', function( event ) {
 				var originalEvent  = event.originalEvent,
 					expectedOrigin = document.location.protocol + '//' + document.location.hostname,
@@ -174,19 +145,39 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					return;
 				}
 
-				if ( ! _.isUndefined( message.action ) && message.action === 'update-plugin' ) {
-					window.tb_remove();
+				if ( ! _.isUndefined( message.action ) ) {
 
-					// Ensure plugin doesn't have process running and button is enabled.
-					if ( self.loading ) {
-						return false;
+					// Update plugin events.
+					if ( message.action === 'update-plugin' ) {
+						window.tb_remove();
+
+						// Ensure plugin doesn't have process running and button is enabled.
+						if ( self.loading ) {
+							return false;
+						}
+						el = $( '.bglib-plugin-installer .plugin-card-' + message.data.slug + ' .installer-messages' );
+
+						// Add processing message.
+						el.addClass( 'updating-message' )
+							.find( 'p' )
+							.text( wp.updates.l10n.updatingMsg );
 					}
-					el = $( '.bglib-plugin-installer .plugin-card-' + message.data.slug + ' .installer-messages' );
 
-					// Add processing message.
-					el.addClass( 'updating-message' )
-						.find( 'p' )
-						.text( wp.updates.l10n.updatingMsg );
+					// Install plugin events.
+					if ( message.action === 'install-plugin' ) {
+						window.tb_remove();
+
+						// Ensure plugin doesn't have process running and button is enabled.
+						if ( self.loading ) {
+							return false;
+						}
+						el = $( '.bglib-plugin-installer .plugin-card-' + message.data.slug + ' .installer-messages' );
+
+						// Add processing message.
+						el.addClass( 'updating-message notice inline notice-warning notice-alt' )
+							.find( 'p' )
+							.text( wp.updates.l10n.installingMsg );
+					}
 				}
 			} );
 		},
@@ -197,7 +188,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 0.2.0
 		 */
 		_updateSuccess : function() {
-			$( document).on ( 'wp-plugin-update-success', function( event, response ) {
+			$( document).on( 'wp-plugin-update-success', function( event, response ) {
 				var el = $( '.plugin-card-' + response.slug ).find( '.installer-messages' );
 
 				// Disable the install/activate button while performing upgrade.
@@ -264,16 +255,57 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		},
 
 		/**
+		 * Activate a WordPress plugin.
+		 *
+		 * @since 0.1.0
+		 *
+		 * @param {Object} el     The activate button element.
+		 * @param {string} plugin The plugin slug to activate.
+		 */
+		activate : function( el, plugin ) {
+			$.ajax( {
+				type: 'POST',
+				url: self.i18n.ajaxUrl,
+				data: {
+					action: 'activation',
+					plugin: plugin,
+					nonce: self.i18n.nonce,
+					dataType: 'json'
+				},
+				success: function( response ) {
+					el.attr( 'class', 'installed button disabled' );
+					el.html( self.i18n.installed );
+					el.removeClass( 'installing' );
+					el.closest( '.plugin' )
+						.find( '.installer-messages' )
+						.addClass( 'notice updated-message notice-success notice-alt' )
+						.find( 'p' )
+						.text( response.data.message );
+					self.loading = false;
+				},
+				error: function( xhr, status, error ) {
+					el.removeClass( 'installing' );
+					el.closest( '.plugin' )
+						.find( '.installer-messages' )
+						.addClass( 'notice update-message notice-error notice-alt is-dismissible' )
+						.find( 'p' )
+						.text( error );
+					self.loading = false;
+				}
+			} );
+		},
+
+		/**
 		 * Install/Activate buttons event handler.
 		 *
 		 *  @since 0.1.0
 		 */
 		_buttons : function() {
 			$( '.bglib-plugin-installer' ).on( 'click', 'a.button', function( e ) {
-				var el, plugin;
+				var el, slug;
 
 				el = $( this );
-				plugin = el.data( 'slug' );
+				slug = el.data( 'slug' );
 
 				e.preventDefault();
 
@@ -291,16 +323,20 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 				// Installation of plugins.
 				if ( el.hasClass( 'install' ) ) {
-					el.html( wp.updates.l10n.installingMsg );
+					el.html( wp.updates.l10n.installing );
 					el.attr( 'class', 'installing button disabled' );
-					self.install( el, plugin );
+
+					// Send ajax request to upgrade plugin.
+					wp.updates.installPlugin( {
+						slug : slug
+					} );
 				}
 
 				// Activation of plugins.
 				if ( el.hasClass( 'activate' ) ) {
 					el.html( self.i18n.activating );
 					el.attr( 'class', 'installing button disabled' );
-					self.activate( el, plugin );
+					self.activate( el, slug );
 				}
 			} );
 		},
