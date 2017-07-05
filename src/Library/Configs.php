@@ -37,7 +37,7 @@ class Configs {
 	 * @param array $configs Plugin configuration array.
 	 */
 	public function __construct( $configs = null ) {
-		$defaults = include_once dirname( __DIR__ ) . '/library.config.php';
+		$defaults = include_once dirname( __DIR__ ) . '/library.global.php';
 		self::set( $configs, $defaults );
 	}
 
