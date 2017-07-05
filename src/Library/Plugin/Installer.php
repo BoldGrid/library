@@ -359,8 +359,6 @@ class Installer {
 	protected function ajax() {
 		$activate = new Installer\Activate( $this->configs );
 		$activate->init();
-		$install = new Installer\Install( $this->configs );
-		$install->init();
 	}
 
 	/**
