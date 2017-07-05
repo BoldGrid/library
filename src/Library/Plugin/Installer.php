@@ -327,7 +327,7 @@ class Installer {
 
 					$messageClasses = 'installer-messages';
 					$message = '';
-					if ( $this->configs['plugins'][ $api->slug ]['Version'] !== $api->new_version ) {
+					if ( ( $this->configs['plugins'][ $api->slug ]['Version'] !== $api->new_version ) && $this->getPluginFile( $api->slug ) ) {
 						$messageClasses = "{$messageClasses} update-message notice inline notice-warning notice-alt";
 						$updateUrl = add_query_arg(
 							array(
@@ -686,7 +686,7 @@ class Installer {
 				$update->url = $details->url;
 				$update->package = $details->download_link;
 
-				if ( $this->configs['plugins'][ $plugin ]['Version'] !== $details->new_version ) {
+				if ( ( $this->configs['plugins'][ $plugin ]['Version'] !== $details->new_version ) && $this->getPluginFile( $details->slug ) ) {
 					$update->tested = $details->tested_wp_version;
 					$update->compatibility = new \stdClass();
 					$updates->response[ $update->plugin ] = $update;
