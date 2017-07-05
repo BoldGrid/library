@@ -54,6 +54,22 @@ class Configs {
 	public static function set( $configs, $defaults = null ) {
 		$defaults = $defaults ? $defaults : self::get();
 
+		// Check if local library file is added.
+		$localPath = dirname( __DIR__ ) . '/library.local.php';
+		if ( file_exists( $localPath ) && is_readable( $localPath ) ) {
+			$local = include_once $localPath;
+			$defaults = wp_parse_args( $local, $defaults );
+		}
+
+		// Check if constant is added.
+		if ( defined( 'BGLIB_CONFIGS' ) ) {
+			$localPath = ABSPATH . BGLIB_CONFIGS;
+			if ( file_exists( $localPath ) && is_readable( $localPath ) ) {
+				$local = include_once $localPath;
+				$defaults = wp_parse_args( $local, $defaults );
+			}
+		}
+
 		return self::$configs = wp_parse_args( $configs, $defaults );
 	}
 
