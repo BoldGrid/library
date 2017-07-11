@@ -226,7 +226,7 @@ class Installer {
 			if ( ! empty( $args->search ) && strpos( strtolower( $args->search ), 'boldgrid' ) !== false ) {
 
 				// Add all boldgrid plugins.
-				$result->plugins = ( object ) array_merge( ( array ) $boldgrid_plugins, ( array ) $result->plugins );
+				$result->plugins = array_merge( ( array ) $boldgrid_plugins, ( array ) $result->plugins );
 
 				// Count results found.
 				$result->info['results'] = count( ( array ) $result->plugins );
@@ -239,7 +239,7 @@ class Installer {
 				}
 
 				// Merge found results.
-				$result->plugins = ( object ) array_merge( $found, ( array ) $result->plugins );
+				$result->plugins = array_merge( $found, ( array ) $result->plugins );
 
 				// Recount the results found.
 				$result->info['results'] = ( $result->info['results'] + count( $found ) );
