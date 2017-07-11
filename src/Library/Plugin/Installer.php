@@ -229,7 +229,7 @@ class Installer {
 				$result->plugins = ( object ) array_merge( ( array ) $boldgrid_plugins, ( array ) $result->plugins );
 
 				// Count results found.
-				$result->info = array( 'results' => count( $result->plugins ) );
+				$result->info['results'] = count( ( array ) $result->plugins );
 			} else if ( ! empty( $args->search ) ) {
 				$found = array();
 				foreach ( $boldgrid_plugins as $plugin ) {
@@ -239,10 +239,10 @@ class Installer {
 				}
 
 				// Merge found results.
-				$result->plugins = ( object ) array_merge( ( array ) $found, ( array ) $result->plugins );
+				$result->plugins = ( object ) array_merge( $found, ( array ) $result->plugins );
 
 				// Recount the results found.
-				$result->info = array( 'results' => count( $result->plugins ) );
+				$result->info['results'] = ( $result->info['results'] + count( $found ) );
 			}
 		}
 
