@@ -178,7 +178,7 @@ class Call {
 		}
 
 		// Check for nested status code not being successful.
-		if ( $this->response->status !== 200 ) {
+		if ( isset( $this->response->status ) && 200 !== $this->response->status ) {
 			$this->error = $this->response->result->data;
 			return false;
 		}
