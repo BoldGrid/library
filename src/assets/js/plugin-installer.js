@@ -77,7 +77,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		_installSuccess : function() {
 			$( document).on ( 'wp-plugin-install-success', function( event, response ) {
-				console.log( response );
 				var button, notice, card = $( '.plugin-card-' + response.slug );
 					notice = card.find( '.installer-messages' );
 					button = card.find( '.button' );
