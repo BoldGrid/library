@@ -172,7 +172,7 @@ class Installer {
 	 * @return array $args WordPress Plugins API arguments.
 	 */
 	public function pluginsApi( $results, $action, $args ) {
-		$boldgrid_plugins = $this->getTransient();
+		$boldgrid_plugins = $this->getTransient() ? : array();
 
 		// Check if we are hooked to query_plugins and browsing 'boldgrid' sorted plugins.
 		if ( isset( $args->browse ) && $args->browse === 'boldgrid' ) {
@@ -212,7 +212,7 @@ class Installer {
 	 * @return array $result WordPress Plugins API result.
 	 */
 	public function result( $result, $action, $args ) {
-		$boldgrid_plugins = $this->getTransient();
+		$this->getTransient() ? : array();
 
 		// Add data for plugin info tabs in results.
 		if ( $action === 'plugin_information' ) {
