@@ -212,7 +212,7 @@ class Installer {
 	 * @return array $result WordPress Plugins API result.
 	 */
 	public function result( $result, $action, $args ) {
-		$this->getTransient() ? : array();
+		$boldgrid_plugins = $this->getTransient() ? : array();
 
 		// Add data for plugin info tabs in results.
 		if ( $action === 'plugin_information' ) {
