@@ -81,11 +81,22 @@ class ReleaseChannel {
 	 * @return mixed $new    The new option being set.
 	 */
 	public function updateChannel( $option, $new, $old ) {
+
+		// Plugin checks.
 		if ( ! empty( $old['release_channel'] ) || ! empty( $new['release_channel'] ) ) {
 			if ( $old['release_channel'] !== $new['release_channel'] ) {
 				delete_site_transient( 'boldgrid_plugins' );
 				delete_site_transient( 'update_plugins' );
 				wp_update_plugins();
+			}
+		}
+
+		// Theme checks.
+		if ( ! empty( $old['theme_release_channel'] ) || ! empty( $new['theme_release_channel'] ) ) {
+			if ( $old['theme_release_channel'] !== $new['theme_release_channel'] ) {
+				delete_site_transient( 'boldgrid_api_data' );
+				delete_site_transient( 'update_themes' );
+				wp_update_themes();
 			}
 		}
 
