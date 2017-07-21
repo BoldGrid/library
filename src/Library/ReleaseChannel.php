@@ -94,6 +94,17 @@ class ReleaseChannel {
 		// Theme checks.
 		if ( ! empty( $old['theme_release_channel'] ) || ! empty( $new['theme_release_channel'] ) ) {
 			if ( $old['theme_release_channel'] !== $new['theme_release_channel'] ) {
+
+				/**
+				 * Action to take when theme release channel has changed.
+				 *
+				 * @since 1.1
+				 *
+				 * @param type string $old Old theme release channel.
+				 * @param type string $new New theme release channel.
+				 */
+				do_action( 'Boldgrid\Library\Library\ReleaseChannel\theme_channel_updated', $old['theme_release_channel'], $new['theme_release_channel'] );
+
 				delete_site_transient( 'boldgrid_api_data' );
 				delete_site_transient( 'update_themes' );
 				wp_update_themes();

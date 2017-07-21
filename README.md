@@ -8,3 +8,8 @@ Using composer, you can get started quickly:
 composer require boldgrid/library
 
 ```
+
+## Changelog ##
+
+### 1.1 ###
+* Added action for when theme release channel changed.
