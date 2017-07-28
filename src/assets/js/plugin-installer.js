@@ -300,7 +300,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *  @since 0.1.0
 		 */
 		_buttons : function() {
-			$( '.bglib-plugin-installer' ).on( 'click', 'a.button', function( e ) {
+			$( '.bglib-plugin-installer' ).on( 'click', 'a.button:not(.get-premium)', function( e ) {
 				var el, slug;
 
 				el = $( this );
