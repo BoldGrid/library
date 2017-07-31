@@ -13,3 +13,4 @@ composer require boldgrid/library
 
 ### 1.1 ###
 * Added action for when theme release channel changed.
+* Added Reseller class.
