@@ -42,8 +42,20 @@ class Reseller {
 	 * @since 1.1
 	 */
 	public function __construct() {
+		$this->setData();
+		Filter::add( $this );
+	}
+
+	/**
+	 * Set data.
+	 *
+	 * @since 1.1
+	 *
+	 * @hook: update_option_boldgrid_reseller
+	 */
+	public function setData() {
 		$defaults = array(
-			'reseller_coin_url' => $this->centralUrl,
+				'reseller_coin_url' => $this->centralUrl,
 		);
 
 		$this->data = array_merge( $defaults, get_option( 'boldgrid_reseller', array() ) );
