@@ -23,25 +23,25 @@ return array(
 
 		// Installable plugins.
 		'plugins' => array(
+			'boldgrid-editor' => array(
+				'key' => 'editor',
+				'file' => 'boldgrid-editor/boldgrid-editor.php',
+			),
 			'boldgrid-inspirations' => array(
 				'key' => 'core',
 				'file' => 'boldgrid-inspirations/boldgrid-inspirations.php',
-			),
-			'boldgrid-staging' => array(
-				'key' => 'staging',
-				'file' => 'boldgrid-staging/boldgrid-staging.php',
 			),
 			'boldgrid-seo' => array(
 				'key' => 'seo',
 				'file' => 'boldgrid-seo/boldgrid-seo.php',
 			),
-			'boldgrid-editor' => array(
-				'key' => 'editor',
-				'file' => 'boldgrid-editor/boldgrid-editor.php',
-			),
 			'boldgrid-backup' => array(
 				'key' => 'backup',
 				'file' => 'boldgrid-backup/boldgrid-backup.php',
+			),
+			'boldgrid-staging' => array(
+				'key' => 'staging',
+				'file' => 'boldgrid-staging/boldgrid-staging.php',
 			),
 			'boldgrid-gallery' => array(
 				'key' => 'gallery-wc-canvas',
