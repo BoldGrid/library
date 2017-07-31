@@ -108,6 +108,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				card.find( '.installer-messages')
 					.replaceWith( card.find( '.notice.update-message.notice-error.notice-alt.is-dismissible' ) );
 				card.find( '.notice' ).addClass( 'installer-messages' ).show();
+
+				// Clear loading process indicator.
+				self.loading = false;
 			} );
 		},
 
@@ -214,6 +217,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				card.find( '.installer-messages')
 					.replaceWith( card.find( '.notice.update-message.notice-error.notice-alt.is-dismissible' ) );
 				card.find( '.notice' ).addClass( 'installer-messages' ).show();
+
+				// Clear loading process indicator.
+				self.loading = false;
 			} );
 		},
 
@@ -280,6 +286,8 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 						.addClass( 'notice updated-message notice-success notice-alt' )
 						.find( 'p' )
 						.text( response.data.message );
+
+					// Clear loading process indicator.
 					self.loading = false;
 				},
 				error: function( xhr, status, error ) {
@@ -289,6 +297,8 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 						.addClass( 'notice update-message notice-error notice-alt is-dismissible' )
 						.find( 'p' )
 						.text( error );
+
+					// Clear loading process indicator.
 					self.loading = false;
 				}
 			} );
