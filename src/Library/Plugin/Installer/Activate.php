@@ -12,6 +12,8 @@
 namespace Boldgrid\Library\Library\Plugin\Installer;
 
 use Boldgrid\Library\Library;
+use Boldgrid\Library\Library\Plugin\Installer;
+use Boldgrid\Library\Library\ReleaseChannel;
 
 /**
  * BoldGrid Library Plugin Installer Class.
@@ -99,7 +101,9 @@ class Activate {
 		);
 
 		if ( $api->name ) {
-			$file = $this->configs['plugins'][ $plugin ]['file'];
+			$channel = new ReleaseChannel();
+			$installer = new Installer( $this->configs, $channel );
+			$file = ! empty( $file = $this->configs['plugins'][ $plugin ]['file'] ) ? $this->configs['plugins'][ $plugin ]['file'] : $installer->getPluginFile( $api->slug );
 			$status = 'success';
 			if ( $file ) {
 				$activate = activate_plugin( $file );
