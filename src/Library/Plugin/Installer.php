@@ -13,6 +13,7 @@ namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library;
 use Boldgrid\Library\Util;
+use Boldgrid\Library\Form\Wpforms;
 
 /**
  * BoldGrid Library Plugin Installer Class.
@@ -33,6 +34,7 @@ class Installer {
 	protected
 		$configs,
 		$releaseChannel,
+		$forms,
 		$transient,
 		$updates;
 
@@ -46,6 +48,7 @@ class Installer {
 	public function __construct( $configs, Library\ReleaseChannel $releaseChannel ) {
 		$this->setConfigs( $configs );
 		$this->releaseChannel = $releaseChannel;
+		$this->forms = new Wpforms\AddNew();
 		if ( $this->configs['enabled'] && ! empty( $this->configs['plugins'] ) ) {
 			$this->setPluginData( $this->configs['plugins'] );
 			$this->setTransient();
