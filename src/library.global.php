@@ -21,6 +21,9 @@ return array(
 		// Enabled the plugin installer feature in library.
 		'enabled' => true,
 
+		// Default Premium Link.
+		'defaultLink' => 'https://www.boldgrid.com/connect-keys/',
+
 		// Installable plugins.
 		'plugins' => array(
 			'boldgrid-editor' => array(
@@ -50,6 +53,14 @@ return array(
 			'boldgrid-ninja-forms' => array(
 				'key' => 'ninja-forms',
 				'file' => 'boldgrid-ninja-forms/ninja-forms.php',
+			),
+		),
+
+		// WordPress.org Recommended Plugins.
+		'wporgPlugins' => array(
+			array(
+				'slug' => 'wpforms-lite',
+				'link' => '//wpforms.com/lite-upgrade/',
 			),
 		),
 	),
