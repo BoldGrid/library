@@ -745,7 +745,7 @@ class Installer {
 			foreach( $plugins as $plugin ) {
 				$api = plugins_api( 'plugin_information',
 					array(
-						'slug' => $plugin,
+						'slug' => $plugin['slug'],
 						'fields' => array(
 							'short_description' => true,
 							'icons' => true,
@@ -753,7 +753,7 @@ class Installer {
 					)
 				);
 				if ( ! is_wp_error( $api ) ) {
-					$responses->{$plugin} = $api;
+					$responses->{$plugin['slug']} = $api;
 				}
 			}
 			if ( ! empty( $responses ) ) {
