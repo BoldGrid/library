@@ -11,7 +11,7 @@
 /**
  * BoldGrid Library Reseller Test class.
  *
- * @since
+ * @since 1.1
  */
 class Test_BoldGrid_Libarary_Reseller extends WP_UnitTestCase {
 
