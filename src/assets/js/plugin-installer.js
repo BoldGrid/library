@@ -285,7 +285,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 						.find( '.installer-messages' )
 						.addClass( 'installer-messages notice updated-message notice-success notice-alt' )
 						.find( 'p' )
-						.text( response.data.message );
+						.html( response.data.message );
 
 					// Clear loading process indicator.
 					self.loading = false;
