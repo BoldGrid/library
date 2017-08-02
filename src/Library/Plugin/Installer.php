@@ -713,7 +713,8 @@ class Installer {
 	 * @return object $updates Updates available.
 	 */
 	public function externalUpdates( $updates ) {
-		if ( ! empty( $plugins = $this->configs['wporgPlugins'] ) && ! get_site_transient( 'boldgrid_wporg_plugins', false ) ) {
+		if ( ! empty( $this->configs['wporgPlugins'] ) && ! get_site_transient( 'boldgrid_wporg_plugins', false ) ) {
+			$plugins = $this->configs['wporgPlugins'];
 			require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 			$responses = new \stdClass();
 			foreach( $plugins as $plugin ) {

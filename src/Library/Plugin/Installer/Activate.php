@@ -100,7 +100,7 @@ class Activate {
 		);
 
 		if ( $api->name ) {
-			$file = ! empty( $file = $this->configs['plugins'][ $plugin ]['file'] ) ? $this->configs['plugins'][ $plugin ]['file'] : Util\Plugin::getPluginFile( $api->slug );
+			$file = ! empty( $this->configs['plugins'][ $plugin ]['file'] ) ? $this->configs['plugins'][ $plugin ]['file'] : Util\Plugin::getPluginFile( $api->slug );
 			$status = 'success';
 			if ( $file ) {
 				$activate = activate_plugin( $file );
