@@ -293,7 +293,7 @@ class Installer {
 				$button_classes = 'install button';
 				$button_text = __( 'Install Now', 'boldgrid-library' );
 
-					if ( $file = $this->getPluginFile( $api->slug ) ) {
+					if ( $file = Util\Plugin::getPluginFile( $api->slug ) ) {
 
 						// Has activation already occured? Disable button if so.
 						if ( is_plugin_active( $file ) ) {
@@ -383,32 +383,6 @@ class Installer {
 	protected function ajax() {
 		$activate = new Installer\Activate( $this->configs );
 		$activate->init();
-	}
-
-	/**
-	 * Helper to get and verify the plugin file.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param  string $slug Slug of the plugin to get main file for.
-	 *
-	 * @return mixed  $file Main plugin file of slug or null if not found.
-	 */
-	public function getPluginFile( $slug ) {
-
-		// Load plugin.php if not already included by core.
-		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-		$plugins = get_plugins();
-		foreach ( $plugins as $file => $info ) {
-
-			// Get the basename of the plugin.
-			$basename = dirname( plugin_basename( $file ) );
-			if ( $basename === $slug ) {
-				return $file;
-			}
-		}
-
-		return null;
 	}
 
 	/**
@@ -714,7 +688,7 @@ class Installer {
 			$update->url = $details->url;
 			$update->package = $details->download_link;
 
-			if ( ( $this->configs['plugins'][ $plugin ]['Version'] !== $details->new_version ) && $this->getPluginFile( $details->slug ) ) {
+			if ( ( $this->configs['plugins'][ $plugin ]['Version'] !== $details->new_version ) && Util\Plugin::getPluginFile( $details->slug ) ) {
 				$update->tested = $details->tested_wp_version;
 				$update->compatibility = new \stdClass();
 				$updates->response[ $update->plugin ] = $update;

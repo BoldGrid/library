@@ -25,13 +25,11 @@ class Plugin {
 	 *
 	 * @since 1.0.2
 	 *
-	 * @nohook
-	 *
 	 * @param  string $slug Slug of the plugin to get main file for.
 	 *
 	 * @return mixed  $file Main plugin file of slug or null if not found.
 	 */
-	public function getPluginFile( $slug ) {
+	public static function getPluginFile( $slug ) {
 
 		// Load plugin.php if not already included by core.
 		if ( ! function_exists( 'get_plugins' ) ) {
