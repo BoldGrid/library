@@ -176,7 +176,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 						el = $( '.bglib-plugin-installer .plugin-card-' + message.data.slug + ' .installer-messages' );
 
 						// Add processing message.
-						el.addClass( 'updating-message notice inline notice-warning notice-alt' )
+						el.addClass( 'installer-messages updating-message notice inline notice-warning notice-alt' )
 							.find( 'p' )
 							.text( wp.updates.l10n.installingMsg );
 					}
@@ -283,7 +283,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					el.removeClass( 'installing' );
 					el.closest( '.plugin' )
 						.find( '.installer-messages' )
-						.addClass( 'notice updated-message notice-success notice-alt' )
+						.addClass( 'installer-messages notice updated-message notice-success notice-alt' )
 						.find( 'p' )
 						.text( response.data.message );
 
@@ -294,7 +294,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					el.removeClass( 'installing' );
 					el.closest( '.plugin' )
 						.find( '.installer-messages' )
-						.addClass( 'notice update-message notice-error notice-alt is-dismissible' )
+						.addClass( 'installer-messages notice update-message notice-error notice-alt is-dismissible' )
 						.find( 'p' )
 						.text( error );
 
@@ -325,7 +325,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 				// Remove any current messages displayed.
 				el.closest( '.plugin' )
-					.find( '.installer-messages' )
+					.find( '.notice' )
 					.attr( 'class', 'installer-messages' )
 					.find( 'p' )
 					.text( '' );
