@@ -350,8 +350,9 @@ class Installer {
 					$message = '';
 
 					if ( ( ! empty( $this->configs['plugins'][ $api->slug ] ) &&
-						( $this->configs['plugins'][ $api->slug ]['Version'] !== $api->new_version ) ) ||
-							! empty( $this->updates[$file] ) ) {
+						( $this->configs['plugins'][ $api->slug ]['Version'] !== $api->new_version &&
+							! empty( Util\Plugin::getPluginFile( $api->slug ) ) ) ) ||
+							! empty( $this->updates[ $file ] ) ) {
 								$messageClasses = "{$messageClasses} update-message notice inline notice-warning notice-alt";
 								$updateUrl = add_query_arg(
 									array(
