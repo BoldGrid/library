@@ -163,6 +163,11 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 						el.addClass( 'updating-message' )
 							.find( 'p' )
 							.text( wp.updates.l10n.updatingMsg );
+
+						// Add loading button.
+						$( '.plugin-card-' + message.data.slug + ' .install.button' )
+							.html( wp.updates.l10n.installing )
+							.attr( 'class', 'installing button disabled' );
 					}
 
 					// Install plugin events.
@@ -179,6 +184,11 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 						el.addClass( 'installer-messages updating-message notice inline notice-warning notice-alt' )
 							.find( 'p' )
 							.text( wp.updates.l10n.installingMsg );
+
+						// Add loading button.
+						$( '.plugin-card-' + message.data.slug + ' .install.button' )
+							.html( wp.updates.l10n.installing )
+							.attr( 'class', 'installing button disabled' );
 					}
 				}
 			} );
@@ -190,7 +200,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 0.2.0
 		 */
 		_updateSuccess : function() {
-			$( document).on( 'wp-plugin-update-success', function( event, response ) {
+			$( document ).on( 'wp-plugin-update-success', function( event, response ) {
 				var el = $( '.plugin-card-' + response.slug ).find( '.installer-messages' );
 
 				// Disable the install/activate button while performing upgrade.
@@ -212,8 +222,8 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 0.2.0
 		 */
 		_updateError : function() {
-			$( document).on ( 'wp-plugin-update-error', function() {
-				var card = $('.plugin-card-update-failed' );
+			$( document ).on ( 'wp-plugin-update-error', function() {
+				var card = $( '.plugin-card-update-failed' );
 				card.find( '.installer-messages')
 					.replaceWith( card.find( '.notice.update-message.notice-error.notice-alt.is-dismissible' ) );
 				card.find( '.notice' ).addClass( 'installer-messages' ).show();
