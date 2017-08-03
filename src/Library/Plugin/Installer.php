@@ -292,8 +292,8 @@ class Installer {
 			foreach ( $plugins as $api ) {
 				$button_classes = 'install button';
 				$button_text = __( 'Install Now', 'boldgrid-library' );
-
-					if ( $file = Util\Plugin::getPluginFile( $api->slug ) ) {
+					$file = Util\Plugin::getPluginFile( $api->slug );
+					if ( ! empty( $file ) ) {
 
 						// Has activation already occured? Disable button if so.
 						if ( is_plugin_active( $file ) ) {
@@ -349,9 +349,8 @@ class Installer {
 					$messageClasses = 'installer-messages';
 					$message = '';
 
-					if ( ( ! empty( $this->configs['plugins'][ $api->slug ] ) &&
-						( $this->configs['plugins'][ $api->slug ]['Version'] !== $api->new_version &&
-							! empty( Util\Plugin::getPluginFile( $api->slug ) ) ) ) ||
+					if ( ! empty( $file ) && ( ! empty( $this->configs['plugins'][ $api->slug ] ) &&
+						( $this->configs['plugins'][ $api->slug ]['Version'] !== $api->new_version ) ) ||
 							! empty( $this->updates[ $file ] ) ) {
 								$messageClasses = "{$messageClasses} update-message notice inline notice-warning notice-alt";
 								$updateUrl = add_query_arg(
