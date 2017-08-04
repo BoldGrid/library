@@ -655,7 +655,7 @@ class Installer {
 						'installed_plugin_version' => $details['Version'],
 						'installed_wp_version' => $wp_version,
 					),
-					$api . '/api/asset/get'
+					$api . '/api/open/getAsset'
 				);
 			}
 		}
