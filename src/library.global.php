@@ -3,6 +3,8 @@
  * BoldGrid Premium Default Configurations.
  */
 
+defined( 'WPFORMS_SHAREASALE_ID' ) || define( 'WPFORMS_SHAREASALE_ID', '1581233' );
+
 return array(
 	'api' => 'https://api.boldgrid.com',
 	'option' => 'license',
