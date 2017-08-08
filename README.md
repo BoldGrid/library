@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 1.1.3 ###
+* Validate plugin before printing card.
+
+### 1.1.2 ###
+* Bug fixes.
+
 ### 1.1.1 ###
 * Added form affiliate data.
 

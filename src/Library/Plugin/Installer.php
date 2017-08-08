@@ -290,6 +290,10 @@ class Installer {
 		<?php
 			$plugins = apply_filters( 'Boldgrid\Library\Plugin\Installer\init', $plugins );
 			foreach ( $plugins as $api ) {
+				if( ! isset( $api->name ) || empty( $api->name ) ) {
+					continue;
+				}
+
 				$button_classes = 'install button';
 				$button_text = __( 'Install Now', 'boldgrid-library' );
 					$file = Util\Plugin::getPluginFile( $api->slug );
