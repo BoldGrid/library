@@ -58,6 +58,8 @@ class Installer {
 			$this->ajax();
 			Library\Filter::add( $this );
 		}
+
+		add_action( 'upgrader_process_complete', array( $this, 'upgrader_process_complete' ), 10, 2 );
 	}
 
 	/**
@@ -665,7 +667,7 @@ class Installer {
 		}
 
 		// Update transient.  Expiry set to 1 week.
-		set_site_transient( 'boldgrid_plugins', $responses, 7 * DAY_IN_SECONDS );
+		set_site_transient( 'boldgrid_plugins', $responses, 8 * HOUR_IN_SECONDS );
 	}
 
 
@@ -736,7 +738,7 @@ class Installer {
 				}
 			}
 			if ( ! empty( $responses ) ) {
-				set_site_transient( 'boldgrid_wporg_plugins', $responses, 7 * DAY_IN_SECONDS );
+				set_site_transient( 'boldgrid_wporg_plugins', $responses, 8 * HOUR_IN_SECONDS );
 			}
 		}
 
@@ -790,5 +792,28 @@ class Installer {
 	 */
 	public function getTransient() {
 		return $this->transient;
+	}
+
+	/**
+	 * Callback action for upgrader_process_complete.
+	 *
+	 * If plugins have been upgraded, then delete the boldgrid_plugins transient.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @see \Boldgrid\Library\Util\Option::deletePluginTransients()
+	 *
+	 * @param \WP_Upgrader $upgrader
+	 * @param array        $updateData
+	 */
+	public function upgrader_process_complete( $upgrader, $updateData ) {
+		if ( ! empty( $updateData['plugins'] ) && is_array( $updateData['plugins'] ) ) {
+			foreach ( $updateData['plugins'] as $plugin ) {
+				if ( false !== strpos( $plugin, 'boldgrid' ) ) {
+					Util\Option::deletePluginTransients();
+					break;
+				}
+			}
+		}
 	}
 }

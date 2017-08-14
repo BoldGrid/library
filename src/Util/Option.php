@@ -27,7 +27,7 @@ class Option {
 	 * @var string $key    Key to use in option.
 	 * @var string $option Option data retrieved.
 	 */
-	public static 
+	public static
 		$name,
 		$key,
 		$option;
@@ -103,5 +103,22 @@ class Option {
 	 */
 	public static function get( $key = null, $default = array() ) {
 		return $key && ! empty( self::$option[ $key ] ) ? self::$option[ $key ] : $default;
+	}
+
+	/**
+	 * Deletes plugin-related transients.
+	 *
+	 * @since 1.1.4
+	 */
+	public static function deletePluginTransients() {
+		$names = array(
+			'boldgrid_plugins',
+			'boldgrid_wporg_plugins',
+			'update_plugins',
+		);
+
+		foreach ( $names as $name ) {
+			delete_site_transient( $name );
+		}
 	}
 }
