@@ -59,7 +59,7 @@ class Installer {
 			Library\Filter::add( $this );
 		}
 
-		add_action( 'upgrader_process_complete', array( $this, 'upgrader_process_complete' ), 10, 2 );
+		add_action( 'upgrader_process_complete', array( $this, 'upgraderProcessComplete' ), 10, 2 );
 	}
 
 	/**
@@ -806,13 +806,13 @@ class Installer {
 	 * @param \WP_Upgrader $upgrader
 	 * @param array        $updateData
 	 */
-	public function upgrader_process_complete( $upgrader, $updateData ) {
-		if ( ! empty( $updateData['plugins'] ) && is_array( $updateData['plugins'] ) ) {
-			foreach ( $updateData['plugins'] as $plugin ) {
-				if ( false !== strpos( $plugin, 'boldgrid' ) ) {
-					Util\Option::deletePluginTransients();
-					break;
-				}
+	public function upgraderProcessComplete( $upgrader, $updateData ) {
+		$updateData['plugins'] = ! empty( $updateData['plugins'] ) ? $updateData['plugins'] : array();
+
+		foreach ( $updateData['plugins'] as $plugin ) {
+			if ( false !== strpos( $plugin, 'boldgrid' ) ) {
+				Util\Option::deletePluginTransients();
+				break;
 			}
 		}
 	}

@@ -85,7 +85,7 @@ class ReleaseChannel {
 		// Plugin checks.
 		if ( ! empty( $old['release_channel'] ) || ! empty( $new['release_channel'] ) ) {
 			if ( $old['release_channel'] !== $new['release_channel'] ) {
-				\Boldgrid\Library\Util\Option::deletePluginTransients();
+				Util\Option::deletePluginTransients();
 				wp_update_plugins();
 			}
 		}
