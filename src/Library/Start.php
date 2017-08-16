@@ -46,6 +46,10 @@ class Start {
 		}
 		$this->releaseChannel = new ReleaseChannel;
 		$this->pluginInstaller = new Plugin\Installer( Configs::get( 'pluginInstaller' ), $this->getReleaseChannel() );
+
+		if ( is_admin() ) {
+			$this->checkPostUpdates();
+		}
 	}
 
 	/**
@@ -57,5 +61,34 @@ class Start {
 	 */
 	public function getReleaseChannel() {
 		return $this->releaseChannel;
+	}
+
+	/**
+	 * Check for post-update actions for BoldGrid plugins.
+	 *
+	 * If there is a new BoldGrid plugin or version, then clear the plugin transients.
+	 *
+	 * @since 1.1.4
+	 */
+	public function checkPostUpdates() {
+		$purge = false;
+
+		$boldgridSettings = get_site_option( 'boldgrid_settings' );
+
+		foreach ( get_plugins() as $slug => $data ) {
+			if ( false !== strpos( $slug, 'boldgrid-' ) ) {
+				if ( empty( $boldgridSettings['plugins_checked'][ $slug ][ $data['Version'] ] ) ) {
+					$purge = true;
+				}
+
+				$boldgridSettings['plugins_checked'][ $slug ][ $data['Version'] ] = time();
+			}
+		}
+
+		if ( $purge ) {
+			Util\Option::deletePluginTransients();
+		}
+
+		update_site_option( 'boldgrid_settings', $boldgridSettings );
 	}
 }
