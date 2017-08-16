@@ -666,7 +666,6 @@ class Installer {
 			}
 		}
 
-		// Update transient.  Expiry set to 1 week.
 		set_site_transient( 'boldgrid_plugins', $responses, 8 * HOUR_IN_SECONDS );
 	}
 
