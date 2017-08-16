@@ -48,7 +48,12 @@ class Start {
 		$this->pluginInstaller = new Plugin\Installer( Configs::get( 'pluginInstaller' ), $this->getReleaseChannel() );
 
 		if ( is_admin() ) {
-			$this->checkPostUpdates();
+			/** This action is documented in this file, in method checkPluginsUpdated() */
+			add_action( 'boldgrid_plugins_updated',
+				array( 'Boldgrid\Library\Util\Option', 'deletePluginTransients' ), 10, 0
+			);
+
+			$this->checkPluginsUpdated();
 		}
 	}
 
@@ -69,8 +74,11 @@ class Start {
 	 * If there is a new BoldGrid plugin or version, then clear the plugin transients.
 	 *
 	 * @since 1.1.4
+	 *
+	 * @link https://developer.wordpress.org/reference/functions/get_plugins/
+	 * @see get_plugins()
 	 */
-	public function checkPostUpdates() {
+	public function checkPluginsUpdated() {
 		$purge = false;
 
 		$boldgridSettings = get_site_option( 'boldgrid_settings' );
@@ -79,6 +87,31 @@ class Start {
 			if ( false !== strpos( $slug, 'boldgrid-' ) ) {
 				if ( empty( $boldgridSettings['plugins_checked'][ $slug ][ $data['Version'] ] ) ) {
 					$purge = true;
+
+					/**
+					 * Action triggered when a BoldGrid plugin is found to be updated or new.
+					 *
+					 * @since 1.1.4
+					 *
+					 * @param string $tag  Tag name.
+					 * @param string $slug Plugin slug (folder/file).
+					 * @param array $data {
+					 *     Plugin data from the get_plugins() call.
+					 *
+					 *     @type string $Name        Plugin name.
+					 *     @type string $PluginURI   Plugin URI.
+					 *     @type string $Version     Version number/string.
+					 *     @type string $Description Description.
+					 *     @type string $Author      Author name.
+					 *     @type string $AuthorURI   Author URI.
+					 *     @type string $TextDomain  Text domain.
+					 *     @type string $DomainPath  Domain path.
+					 *     @type string $Network     Network.
+					 *     @type string $Title       Plugin title.
+					 *     @type string $AuthorName  Author name.
+					 * }
+					 */
+					do_action( 'plugin_updated_' . $slug, $slug, $data );
 				}
 
 				$boldgridSettings['plugins_checked'][ $slug ][ $data['Version'] ] = time();
@@ -86,7 +119,12 @@ class Start {
 		}
 
 		if ( $purge ) {
-			Util\Option::deletePluginTransients();
+			/**
+			 * When one or more BoldGrid plugins are updated or new, then delete plugin transients.
+			 *
+			 * @since 1.1.4
+			 */
+			do_action( 'boldgrid_plugins_updated' );
 		}
 
 		update_site_option( 'boldgrid_settings', $boldgridSettings );
