@@ -22,21 +22,27 @@ matrix:
     - php: 5.6
       env: WP_VERSION=4.7.5 WP_MULTISITE=1
     - php: 5.6
-      env: WP_VERSION=4.6.1 WP_MULTISITE=0
-    - php: 5.6
-      env: WP_VERSION=4.6.2 WP_MULTISITE=1
-    - php: 5.6
-      env: WP_VERSION=4.5.3 WP_MULTISITE=0
-    - php: 5.6
-      env: WP_VERSION=4.5.3 WP_MULTISITE=1
-    - php: 5.6
-      env: WP_VERSION=4.4.2 WP_MULTISITE=0
-    - php: 5.6
-      env: WP_VERSION=4.4.2 WP_MULTISITE=1
-
-#	It doesn't look like WP 4.3 will work.
-#	Fatal error: Class 'WP_REST_Server' not found.
-#	WP_REST_Server is #since 4.4.0
+# #
+# Need to fix this error before running on 4.6.1 and below:
+# Fatal error: __clone method called on non-object in
+# /tmp/wordpress-tests-lib/includes/testcase.php on line 287
+# #
+#      env: WP_VERSION=4.6.1 WP_MULTISITE=0
+#    - php: 5.6
+#      env: WP_VERSION=4.6.2 WP_MULTISITE=1
+#    - php: 5.6
+#      env: WP_VERSION=4.5.3 WP_MULTISITE=0
+#    - php: 5.6
+#      env: WP_VERSION=4.5.3 WP_MULTISITE=1
+#    - php: 5.6
+#      env: WP_VERSION=4.4.2 WP_MULTISITE=0
+#    - php: 5.6
+#      env: WP_VERSION=4.4.2 WP_MULTISITE=1
+# #
+# It doesn't look like WP 4.3 will work.
+# Fatal error: Class 'WP_REST_Server' not found.
+# WP_REST_Server is #since 4.4.0
+# #
 #    - php: 5.6
 #      env: WP_VERSION=4.3.1 WP_MULTISITE=0
 #    - php: 5.6
