@@ -63,7 +63,7 @@ class Plugin {
 	 * @param string $pattern A regex pattern used to filter the plugin data array.
 	 * @return array
 	 */
-	public static function getFiltered( $pattern ) {
+	public static function getFiltered( $pattern = '' ) {
 		$plugins = get_plugins();
 
 		if ( empty( $pattern ) ) {
