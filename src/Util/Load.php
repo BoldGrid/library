@@ -171,6 +171,7 @@ class Load {
 				if ( is_dir( $library ) ) {
 					$loader->addPsr4( 'Boldgrid\\Library\\Library\\', $library );
 					$load = new \Boldgrid\Library\Library\Start( $this->configs );
+					$load->init();
 				}
 			}
 		}

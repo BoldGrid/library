@@ -49,4 +49,35 @@ class Plugin {
 
 		return null;
 	}
+
+	/**
+	 * Get plugin data filtered by plugin slug pattern.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @static
+	 *
+	 * @link https://developer.wordpress.org/reference/functions/get_plugins/
+	 * @see get_plugins()
+	 *
+	 * @param string $pattern A regex pattern used to filter the plugin data array.
+	 * @return array
+	 */
+	public static function getFiltered( $pattern ) {
+		$plugins = get_plugins();
+
+		if ( empty( $pattern ) ) {
+			return $plugins;
+		}
+
+		$filtered = array();
+
+		foreach ( $plugins as $slug => $data ) {
+			if ( preg_match( '#' . $pattern . '#', $slug ) ) {
+				$filtered[ $slug ] = $data;
+			}
+		}
+
+		return $filtered;
+	}
 }
