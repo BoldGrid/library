@@ -236,7 +236,7 @@ class License {
 	 *
 	 * @return $data The data class property.
 	 */
-	protected function getData() {
+	public function getData() {
 		return $this->data;
 	}
 
@@ -249,5 +249,18 @@ class License {
 	 */
 	public function getValid() {
 		return $this->isValid();
+	}
+
+	/**
+	 * Checks if product is premium or free.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @nohook
+	 *
+	 * @return bool 
+	 */
+	public function isPremium( $product ) {
+		return isset( $this->getData()->$product );
 	}
 }
