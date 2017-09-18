@@ -234,6 +234,8 @@ class License {
 	 *
 	 * @since  1.0.0
 	 *
+	 * @nohook
+	 *
 	 * @return $data The data class property.
 	 */
 	public function getData() {
