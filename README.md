@@ -11,7 +11,7 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 1.1.4 In progress ###
+### 1.1.4 ###
 * Bug fix: JIRA WPB-3427	Adjusted handling of plugin update transients.
 * Added premium product check to license class.
 
