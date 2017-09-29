@@ -12,6 +12,9 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 1.1.4 ###
+* JIRA WPB-3518 Fixed fatal error in certain scenarios from double inclusion of WP core files.
+
+### 1.1.4 ###
 * Bug fix: JIRA WPB-3427	Adjusted handling of plugin update transients.
 * Added premium product check to license class.
 
