@@ -72,10 +72,18 @@ class Activate {
 			die( __( 'Error - unable to verify nonce, please try again.', 'boldgrid-library' ) );
 		}
 
-		// Include required libs for activation.
-		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
-		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-		require_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
+		// Include the required libs for activation.
+		if ( ! function_exists( 'install_plugin_information' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+		}
+
+		if ( ! class_exists( 'WP_Upgrader' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+		}
+
+		if ( ! class_exists( 'Plugin_Upgrader' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
+		}
 
 		// Get Plugin Info.
 		$api = plugins_api(
