@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 1.1.6 ###
+* JIRA BGBKUP-67 Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
+
 ### 1.1.5 ###
 * JIRA WPB-3518 Fixed fatal error in certain scenarios from double inclusion of WP core files.
 
