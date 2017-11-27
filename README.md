@@ -11,14 +11,15 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 1.1.6 ###
-* JIRA BGBKUP-67 Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
+### 1.1.6 In progress ###
+* Bug fix: JIRA WPB-3635  API calls now respect release channels.
+* Bug fix: JIRA BGBKUP-67 Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
 
 ### 1.1.5 ###
-* JIRA WPB-3518 Fixed fatal error in certain scenarios from double inclusion of WP core files.
+* Bug fix: JIRA WPB-3518  Fixed fatal error in certain scenarios from double inclusion of WP core files.
 
 ### 1.1.4 ###
-* Bug fix: JIRA WPB-3427	Adjusted handling of plugin update transients.
+* Bug fix: JIRA WPB-3427  Adjusted handling of plugin update transients.
 * Added premium product check to license class.
 
 ### 1.1.3 ###

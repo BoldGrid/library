@@ -48,7 +48,11 @@ class Installer {
 	public function __construct( $configs, Library\ReleaseChannel $releaseChannel ) {
 		$this->setConfigs( $configs );
 		$this->releaseChannel = $releaseChannel;
-		$this->forms = new Wpforms\AddNew();
+
+		if ( class_exists( 'Boldgrid\Library\Form\Wpforms\AddNew' ) ) {
+			$this->forms = new Wpforms\AddNew();
+		}
+
 		if ( $this->configs['enabled'] && ! empty( $this->configs['plugins'] ) ) {
 			$this->setPluginData( $this->configs['plugins'] );
 			$this->setTransient();
@@ -566,6 +570,7 @@ class Installer {
 			$params = array(
 				'key' => $details['key'],
 				'channel' => $this->releaseChannel->getPluginChannel(),
+				'theme_channel' => $this->releaseChannel->getThemeChannel(),
 				'installed_' . $details['key'] . '_version' => $details['Version'],
 				'installed_wp_version' => $wp_version,
 			);

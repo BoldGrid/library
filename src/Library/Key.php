@@ -166,8 +166,14 @@ class Key {
 	public function verify( $key = null ) {
 		$key = $key ? $key : Configs::get( 'key' );
 
+		$releaseChannel = new ReleaseChannel;
+
 		// Make an API call for API data.
-		$data = $this->callCheckVersion( array( 'key' => $key ) );
+		$data = $this->callCheckVersion( array(
+			'key' => $key,
+			'channel' => $releaseChannel->getPluginChannel(),
+			'theme_channel' => $releaseChannel->getThemeChannel(),
+		) );
 
 		// Handle the response.
 		if ( is_object( $data ) ) {
