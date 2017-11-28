@@ -234,16 +234,15 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 		// Get the wpnonce and referer values.
 		nonce = $( '#set_key_auth', notice ).val();
 		wpHttpReferer = $( '[name="_wp_http_referer"]', notice ).val();
+
 		data = {
 			'action'  : 'dismissBoldgridNotice',
 			'notice' :  'bg-key-prompt',
 			'set_key_auth' : nonce,
 			'_wp_http_referer' : wpHttpReferer,
-			};
+		};
 
-			$.post( ajaxurl, data, function( response ) {
-console.log( response );
-			});
+		$.post( ajaxurl, data );
 	};
 };
 
