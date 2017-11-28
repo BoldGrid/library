@@ -12,6 +12,7 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 1.1.6 In progress ###
+* Bug fix: JIRA WPB-3636  Fixed invalid version number sent for plugins not installed, but in config.
 * Bug fix: JIRA WPB-3635  API calls now respect release channels.
 * Bug fix: JIRA BGBKUP-67 Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
 
