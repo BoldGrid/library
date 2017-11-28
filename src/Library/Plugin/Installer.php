@@ -98,14 +98,14 @@ class Installer {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		// Default data to use if plugin isn't loaded locally.
-		$data = array(
-			'Author' => 'BoldGrid.com',
-			'Version' => null,
-		);
-
 		foreach( $plugins as $plugin => $details ) {
 			$file = trailingslashit( WP_PLUGIN_DIR ) . $details['file'];
+
+			// Default data to use if plugin isn't loaded locally.
+			$data = array(
+				'Author' => 'BoldGrid.com',
+				'Version' => null,
+			);
 
 			if ( file_exists( $file ) && is_readable( $file ) ) {
 				$data = get_plugin_data( $file, false );
@@ -571,6 +571,7 @@ class Installer {
 			);
 
 			// Make API Call.
+error_log( print_r( array( $api . $endpoint, $params ), true ) );
 			$call = new Library\Api\Call( $api . $endpoint, $params );
 
 			if ( ! $call->getError() ) {
@@ -683,7 +684,12 @@ class Installer {
 	 */
 	public function filterUpdates( $updates ) {
 		$plugins = $this->getTransient() ? : array();
+
 		foreach( $plugins as $plugin => $details ) {
+			if ( empty( $this->configs['plugins'][ $plugin ] ) ) {
+				continue;
+			}
+
 			$update = new \stdClass();
 			$update->plugin = $this->configs['plugins'][ $plugin ]['file'];
 			$update->slug = $details->slug;
