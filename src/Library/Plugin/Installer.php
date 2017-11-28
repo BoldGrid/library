@@ -13,7 +13,6 @@ namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library;
 use Boldgrid\Library\Util;
-use Boldgrid\Library\Form\Wpforms;
 
 /**
  * BoldGrid Library Plugin Installer Class.
@@ -50,7 +49,7 @@ class Installer {
 		$this->releaseChannel = $releaseChannel;
 
 		if ( class_exists( 'Boldgrid\Library\Form\Wpforms\AddNew' ) ) {
-			$this->forms = new Wpforms\AddNew();
+			$this->forms = new \Boldgrid\Library\Form\Wpforms\AddNew();
 		}
 
 		if ( $this->configs['enabled'] && ! empty( $this->configs['plugins'] ) ) {
