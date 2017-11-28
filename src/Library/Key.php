@@ -71,7 +71,6 @@ class Key {
 	 * @return bool  $valid Is transient/key valid?
 	 */
 	public function setValid() {
-
 		// The API Transient data.
 		$data = Configs::get( 'apiData' );
 
@@ -83,23 +82,19 @@ class Key {
 
 		// If the API data is available in the transient.
 		if ( $data && ! empty( $data->license_status ) ) {
-
 			// Let the transient set it's own reported status.
 			$valid = $data->license_status;
 		}
 
 		// If we're still not valid, have no transient data, and have a key stored already.
 		if ( ! $valid && ! $data && $key ) {
-
 			// Make a call to get data.
 			$data = $this->verify();
 
 			// Did data come back in the response?
 			if ( $data ) {
-
 				// Errors come back as strings and success comes back as an object we can use.
 				if ( is_object( $data ) ) {
-
 					// Update the data since we know
 					$this->save( $data, $key );
 
@@ -149,7 +144,7 @@ class Key {
 		if ( ! $response = $call->getError() ) {
 
 			// If the response is successful, then retrieve the response.
-			$response = $call->getResponse()->result->data;
+			$response = $call->getResponse();
 		}
 
 		// Return the API response.
@@ -210,10 +205,10 @@ class Key {
 		update_site_option( 'boldgrid_api_key', $key );
 
 		// Updates the site hash identifier being stored.
-		update_site_option( 'boldgrid_site_hash', $data->site_hash );
+		update_site_option( 'boldgrid_site_hash', $data->result->data->site_hash );
 
 		// This looks for any reseller entries that exist and saves the wp option.
-		$this->saveReseller( $data );
+		$this->saveReseller( $data->result->data );
 
 
 		// Returns back the transient data object.
