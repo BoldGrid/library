@@ -571,7 +571,6 @@ class Installer {
 			);
 
 			// Make API Call.
-error_log( print_r( array( $api . $endpoint, $params ), true ) );
 			$call = new Library\Api\Call( $api . $endpoint, $params );
 
 			if ( ! $call->getError() ) {
