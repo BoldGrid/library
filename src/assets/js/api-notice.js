@@ -230,7 +230,9 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 * @since 1.1.6
 	 */
 	this.dismiss = function() {
-		var data, nonce, wpHttpReferer;
+		var data, nonce, wpHttpReferer,
+			notice = $( '#container_boldgrid_api_key_notice' );
+		
 		// Get the wpnonce and referer values.
 		nonce = $( '#set_key_auth', notice ).val();
 		wpHttpReferer = $( '[name="_wp_http_referer"]', notice ).val();

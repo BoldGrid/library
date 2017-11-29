@@ -86,13 +86,14 @@ class KeyPrompt {
 	 * @hook: admin_notices
 	 */
 	public function keyNotice() {
-		// Get current user.
-		$current_user = wp_get_current_user();
-		$email = $current_user->user_email;
-		$first_name = empty( $current_user->user_firstname ) ? '' : $current_user->user_firstname;
-		$last_name = empty( $current_user->user_lastname ) ? '' : $current_user->user_lastname;
-		$api = Library\Configs::get( 'api' ) . '/api/open/generateKey';
-		include dirname( __DIR__ ) . '/Views/KeyPrompt.php';
+		if ( ! $this->isDismissed( 'bg-key-prompt' ) ) {
+			$current_user = wp_get_current_user();
+			$email = $current_user->user_email;
+			$first_name = empty( $current_user->user_firstname ) ? '' : $current_user->user_firstname;
+			$last_name = empty( $current_user->user_lastname ) ? '' : $current_user->user_lastname;
+			$api = Library\Configs::get( 'api' ) . '/api/open/generateKey';
+			include dirname( __DIR__ ) . '/Views/KeyPrompt.php';
+		}
 	}
 
 	/**
@@ -153,5 +154,58 @@ class KeyPrompt {
 	 */
 	protected function getMessages() {
 		return $this->messages;
+	}
+	
+	/**
+	 * Handle dimissal of the key prompt notice.
+	 *
+	 * @since 1.1.6
+	 * 
+	 * @see \Boldgrid\Library\Library\Notice\KeyPrompt::getMessages()
+	 *
+	 * @hook: wp_ajax_dismissBoldgridNotice
+	 */
+	public function dismiss() {
+		// Validate nonce.
+		if ( isset( $_POST['set_key_auth'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
+			$id = 'bg-key-prompt';
+			
+			// Mark the notice as dismissed, if not already done so.
+			$dismissal = array(
+				'id' => $id,
+				'timestamp' => time(),
+			);
+			
+			if ( ! $this->isDismissed( $id ) ) {
+				add_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices', $dismissal );
+			}
+		}
+	}
+	
+	/**
+	 * Is there a user dismissal record for a particular admin notice id?
+	 *
+	 * @since 1.1.6
+	 *
+	 * @param  string $id An admin notice id.
+	 * @return bool
+	 */
+	public function isDismissed( $id ) {
+		$dismissed = false;
+		$id = sanitize_key( $id );
+		
+		// Get all of the notices this user has dismissed.
+		$dismissals = get_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices' );
+		
+		// Loop through all of the dismissed notices. If we find our $id, return it.
+		foreach ( $dismissals as $dismissal ) {
+			if ( $id === $dismissal['id'] ) {
+				$dismissed = true;
+				break;
+			}
+		}
+		
+		// We did not find our notice dismissed above, so return false.
+		return $dismissed;
 	}
 }
