@@ -68,6 +68,8 @@ class Key {
 	 *
 	 * @since  1.0.0
 	 *
+	 * @see \Boldgrid\Library\Library\Key::verifyData()
+	 * 
 	 * @return bool  $valid Is transient/key valid?
 	 */
 	public function setValid() {
@@ -87,20 +89,17 @@ class Key {
 		}
 
 		// If we're still not valid, have no transient data, and have a key stored already.
-		if ( ! $valid && ! $data && $key ) {
+		if ( ! $valid && ! isset( $data->license_status ) && $key ) {
 			// Make a call to get data.
 			$data = $this->verify();
 
-			// Did data come back in the response?
-			if ( $data ) {
-				// Errors come back as strings and success comes back as an object we can use.
-				if ( is_object( $data ) ) {
-					// Update the data since we know
-					$this->save( $data, $key );
+			// Errors come back as strings and success comes back as an object we can use.
+			if ( $this->verifyData( $data ) ) {
+				// Update the data since we know
+				$this->save( $data, $key );
 
-					// Set our flag.
-					$valid = true;
-				}
+				// Set our flag.
+				$valid = true;
 			}
 		}
 
@@ -152,9 +151,26 @@ class Key {
 	}
 
 	/**
+	 * Verify API data status.
+	 * 
+	 * @since 1.1.6
+	 * 
+	 * @param  stdClass $data API response data object, or error string.
+	 * @return bool
+	 */
+	public function verifyData( $data ) {
+		return is_a( $data->result->data, 'stdClass' ) && ! empty( $data->result->data->asset_id );
+	}
+	
+	/**
 	 * Validates the API key and returns details on if it is valid as well as version.
 	 *
 	 * @since  1.0.0
+	 * 
+	 * @see \Boldgrid\Library\Library\ReleaseChannel::getPluginChannel()
+	 * @see \Boldgrid\Library\Library\ReleaseChannel::getThemeChannel()
+	 * @see \Boldgrid\Library\Library\Key::callCheckVersion()
+	 * @see \Boldgrid\Library\Library\Key::verifyData()
 	 *
 	 * @return mixed The BoldGrid API Data object or a message string on failure.
 	 */
@@ -170,10 +186,8 @@ class Key {
 			'theme_channel' => $releaseChannel->getThemeChannel(),
 		) );
 
-		// Handle the response.
-		if ( is_object( $data ) ) {
-
-			// Let the transient data set it's own validity.
+		// Let the transient data set it's own validity.
+		if ( $this->verifyData( $data ) ) {
 			$data->license_status = true;
 		}
 
