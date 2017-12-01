@@ -13,12 +13,13 @@ composer require boldgrid/library
 
 ### 1.1.6 In progress ###
 * Bug fix: JIRA WPB-3636  Fixed invalid version number sent for plugins not installed, but in config.
+* Bug fix: JIRA WPB-3635  API calls now respect release channels.
 
 ### 1.1.5 ###
-* JIRA WPB-3518 Fixed fatal error in certain scenarios from double inclusion of WP core files.
+* Bug fix: JIRA WPB-3518  Fixed fatal error in certain scenarios from double inclusion of WP core files.
 
 ### 1.1.4 ###
-* Bug fix: JIRA WPB-3427	Adjusted handling of plugin update transients.
+* Bug fix: JIRA WPB-3427  Adjusted handling of plugin update transients.
 * Added premium product check to license class.
 
 ### 1.1.3 ###
