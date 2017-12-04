@@ -41,10 +41,12 @@ class Start {
 	 */
 	public function __construct( $configs = null ) {
 		$this->configs = new Configs( $configs );
-		if ( Configs::get( 'keyValidate' ) ) {
-			$this->key = new Key();
-		}
 		$this->releaseChannel = new ReleaseChannel;
+
+		if ( Configs::get( 'keyValidate' ) ) {
+			$this->key = new Key( $this->getReleaseChannel() );
+		}
+
 		$this->pluginInstaller = new Plugin\Installer( Configs::get( 'pluginInstaller' ), $this->getReleaseChannel() );
 	}
 
