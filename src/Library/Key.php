@@ -40,13 +40,23 @@ class Key {
 	protected static $valid;
 
 	/**
+	 * @access protected
+	 *
+	 * @since 1.1.6
+	 *
+	 * @var \Boldgrid\Library\Library\ReleaseChannel
+	 */
+	protected $releaseChannel;
+
+	/**
 	 * Initialize class and set class properties.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param array $configs Plugin configuration array.
 	 */
-	public function __construct() {
+	public function __construct( ReleaseChannel $releaseChannel ) {
+		$this->releaseChannel = $releaseChannel;
 		$this->setValid();
 		$this->setLicense();
 		$this->setNotice();
@@ -69,7 +79,7 @@ class Key {
 	 * @since  1.0.0
 	 *
 	 * @see \Boldgrid\Library\Library\Key::verifyData()
-	 * 
+	 *
 	 * @return bool  $valid Is transient/key valid?
 	 */
 	public function setValid() {
@@ -152,21 +162,21 @@ class Key {
 
 	/**
 	 * Verify API data status.
-	 * 
+	 *
 	 * @since 1.1.6
-	 * 
+	 *
 	 * @param  stdClass $data API response data object, or error string.
 	 * @return bool
 	 */
 	public function verifyData( $data ) {
 		return is_a( $data->result->data, 'stdClass' ) && ! empty( $data->result->data->asset_id );
 	}
-	
+
 	/**
 	 * Validates the API key and returns details on if it is valid as well as version.
 	 *
 	 * @since  1.0.0
-	 * 
+	 *
 	 * @see \Boldgrid\Library\Library\ReleaseChannel::getPluginChannel()
 	 * @see \Boldgrid\Library\Library\ReleaseChannel::getThemeChannel()
 	 * @see \Boldgrid\Library\Library\Key::callCheckVersion()
@@ -177,13 +187,11 @@ class Key {
 	public function verify( $key = null ) {
 		$key = $key ? $key : Configs::get( 'key' );
 
-		$releaseChannel = new ReleaseChannel;
-
 		// Make an API call for API data.
 		$data = $this->callCheckVersion( array(
 			'key' => $key,
-			'channel' => $releaseChannel->getPluginChannel(),
-			'theme_channel' => $releaseChannel->getThemeChannel(),
+			'channel' => $this->releaseChannel->getPluginChannel(),
+			'theme_channel' => $this->releaseChannel->getThemeChannel(),
 		) );
 
 		// Let the transient data set it's own validity.
