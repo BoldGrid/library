@@ -28,17 +28,9 @@ return array(
 
 		// Installable plugins.
 		'plugins' => array(
-			'boldgrid-editor' => array(
-				'key' => 'editor',
-				'file' => 'boldgrid-editor/boldgrid-editor.php',
-			),
 			'boldgrid-inspirations' => array(
 				'key' => 'core',
 				'file' => 'boldgrid-inspirations/boldgrid-inspirations.php',
-			),
-			'boldgrid-seo' => array(
-				'key' => 'seo',
-				'file' => 'boldgrid-seo/boldgrid-seo.php',
 			),
 			'boldgrid-backup' => array(
 				'key' => 'backup',
@@ -58,8 +50,16 @@ return array(
 			),
 		),
 
-		// WordPress.org Recommended Plugins.
+		// WordPress.org recommended plugins.
 		'wporgPlugins' => array(
+			array(
+				'slug' => 'post-and-page-builder',
+				'link' => '//wordpress.org/plugins/post-and-page-builder/',
+			),
+			array(
+				'slug' => 'boldgrid-easy-seo',
+				'link' => '//wordpress.org/plugins/boldgrid-easy-seo/',
+			),
 			array(
 				'slug' => 'wpforms-lite',
 				'link' => '//wpforms.com/lite-upgrade/',

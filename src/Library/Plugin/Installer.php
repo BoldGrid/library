@@ -292,7 +292,15 @@ class Installer {
 		?>
 		<div class="bglib-plugin-installer">
 		<?php
+			/**
+			 * Filter for plugin array manipulation.
+			 * 
+			 * @since 1.0.0
+			 * 
+			 * @param StdClass $plugins The plugin object for update information.
+			 */
 			$plugins = apply_filters( 'Boldgrid\Library\Plugin\Installer\init', $plugins );
+
 			foreach ( $plugins as $api ) {
 				if( ! isset( $api->name ) || empty( $api->name ) ) {
 					continue;
@@ -723,6 +731,7 @@ class Installer {
 	 *
 	 * @hook: set_site_transient_update_plugins
 	 *
+	 * @param  object $updates Updates available.
 	 * @return object $updates Updates available.
 	 */
 	public function externalUpdates( $updates ) {
@@ -804,5 +813,32 @@ class Installer {
 	 */
 	public function getTransient() {
 		return $this->transient;
+	}
+	
+	/**
+	 * Modify the Library's wp.org saved plugin data.
+	 *
+	 * @since 1.1.6
+	 *
+	 * @hook: Boldgrid\Library\Plugin\Installer\init
+	 *
+	 * @return StdClass $plugins The plugin object for update information.
+	 */
+	public function wporgData( $plugins ) {
+		$plugins = (array) $plugins;
+		
+		// Add wporg recommended plugins to the Plugins > Add New page.
+		if ( $wporgPlugins = get_site_transient( 'boldgrid_wporg_plugins', false ) ) {
+			$plugins = array_merge( $plugins, (array) $wporgPlugins );
+		}
+		
+		// Remove boldgrid-ninja-forms if user doesn't already have it.
+		$file = Util\Plugin::getPluginFile( 'boldgrid-ninja-forms' );
+		
+		if ( ! empty( $plugins['boldgrid-ninja-forms'] ) && empty( $file ) ) {
+			unset( $plugins['boldgrid-ninja-forms'] );
+		}
+		
+		return (object) $plugins;
 	}
 }

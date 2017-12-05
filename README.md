@@ -12,6 +12,7 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 1.1.6 In progress ###
+* Feature: JIRA WPB-3638  Added post-and-page-builder and boldgrid-easy-seo to the Plugins >> Add New page.
 * Bug fix: JIRA WPB-3636  Fixed invalid version number sent for plugins not installed, but in config.
 * Bug fix: JIRA WPB-3635  API calls now respect release channels.
 
