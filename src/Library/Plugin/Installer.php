@@ -294,9 +294,9 @@ class Installer {
 		<?php
 			/**
 			 * Filter for plugin array manipulation.
-			 * 
+			 *
 			 * @since 1.0.0
-			 * 
+			 *
 			 * @param StdClass $plugins The plugin object for update information.
 			 */
 			$plugins = apply_filters( 'Boldgrid\Library\Plugin\Installer\init', $plugins );
@@ -814,7 +814,7 @@ class Installer {
 	public function getTransient() {
 		return $this->transient;
 	}
-	
+
 	/**
 	 * Modify the Library's wp.org saved plugin data.
 	 *
@@ -826,19 +826,19 @@ class Installer {
 	 */
 	public function wporgData( $plugins ) {
 		$plugins = (array) $plugins;
-		
+
 		// Add wporg recommended plugins to the Plugins > Add New page.
 		if ( $wporgPlugins = get_site_transient( 'boldgrid_wporg_plugins', false ) ) {
 			$plugins = array_merge( $plugins, (array) $wporgPlugins );
 		}
-		
+
 		// Remove boldgrid-ninja-forms if user doesn't already have it.
 		$file = Util\Plugin::getPluginFile( 'boldgrid-ninja-forms' );
-		
+
 		if ( ! empty( $plugins['boldgrid-ninja-forms'] ) && empty( $file ) ) {
 			unset( $plugins['boldgrid-ninja-forms'] );
 		}
-		
+
 		return (object) $plugins;
 	}
 }
