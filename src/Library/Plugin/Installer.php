@@ -754,11 +754,14 @@ class Installer {
 						),
 					)
 				);
-				if ( ! is_wp_error( $api ) ) {
+				if ( ! is_wp_error( $api ) && ! empty( $api->slug ) ) {
 					$responses->{$plugin['slug']} = $api;
 				}
 			}
-			if ( ! empty( $responses ) ) {
+
+			// Cast to array before empty check, an empty( object ) evalutates to not empty.
+			$responsesArr = (array) $responses;
+			if ( ! empty( $responsesArr ) ) {
 				set_site_transient( 'boldgrid_wporg_plugins', $responses, 8 * HOUR_IN_SECONDS );
 			}
 		}
