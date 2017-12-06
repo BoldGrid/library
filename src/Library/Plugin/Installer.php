@@ -816,6 +816,39 @@ class Installer {
 	}
 
 	/**
+	 * Update the order of all plugins on install page.
+	 *
+	 * @since 1.1.6
+	 *
+	 * @hook: Boldgrid\Library\Plugin\Installer\init
+	 * @priority: 20
+	 *
+	 * @return StdClass $plugins The plugin object for update information.
+	 */
+	public function orderPlugins( $plugins ) {
+		$plugins = (array) $plugins;
+		$allPlugins = array_merge( $this->configs['plugins'], $this->configs['wporgPlugins'] );
+
+		// Get priority default to 99.
+		$getPriority = function( $plugin ) use ( $allPlugins ) {
+			return ! empty( $allPlugins[ $plugin->slug ]['priority'] ) ?
+				$allPlugins[ $plugin->slug ]['priority'] : 99;
+		};
+
+		$success = uasort( $plugins, function( $a, $b ) use ( $allPlugins, $getPriority ) {
+			$priorityA = $getPriority( $a );
+			$priorityB = $getPriority( $b );
+
+			if ( $priorityA === $priorityB ) {
+				return 0;
+			}
+			return ( $priorityA < $priorityB ) ? -1 : 1;
+		} );
+
+		return (object) $plugins;
+	}
+
+	/**
 	 * Modify the Library's wp.org saved plugin data.
 	 *
 	 * @since 1.1.6

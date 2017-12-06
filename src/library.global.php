@@ -57,17 +57,17 @@ return array(
 
 		// WordPress.org recommended plugins.
 		'wporgPlugins' => array(
-			array(
+			'post-and-page-builder' => array(
 				'slug' => 'post-and-page-builder',
 				'link' => '//wordpress.org/plugins/post-and-page-builder/',
 				'priority' => 10,
 			),
-			array(
+			'boldgrid-easy-seo' => array(
 				'slug' => 'boldgrid-easy-seo',
 				'link' => '//wordpress.org/plugins/boldgrid-easy-seo/',
 				'priority' => 30,
 			),
-			array(
+			'wpforms-lite' => array(
 				'slug' => 'wpforms-lite',
 				'link' => '//wpforms.com/lite-upgrade/',
 				'priority' => 80,
