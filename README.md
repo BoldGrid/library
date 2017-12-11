@@ -12,9 +12,10 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 1.1.6 In progress ###
+* Bug fix: JIRA BGBKUP-67 Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
+* Feature: JIRA WPB-3638  Added post-and-page-builder and boldgrid-easy-seo to the Plugins >> Add New page.
 * Bug fix: JIRA WPB-3636  Fixed invalid version number sent for plugins not installed, but in config.
 * Bug fix: JIRA WPB-3635  API calls now respect release channels.
-* Bug fix: JIRA BGBKUP-67 Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
 
 ### 1.1.5 ###
 * Bug fix: JIRA WPB-3518  Fixed fatal error in certain scenarios from double inclusion of WP core files.

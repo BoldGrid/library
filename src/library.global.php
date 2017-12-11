@@ -28,41 +28,49 @@ return array(
 
 		// Installable plugins.
 		'plugins' => array(
-			'boldgrid-editor' => array(
-				'key' => 'editor',
-				'file' => 'boldgrid-editor/boldgrid-editor.php',
-			),
 			'boldgrid-inspirations' => array(
 				'key' => 'core',
 				'file' => 'boldgrid-inspirations/boldgrid-inspirations.php',
-			),
-			'boldgrid-seo' => array(
-				'key' => 'seo',
-				'file' => 'boldgrid-seo/boldgrid-seo.php',
+				'priority' => 20,
 			),
 			'boldgrid-backup' => array(
 				'key' => 'backup',
 				'file' => 'boldgrid-backup/boldgrid-backup.php',
+				'priority' => 40,
 			),
 			'boldgrid-staging' => array(
 				'key' => 'staging',
 				'file' => 'boldgrid-staging/boldgrid-staging.php',
+				'priority' => 60,
 			),
 			'boldgrid-gallery' => array(
 				'key' => 'gallery-wc-canvas',
 				'file' => 'boldgrid-gallery/wc-gallery.php',
+				'priority' => 70,
 			),
 			'boldgrid-ninja-forms' => array(
 				'key' => 'ninja-forms',
 				'file' => 'boldgrid-ninja-forms/ninja-forms.php',
+				'priority' => 80,
 			),
 		),
 
-		// WordPress.org Recommended Plugins.
+		// WordPress.org recommended plugins.
 		'wporgPlugins' => array(
-			array(
+			'post-and-page-builder' => array(
+				'slug' => 'post-and-page-builder',
+				'link' => '//wordpress.org/plugins/post-and-page-builder/',
+				'priority' => 10,
+			),
+			'boldgrid-easy-seo' => array(
+				'slug' => 'boldgrid-easy-seo',
+				'link' => '//wordpress.org/plugins/boldgrid-easy-seo/',
+				'priority' => 30,
+			),
+			'wpforms-lite' => array(
 				'slug' => 'wpforms-lite',
 				'link' => '//wpforms.com/lite-upgrade/',
+				'priority' => 80,
 			),
 		),
 	),

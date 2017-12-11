@@ -291,7 +291,15 @@ class Installer {
 		?>
 		<div class="bglib-plugin-installer">
 		<?php
+			/**
+			 * Filter for plugin array manipulation.
+			 *
+			 * @since 1.0.0
+			 *
+			 * @param StdClass $plugins The plugin object for update information.
+			 */
 			$plugins = apply_filters( 'Boldgrid\Library\Plugin\Installer\init', $plugins );
+
 			foreach ( $plugins as $api ) {
 				if( ! isset( $api->name ) || empty( $api->name ) ) {
 					continue;
@@ -722,6 +730,7 @@ class Installer {
 	 *
 	 * @hook: set_site_transient_update_plugins
 	 *
+	 * @param  object $updates Updates available.
 	 * @return object $updates Updates available.
 	 */
 	public function externalUpdates( $updates ) {
@@ -744,11 +753,14 @@ class Installer {
 						),
 					)
 				);
-				if ( ! is_wp_error( $api ) ) {
+				if ( ! is_wp_error( $api ) && ! empty( $api->slug ) ) {
 					$responses->{$plugin['slug']} = $api;
 				}
 			}
-			if ( ! empty( $responses ) ) {
+
+			// Cast to array before empty check, an empty( object ) evalutates to not empty.
+			$responsesArr = (array) $responses;
+			if ( ! empty( $responsesArr ) ) {
 				set_site_transient( 'boldgrid_wporg_plugins', $responses, 8 * HOUR_IN_SECONDS );
 			}
 		}
@@ -803,5 +815,65 @@ class Installer {
 	 */
 	public function getTransient() {
 		return $this->transient;
+	}
+
+	/**
+	 * Update the order of all plugins on install page.
+	 *
+	 * @since 1.1.6
+	 *
+	 * @hook: Boldgrid\Library\Plugin\Installer\init
+	 * @priority: 20
+	 *
+	 * @return StdClass $plugins The plugin object for update information.
+	 */
+	public function orderPlugins( $plugins ) {
+		$plugins = (array) $plugins;
+		$allPlugins = array_merge( $this->configs['plugins'], $this->configs['wporgPlugins'] );
+
+		// Get priority default to 99.
+		$getPriority = function( $plugin ) use ( $allPlugins ) {
+			return ! empty( $allPlugins[ $plugin->slug ]['priority'] ) ?
+				$allPlugins[ $plugin->slug ]['priority'] : 99;
+		};
+
+		$success = uasort( $plugins, function( $a, $b ) use ( $allPlugins, $getPriority ) {
+			$priorityA = $getPriority( $a );
+			$priorityB = $getPriority( $b );
+
+			if ( $priorityA === $priorityB ) {
+				return 0;
+			}
+			return ( $priorityA < $priorityB ) ? -1 : 1;
+		} );
+
+		return (object) $plugins;
+	}
+
+	/**
+	 * Modify the Library's wp.org saved plugin data.
+	 *
+	 * @since 1.1.6
+	 *
+	 * @hook: Boldgrid\Library\Plugin\Installer\init
+	 *
+	 * @return StdClass $plugins The plugin object for update information.
+	 */
+	public function wporgData( $plugins ) {
+		$plugins = (array) $plugins;
+
+		// Add wporg recommended plugins to the Plugins > Add New page.
+		if ( $wporgPlugins = get_site_transient( 'boldgrid_wporg_plugins', false ) ) {
+			$plugins = array_merge( $plugins, (array) $wporgPlugins );
+		}
+
+		// Remove boldgrid-ninja-forms if user doesn't already have it.
+		$file = Util\Plugin::getPluginFile( 'boldgrid-ninja-forms' );
+
+		if ( ! empty( $plugins['boldgrid-ninja-forms'] ) && empty( $file ) ) {
+			unset( $plugins['boldgrid-ninja-forms'] );
+		}
+
+		return (object) $plugins;
 	}
 }
