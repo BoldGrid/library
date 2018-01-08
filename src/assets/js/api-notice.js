@@ -18,6 +18,116 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 
 		/** Dismissible action **/
 		notice.on( 'click', '.notice-dismiss', self.dismiss );
+		
+		/** Toggle the forms around **/
+		$( '.boldgridApiKeyLink', notice ).on( 'click', function() {
+			$( '.api-notice', notice ).hide();
+			$( '.new-api-key', notice ).fadeIn( 'slow' );
+		});
+		$( '.enterKeyLink', notice ).on( 'click', function() {
+			$( '.new-api-key', notice ).hide();
+			$( '.api-notice', notice ).fadeIn( 'slow' );
+		});
+		
+		/** Submit action **/
+		$( "#requestKeyForm" ).submit( function( event ) {
+			event.preventDefault();
+
+			var posting,
+				$form = $( this ),
+				$firstName = $form.find( '#firstName' ).val(),
+				$lastName = $form.find( '#lastName' ).val(),
+				$email = $form.find( '#emailAddr' ).val(),
+				$link = $form.find( '#siteUrl' ).val(),
+				$alertBox = $( '.error-alerts' ),
+				$genericError = 'There was an error communicating with the BoldGrid Connect Key server.  Please try again.';
+
+
+				$('.error-color').removeClass( 'error-color' );
+
+			// Basic js checks before server-side verification.
+			if ( ! $firstName ) {
+				$alertBox.text( 'First name is required.' );
+				$form.find( '#firstName' ).prev().addClass( 'error-color' );
+				return false;
+			}
+			if ( ! $lastName ) {
+				$alertBox.text( 'Last name is required.' );
+				$form.find( '#lastName' ).prev().addClass( 'error-color' );
+				return false;
+			}
+			if ( ! ( $email.indexOf( '@' ) > -1 && $email.indexOf( '.' ) > -1 ) ) {
+				$alertBox.text( 'Please enter a valid e-mail address.' );
+				$form.find( '#emailAddr' ).prev().addClass( 'error-color' );
+				return false;
+			}
+
+			posting = $.post( $( '#generate-api-key' ).val(),
+				{
+					first: $firstName,
+					last: $lastName,
+					email: $email,
+					link: $link,
+				}
+			);
+
+			posting.done( function( response ) {
+				$alertBox.text( $genericError );
+				if ( 200 === response.status ) {
+					$( '.key-request-content' ).text( response.message );
+				}
+			}).fail( function( post ) {
+				var message = post.responseJSON.message
+				if ( message.indexOf( 'First name' ) >= 0 ) {
+					$form.find( '#firstName' ).prev().addClass( 'error-color' );
+				}
+				if ( message.indexOf( 'Last name' ) >= 0 ) {
+					$form.find( '#lastName' ).prev().addClass( 'error-color' );
+				}
+				if ( message.indexOf( 'e-mail' ) >= 0 ) {
+					$form.find( '#emailAddr' ).prev().addClass( 'error-color' );
+				}
+				$alertBox.text( message );
+			});
+		});
+
+		/**
+		 * When the submit button is pressed.
+		 */
+		$( '#boldgrid-api-form' ).submit( function( e ){
+			e.preventDefault();
+		});
+
+		$( '#boldgrid-api-loading', notice ).hide();
+
+		$( '#submit_api_key', notice ).on('click', function() {
+			$( '#boldgrid_api_key_notice_message' ).empty();
+			if ( ! $( '#tos-box:checked').length  ) {
+				$( '#boldgrid_api_key_notice_message', notice )
+					.html( 'You must agree to the Terms of Service before continuing.' )
+					.addClass( 'error-color' );
+				return false;
+			}
+			var key = $( '#boldgrid_api_key', notice ).val()
+				.replace( /[^a-z0-9]/gi,'' )
+				.replace( /(.{8})/g,"$1\-" )
+				.slice( 0, -1 );
+			if ( ! key || key.length !== 35 ) {
+				$( '#boldgrid_api_key_notice_message', notice )
+					.html( 'You must enter a valid BoldGrid Connect Key.' )
+					.addClass( 'error-color' );
+				return false;
+			}
+			$( '#boldgrid_api_key_notice_message', notice ).removeClass( 'error-color' );
+
+			self.set( key );
+
+			// hide the button
+			$( this ).hide();
+
+			// show the loading graphic.
+			$( '#boldgrid-api-loading', notice ).show();
+		});
 	});
 
 	/**
@@ -60,120 +170,6 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 		iframe.style.display = 'none';
 	};
 
-	notice = $( '#container_boldgrid_api_key_notice' );
-
-	/** Toggle the forms around **/
-	$( '.boldgridApiKeyLink', notice ).on( 'click', function() {
-		$( '.api-notice', notice ).hide();
-		$( '.new-api-key', notice ).fadeIn( 'slow' );
-	});
-	$( '.enterKeyLink', notice ).on( 'click', function() {
-		$( '.new-api-key', notice ).hide();
-		$( '.api-notice', notice ).fadeIn( 'slow' );
-	});
-
-	/** Submit action **/
-	$( "#requestKeyForm" ).submit( function( event ) {
-		event.preventDefault();
-
-		var posting,
-			$form = $( this ),
-			$firstName = $form.find( '#firstName' ).val(),
-			$lastName = $form.find( '#lastName' ).val(),
-			$email = $form.find( '#emailAddr' ).val(),
-			$link = $form.find( '#siteUrl' ).val(),
-			$alertBox = $( '.error-alerts' ),
-			$genericError = 'There was an error communicating with the BoldGrid Connect Key server.  Please try again.';
-
-
-			$('.error-color').removeClass( 'error-color' );
-
-		// Basic js checks before server-side verification.
-		if ( ! $firstName ) {
-			$alertBox.text( 'First name is required.' );
-			$form.find( '#firstName' ).prev().addClass( 'error-color' );
-			return false;
-		}
-		if ( ! $lastName ) {
-			$alertBox.text( 'Last name is required.' );
-			$form.find( '#lastName' ).prev().addClass( 'error-color' );
-			return false;
-		}
-		if ( ! ( $email.indexOf( '@' ) > -1 && $email.indexOf( '.' ) > -1 ) ) {
-			$alertBox.text( 'Please enter a valid e-mail address.' );
-			$form.find( '#emailAddr' ).prev().addClass( 'error-color' );
-			return false;
-		}
-
-		posting = $.post( $( '#generate-api-key' ).val(),
-			{
-				first: $firstName,
-				last: $lastName,
-				email: $email,
-				link: $link,
-			}
-		);
-
-		posting.done( function( response ) {
-			$alertBox.text( $genericError );
-			if ( 200 === response.status ) {
-				$( '.key-request-content' ).text( response.message );
-			}
-		}).fail( function( post ) {
-			var message = post.responseJSON.message
-			if ( message.indexOf( 'First name' ) >= 0 ) {
-				$form.find( '#firstName' ).prev().addClass( 'error-color' );
-			}
-			if ( message.indexOf( 'Last name' ) >= 0 ) {
-				$form.find( '#lastName' ).prev().addClass( 'error-color' );
-			}
-			if ( message.indexOf( 'e-mail' ) >= 0 ) {
-				$form.find( '#emailAddr' ).prev().addClass( 'error-color' );
-			}
-			$alertBox.text( message );
-		});
-	});
-
-	/**
-	 * Bind events.
-	 *
-	 * When the submit button is pressed.
-	 */
-	$( '#boldgrid-api-form' ).submit( function( e ){
-		e.preventDefault();
-	});
-
-	$( '#boldgrid-api-loading', notice ).hide();
-
-	$( '#submit_api_key', notice ).on('click', function() {
-		$( '#boldgrid_api_key_notice_message' ).empty();
-		if ( ! $( '#tos-box:checked').length  ) {
-			$( '#boldgrid_api_key_notice_message', notice )
-				.html( 'You must agree to the Terms of Service before continuing.' )
-				.addClass( 'error-color' );
-			return false;
-		}
-		var key = $( '#boldgrid_api_key', notice ).val()
-			.replace( /[^a-z0-9]/gi,'' )
-			.replace( /(.{8})/g,"$1\-" )
-			.slice( 0, -1 );
-		if ( ! key || key.length !== 35 ) {
-			$( '#boldgrid_api_key_notice_message', notice )
-				.html( 'You must enter a valid BoldGrid Connect Key.' )
-				.addClass( 'error-color' );
-			return false;
-		}
-		$( '#boldgrid_api_key_notice_message', notice ).removeClass( 'error-color' );
-
-		self.set( key );
-
-		// hide the button
-		$( this ).hide();
-
-		// show the loading graphic.
-		$( '#boldgrid-api-loading', notice ).show();
-	});
-
 	/**
 	 * Set the API key.
 	 */
@@ -191,7 +187,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 
 		$.post( ajaxurl, data, function( response ) {
 			// Declare variables.
-			var response, message;
+			var response, message,
+				notice = $( '#container_boldgrid_api_key_notice' );
 
 			// If the key was saved successfully.
 			if ( response.success ) {
