@@ -155,13 +155,13 @@ class KeyPrompt {
 	protected function getMessages() {
 		return $this->messages;
 	}
-	
+
 	/**
 	 * Handle dimissal of the key prompt notice.
 	 *
 	 * @since 1.1.6
-	 * 
-	 * @see \Boldgrid\Library\Library\Notice\KeyPrompt::getMessages()
+	 *
+	 * @see \Boldgrid\Library\Library\Notice\KeyPrompt::isDismissed()
 	 *
 	 * @hook: wp_ajax_dismissBoldgridNotice
 	 */
@@ -169,19 +169,44 @@ class KeyPrompt {
 		// Validate nonce.
 		if ( isset( $_POST['set_key_auth'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
 			$id = 'bg-key-prompt';
-			
+
 			// Mark the notice as dismissed, if not already done so.
 			$dismissal = array(
 				'id' => $id,
 				'timestamp' => time(),
 			);
-			
+
 			if ( ! $this->isDismissed( $id ) ) {
 				add_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices', $dismissal );
 			}
 		}
 	}
-	
+
+	/**
+	 * Handle undimissal of the key prompt notice.
+	 *
+	 * @since 1.5.4
+	 *
+	 * @hook: wp_ajax_undismissBoldgridNotice
+	 */
+	public function undismiss() {
+		// Validate nonce.
+		if ( isset( $_POST['set_key_auth'] ) && ! empty( $_POST['notice'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
+			$id = sanitize_key( $_POST['notice'] );
+
+			// Get all of the notices this user has dismissed.
+			$dismissals = get_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices' );
+
+			// Loop through all of the dismissed notices. If we find the dismissal, then remove it.
+			foreach ( $dismissals as $dismissal ) {
+				if ( $id === $dismissal['id'] ) {
+					delete_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices', $dismissal );
+					break;
+				}
+			}
+		}
+	}
+
 	/**
 	 * Is there a user dismissal record for a particular admin notice id?
 	 *
@@ -193,18 +218,18 @@ class KeyPrompt {
 	public function isDismissed( $id ) {
 		$dismissed = false;
 		$id = sanitize_key( $id );
-		
+
 		// Get all of the notices this user has dismissed.
 		$dismissals = get_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices' );
-		
-		// Loop through all of the dismissed notices. If we find our $id, return it.
+
+		// Loop through all of the dismissed notices. If we find our $id, then mark bool and break.
 		foreach ( $dismissals as $dismissal ) {
 			if ( $id === $dismissal['id'] ) {
 				$dismissed = true;
 				break;
 			}
 		}
-		
+
 		// We did not find our notice dismissed above, so return false.
 		return $dismissed;
 	}

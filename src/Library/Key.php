@@ -53,7 +53,7 @@ class Key {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $configs Plugin configuration array.
+	 * @param \Boldgrid\Library\Library\ReleaseChannel $releaseChannel Plugin release channel.
 	 */
 	public function __construct( ReleaseChannel $releaseChannel ) {
 		$this->releaseChannel = $releaseChannel;
