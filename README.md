@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 1.1.7 In progress ###
+* Feature: JIRA BGBKUP-75 Added dismiss/undismiss for Connect Key prompt/notice.
+
 ### 1.1.6 ###
 * Bug fix: JIRA BGBKUP-67 Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
 * Feature: JIRA WPB-3638  Added post-and-page-builder and boldgrid-easy-seo to the Plugins >> Add New page.
