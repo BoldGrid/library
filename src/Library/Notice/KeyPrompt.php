@@ -185,7 +185,7 @@ class KeyPrompt {
 	/**
 	 * Handle undimissal of the key prompt notice.
 	 *
-	 * @since 1.5.4
+	 * @since 1.1.7
 	 *
 	 * @hook: wp_ajax_undismissBoldgridNotice
 	 */
