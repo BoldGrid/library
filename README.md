@@ -12,6 +12,7 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 1.1.7 In progress ###
+* Update:  JIRA WPB-3684  Moved plugin install to its own package (boldgrid/plugin-install).
 * Feature: JIRA BGBKUP-75 Added dismiss/undismiss for Connect Key prompt/notice.
 
 ### 1.1.6 ###

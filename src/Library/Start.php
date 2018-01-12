@@ -37,6 +37,12 @@ class Start {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @uses \Boldgrid\Library\Library\Configs()
+	 * @uses \Boldgrid\Library\Library\ReleaseChannel()
+	 * @uses \Boldgrid\Library\Library\Key()
+	 * @uses \Boldgrid\Library\Plugin\Installer()
+	 * @uses \Boldgrid\Library\Library\Start::getReleaseChannel()
+	 *
 	 * @param array $configs Plugin configuration array.
 	 */
 	public function __construct( $configs = null ) {
@@ -47,7 +53,12 @@ class Start {
 			$this->key = new Key( $this->getReleaseChannel() );
 		}
 
-		$this->pluginInstaller = new Plugin\Installer( Configs::get( 'pluginInstaller' ), $this->getReleaseChannel() );
+		if ( class_exists( 'Boldgrid\Library\Plugin\Installer' ) ) {
+			$this->pluginInstaller = new \Boldgrid\Library\Plugin\Installer(
+				Configs::get( 'pluginInstaller' ),
+				$this->getReleaseChannel()
+			);
+		}
 	}
 
 	/**
@@ -65,9 +76,14 @@ class Start {
 	 * Initialization.
 	 *
 	 * @since 1.1.4
+	 *
+	 * @uses \Boldgrid\Library\Plugin\Checker()
+	 * @uses \Boldgrid\Library\Plugin\Checker::run()
 	 */
 	public function init() {
-		$pluginChecker = new Plugin\Checker();
-		$pluginChecker->run();
+		if ( class_exists( 'Boldgrid\Library\Plugin\Checker' ) ) {
+			$pluginChecker = new \Boldgrid\Library\Plugin\Checker();
+			$pluginChecker->run();
+		}
 	}
 }
