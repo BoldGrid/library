@@ -64,6 +64,10 @@ class Plugin {
 	 * @return array
 	 */
 	public static function getFiltered( $pattern = '' ) {
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
 		$plugins = get_plugins();
 
 		if ( empty( $pattern ) ) {

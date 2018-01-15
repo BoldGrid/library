@@ -53,12 +53,7 @@ class Start {
 			$this->key = new Key( $this->getReleaseChannel() );
 		}
 
-		if ( class_exists( 'Boldgrid\Library\Plugin\Installer' ) ) {
-			$this->pluginInstaller = new \Boldgrid\Library\Plugin\Installer(
-				Configs::get( 'pluginInstaller' ),
-				$this->getReleaseChannel()
-			);
-		}
+		add_action( 'admin_init' , array( $this, 'loadPluginInstaller' ) );
 	}
 
 	/**
@@ -84,6 +79,24 @@ class Start {
 		if ( class_exists( 'Boldgrid\Library\Plugin\Checker' ) ) {
 			$pluginChecker = new \Boldgrid\Library\Plugin\Checker();
 			$pluginChecker->run();
+		}
+	}
+
+	/**
+	 * Load the Plugin\Installer class, if exists.
+	 *
+	 * @since 1.1.7
+	 */
+	public function loadPluginInstaller() {
+		if ( ! did_action( 'Boldgrid\Library\Library\Start::loadPluginInstaller' ) ) {
+			do_action( 'Boldgrid\Library\Library\Start::loadPluginInstaller' );
+
+			if ( class_exists( 'Boldgrid\Library\Plugin\Installer' ) ) {
+				$this->pluginInstaller = new \Boldgrid\Library\Plugin\Installer(
+					Configs::get( 'pluginInstaller' ),
+					$this->getReleaseChannel()
+				);
+			}
 		}
 	}
 }
