@@ -12,6 +12,7 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 1.1.7 In progress ###
+* Feature: JIRA BGINSP-3  Added filter to display Connect Key prompt admin notice, even if dismissed.
 * Update:  JIRA WPB-3684  Moved plugin install to its own package (boldgrid/plugin-install).
 * Feature: JIRA BGBKUP-75 Added dismiss/undismiss for Connect Key prompt/notice.
 
