@@ -86,7 +86,12 @@ class KeyPrompt {
 	 * @hook: admin_notices
 	 */
 	public function keyNotice() {
-		if ( ! $this->isDismissed( 'bg-key-prompt' ) ) {
+		$display_notice = apply_filters(
+			'Boldgrid\Library\Library\Notice\KeyPrompt_display',
+			( ! $this->isDismissed( 'bg-key-prompt' ) )
+		);
+
+		if ( $display_notice ) {
 			$current_user = wp_get_current_user();
 			$email = $current_user->user_email;
 			$first_name = empty( $current_user->user_firstname ) ? '' : $current_user->user_firstname;
