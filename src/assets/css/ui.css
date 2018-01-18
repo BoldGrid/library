@@ -71,20 +71,20 @@
 *
 * #col-container, #col-left, #col-right taken from Posts > Categories page.
 */
+#col-container {
+	margin-top: 20px;
+}
+
+#col-container h2:first-child {
+	margin-top: 0px;
+}
+
 #col-left {
 	max-width: 180px;
 }
 
 #col-right {
 	width: calc(100% - 180px - 20px);
-}
-
-.col-right-section {
-	display: none;
-}
-
-.col-right-section:first-of-type {
-	display: block;
 }
 
 /**
@@ -102,6 +102,18 @@
 	box-shadow: 0 1px 0 green;
 	background: #009900;
 	color: #fff;
+}
+
+/* Add a primary page title action. */
+.wrap .page-title-action-primary {
+	border-color: #0073aa #006799 #006799;
+    background: #0085ba;
+    color: #fff;
+}
+.wrap .page-title-action-primary:hover {
+	border-color: #006799;
+    background: #008ec2;
+    color: #fff;
 }
 
 /**

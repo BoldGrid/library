@@ -118,24 +118,42 @@ class Ui {
 	public function render_col_container( $sections ) {
 		$section_count = 0;
 
+		$show_section = ! empty( $_GET['section'] ) ? $_GET['section'] : null;
+
 		$content = '';
 		$navigation = '<ul class="bg-left-nav">';
 		foreach ( $sections['sections'] as $section ) {
 			$section_count++;
 
+			/*
+			 * Determine which section should be visible first.
+			 *
+			 * You can pass in &section=section-id to choose a section other
+			 * than the first to display by default.
+			 */
+			$is_first_section = is_null( $show_section ) && 1 === $section_count;
+			$is_show_section = ! is_null( $show_section ) && $section['id'] === $show_section;
+			$nav_class = '';
+			$section_style = 'display:none;';
+			if( $is_first_section || $is_show_section ) {
+				$nav_class = 'active';
+				$section_style = '';
+			}
+
 			$navigation .= sprintf( '
-				<li %3$s data-section-id="%1$s">%2$s</li>',
+				<li class="%3$s" data-section-id="%1$s">%2$s</li>',
 				$section['id'],
 				$section['title'],
-				1 === $section_count ? 'class="active"' : ''
+				$nav_class
 			);
 
 			$content .= sprintf( '
-				<div class="col-right-section" id="%2$s">
+				<div class="col-right-section" id="%2$s" style="%3$s">
 					%1$s
 				</div>',
 				$section['content'],
-				$section['id']
+				$section['id'],
+				$section_style
 			);
 		}
 		$navigation .= '</ul>';
