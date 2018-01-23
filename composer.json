@@ -2,7 +2,7 @@
     "name": "boldgrid/library",
     "description": "The BoldGrid Library for shared code used in official BoldGrid plugins and themes.",
     "type": "library",
-    "license": "GPL2.0",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Tim Elsass",
