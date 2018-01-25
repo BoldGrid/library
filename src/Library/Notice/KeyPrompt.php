@@ -24,23 +24,60 @@ use Boldgrid\Library\Library;
 class KeyPrompt {
 
 	/**
+	 * Bool indicating whether or not this key prompt has been dismissed by the
+	 * current user.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @var mixed $isDismissed Null if not set, otherwise bool.
+	 */
+	public static $isDismissed = null;
+
+	/**
+	 * Bool indicating whether or not we are currently showing the notice.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @var bool $isDisplayed
+	 */
+	public static $isDisplayed = false;
+
+	/**
 	 * @access private
 	 *
-	 * @var object $key      Key class object.
-	 * @var object $messages Messages used for key prompt.
+	 * @var object $key           Key class object.
+	 * @var object $messages      Messages used for key prompt.
+	 * @var string $userNoticeKey When dismissing this prompt, this is the
+	 *                            identifier for the user notice.
 	 */
 	private
 		$key,
-		$messages;
+		$messages,
+		$userNoticeKey;
 
 	/**
 	 * Initialize class and set class properties.
+	 *
+	 * This class is automatically instantiated through the following events:
+	 * #. Boldgrid\Library\Util\Load->__construct
+	 * #. Boldgrid\Library\Library\Start->__construct
+	 * #. Boldgrid\Library\Library\Key->__construct
+	 * #. Boldgrid\Library\Library\Notice->__construct
+	 * #. Boldgrid\Library\Library\Notice\KeyPrompt->__construct
+	 *
+	 * This is important to note because if you ever wanted to instantiate
+	 * another KeyPrompt class, you should know it's probably already been done
+	 * so.
+	 *
+	 * Some of the class properties (such as isDismissed and isDisplayed) are
+	 * static and easily retrievable via filters.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct( Library\Key $key ) {
 		$this->key = $key;
 		$this->setMessages();
+		$this->userNoticeKey = 'bg-key-prompt';
 		Library\Filter::add( $this );
 	}
 
@@ -88,7 +125,7 @@ class KeyPrompt {
 	public function keyNotice() {
 		$display_notice = apply_filters(
 			'Boldgrid\Library\Library\Notice\KeyPrompt_display',
-			( ! $this->isDismissed( 'bg-key-prompt' ) )
+			( ! $this->isDismissed( $this->userNoticeKey ) )
 		);
 
 		if ( $display_notice ) {
@@ -98,6 +135,8 @@ class KeyPrompt {
 			$last_name = empty( $current_user->user_lastname ) ? '' : $current_user->user_lastname;
 			$api = Library\Configs::get( 'api' ) . '/api/open/generateKey';
 			include dirname( __DIR__ ) . '/Views/KeyPrompt.php';
+
+			self::$isDisplayed = true;
 		}
 	}
 
@@ -151,6 +190,32 @@ class KeyPrompt {
 	}
 
 	/**
+	 * Get static class property isDismissed.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @hook: Boldgrid\Library\Notice\KeyPrompt\getIsDismissed
+	 */
+	public function getIsDismissed() {
+		if( is_null( self::$isDismissed ) ) {
+			self::$isDismissed = $this->isDismissed( $this->userNoticeKey );
+		}
+
+		return self::$isDismissed;
+	}
+
+	/**
+	 * Get static class property isDisplayed.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @hook: Boldgrid\Library\Notice\KeyPrompt\getIsDisplayed
+	 */
+	public function getIsDisplayed() {
+		return self::$isDisplayed;
+	}
+
+	/**
 	 * Gets messages class property.
 	 *
 	 * @since  1.0.0
@@ -173,15 +238,14 @@ class KeyPrompt {
 	public function dismiss() {
 		// Validate nonce.
 		if ( isset( $_POST['set_key_auth'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
-			$id = 'bg-key-prompt';
 
 			// Mark the notice as dismissed, if not already done so.
 			$dismissal = array(
-				'id' => $id,
+				'id' => $this->userNoticeKey,
 				'timestamp' => time(),
 			);
 
-			if ( ! $this->isDismissed( $id ) ) {
+			if ( ! $this->isDismissed( $this->userNoticeKey ) ) {
 				add_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices', $dismissal );
 			}
 		}
@@ -214,6 +278,9 @@ class KeyPrompt {
 
 	/**
 	 * Is there a user dismissal record for a particular admin notice id?
+	 *
+	 * @todo This method seems like a more generalized method that should belong
+	 * in maybe Library\Notice rather than Library\Notice\KeyPrompt.
 	 *
 	 * @since 1.1.6
 	 *

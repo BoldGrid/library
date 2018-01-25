@@ -26,6 +26,7 @@
 .bg-box-bottom.premium .button-success,
 .postbox .premium .button-success {
 	float: right;
+	margin: 0px 0px 10px 10px;
 }
 
 .postbox .premium {
