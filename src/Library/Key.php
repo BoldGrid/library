@@ -60,6 +60,7 @@ class Key {
 		$this->setValid();
 		$this->setLicense();
 		$this->setNotice();
+		$this->addNotices();
 	}
 
 	/**
@@ -71,6 +72,17 @@ class Key {
 	 */
 	public function setLicense() {
 		return $this->license = self::$valid ? new License() : false;
+	}
+
+	/**
+	 * Get the license class property.
+	 *
+	 * @since  2.1.0
+	 *
+	 * @return Boldgrid\Library\Library\License|false
+	 */
+	public function getLicense() {
+		return $this->license;
 	}
 
 	/**
@@ -272,5 +284,16 @@ class Key {
 
 		// Return back the transient data object.
 		return $data;
+	}
+
+	/**
+	 * Add additional admin notices.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @see \Boldgrid\Library\Library\Notice()
+	 */
+	public function addNotices() {
+		$claimPremiumKey = new Notice( 'ClaimPremiumKey', $this );
 	}
 }

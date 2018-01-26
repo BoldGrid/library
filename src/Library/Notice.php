@@ -45,6 +45,8 @@ class Notice {
 		$this->name = $name;
 		$this->args = $args;
 		$this->setClass( $name, $args );
+
+		Filter::add( $this );
 	}
 
 	/**
@@ -71,7 +73,7 @@ class Notice {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @hook: admin_notices
+	 * @nohook: admin_notices
 	 */
 	public function add( $name = null ) {
 		$name = $name ? $name : $this->getName();
@@ -100,5 +102,104 @@ class Notice {
 	 */
 	protected function getArgs() {
 		return $this->args;
+	}
+
+	/**
+	 * Handle dismissal of the key prompt notice.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @see \Boldgrid\Library\Library\Notice::isDismissed()
+	 *
+	 * @uses $_POST['notice'] Notice id.
+	 *
+	 * @hook: wp_ajax_dismissBoldgridNotice
+	 */
+	public function dismiss() {
+		// Validate nonce.
+		if ( isset( $_POST['set_key_auth'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
+			$id = sanitize_key( $_POST['notice'] );
+
+			// Mark the notice as dismissed, if not already done so.
+			$dismissal = array(
+				'id' => $id,
+				'timestamp' => time(),
+			);
+
+			if ( ! Notice::isDismissed( $id ) ) {
+				add_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices', $dismissal );
+			}
+		}
+	}
+
+	/**
+	 * Handle undismissal of the key prompt notice.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @uses $_POST['notice'] Notice id.
+	 *
+	 * @hook: wp_ajax_undismissBoldgridNotice
+	 */
+	public function undismiss() {
+		// Validate nonce.
+		if ( isset( $_POST['set_key_auth'] ) && ! empty( $_POST['notice'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
+			$id = sanitize_key( $_POST['notice'] );
+
+			// Get all of the notices this user has dismissed.
+			$dismissals = get_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices' );
+
+			// Loop through all of the dismissed notices. If we find the dismissal, then remove it.
+			foreach ( $dismissals as $dismissal ) {
+				if ( $id === $dismissal['id'] ) {
+					delete_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices', $dismissal );
+					break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Is there a user dismissal record for a particular admin notice id?
+	 *
+	 * @since 2.1.0
+	 *
+	 * @static
+	 *
+	 * @param  string $id An admin notice id.
+	 * @return bool
+	 */
+	public static function isDismissed( $id ) {
+		$dismissed = false;
+		$id = sanitize_key( $id );
+
+		// Get all of the notices this user has dismissed.
+		$dismissals = get_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices' );
+
+		// Loop through all of the dismissed notices. If we find our $id, then mark bool and break.
+		foreach ( $dismissals as $dismissal ) {
+			if ( $id === $dismissal['id'] ) {
+				$dismissed = true;
+				break;
+			}
+		}
+
+		return $dismissed;
+	}
+
+	/**
+	 * Enqueues the required files.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @see \Boldgrid\Library\Library\Configs::get()
+	 *
+	 * @hook: admin_enqueue_scripts
+	 */
+	public function enqueue() {
+		wp_enqueue_script(
+			'bglib-notice-js',
+			Configs::get( 'libraryUrl' ) . 'src/assets/js/notice.js'
+		);
 	}
 }

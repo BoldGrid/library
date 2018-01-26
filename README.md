@@ -11,33 +11,36 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.1.0 ###
+* Feature: JIRA BGTHEME-103 Added ClaimPremiumKey notice.
+
 ### 2.0.0 ###
-* Feature: JIRA BGINSP-3  Added filter to display Connect Key prompt admin notice, even if dismissed.
-* Update:  JIRA WPB-3684  Moved plugin install to its own package (boldgrid/plugin-install).
-* Feature: JIRA BGBKUP-75 Added dismiss/undismiss for Connect Key prompt/notice.
+* Feature: JIRA BGINSP-3    Added filter to display Connect Key prompt admin notice, even if dismissed.
+* Update:  JIRA WPB-3684    Moved plugin install to its own package (boldgrid/plugin-install).
+* Feature: JIRA BGBKUP-75   Added dismiss/undismiss for Connect Key prompt/notice.
 
 ### 1.1.6 ###
-* Bug fix: JIRA BGBKUP-67 Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
-* Feature: JIRA WPB-3638  Added post-and-page-builder and boldgrid-easy-seo to the Plugins >> Add New page.
-* Bug fix: JIRA WPB-3636  Fixed invalid version number sent for plugins not installed, but in config.
-* Bug fix: JIRA WPB-3635  API calls now respect release channels.
+* Bug fix: JIRA BGBKUP-67   Fixed key prompt is-dismissible, and hid duplicate notice from other plugin.
+* Feature: JIRA WPB-3638    Added post-and-page-builder and boldgrid-easy-seo to the Plugins >> Add New page.
+* Bug fix: JIRA WPB-3636    Fixed invalid version number sent for plugins not installed, but in config.
+* Bug fix: JIRA WPB-3635    API calls now respect release channels.
 
 ### 1.1.5 ###
-* Bug fix: JIRA WPB-3518  Fixed fatal error in certain scenarios from double inclusion of WP core files.
+* Bug fix: JIRA WPB-3518    Fixed fatal error in certain scenarios from double inclusion of WP core files.
 
 ### 1.1.4 ###
-* Bug fix: JIRA WPB-3427  Adjusted handling of plugin update transients.
-* Added premium product check to license class.
+* Bug fix: JIRA WPB-3427    Adjusted handling of plugin update transients.
+*                           Added premium product check to license class.
 
 ### 1.1.3 ###
-* Validate plugin before printing card.
+*                           Validate plugin before printing card.
 
 ### 1.1.2 ###
-* Bug fixes.
+*                           Bug fixes.
 
 ### 1.1.1 ###
-* Added form affiliate data.
+*                           Added form affiliate data.
 
 ### 1.1.0 ###
-* Added action for when theme release channel changed.
-* Added Reseller class.
+*                           Added action for when theme release channel changed.
+*                           Added Reseller class.

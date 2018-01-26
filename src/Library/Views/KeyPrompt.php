@@ -1,4 +1,6 @@
-<div id="container_boldgrid_api_key_notice" class="library error notice is-dismissible">
+<div id="container_boldgrid_api_key_notice"
+	class="boldgrid-notice library error notice is-dismissible"
+	data-notice-id="bg-key-prompt">
 	<div class="api-notice">
 		<h2 class="dashicons-before dashicons-admin-network">
 			<?php esc_html_e( 'Enter Your BoldGrid Connect Key', 'boldgrid-inspirations' ); ?>

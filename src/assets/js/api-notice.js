@@ -16,9 +16,6 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			document.getElementById( 'boldgrid_api_key' ).value = $activateKey;
 		}
 
-		/** Dismissible action **/
-		notice.on( 'click', '.notice-dismiss', self.dismiss );
-		
 		/** Toggle the forms around **/
 		$( '.boldgridApiKeyLink', notice ).on( 'click', function() {
 			$( '.api-notice', notice ).hide();
@@ -28,7 +25,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			$( '.new-api-key', notice ).hide();
 			$( '.api-notice', notice ).fadeIn( 'slow' );
 		});
-		
+
 		/** Submit action **/
 		$( "#requestKeyForm" ).submit( function( event ) {
 			event.preventDefault();
@@ -219,29 +216,6 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 					.addClass( 'error-color' );
 			}
 		});
-	};
-
-	/**
-	 * Handle click of the notice-dismiss icon in the key prompt.
-	 *
-	 * @since 1.1.6
-	 */
-	this.dismiss = function() {
-		var data, nonce, wpHttpReferer,
-			notice = $( '#container_boldgrid_api_key_notice' );
-		
-		// Get the wpnonce and referer values.
-		nonce = $( '#set_key_auth', notice ).val();
-		wpHttpReferer = $( '[name="_wp_http_referer"]', notice ).val();
-
-		data = {
-			'action'  : 'dismissBoldgridNotice',
-			'notice' :  'bg-key-prompt',
-			'set_key_auth' : nonce,
-			'_wp_http_referer' : wpHttpReferer,
-		};
-
-		$.post( ajaxurl, data );
 	};
 };
 

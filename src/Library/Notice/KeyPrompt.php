@@ -24,8 +24,7 @@ use Boldgrid\Library\Library;
 class KeyPrompt {
 
 	/**
-	 * Bool indicating whether or not this key prompt has been dismissed by the
-	 * current user.
+	 * Bool indicating whether or not this key prompt has been dismissed by the current user.
 	 *
 	 * @since 2.0.1
 	 *
@@ -73,6 +72,8 @@ class KeyPrompt {
 	 * static and easily retrievable via filters.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param \Boldgrid\Library\Library\Key Key object.
 	 */
 	public function __construct( Library\Key $key ) {
 		$this->key = $key;
@@ -120,12 +121,14 @@ class KeyPrompt {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @see \Boldgrid\Library\Library\Notice::isDismissed()
+	 *
 	 * @hook: admin_notices
 	 */
 	public function keyNotice() {
 		$display_notice = apply_filters(
 			'Boldgrid\Library\Library\Notice\KeyPrompt_display',
-			( ! $this->isDismissed( $this->userNoticeKey ) )
+			( ! Library\Notice::isDismissed( $this->userNoticeKey ) )
 		);
 
 		if ( $display_notice ) {
@@ -198,7 +201,7 @@ class KeyPrompt {
 	 */
 	public function getIsDismissed() {
 		if( is_null( self::$isDismissed ) ) {
-			self::$isDismissed = $this->isDismissed( $this->userNoticeKey );
+			self::$isDismissed = Library\Notice::isDismissed( $this->userNoticeKey );
 		}
 
 		return self::$isDismissed;
@@ -224,85 +227,5 @@ class KeyPrompt {
 	 */
 	protected function getMessages() {
 		return $this->messages;
-	}
-
-	/**
-	 * Handle dimissal of the key prompt notice.
-	 *
-	 * @since 1.1.6
-	 *
-	 * @see \Boldgrid\Library\Library\Notice\KeyPrompt::isDismissed()
-	 *
-	 * @hook: wp_ajax_dismissBoldgridNotice
-	 */
-	public function dismiss() {
-		// Validate nonce.
-		if ( isset( $_POST['set_key_auth'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
-
-			// Mark the notice as dismissed, if not already done so.
-			$dismissal = array(
-				'id' => $this->userNoticeKey,
-				'timestamp' => time(),
-			);
-
-			if ( ! $this->isDismissed( $this->userNoticeKey ) ) {
-				add_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices', $dismissal );
-			}
-		}
-	}
-
-	/**
-	 * Handle undimissal of the key prompt notice.
-	 *
-	 * @since 1.1.7
-	 *
-	 * @hook: wp_ajax_undismissBoldgridNotice
-	 */
-	public function undismiss() {
-		// Validate nonce.
-		if ( isset( $_POST['set_key_auth'] ) && ! empty( $_POST['notice'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
-			$id = sanitize_key( $_POST['notice'] );
-
-			// Get all of the notices this user has dismissed.
-			$dismissals = get_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices' );
-
-			// Loop through all of the dismissed notices. If we find the dismissal, then remove it.
-			foreach ( $dismissals as $dismissal ) {
-				if ( $id === $dismissal['id'] ) {
-					delete_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices', $dismissal );
-					break;
-				}
-			}
-		}
-	}
-
-	/**
-	 * Is there a user dismissal record for a particular admin notice id?
-	 *
-	 * @todo This method seems like a more generalized method that should belong
-	 * in maybe Library\Notice rather than Library\Notice\KeyPrompt.
-	 *
-	 * @since 1.1.6
-	 *
-	 * @param  string $id An admin notice id.
-	 * @return bool
-	 */
-	public function isDismissed( $id ) {
-		$dismissed = false;
-		$id = sanitize_key( $id );
-
-		// Get all of the notices this user has dismissed.
-		$dismissals = get_user_meta( get_current_user_id(), 'boldgrid_dismissed_admin_notices' );
-
-		// Loop through all of the dismissed notices. If we find our $id, then mark bool and break.
-		foreach ( $dismissals as $dismissal ) {
-			if ( $id === $dismissal['id'] ) {
-				$dismissed = true;
-				break;
-			}
-		}
-
-		// We did not find our notice dismissed above, so return false.
-		return $dismissed;
 	}
 }
