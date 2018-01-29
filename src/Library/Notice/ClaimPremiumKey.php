@@ -160,11 +160,13 @@ class ClaimPremiumKey {
 	 *
 	 * @since 2.0.1
 	 *
+	 * @see \Boldgrid\Library\Library\Notice::isDismissed()
+	 *
 	 * @hook: Boldgrid\Library\Notice\KeyPrompt\getIsDismissed
 	 */
 	public function getIsDismissed() {
 		if( is_null( self::$isDismissed ) ) {
-			self::$isDismissed = $this->isDismissed( $this->userNoticeKey );
+			self::$isDismissed = Library\Notice::isDismissed( $this->userNoticeKey );
 		}
 
 		return self::$isDismissed;
