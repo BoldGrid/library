@@ -181,7 +181,7 @@ class Key {
 	 * @return bool
 	 */
 	public function verifyData( $data ) {
-		return is_a( $data->result->data, 'stdClass' ) && ! empty( $data->result->data->asset_id );
+		return ! empty( $data->result->data->asset_id );
 	}
 
 	/**
