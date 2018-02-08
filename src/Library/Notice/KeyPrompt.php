@@ -137,6 +137,19 @@ class KeyPrompt {
 			$first_name = empty( $current_user->user_firstname ) ? '' : $current_user->user_firstname;
 			$last_name = empty( $current_user->user_lastname ) ? '' : $current_user->user_lastname;
 			$api = Library\Configs::get( 'api' ) . '/api/open/generateKey';
+
+			/**
+			 * Check if the Envato notice to claim a Premium Connect Key should be enabled.
+			 *
+			 * A theme can add this filter and return true, which will enable this notice.
+			 *
+			 * @since 2.1.0
+			 */
+			$enableClaimMessage = apply_filters(
+				'Boldgrid\Library\Library\Notice\ClaimPremiumKey_enable',
+				false
+			);
+
 			include dirname( __DIR__ ) . '/Views/KeyPrompt.php';
 
 			self::$isDisplayed = true;

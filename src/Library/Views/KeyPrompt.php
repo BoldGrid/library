@@ -24,9 +24,28 @@
 			</span>
 		</form>
 		<br />
+		<?php
+// Display either the Envato message or the default signup message.
+if ( $enableClaimMessage ) {
+	printf(
+		esc_html__(
+			'Thank you for your Envato Market purchase.%sPlease visit %sBoldGrid Central%s to link your accounts and claim your Premium Connect Key.',
+			'boldgrid-inspirations'
+		),
+		'<br />',
+		'<a target="_blank" href="https://www.boldgrid.com/central/code/envato">',
+		'</a>'
+	);
+} else {
+		?>
 		<a href="#" class="boldgridApiKeyLink">
-			<?php esc_html_e( 'Don\'t have a Connect Key yet or lost your Key?', 'boldgrid-inspirations' ); ?>
+		<?php
+	esc_html_e( 'Don\'t have a Connect Key yet or lost your Key?', 'boldgrid-inspirations' );
+		?>
 		</a>
+		<?php
+}
+		?>
 	</div>
 	<div class="new-api-key hidden">
 		<h2 class="dashicons-before dashicons-admin-network">

@@ -2,6 +2,9 @@
 /**
  * File: ClaimPremiumKey.php
  *
+ * The notice for Envato customers that have purchased the BoldGrid Prime theme.
+ * They are eligible to receive a free Premium Connect Key.
+ *
  * @package Boldgrid\Library
  *
  * @version 2.1.0
@@ -94,7 +97,7 @@ class ClaimPremiumKey {
 	 */
 	public function displayNotice() {
 		/**
-		 * Check if this notice should be enabled.
+		 * Check if the Envato notice to claim a Premium Connect Key should be enabled.
 		 *
 		 * A theme can add this filter and return true, which will enable this notice.
 		 *
@@ -105,15 +108,17 @@ class ClaimPremiumKey {
 			false
 		);
 
-		if ( $enabled ) {
+		// If a Connect Key is not saved, then skip this notice; it will be in the key prompt.
+		$hasConnectKey = (bool) Library\Configs::get( 'key' );
+
+		if ( $enabled && $hasConnectKey ) {
 			// If user has dismissed the notice, then do not display the notice.
 			$display = ! Library\Notice::isDismissed( $this->userNoticeKey );
 
-			// If the user has a Premium Connect Key, then do not display the notice.
-			$hasConnectKey = (bool) Library\Configs::get( 'key' );
-			$isPremium = $this->key->getLicense()->isPremium( 'boldgrid-inspirations' );
+			// Do not display if user has an Envato-connected Prime theme.
+			$hasEnvatoPrime = $this->key->getLicense()->isPremium( 'envato-prime' );
 
-			if ( $hasConnectKey && $isPremium ) {
+			if ( $hasEnvatoPrime ) {
 				$display = false;
 			}
 
