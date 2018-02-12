@@ -116,6 +116,11 @@ class Ui {
 	 * @return string
 	 */
 	public function render_col_container( $sections ) {
+
+		if( empty( $sections['sections'] ) ) {
+			return $sections;
+		}
+
 		$section_count = 0;
 
 		$show_section = ! empty( $_GET['section'] ) ? $_GET['section'] : null;

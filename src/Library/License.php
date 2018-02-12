@@ -11,6 +11,8 @@
 
 namespace Boldgrid\Library\Library;
 
+use Boldgrid\Library\Library;
+
 /**
  * BoldGrid Library License Class.
  *
@@ -26,13 +28,16 @@ class License {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var array  $key     Transient data key.
-	 * @var object $license BoldGrid license details.
-	 * @var object $data    BoldGrid license data.
+	 * @var array  $key           Transient data key.
+	 * @var object $license       BoldGrid license details.
+	 * @var string $licenseString A string representing the type of license, such
+	 *                            as "Free" or "Premium".
+	 * @var object $data          BoldGrid license data.
 	 */
 	private
 		$key,
 		$license,
+		$licenseString,
 		$data;
 
 	/**
@@ -42,18 +47,63 @@ class License {
 	 */
 	public function __construct() {
 		$this->key = $this->setKey();
-		$this->license = $this->setLicense();
-		if ( is_object( $this->getLicense() ) ) {
-			$this->data = $this->setData();
-			$this->setTransient( $this->getData() );
-			$licenseData = array( 'licenseData' => $this->getData() );
-			Configs::set( $licenseData, Configs::get() );
-		} else {
-			if ( Configs::get( 'licenseActivate' ) ) {
-				Filter::add( $this );
-				$this->licenseNotice();
-			}
+
+		$this->initLicense();
+
+		Filter::add( $this );
+	}
+
+	/**
+	 * Handle ajax request to clear license data.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @hook: wp_ajax_bg_clear_license
+	 */
+	public function ajaxClear() {
+		$plugin = ! empty( $_POST['plugin'] ) ? $_POST['plugin'] : null;
+		if( empty( $plugin ) ) {
+			wp_send_json_error( __( 'Unknown plugin.' ) );
 		}
+
+		if( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( __( 'Access denied.', $plugin ) );
+		}
+
+		$success = $this->clearTransient();
+		if( ! $success ) {
+			wp_send_json_error( __( 'Failed to clear license data.', $plugin ) );
+		}
+
+		$this->initLicense();
+
+		$return = array(
+			'isPremium' => $this->isPremium( $plugin ),
+			'string' => $this->licenseString,
+		);
+
+		wp_send_json_success( $return );
+	}
+
+	/**
+	 * Register scripts.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @hook: admin_enqueue_scripts
+	 */
+	public function registerScripts() {
+		wp_register_script(
+			'bglib-license',
+			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/license.js',
+			'jQuery'
+		);
+
+		$translations = array(
+			'unknownError' => __( 'Unknown error' ),
+		);
+
+		wp_localize_script( 'bglib-license', 'bglibLicense', $translations );
 	}
 
 	/**
@@ -161,10 +211,21 @@ class License {
 	 * @hook: admin_init
 	 */
 	public function deactivate() {
-		if ( ! $this->isValid() ) {
+		if ( ! $this->isValid() && Configs::get( 'licenseActivate' ) ) {
 			delete_site_transient( $this->getKey() );
 			deactivate_plugins( Configs::get( 'file' ) );
 		}
+	}
+
+	/**
+	 * Clear the transient containing license data.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @return bool True on success
+	 */
+	protected function clearTransient() {
+		return delete_site_transient( $this->getKey() );
 	}
 
 	/**
@@ -230,6 +291,17 @@ class License {
 	}
 
 	/**
+	 * Return the license string.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @return string
+	 */
+	public function getLicenseString() {
+		return $this->licenseString;
+	}
+
+	/**
 	 * Get the data class property.
 	 *
 	 * @since  1.0.0
@@ -254,15 +326,39 @@ class License {
 	}
 
 	/**
+	 * Init the license.
+	 *
+	 * This method was originally contained within the constructor, however it
+	 * was pulled out as it was needed in additional places. For example, in cases
+	 * we instantiate this class and then clear the license data, we may need to
+	 * get fresh license data at that time by initializing the license again.
+	 *
+	 * @since 2.2.0
+	 */
+	public function initLicense() {
+		$this->license = $this->setLicense();
+		if ( is_object( $this->getLicense() ) ) {
+			$this->data = $this->setData();
+			$this->setTransient( $this->getData() );
+			$licenseData = array( 'licenseData' => $this->getData() );
+			Configs::set( $licenseData, Configs::get() );
+		}
+	}
+
+	/**
 	 * Checks if product is premium or free.
 	 *
 	 * @since 1.1.4
 	 *
 	 * @nohook
 	 *
-	 * @return bool 
+	 * @return bool
 	 */
 	public function isPremium( $product ) {
-		return isset( $this->getData()->$product );
+		$isPremium = isset( $this->getData()->$product );
+
+		$this->licenseString = $isPremium ? __( 'Premium' ) : __( 'Free' );
+
+		return $isPremium;
 	}
 }
