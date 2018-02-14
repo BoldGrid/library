@@ -11,7 +11,7 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.2.0 In progress ###
+### 2.2.0 ###
 * Bug fix: JIRA WPB-3714    Fixed PHP notice in Key::verifyData().
 * Feature:                  As a user, I can refresh my license key status.
 
