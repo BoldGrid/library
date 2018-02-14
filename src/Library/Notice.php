@@ -69,6 +69,32 @@ class Notice {
 	}
 
 	/**
+	 * Show an admin notice.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @hook: Boldgrid\Libary\Notice\show
+	 *
+	 * @param string $message
+	 * @param string $id
+	 * @param string $class
+	 */
+	public function show( $message, $id, $class = "notice notice-warning" ) {
+		$nonce = wp_nonce_field( 'boldgrid_set_key', 'set_key_auth', true, false );
+
+		if( self::isDismissed( $id ) ) {
+			return;
+		}
+
+		printf( '<div class="%1$s boldgrid-notice is-dismissible" data-notice-id="%2$s">%3$s%4$s</div>',
+			$class,
+			$id,
+			$message,
+			$nonce
+		);
+	}
+
+	/**
 	 * Displays the license notice in the WordPress admin.
 	 *
 	 * @since 1.0.0
