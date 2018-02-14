@@ -222,9 +222,11 @@ class License {
 	 *
 	 * @since 2.2.0
 	 *
+	 * @hook: Boldgrid\Library\License\clearTransient
+	 *
 	 * @return bool True on success
 	 */
-	protected function clearTransient() {
+	public function clearTransient() {
 		return delete_site_transient( $this->getKey() );
 	}
 
