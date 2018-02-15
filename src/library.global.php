@@ -10,6 +10,7 @@ return array(
 	'option' => 'license',
 	'key' => get_site_option( 'boldgrid_api_key', null ),
 	'apiData' => get_site_transient( 'boldgrid_api_data' ),
+	'themeData' => get_site_transient( 'boldgrid_theme_data' ),
 
 	// Enable key validation in library.
 	'keyValidate' => true,
@@ -73,5 +74,9 @@ return array(
 				'priority' => 80,
 			),
 		),
+	),
+	'api_calls' => array(
+		'get_theme_data' => '/api/open/get-theme-data',
+		'get_asset'      => '/api/open/get-asset',
 	),
 );

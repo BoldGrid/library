@@ -42,6 +42,16 @@ class Call {
 		$error;
 
 	/**
+	 * Request method.
+	 *
+	 * @since 2.2.0
+	 * @access private
+	 *
+	 * @var string
+	 */
+	private $method;
+
+	/**
 	 * Initialize class and set class properties.
 	 *
 	 * @since 1.0.0
@@ -49,11 +59,12 @@ class Call {
 	 * @param string $url  The URL to make API calls to.
 	 * @param array  $args The arguments to pass to API call.
 	 */
-	public function __construct( $url, array $args = array() ) {
+	public function __construct( $url, array $args = array(), $method = 'post' ) {
 		$this->setKey();
 		$this->setSiteHash();
 		$this->setUrl( $url );
 		$this->setArgs( $args );
+		$this->setMethod( $method );
 		$availability = new Availability( Configs::get( 'api' ) );
 		if ( $availability->getAvailable() ) {
 			$this->call();
@@ -124,6 +135,18 @@ class Call {
 	}
 
 	/**
+	 * Sets the request method.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param  string $method Request method.
+	 * @return string
+	 */
+	protected function setMethod( $method ) {
+		return $this->method = $method;
+	}
+
+	/**
 	 * Makes the API call.
 	 *
 	 * @since  1.0.0
@@ -131,9 +154,12 @@ class Call {
 	 * @return bool  Was the API call successful?
 	 */
 	private function call() {
-
-		// Make the POST request.
-		$response = wp_remote_post( $this->url, $this->args );
+		// Make the request.
+		if ( 'get' === $this->method ) {
+			$response = wp_remote_get( $this->url, $this->args );
+		} else {
+			$response = wp_remote_post( $this->url, $this->args );
+		}
 
 		// Decode the response and set class property.
 		$this->response = json_decode( wp_remote_retrieve_body( $response ) );
