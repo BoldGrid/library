@@ -167,7 +167,7 @@ class ClaimPremiumKey {
 	 *
 	 * @see \Boldgrid\Library\Library\Notice::isDismissed()
 	 *
-	 * @hook: Boldgrid\Library\Notice\KeyPrompt\getIsDismissed
+	 * @hook: Boldgrid\Library\Notice\ClaimPremiumKey\getIsDismissed
 	 */
 	public function getIsDismissed() {
 		if( is_null( self::$isDismissed ) ) {
