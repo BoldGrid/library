@@ -71,15 +71,19 @@ class Notice {
 	/**
 	 * Show an admin notice.
 	 *
-	 * @since 2.2.0
+	 * At one point we had this method running on the following hook:
+	 * Boldgrid\Libary\Notice\show. Because several different notices are
+	 * instantiating this class (such as the keyPrompt and ClaimPremiumKey notices),
+	 * the hook was being added more than once, causing duplicate admin notices
+	 * to show.
 	 *
-	 * @hook: Boldgrid\Libary\Notice\show
+	 * @since 2.2.0
 	 *
 	 * @param string $message
 	 * @param string $id
 	 * @param string $class
 	 */
-	public function show( $message, $id, $class = "notice notice-warning" ) {
+	public static function show( $message, $id, $class = "notice notice-warning" ) {
 		$nonce = wp_nonce_field( 'boldgrid_set_key', 'set_key_auth', true, false );
 
 		if( self::isDismissed( $id ) ) {
