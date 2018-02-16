@@ -15,7 +15,6 @@ composer require boldgrid/library
 * Bug fix:                  Duplicate admin notices showing.
 
 ### 2.2.0 ###
-* Feature: JIRA BGTHEME-104 Added theme updater.
 * Bug fix: JIRA WPB-3714    Fixed PHP notice in Key::verifyData().
 * Feature:                  As a user, I can refresh my license key status.
 
