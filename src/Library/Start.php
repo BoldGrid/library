@@ -72,14 +72,11 @@ class Start {
 	 *
 	 * @since 1.1.4
 	 *
-	 * @uses \Boldgrid\Library\Plugin\Checker()
-	 * @uses \Boldgrid\Library\Plugin\Checker::run()
+	 * @uses \Boldgrid\Library\Library\Plugin\Checker::run()
 	 */
 	public function init() {
-		if ( class_exists( 'Boldgrid\Library\Plugin\Checker' ) ) {
-			$pluginChecker = new \Boldgrid\Library\Plugin\Checker();
-			$pluginChecker->run();
-		}
+		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
+		$pluginChecker->run();
 	}
 
 	/**
@@ -91,7 +88,7 @@ class Start {
 		if ( ! did_action( 'Boldgrid\Library\Library\Start::loadPluginInstaller' ) ) {
 			do_action( 'Boldgrid\Library\Library\Start::loadPluginInstaller' );
 
-			if ( class_exists( 'Boldgrid\Library\Plugin\Installer' ) ) {
+			if ( class_exists( 'Boldgrid\Library\Plugin\Installer', false ) ) {
 				$this->pluginInstaller = new \Boldgrid\Library\Plugin\Installer(
 					Configs::get( 'pluginInstaller' ),
 					$this->getReleaseChannel()

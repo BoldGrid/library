@@ -12,6 +12,7 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 2.2.1 In progress ###
+* Update:  JIRA WPB-3721    Moved Plugin\Checker back to Library.
 * Bug fix:                  Duplicate admin notices showing.
 
 ### 2.2.0 ###
