@@ -37,7 +37,7 @@ class Checker {
 	 * @since 1.1.4
 	 */
 	public function run() {
-		/** This action is documented in this file, in method checkUpdated() */
+
 		add_action( 'boldgrid_plugins_updated',
 			array(
 				'Boldgrid\Library\Util\Option',
@@ -70,7 +70,9 @@ class Checker {
 
 		$boldgridSettings = get_site_option( 'boldgrid_settings' );
 
-		foreach ( Util\Plugin::getFiltered( $this->pluginPattern ) as $slug => $data ) {
+		$plugins = \Boldgrid\Library\Library\Util\Plugin::getFiltered( $this->pluginPattern );
+
+		foreach ( $plugins as $slug => $data ) {
 			if ( empty( $boldgridSettings['plugins_checked'][ $slug ][ $data['Version'] ] ) ) {
 				$updated[ $slug ] = $data;
 
