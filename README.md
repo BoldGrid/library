@@ -12,6 +12,7 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 2.2.1 In progress ###
+* Bug fix: JIRA WPB-3724    Do not call getLicense if Connect Key is not available.
 * Update:  JIRA WPB-3721    Moved Plugin\Checker back to Library.
 * Bug fix:                  Duplicate admin notices showing.
 

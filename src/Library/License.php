@@ -127,7 +127,9 @@ class License {
 	 * @return mixed $license The response object or error string of call.
 	 */
 	private function setLicense() {
-		if ( ! $license = $this->getTransient() ) {
+		if ( ! get_option( 'boldgrid_api_key' ) ) {
+			$license = 'Missing Connect Key';
+		} else if ( ! $license = $this->getTransient() ) {
 			$license = $this->getRemoteLicense();
 		}
 
