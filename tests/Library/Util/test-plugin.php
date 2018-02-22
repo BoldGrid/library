@@ -9,19 +9,19 @@
  */
 
 /**
- * BoldGrid Util Plugin Test class.
+ * BoldGrid Library Util Plugin Test class.
  *
- * @since 1.1.4
+ * @since 2.2.1
  */
-class Test_BoldGrid_Util_Plugin extends WP_UnitTestCase {
+class Test_BoldGrid_Library_Util_Plugin extends WP_UnitTestCase {
 
 	/**
 	 * Test getFiltered.
 	 *
-	 * @since 1.1.4
+	 * @since 2.2.1
 	 */
 	public function testGetFiltered() {
-		$plugin = new Boldgrid\Library\Util\Plugin();
+		$plugin = new Boldgrid\Library\Library\Util\Plugin();
 
 		$allPlugins = get_plugins();
 

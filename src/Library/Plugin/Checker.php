@@ -10,8 +10,6 @@
 
 namespace Boldgrid\Library\Library\Plugin;
 
-use Boldgrid\Library\Util;
-
 /**
  * BoldGrid Plugin Checker.
  *
