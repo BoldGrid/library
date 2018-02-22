@@ -68,11 +68,7 @@ class Load {
 		$this->configs['libraryDir'] = trailingslashit( $this->getPath() ) . 'vendor/boldgrid/library/';
 
 		// Add loaded Library URL to configs.
-		$this->configs['libraryUrl'] = str_replace(
-			ABSPATH,
-			get_site_url() . '/',
-			$this->configs['libraryDir']
-		);
+		$this->configs['libraryUrl'] = plugin_dir_url( $this->configs['libraryDir'] ) . 'library/';
 
 		// Initialize BoldGrid Library.
 		$this->load( $this->configs['loader'] );

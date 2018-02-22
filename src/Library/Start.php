@@ -46,6 +46,8 @@ class Start {
 	 * @param array $configs Plugin configuration array.
 	 */
 	public function __construct( $configs = null ) {
+		$configs = $this->filterConfigs( $configs );
+
 		$this->configs = new Configs( $configs );
 		$this->releaseChannel = new ReleaseChannel;
 
@@ -95,5 +97,25 @@ class Start {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Filter the configuration array.
+	 *
+	 * @since 2.2.1
+	 *
+	 * @param  array $configs Configuration array.
+	 * @return array
+	 */
+	public function filterConfigs( $configs ) {
+		if ( ! empty( $configs['libraryDir'] ) ) {
+			$configs['libraryUrl'] = str_replace(
+				ABSPATH,
+				get_site_url() . '/',
+				$configs['libraryDir']
+			);
+		}
+
+		return $configs;
 	}
 }
