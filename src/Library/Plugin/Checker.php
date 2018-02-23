@@ -29,6 +29,12 @@ class Checker {
 	 */
 	private $pluginPattern = '^(boldgrid-|post-and-page-builder)';
 
+	public function __construct() {
+		add_action( 'upgrader_process_complete', function() {
+			delete_site_transient( 'boldgrid_plugins_filtered' );
+		} );
+	}
+
 	/**
 	 * Check plugins.
 	 *
@@ -79,7 +85,12 @@ class Checker {
 
 		$boldgridSettings = get_site_option( 'boldgrid_settings' );
 
-		$plugins = \Boldgrid\Library\Library\Util\Plugin::getFiltered( $this->pluginPattern );
+		$plugins = get_site_transient( 'boldgrid_plugins_filtered' );
+
+		if ( empty( $plugins ) ) {
+			$plugins = \Boldgrid\Library\Library\Util\Plugin::getFiltered( $this->pluginPattern );
+			set_site_transient( 'boldgrid_plugins_filtered', $plugins );
+		}
 
 		foreach ( $plugins as $slug => $data ) {
 			if ( empty( $boldgridSettings['plugins_checked'][ $slug ][ $data['Version'] ] ) ) {
