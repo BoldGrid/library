@@ -78,8 +78,7 @@ class Registration implements Registration\RegistrationInterface {
 
 	/**
 	 * Verify the product is found in the library option, or register it
-	 * if it's not found. If the library version is registered incorrectly, we
-	 * will fix it.
+	 * if it's not found.
 	 *
 	 * @since  1.0.0
 	 *
