@@ -51,6 +51,17 @@ class Checker {
 	}
 
 	/**
+	 * Get pluginPattern.
+	 *
+	 * @since 2.2.1
+	 *
+	 * @return string
+	 */
+	public function getPluginPattern() {
+		return $this->pluginPattern;
+	}
+
+	/**
 	 * Find updated/new BoldGrid plugins.
 	 *
 	 * Check for post-update actions for BoldGrid plugins.

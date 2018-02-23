@@ -48,4 +48,24 @@ class Plugin {
 
 		return $filtered;
 	}
+
+	/**
+	 * Determine if a plugin is a BoldGrid plugin.
+	 *
+	 * @since 2.2.1
+	 *
+	 * @param  string $plugin Such as post-and-page-builder/post-and-page-builder.php
+	 * @return bool
+	 */
+	public static function isBoldgridPlugin( $plugin ) {
+		if( empty( $plugin ) ) {
+			return false;
+		}
+
+		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
+
+		$plugins = \Boldgrid\Library\Library\Util\Plugin::getFiltered( $pluginChecker->getPluginPattern() );
+
+		return array_key_exists( $plugin, $plugins );
+	}
 }

@@ -86,24 +86,8 @@ class Registration implements Registration\RegistrationInterface {
 	 * @return null
 	 */
 	public function verify() {
-
 		if ( ! isset( $this->libraries[ $this->getProduct() ] ) ) {
 			$this->register();
-		} else {
-			$version = new Version( $this->getDependency() );
-
-			/*
-			 * If this version does not match the version registered, then
-			 * reregister it and get it right.
-			 *
-			 * The version should always be right as of @2.2.1. This is more for
-			 * prior versions of the library because they lack the ability to
-			 * update their registered library version on upgrade.
-			 */
-			if( $version->getVersion() !== $this->libraries[ $this->getProduct() ] ) {
-				$this->deregister();
-				$this->register();
-			}
 		}
 	}
 

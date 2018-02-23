@@ -77,6 +77,10 @@ class Start {
 	 * @uses \Boldgrid\Library\Library\Plugin\Checker::run()
 	 */
 	public function init() {
+
+		// Registration class runs Filter::add($this) in __construct.
+		$registration = new \Boldgrid\Library\Library\Registration();
+
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
 	}
