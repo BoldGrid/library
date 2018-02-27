@@ -94,7 +94,7 @@ class Start {
 		if ( ! did_action( 'Boldgrid\Library\Library\Start::loadPluginInstaller' ) ) {
 			do_action( 'Boldgrid\Library\Library\Start::loadPluginInstaller' );
 
-			if ( class_exists( 'Boldgrid\Library\Plugin\Installer', false ) ) {
+			if ( class_exists( '\Boldgrid\Library\Plugin\Installer' ) ) {
 				$this->pluginInstaller = new \Boldgrid\Library\Plugin\Installer(
 					Configs::get( 'pluginInstaller' ),
 					$this->getReleaseChannel()
