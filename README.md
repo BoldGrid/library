@@ -11,7 +11,7 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.2.1 In progress ###
+### 2.2.1 ###
 * Update:  JIRA WPB-3725    Use a transient in Checker::findUpdated().
 * Bug fix: JIRA WPB-3724    Do not call getLicense if Connect Key is not available.
 * Update:  JIRA WPB-3721    Moved Plugin\Checker back to Library.
