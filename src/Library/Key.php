@@ -159,13 +159,17 @@ class Key {
 	 * @return mixed $response Object for valid response, or error message as string.
 	 */
 	public function callCheckVersion( $args ) {
-		$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/checkVersion', $args );
+		if ( ! empty( $args['key'] ) ) {
+			$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/checkVersion', $args );
 
-		// If there's an error set that as the response.
-		if ( ! $response = $call->getError() ) {
+			// If there's an error set that as the response.
+			if ( ! $response = $call->getError() ) {
 
-			// If the response is successful, then retrieve the response.
-			$response = $call->getResponse();
+				// If the response is successful, then retrieve the response.
+				$response = $call->getResponse();
+			}
+		} else {
+			$response = 'No Connect Key available.';
 		}
 
 		// Return the API response.

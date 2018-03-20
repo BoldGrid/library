@@ -89,7 +89,7 @@ class Availability {
 		}
 
 		// Update the boldgrid_available transient.
-		set_site_transient( 'boldgrid_available', ( int ) $available, HOUR_IN_SECONDS );
+		set_site_transient( 'boldgrid_available', ( int ) $available, 5 * MINUTE_IN_SECONDS );
 
 		return $available;
 	}

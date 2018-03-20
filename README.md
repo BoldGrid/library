@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.2.2 In progress ###
+* Bug fix: JIRA WPB-3767    Prevent invalid API calls for check-version.
+
 ### 2.2.1 ###
 * Bug fix: JIRA WPB-3730    Fixed loading of plugin installer class.
 * Update:  JIRA WPB-3725    Use a transient in Checker::findUpdated().
