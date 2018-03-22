@@ -81,6 +81,9 @@ class Start {
 		// Registration class runs Filter::add($this) in __construct.
 		$registration = new \Boldgrid\Library\Library\Registration();
 
+		// Update class runs Filter::add($this) in __construct.
+		$update = new \Boldgrid\Library\Library\Update();
+
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
 	}
