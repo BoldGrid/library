@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.3.1 ###
+* Bug fix: JIRA BGBKUP-180  Fixed empty check for PHP 5.3.
+
 ### 2.3.0 ###
 * Feature: JIRA BGBKUP-180  Handle auto updates as configured by the boldgrid_settings option.
 
