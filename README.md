@@ -11,8 +11,8 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.3 In progress ###
-* Feature:                  Handle auto updates as configured by the boldgrid_settings option.
+### 2.3.0 ###
+* Feature: JIRA BGBKUP-180  Handle auto updates as configured by the boldgrid_settings option.
 
 ### 2.2.2 ###
 * Bug fix: JIRA WPB-3767    Prevent invalid API calls for check-version.

@@ -42,7 +42,7 @@ class Update {
 	 * @hook: auto_update_plugin
 	 */
 	public function auto_update_plugin() {
-		return 1 === \Boldgrid\Library\Util\Option::get( 'plugin_autoupdate' );
+		return ! empty( \Boldgrid\Library\Util\Option::get( 'plugin_autoupdate' ) );
 	}
 
 	/**
@@ -53,6 +53,6 @@ class Update {
 	 * @hook: auto_update_theme
 	 */
 	public function auto_update_theme() {
-		return 1 === \Boldgrid\Library\Util\Option::get( 'theme_autoupdate' );
+		return ! empty( \Boldgrid\Library\Util\Option::get( 'theme_autoupdate' ) );
 	}
 }
