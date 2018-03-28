@@ -71,8 +71,13 @@ class License {
 		}
 
 		$success = $this->clearTransient();
-		if( ! $success ) {
-			wp_send_json_error( __( 'Failed to clear license data.', $plugin ) );
+		if( $success ) {
+			wp_send_json_error( array(
+				'string' => sprintf(
+					__( 'Failed to clear license data. Unable to delete site transient "%1$s".', $plugin ),
+					$this->getKey()
+				),
+			));
 		}
 
 		$this->initLicense();
