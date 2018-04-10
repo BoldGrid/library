@@ -11,6 +11,10 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.3.2 ###
+* Update:                   More clear error message on failed ajax license clears.
+* Update:                   Added prettier-eslint.
+
 ### 2.3.1 ###
 * Bug fix: JIRA BGBKUP-180  Fixed empty check for PHP 5.3.
 
