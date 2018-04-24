@@ -27,7 +27,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 		});
 
 		/** Submit action **/
-		$( "#requestKeyForm" ).submit( function( event ) {
+		$( '#requestKeyForm' ).submit( function( event ) {
 			event.preventDefault();
 
 			var posting,
@@ -59,6 +59,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				return false;
 			}
 
+			$form.find( '#requestKey' ).prop( 'disabled', 'disabled' );
+
 			posting = $.post( $( '#generate-api-key' ).val(),
 				{
 					first: $firstName,
@@ -85,6 +87,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 					$form.find( '#emailAddr' ).prev().addClass( 'error-color' );
 				}
 				$alertBox.text( message );
+
+				$form.find( '#requestKey' ).prop( 'disabled', false );
 			});
 		});
 

@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.3.3 In progress ###
+* Bug fix: JIRA BGINSP-15   Disable Connect Key request button after submission.
+
 ### 2.3.2 ###
 * Update:                   More clear error message on failed ajax license clears.
 * Update:                   Added prettier-eslint.
