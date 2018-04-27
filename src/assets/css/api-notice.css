@@ -91,3 +91,8 @@ input#boldgrid_api_key {
 	margin-top: -2em;
 	display: none;
 }
+#requestKeyForm .spinner.inline {
+	visibility: visible;
+	float: none;
+	vertical-align: bottom;
+}

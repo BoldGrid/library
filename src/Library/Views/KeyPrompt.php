@@ -95,6 +95,7 @@ if ( $enableClaimMessage ) {
 				<button id="requestKey" class="button button-primary">
 					<?php esc_html_e( 'Submit', 'boldgrid-inspirations' ); ?>
 				</button>
+				<span class="spinner"></span>
 				<input type="hidden" id="generate-api-key" value="<?php echo $api ?>" />
 			</form>
 		</div>

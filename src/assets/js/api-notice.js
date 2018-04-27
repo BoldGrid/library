@@ -37,7 +37,10 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				$email = $form.find( '#emailAddr' ).val(),
 				$link = $form.find( '#siteUrl' ).val(),
 				$alertBox = $( '.error-alerts' ),
-				$genericError = 'There was an error communicating with the BoldGrid Connect Key server.  Please try again.';
+				$genericError = 'There was an error communicating with the BoldGrid Connect Key server.  Please try again.',
+				$submit = $form.find( '#requestKey' ),
+				$spinner = $form.find( '.spinner' );
+
 
 
 				$('.error-color').removeClass( 'error-color' );
@@ -59,7 +62,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				return false;
 			}
 
-			$form.find( '#requestKey' ).prop( 'disabled', 'disabled' );
+			$submit.prop( 'disabled', 'disabled' );
+			$spinner.addClass( 'inline' );
 
 			posting = $.post( $( '#generate-api-key' ).val(),
 				{
@@ -88,7 +92,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				}
 				$alertBox.text( message );
 
-				$form.find( '#requestKey' ).prop( 'disabled', false );
+				$submit.prop( 'disabled', false );
+				$spinner.removeClass( 'inline' );
 			});
 		});
 
