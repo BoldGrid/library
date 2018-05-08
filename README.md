@@ -11,7 +11,7 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.3.3 In progress ###
+### 2.3.3 ###
 * Bug fix: JIRA BGINSP-15   Disable Connect Key request button after submission.
 
 ### 2.3.2 ###
