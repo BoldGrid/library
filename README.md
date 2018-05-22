@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.3.4 ###
+* Update:  JIRA BGBKUP-220  Sanitize inputs.
+
 ### 2.3.3 ###
 * Bug fix: JIRA BGINSP-15   Disable Connect Key request button after submission.
 

@@ -197,7 +197,7 @@ class KeyPrompt {
 		}
 
 		// Validate key.
-		$valid = new Library\Key\Validate( $_POST['api_key'] );
+		$valid = new Library\Key\Validate( sanitize_text_field( $_POST['api_key'] ) );
 		if ( ! $valid->getValid() ) {
 			wp_send_json_error( array( 'message' => $msg->error ) );
 		}

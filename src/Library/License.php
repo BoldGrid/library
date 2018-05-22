@@ -61,7 +61,7 @@ class License {
 	 * @hook: wp_ajax_bg_clear_license
 	 */
 	public function ajaxClear() {
-		$plugin = ! empty( $_POST['plugin'] ) ? $_POST['plugin'] : null;
+		$plugin = ! empty( $_POST['plugin'] ) ? sanitize_text_field( $_POST['plugin'] ) : null;
 		if( empty( $plugin ) ) {
 			wp_send_json_error( __( 'Unknown plugin.' ) );
 		}
