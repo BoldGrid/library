@@ -34,11 +34,6 @@ return array(
 				'file' => 'boldgrid-inspirations/boldgrid-inspirations.php',
 				'priority' => 20,
 			),
-			'boldgrid-backup' => array(
-				'key' => 'backup',
-				'file' => 'boldgrid-backup/boldgrid-backup.php',
-				'priority' => 40,
-			),
 			'boldgrid-staging' => array(
 				'key' => 'staging',
 				'file' => 'boldgrid-staging/boldgrid-staging.php',
@@ -67,6 +62,11 @@ return array(
 				'slug' => 'boldgrid-easy-seo',
 				'link' => '//wordpress.org/plugins/boldgrid-easy-seo/',
 				'priority' => 30,
+			),
+			'boldgrid-backup' => array(
+				'key' => 'backup',
+				'file' => 'boldgrid-backup/boldgrid-backup.php',
+				'priority' => 40,
 			),
 			'wpforms-lite' => array(
 				'slug' => 'wpforms-lite',
