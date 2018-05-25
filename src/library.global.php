@@ -64,6 +64,7 @@ return array(
 				'priority' => 30,
 			),
 			'boldgrid-backup' => array(
+				'slug' => 'boldgrid-backup',
 				'key' => 'backup',
 				'file' => '//wordpress.org/plugins/boldgrid-backup/',
 				'priority' => 40,
