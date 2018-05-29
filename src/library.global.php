@@ -65,7 +65,7 @@ return array(
 			),
 			'boldgrid-backup' => array(
 				'slug' => 'boldgrid-backup',
-				'file' => '//wordpress.org/plugins/boldgrid-backup/',
+				'link' => '//wordpress.org/plugins/boldgrid-backup/',
 				'priority' => 40,
 			),
 			'wpforms-lite' => array(
