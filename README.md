@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.3.5 ###
+* Bug fix:                  Updating boldgrid-backup link in config.
+
 ### 2.3.4 ###
 * Update:  JIRA BGBKUP-220  Sanitize inputs.
 
