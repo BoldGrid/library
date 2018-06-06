@@ -80,15 +80,15 @@ if ( $enableClaimMessage ) {
 				<label>
 					<?php esc_html_e( 'First Name', 'boldgrid-inspirations' ); ?>:
 				</label>
-				<input type="text" id="firstName" maxlength="50" placeholder="<?php esc_html_e( 'First Name', 'boldgrid-inspirations' ); ?>" value="<?php echo $first_name; ?>" />
+				<input type="text" id="firstName" maxlength="50" placeholder="<?php esc_html_e( 'First Name', 'boldgrid-inspirations' ); ?>" value="<?php echo esc_attr( $first_name ); ?>" />
 				<label>
 					<?php esc_html_e( 'Last Name', 'boldgrid-inspirations' ); ?>:
 				</label>
-				<input type="text" id="lastName" maxlength="50" placeholder="<?php esc_html_e( 'Last Name', 'boldgrid-inspirations' ); ?>" value="<?php echo $last_name; ?>" />
+				<input type="text" id="lastName" maxlength="50" placeholder="<?php esc_html_e( 'Last Name', 'boldgrid-inspirations' ); ?>" value="<?php echo esc_attr( $last_name ); ?>" />
 				<label>
 					<?php esc_html_e( 'E-mail', 'boldgrid-inspirations' ); ?>:
 				</label>
-				<input type="text" id="emailAddr" maxlength="50" placeholder="your@name.com" value="<?php echo $email; ?>" />
+				<input type="text" id="emailAddr" maxlength="50" placeholder="your@name.com" value="<?php echo esc_attr( $email ); ?>" />
 				<br />
 				<input type="hidden" id="siteUrl" value="<?php echo get_admin_url(); ?>" />
 				<br />
@@ -96,7 +96,7 @@ if ( $enableClaimMessage ) {
 					<?php esc_html_e( 'Submit', 'boldgrid-inspirations' ); ?>
 				</button>
 				<span class="spinner"></span>
-				<input type="hidden" id="generate-api-key" value="<?php echo $api ?>" />
+				<input type="hidden" id="generate-api-key" value="<?php echo esc_attr( $api ); ?>" />
 			</form>
 		</div>
 	</div>
