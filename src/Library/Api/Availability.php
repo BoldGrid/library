@@ -22,7 +22,6 @@ use \WP_Http;
  * @since 1.0.0
  */
 class Availability {
-
 	/**
 	 * @var array $url URL to make call to.
 	 * @var array Request parameters
@@ -75,7 +74,6 @@ class Availability {
 	 * @return bool
 	 */
 	private function checkAvailability() {
-
 		// Get the boldgrid_available transient.
 		$available = get_site_transient( 'boldgrid_available' );
 
@@ -89,7 +87,7 @@ class Availability {
 		}
 
 		// Update the boldgrid_available transient.
-		set_site_transient( 'boldgrid_available', ( int ) $available, 5 * MINUTE_IN_SECONDS );
+		set_site_transient( 'boldgrid_available', ( int ) $available, 2 * MINUTE_IN_SECONDS );
 
 		return $available;
 	}

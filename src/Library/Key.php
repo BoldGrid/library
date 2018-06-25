@@ -137,9 +137,8 @@ class Key {
 	 * @since 1.0.0
 	 */
 	public function setNotice() {
-
 		// If we already have transient data saying the API is not available.
-		if ( '0' === get_site_transient( 'boldgrid_available' ) ) {
+		if ( 0 === get_site_transient( 'boldgrid_available' ) ) {
 			return new Notice( 'ConnectionIssue' );
 		}
 
@@ -234,7 +233,7 @@ class Key {
 
 		// We can update the available status transient since we know the server was reached.
 		// @todo move this into the Call class since it's the earliest point of access.
-		set_site_transient( 'boldgrid_available', 1, HOUR_IN_SECONDS );
+		set_site_transient( 'boldgrid_available', 1, 2 * MINUTE_IN_SECONDS );
 
 		// We update transient with the response of the API check version call.
 		set_site_transient( 'boldgrid_api_data', $data, 8 * HOUR_IN_SECONDS );
