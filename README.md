@@ -12,7 +12,7 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 2.3.6 In progress ###
-* Update:  JIRA BGINSP-23   Updated "boldgrid_available" transient lifetime and checking. 
+* Update:  JIRA BGINSP-23   Updated "boldgrid_available" transient lifetime and checking. Also fixed fatal error when API has an error response.
 
 ### 2.3.5 ###
 * Bug fix:                  Updating boldgrid-backup link in config.

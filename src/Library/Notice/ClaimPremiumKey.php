@@ -112,11 +112,17 @@ class ClaimPremiumKey {
 		$hasConnectKey = (bool) Library\Configs::get( 'key' );
 
 		if ( $enabled && $hasConnectKey ) {
+			$hasEnvatoPrime = false;
+
 			// If user has dismissed the notice, then do not display the notice.
 			$display = ! Library\Notice::isDismissed( $this->userNoticeKey );
 
 			// Do not display if user has an Envato-connected Prime theme.
-			$hasEnvatoPrime = $this->key->getLicense()->isPremium( 'envato-prime' );
+			$licenseData = $this->key->getLicense();
+
+			if ( $licenseData ) {
+				$hasEnvatoPrime = $licenseData->isPremium( 'envato-prime' );
+			}
 
 			if ( $hasEnvatoPrime ) {
 				$display = false;
