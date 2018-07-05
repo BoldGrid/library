@@ -138,6 +138,10 @@ class License {
 			$license = $this->getRemoteLicense();
 		}
 
+		if ( empty( $license->version ) || 2 > $license->version ) {
+			$license = $this->getRemoteLicense();
+		}
+
 		return $this->license = $license;
 	}
 
@@ -187,7 +191,7 @@ class License {
 					$license->cipher,
 					$license->key,
 					0,
-					base64_decode( $license->iv )
+					urldecode( $license->iv )
 				)
 			);
 		}
@@ -245,7 +249,7 @@ class License {
 	 * @return mixed $response The remote license data object or error string.
 	 */
 	private function getRemoteLicense() {
-		$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/getLicense' );
+		$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/getLicense?v=2' );
 		if ( ! $response = $call->getError() ) {
 			$response = $call->getResponse()->result->data;
 		}
