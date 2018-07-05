@@ -134,11 +134,8 @@ class License {
 	private function setLicense() {
 		if ( ! get_option( 'boldgrid_api_key' ) ) {
 			$license = 'Missing Connect Key';
-		} else if ( ! $license = $this->getTransient() ) {
-			$license = $this->getRemoteLicense();
-		}
-
-		if ( empty( $license->version ) || 2 > $license->version ) {
+		} else if ( ! ( $license = $this->getTransient() ) || ! $this->isVersionValid() ) {
+			delete_site_transient( $this->getKey() );
 			$license = $this->getRemoteLicense();
 		}
 
@@ -350,6 +347,7 @@ class License {
 	 */
 	public function initLicense() {
 		$this->license = $this->setLicense();
+
 		if ( is_object( $this->getLicense() ) ) {
 			$this->data = $this->setData();
 			$this->setTransient( $this->getData() );
@@ -373,5 +371,17 @@ class License {
 		$this->licenseString = $isPremium ? __( 'Premium' ) : __( 'Free' );
 
 		return $isPremium;
+	}
+
+	/**
+	 * Check if the license version and encoding is correct.
+	 *
+	 * @since 2.3.7
+	 *
+	 * @return bool
+	 */
+	public function isVersionValid() {
+		return ( ! empty( $license->version ) && ! empty( $license->iv ) &&
+			16 === strlen( urldecode( $license->iv ) ) && 2 === $license->version );
 	}
 }
