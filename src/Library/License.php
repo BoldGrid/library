@@ -22,7 +22,6 @@ use Boldgrid\Library\Library;
  * @since 1.0.0
  */
 class License {
-
 	/**
 	 * @access private
 	 *
@@ -241,6 +240,8 @@ class License {
 	/**
 	 * Get the latest license data from the API server.
 	 *
+	 * The current API version is 2.
+	 *
 	 * @since  1.0.0
 	 *
 	 * @return mixed $response The remote license data object or error string.
@@ -375,6 +376,9 @@ class License {
 
 	/**
 	 * Check if the license version and encoding is correct.
+	 *
+	 * The license data is valid (for API version 2) if the "version" and "iv" properties are set,
+	 * the decoded initialization vector (iv) is 16 characters in length, and the "version" is 2.
 	 *
 	 * @since 2.3.7
 	 *
