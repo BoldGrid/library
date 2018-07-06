@@ -75,6 +75,18 @@ class Connect {
 					),
 				),
 				array(
+					'id' => 'boldgrid-connect-url',
+					'parent' => 'boldgrid-adminbar-icon',
+					'title' => __( 'BoldGrid Connect', 'boldgrid-inspirations' ),
+					'href' => 'https://www.boldgrid.com/feedback',
+					'meta' => array(
+						'class' => 'boldgrid-dropdown',
+						'target' => '_blank',
+						'title' => 'BoldGrid Connect',
+						'tabindex' => '1',
+					),
+				),
+				array(
 					'id' => 'boldgrid-feedback-url',
 					'parent' => 'boldgrid-adminbar-icon',
 					'title' => __( 'Feedback', 'boldgrid-inspirations' ),
