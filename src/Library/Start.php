@@ -86,6 +86,8 @@ class Start {
 
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
+
+		new \Boldgrid\Library\Library\Menu\Connect();
 	}
 
 	/**
