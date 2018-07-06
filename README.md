@@ -15,7 +15,7 @@ composer require boldgrid/library
 
 * Update:  JIRA WPB-3922    Updated license API to v2.
 
-### 2.3.6 In progress ###
+### 2.3.6 ###
 * Update:  JIRA BGINSP-23   Updated "boldgrid_available" transient lifetime and checking. Also fixed fatal error when API has an error response.
 
 ### 2.3.5 ###

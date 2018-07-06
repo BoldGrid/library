@@ -40,6 +40,15 @@ class License {
 		$data;
 
 	/**
+	 * API version number.
+	 *
+	 * @since 2.3.7
+	 *
+	 * @var int
+	 */
+	private $apiVersion = 2;
+
+	/**
 	 * Initialize class and set class properties.
 	 *
 	 * @since 1.0.0
@@ -247,7 +256,9 @@ class License {
 	 * @return mixed $response The remote license data object or error string.
 	 */
 	private function getRemoteLicense() {
-		$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/getLicense?v=2' );
+		$call = new Api\Call( Configs::get( 'api' ) . '/api/plugin/getLicense?v=' .
+			$this->apiVersion );
+
 		if ( ! $response = $call->getError() ) {
 			$response = $call->getResponse()->result->data;
 		}
@@ -377,8 +388,9 @@ class License {
 	/**
 	 * Check if the license version and encoding is correct.
 	 *
-	 * The license data is valid (for API version 2) if the "version" and "iv" properties are set,
-	 * the decoded initialization vector (iv) is 16 characters in length, and the "version" is 2.
+	 * The license data is valid (for the API version) if the "version" and "iv" properties are set,
+	 * the decoded initialization vector (iv) is 16 characters in length, and the "version" is
+	 * $this->apiVersion.
 	 *
 	 * @since 2.3.7
 	 *
@@ -386,6 +398,7 @@ class License {
 	 */
 	public function isVersionValid() {
 		return ( ! empty( $license->version ) && ! empty( $license->iv ) &&
-			16 === strlen( urldecode( $license->iv ) ) && 2 === $license->version );
+			16 === strlen( urldecode( $license->iv ) ) &&
+			$this->apiVersion === $license->version );
 	}
 }
