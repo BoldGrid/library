@@ -21,7 +21,7 @@ use Boldgrid\Library\Library\Filter;
  *
  * @since 1.0.0
  */
-class Connect {
+class External {
 
 	/**
 	 *
@@ -78,10 +78,9 @@ class Connect {
 					'id' => 'boldgrid-connect-url',
 					'parent' => 'boldgrid-adminbar-icon',
 					'title' => __( 'BoldGrid Connect', 'boldgrid-inspirations' ),
-					'href' => 'https://www.boldgrid.com/feedback',
+					'href' => get_admin_url( null, 'options-general.php?page=boldgrid-connect.php' ),
 					'meta' => array(
 						'class' => 'boldgrid-dropdown',
-						'target' => '_blank',
 						'title' => 'BoldGrid Connect',
 						'tabindex' => '1',
 					),

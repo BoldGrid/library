@@ -1,0 +1,9 @@
+.settings_page_boldgrid-connect #container_boldgrid_api_key_notice {
+	background: transparent;
+	box-shadow: none;
+	border-left: 0;
+}
+
+.settings_page_boldgrid-connect #container_boldgrid_api_key_notice .notice-dismiss {
+	display: none;
+}
