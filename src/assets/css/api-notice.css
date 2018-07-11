@@ -17,6 +17,31 @@
 #requestKeyForm label {
 	display: block;
 }
+
+#container_boldgrid_api_key_notice .envato-claim-message,
+#container_boldgrid_api_key_notice .key-entry-message p {
+	padding-left: 70px;
+}
+
+#container_boldgrid_api_key_notice .envato-claim-message {
+	margin-top: 20px;
+}
+
+#container_boldgrid_api_key_notice:not([data-notice-state="no-key-added"]) .api-notice,
+#container_boldgrid_api_key_notice .premium-key-active,
+#container_boldgrid_api_key_notice .basic-key-active {
+	display: none;
+}
+
+#container_boldgrid_api_key_notice .basic-key-active .button {
+	margin: 10px 0;
+}
+
+#container_boldgrid_api_key_notice[data-notice-state="premium-key-active"] .premium-key-active,
+#container_boldgrid_api_key_notice[data-notice-state="basic-key-active"] .basic-key-active {
+	display: block;
+}
+
 #boldgrid_api_key_notice_message,
 .tos-box,
 .key-request-content,

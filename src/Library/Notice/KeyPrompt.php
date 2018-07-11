@@ -12,6 +12,7 @@
 namespace Boldgrid\Library\Library\Notice;
 
 use Boldgrid\Library\Library;
+use Boldgrid\Library\Library\Configs;
 
 /**
  * BoldGrid Library Key Prompt Notice.
@@ -114,6 +115,26 @@ class KeyPrompt {
 			'bglib-api-notice-js',
 			Library\Configs::get( 'libraryUrl' ) .  'src/assets/js/api-notice.js'
 		);
+	}
+
+	/**
+	 * Get the current state of the BoldGrid Connect Key.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string State, what to display when the prompt loads.
+	 */
+	public static function getState() {
+		$state = 'no-key-added';
+		$key = Configs::get( 'start' )->getKey();
+
+		if ( $key ) {
+			$isPremium = Configs::get( 'start' )->getKey()->getLicense()->isPremium( 'boldgrid-inspirations' );
+			$license = $isPremium ? 'premium' : 'basic';
+			$state = $license . '-key-active';
+		}
+
+		return $state;
 	}
 
 	/**

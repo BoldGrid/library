@@ -1,4 +1,6 @@
 <div class="wrap">
 	<h1>BoldGrid Connect</h1>
-	<h2>Connect Key Management</h2>
+	<div class="card connect-key-management">
+		<div class="connect-key-prompt"></div>
+	</div>
 </div>

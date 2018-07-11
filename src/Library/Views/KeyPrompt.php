@@ -1,6 +1,27 @@
 <div id="container_boldgrid_api_key_notice"
 	class="boldgrid-notice library error notice is-dismissible"
-	data-notice-id="bg-key-prompt">
+	data-notice-id="bg-key-prompt"
+	data-notice-state="<?php echo \Boldgrid\Library\Library\Notice\KeyPrompt::getState() ?>"
+	>
+	<div class="premium-key-active key-entry-message">
+		<h2 class="dashicons-before dashicons-admin-network">
+			<?php esc_html_e( 'Premium BoldGrid Connect Key', 'boldgrid-inspirations' )?></h2>
+		<p>
+			<?php esc_html_e( 'You have Premium Connect Key saved on this site. If needed, you can change your Connect Key with the link below.', 'boldgrid-inspirations' ); ?>
+		</p>
+		<p><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
+	</div>
+	<div class="basic-key-active key-entry-message">
+		<h2 class="dashicons-before dashicons-admin-network">
+			<?php esc_html_e( 'Free BoldGrid Connect Key', 'boldgrid-inspirations' )?></h2>
+		<p>
+			<?php esc_html_e( 'Thank you for adding your Connect Key. Try upgrading to a Premium subscription for full access to BoldGrid!', 'boldgrid-inspirations' ); ?>
+		</p>
+		<p><a target="_blank" href="https://www.boldgrid.com/connect-keys?source=library-prompt"
+				class="button button-primary">Upgrade</a>
+		</p>
+		<p><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
+	</div>
 	<div class="api-notice">
 		<h2 class="dashicons-before dashicons-admin-network">
 			<?php esc_html_e( 'Enter Your BoldGrid Connect Key', 'boldgrid-inspirations' ); ?>
@@ -11,8 +32,8 @@
 		<form id="boldgrid-api-form" autocomplete="off">
 			<?php wp_nonce_field( 'boldgrid_set_key', 'set_key_auth' ); ?>
 			<div class="tos-box">
-				<input id="tos-box" type="checkbox" value="0">
-				<?php printf( esc_html__( 'I agree to the %sTerms of Use and Privacy Policy%s.', 'boldgrid-inspirations' ), '<a href="https://www.boldgrid.com/software-privacy-policy/" target="_blank">', '</a>' ); ?>
+				<label><input id="tos-box" type="checkbox" value="0">
+				<?php printf( esc_html__( 'I agree to the %sTerms of Use and Privacy Policy%s.', 'boldgrid-inspirations' ), '<a href="https://www.boldgrid.com/software-privacy-policy/" target="_blank">', '</a>' ); ?></label>
 			</div>
 			<br />
 			<input type="text" id="boldgrid_api_key" maxlength="37" placeholder="XXXXXXXX - XXXXXXXX - XXXXXXXX - XXXXXXXX" autocomplete="off" />
@@ -23,30 +44,33 @@
 				<div id="boldgrid-api-loading" class="boldgrid-wp-spin"></div>
 			</span>
 		</form>
-		<br />
 		<?php
-// Display either the Envato message or the default signup message.
-if ( $enableClaimMessage ) {
-	printf(
-		esc_html__(
-			'Thank you for your Envato Market purchase.%sPlease visit %sBoldGrid Central%s to link your accounts and claim your Premium Connect Key.',
-			'boldgrid-inspirations'
-		),
-		'<br />',
-		'<a target="_blank" href="https://www.boldgrid.com/central/code/envato">',
-		'</a>'
-	);
-} else {
-		?>
-		<a href="#" class="boldgridApiKeyLink">
-		<?php
-	esc_html_e( 'Don\'t have a Connect Key yet or lost your Key?', 'boldgrid-inspirations' );
-		?>
-		</a>
-		<?php
-}
-		?>
+		if ( $enableClaimMessage ) { ?>
+			<div class="envato-claim-message"><p>
+				<?php printf(
+					esc_html__(
+						'Thank you for your Envato Market purchase.%sPlease visit %sBoldGrid Central%s to link your accounts and claim your Premium Connect Key.',
+						'boldgrid-inspirations'
+					),
+					'</p><p>',
+					'<a target="_blank" href="https://www.boldgrid.com/central/code/envato">',
+					'</a>'
+				); ?>
+			</p></div>
+		<?php } else {
+			// Display either the Envato message or the default signup message.
+			?>
+				<a href="#" class="boldgridApiKeyLink">
+				<?php
+			esc_html_e( 'Don\'t have a Connect Key yet or lost your Key?', 'boldgrid-inspirations' );
+				?>
+				</a>
+		<?php } ?>
 	</div>
+	<?php
+	// Display either the Envato message or the default signup message.
+
+	?>
 	<div class="new-api-key hidden">
 		<h2 class="dashicons-before dashicons-admin-network">
 			<?php esc_html_e( 'Request a BoldGrid Connect Key', 'boldgrid-inspirations' ); ?>

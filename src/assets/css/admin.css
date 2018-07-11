@@ -1,9 +1,15 @@
+/** BoldGrid Connect Page Start **/
 .settings_page_boldgrid-connect #container_boldgrid_api_key_notice {
 	background: transparent;
 	box-shadow: none;
 	border-left: 0;
+	width: auto;
 }
 
 .settings_page_boldgrid-connect #container_boldgrid_api_key_notice .notice-dismiss {
 	display: none;
 }
+.settings_page_boldgrid-connect .connect-key-management {
+	max-width: 590px;
+}
+/** BoldGrid Connect Page End **/

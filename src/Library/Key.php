@@ -49,6 +49,15 @@ class Key {
 	protected $releaseChannel;
 
 	/**
+	 * @access protected
+	 *
+	 * @since X.X.X
+	 *
+	 * @var \Boldgrid\Library\Library\Notice
+	 */
+	protected $notice;
+
+	/**
 	 * Initialize class and set class properties.
 	 *
 	 * @since 1.0.0
@@ -59,7 +68,7 @@ class Key {
 		$this->releaseChannel = $releaseChannel;
 		$this->setValid();
 		$this->setLicense();
-		$this->setNotice();
+		$this->notice = $this->setNotice();
 		$this->addNotices();
 	}
 
@@ -83,6 +92,17 @@ class Key {
 	 */
 	public function getLicense() {
 		return $this->license;
+	}
+
+	/**
+	 * Get the currently set notice.
+	 *
+	 * @since X.X.X
+	 *
+	 * @return \Boldgrid\Library\Library\Notice Notice set.
+	 */
+	public function getNotice() {
+		return $this->notice;
 	}
 
 	/**
@@ -136,14 +156,18 @@ class Key {
 	 *
 	 * @since 1.0.0
 	 */
-	public function setNotice() {
+	public function setNotice( $forceDisplay = false ) {
+		if ( $this->notice ) {
+			return $this->notice;
+		}
+
 		// If we already have transient data saying the API is not available.
 		if ( 0 === get_site_transient( 'boldgrid_available' ) ) {
 			return new Notice( 'ConnectionIssue' );
 		}
 
 		// If we don't have a key stored, or this is not a valid response when calling.
-		if ( ! Configs::get( 'key' ) || ! self::$valid ) {
+		if ( ! Configs::get( 'key' ) || ! self::$valid || $forceDisplay ) {
 			return new Notice( 'keyPrompt', $this );
 		}
 	}

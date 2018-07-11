@@ -1,11 +1,11 @@
 <?php
 /**
- * BoldGrid Library Configs Class
+ * Create the BoldGrid Menu in the upper left of the admin screen.
  *
  * @package Boldgrid\Library
- * @subpackage \Library
+ * @subpackage \Library\Menu
  *
- * @version 1.0.0
+ * @version X.X.X
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -14,18 +14,29 @@ namespace Boldgrid\Library\Library\Menu;
 use Boldgrid\Library\Library\Filter;
 
 /**
- * BoldGrid Library Configs Class.
+* Create the BoldGrid Menu in the upper left of the admin screen.
  *
- * This class is responsible for setting and getting configuration
- * options that are set for the library.
- *
- * @since 1.0.0
+ * @since X.X.X
  */
 class External {
 
 	/**
+	 * Constructor.
 	 *
-	 * @return [type] [description]
+	 * Add Filters.
+	 *
+	 * @since X.X.X
+	 */
+	public function __construct() {
+		Filter::add( $this );
+	}
+
+	/**
+	 * Get the menu items for this location.
+	 *
+	 * @since X.X.X
+	 *
+	 * @return array Menu Items.
 	 */
 	protected static function getMenuItems() {
 		return array(
@@ -47,7 +58,6 @@ class External {
 						'class' => 'boldgrid-dropdown',
 						'target' => '_blank',
 						'title' => 'BoldGrid.com',
-						'tabindex' => '1',
 					),
 				),
 				array(
@@ -59,7 +69,6 @@ class External {
 						'class' => 'boldgrid-dropdown',
 						'target' => '_blank',
 						'title' => 'Documentation',
-						'tabindex' => '1',
 					),
 				),
 				array(
@@ -71,7 +80,6 @@ class External {
 						'class' => 'boldgrid-dropdown',
 						'target' => '_blank',
 						'title' => 'BoldGrid Central',
-						'tabindex' => '1',
 					),
 				),
 				array(
@@ -82,7 +90,6 @@ class External {
 					'meta' => array(
 						'class' => 'boldgrid-dropdown',
 						'title' => 'BoldGrid Connect',
-						'tabindex' => '1',
 					),
 				),
 				array(
@@ -94,22 +101,10 @@ class External {
 						'class' => 'boldgrid-dropdown',
 						'target' => '_blank',
 						'title' => 'Feedback',
-						'tabindex' => '1',
 					),
 				),
 			),
 		);
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * Add Filters.
-	 *
-	 * @since X.X.X
-	 */
-	public function __construct() {
-		Filter::add( $this );
 	}
 
 	/**

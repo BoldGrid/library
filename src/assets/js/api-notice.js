@@ -9,8 +9,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 * Set key if parameter is set.
 	 */
 	$( function() {
-		var $activateKey = self.GetURLParameter( 'activateKey' ),
-			notice = $( '#container_boldgrid_api_key_notice' );
+		var $activateKey = self.GetURLParameter( 'activateKey' );
+		notice = $( '#container_boldgrid_api_key_notice' );
 
 		if ( $activateKey ) {
 			document.getElementById( 'boldgrid_api_key' ).value = $activateKey;
@@ -134,7 +134,21 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			// show the loading graphic.
 			$( '#boldgrid-api-loading', notice ).show();
 		});
+
+		self._setupChangeKey();
 	});
+
+	/**
+	 * When a user clicks on change connect key, change the presentation to key input.
+	 *
+	 * @since X.X.X
+	 */
+	this._setupChangeKey = function() {
+		notice.find( 'a[data-action="change-connect-key"]' ).on( 'click', function ( e ) {
+			e.preventDefault();
+			notice.attr( 'data-notice-state', 'no-key-added' );
+		} );
+	};
 
 	/**
 	 * Get parameter from URL

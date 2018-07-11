@@ -50,12 +50,22 @@ class Start {
 
 		$this->configs = new Configs( $configs );
 		$this->releaseChannel = new ReleaseChannel;
+		Configs::setItem( 'start', $this );
 
 		if ( Configs::get( 'keyValidate' ) ) {
-			$this->key = new Key( $this->getReleaseChannel() );
+			$this->setupKeyConnections();
 		}
 
 		add_action( 'admin_init' , array( $this, 'loadPluginInstaller' ) );
+	}
+
+	/**
+	 * Setup the connect key prompts & validation.
+	 *
+	 * @since X.X.X
+	 */
+	public function setupKeyConnections() {
+		$this->key = $this->key ?: new Key( $this->releaseChannel );
 	}
 
 	/**
@@ -67,6 +77,17 @@ class Start {
 	 */
 	public function getReleaseChannel() {
 		return $this->releaseChannel;
+	}
+
+	/**
+	 * Get key class property.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return object $key Library\Key object.
+	 */
+	public function getKey() {
+		return $this->key;
 	}
 
 	/**
@@ -87,9 +108,9 @@ class Start {
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
 
-		new \Boldgrid\Library\Library\Menu\External();
-		new \Boldgrid\Library\Library\Connect();
-		new \Boldgrid\Library\Library\Asset();
+		Configs::setItem( 'menu-external', new Menu\External() );
+		Configs::setItem( 'page-connect', new Page\Connect() );
+		Configs::setItem( 'assets', new Asset() );
 	}
 
 	/**

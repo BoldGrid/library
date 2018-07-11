@@ -92,4 +92,15 @@ class Configs {
 
 		return $configs;
 	}
+
+	/**
+	 * Set a new configuration item
+	 *
+	 * @since X.X.X
+	 *
+	 * @param  string $key Name of new item.
+	 */
+	public static function setItem( $key, $value ) {
+		self::$configs[ $key ] = $value;
+	}
 }
