@@ -126,10 +126,10 @@ class KeyPrompt {
 	 */
 	public static function getState() {
 		$state = 'no-key-added';
-		$key = Configs::get( 'start' )->getKey();
+		$license = Configs::get( 'start' )->getKey()->getLicense();
 
-		if ( $key ) {
-			$isPremium = Configs::get( 'start' )->getKey()->getLicense()->isPremium( 'boldgrid-inspirations' );
+		if ( $license ) {
+			$isPremium = $license->isPremium( 'boldgrid-inspirations' );
 			$license = $isPremium ? 'premium' : 'basic';
 			$state = $license . '-key-active';
 		}

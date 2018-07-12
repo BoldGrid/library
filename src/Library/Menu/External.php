@@ -21,8 +21,6 @@ use Boldgrid\Library\Library\Filter;
 class External {
 
 	/**
-	 * Constructor.
-	 *
 	 * Add Filters.
 	 *
 	 * @since X.X.X
@@ -32,13 +30,26 @@ class External {
 	}
 
 	/**
+	 * Add Menu item configurations.
+	 *
+	 * @hook: admin_bar_menu
+	 *
+	 * @since X.X.X
+	 *
+	 * @param WP_Admin_Bar $wpAdminBar Admin Bar.
+	 */
+	public function addMenu( $wpAdminBar ) {
+		Render::adminBarNode( $wpAdminBar, $this->getMenuItems() );
+	}
+
+	/**
 	 * Get the menu items for this location.
 	 *
 	 * @since X.X.X
 	 *
 	 * @return array Menu Items.
 	 */
-	protected static function getMenuItems() {
+	protected function getMenuItems() {
 		return array(
 			'topLevel' => array(
 				'id' => 'boldgrid-adminbar-icon',
@@ -105,21 +116,5 @@ class External {
 				),
 			),
 		);
-	}
-
-	/**
-	 * Add Menu item configurations.
-	 *
-	 * @hook: admin_bar_menu
-	 *
-	 * @since X.X.X
-	 */
-	public function addMenu( $wpAdminBar ) {
-		$configs = self::getMenuItems();
-
-		$wpAdminBar->add_node( $configs['topLevel'] );
-		foreach ( $configs['items'] as $item ) {
-			$wpAdminBar->add_menu( $item );
-		}
 	}
 }
