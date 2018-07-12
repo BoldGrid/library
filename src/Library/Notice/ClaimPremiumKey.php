@@ -147,26 +147,6 @@ class ClaimPremiumKey {
 	}
 
 	/**
-	 * Key input handling.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @hook: wp_ajax_addKey
-	 */
-	public function addKey() {
-		$key = $this->validate();
-		$data = $this->key->callCheckVersion( array( 'key' => $key ) );
-		$msg = $this->getMessages();
-
-		if ( is_object( $data ) ) {
-			$this->key->save( $data, $key );
-			wp_send_json_success( array( 'message' => $msg->success ) );
-		} else {
-			wp_send_json_error( array( 'message' => $msg->error ) );
-		}
-	}
-
-	/**
 	 * Get static class property isDismissed.
 	 *
 	 * @since 2.0.1
