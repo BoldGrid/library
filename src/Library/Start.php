@@ -39,7 +39,6 @@ class Start {
 	 *
 	 * @uses \Boldgrid\Library\Library\Configs()
 	 * @uses \Boldgrid\Library\Library\ReleaseChannel()
-	 * @uses \Boldgrid\Library\Library\Key()
 	 * @uses \Boldgrid\Library\Plugin\Installer()
 	 * @uses \Boldgrid\Library\Library\Start::getReleaseChannel()
 	 *
@@ -63,6 +62,8 @@ class Start {
 	 * Setup the connect key prompts & validation.
 	 *
 	 * @since X.X.X
+	 *
+	 * @uses \Boldgrid\Library\Library\Key()
 	 */
 	public function setupKeyConnections() {
 		$this->key = $this->key ?: new Key( $this->releaseChannel );
