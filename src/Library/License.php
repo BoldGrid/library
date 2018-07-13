@@ -142,7 +142,7 @@ class License {
 	private function setLicense() {
 		if ( ! get_option( 'boldgrid_api_key' ) ) {
 			$license = 'Missing Connect Key';
-		} else if ( ! ( $license = $this->getTransient() ) || ! $this->isVersionValid() ) {
+		} else if ( ! ( $license = $this->getTransient() ) || ! $this->isVersionValid( $license ) ) {
 			delete_site_transient( $this->getKey() );
 			$license = $this->getRemoteLicense();
 		}
@@ -394,9 +394,11 @@ class License {
 	 *
 	 * @since 2.3.7
 	 *
+	 * @param Object $license Current license data.
+	 *
 	 * @return bool
 	 */
-	public function isVersionValid() {
+	public function isVersionValid( $license ) {
 		return ( ! empty( $license->version ) && ! empty( $license->iv ) &&
 			16 === strlen( urldecode( $license->iv ) ) &&
 			$this->apiVersion === $license->version );
