@@ -14,12 +14,17 @@
 	<div class="basic-key-active key-entry-message">
 		<h2 class="dashicons-before dashicons-admin-network">
 			<?php esc_html_e( 'Free BoldGrid Connect Key', 'boldgrid-inspirations' )?></h2>
+
+		<?php if ( ! $enableClaimMessage ) { ?>
 		<p>
 			<?php esc_html_e( 'Thank you for adding your Connect Key. Try upgrading to a Premium subscription for full access to BoldGrid!', 'boldgrid-inspirations' ); ?>
 		</p>
 		<p><a target="_blank" href="https://www.boldgrid.com/connect-keys?source=library-prompt"
 				class="button button-primary">Upgrade</a>
 		</p>
+		<?php } else {
+			include __DIR__ . './EnvatoFreeKey.php';
+		} ?>
 		<p><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
 	</div>
 	<div class="api-notice">
@@ -45,19 +50,9 @@
 			</span>
 		</form>
 		<?php
-		if ( $enableClaimMessage ) { ?>
-			<div class="envato-claim-message"><p>
-				<?php printf(
-					esc_html__(
-						'Thank you for your Envato Market purchase.%sPlease visit %sBoldGrid Central%s to link your accounts and claim your Premium Connect Key.',
-						'boldgrid-inspirations'
-					),
-					'</p><p>',
-					'<a target="_blank" href="https://www.boldgrid.com/central/code/envato">',
-					'</a>'
-				); ?>
-			</p></div>
-		<?php } else {
+		if ( $enableClaimMessage ) {
+			include __DIR__ . './Envato.php';
+		} else {
 			// Display either the Envato message or the default signup message.
 			?>
 				<p><a href="#" class="boldgridApiKeyLink">

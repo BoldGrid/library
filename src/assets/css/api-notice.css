@@ -45,6 +45,10 @@
 	margin-top: 10px;
 	display: inline-block;
 }
+#container_boldgrid_api_key_notice[data-notice-state="basic-key-active"] .envato-claim-message {
+	padding-left: 0;
+	margin-bottom: 10px;
+}
 
 #boldgrid_api_key_notice_message,
 .tos-box,
