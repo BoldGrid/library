@@ -187,7 +187,7 @@ class KeyPrompt {
 	public function addKey() {
 
 		//When adding Keys, delete the transient to make sure we get new license info.
-		delete_site_transient( Configs::get( 'start' )->getKey()->getLicense()->getKey() );
+		delete_site_transient( 'bg_license_data' );
 		delete_site_transient( 'boldgrid_api_data' );
 
 		$key = $this->validate();

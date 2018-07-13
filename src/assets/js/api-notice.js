@@ -194,7 +194,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 * Set the API key.
 	 */
 	this.set = function( key ) {
-		var data, nonce, wpHttpReferer;
+		var data, nonce, wpHttpReferer, notice;
 		// Get the wpnonce and referer values.
 		nonce = $( '#set_key_auth', notice ).val();
 		wpHttpReferer = $( '[name="_wp_http_referer"]', notice ).val();
@@ -205,10 +205,21 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			'_wp_http_referer' : wpHttpReferer,
 		};
 
+		notice = $( '#container_boldgrid_api_key_notice' );
+
+		var fail = function ( message ) {
+			message = message || 'An unexpected error occured. Please try again later.';
+
+			$( '#boldgrid-api-loading', notice ).hide();
+			$( '#submit_api_key', notice ).show();
+			$( '#boldgrid_api_key_notice_message', notice )
+				.html( message )
+				.addClass( 'error-color' );
+		};
+
 		$.post( ajaxurl, data, function( response ) {
 			// Declare variables.
-			var response, message,
-				notice = $( '#container_boldgrid_api_key_notice' );
+			var message;
 
 			// If the key was saved successfully.
 			if ( response.success ) {
@@ -231,15 +242,13 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				// Reload page after 3 seconds.
 				setTimeout( function() {
 					window.location.reload();
-				}, 3000 );
+				}, 2000 );
 			} else {
-				$( '#boldgrid-api-loading', notice ).hide();
-				$( '#submit_api_key', notice ).show();
-				$( '#boldgrid_api_key_notice_message', notice )
-					.html( response.data.message )
-					.addClass( 'error-color' );
+				fail( response.data ? response.data.message : null );
 			}
-		});
+		} ).fail( function() {
+			fail();
+		} );
 	};
 };
 
