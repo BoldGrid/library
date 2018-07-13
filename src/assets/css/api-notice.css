@@ -41,6 +41,10 @@
 #container_boldgrid_api_key_notice[data-notice-state="basic-key-active"] .basic-key-active {
 	display: block;
 }
+#container_boldgrid_api_key_notice .boldgridApiKeyLink {
+	margin-top: 10px;
+	display: inline-block;
+}
 
 #boldgrid_api_key_notice_message,
 .tos-box,

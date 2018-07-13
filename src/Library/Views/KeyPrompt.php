@@ -60,11 +60,11 @@
 		<?php } else {
 			// Display either the Envato message or the default signup message.
 			?>
-				<a href="#" class="boldgridApiKeyLink">
+				<p><a href="#" class="boldgridApiKeyLink">
 				<?php
 			esc_html_e( 'Don\'t have a Connect Key yet or lost your Key?', 'boldgrid-inspirations' );
 				?>
-				</a>
+			</a></p>
 		<?php } ?>
 	</div>
 	<?php
