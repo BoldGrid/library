@@ -214,6 +214,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			if ( response.success ) {
 				// Change the notice from red to green.
 				notice.toggleClass( 'error' ).toggleClass( 'updated' );
+				notice.addClass( 'success-add-key' );
 
 				// Initiate tracking iframe.
 				self.trackActivation();

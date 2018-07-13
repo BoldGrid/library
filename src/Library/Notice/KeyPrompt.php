@@ -185,6 +185,11 @@ class KeyPrompt {
 	 * @hook: wp_ajax_addKey
 	 */
 	public function addKey() {
+
+		//When adding Keys, delete the transient to make sure we get new license info.
+		delete_site_transient( Configs::get( 'start' )->getKey()->getLicense()->getKey() );
+		delete_site_transient( 'boldgrid_api_data' );
+
 		$key = $this->validate();
 		$data = $this->key->callCheckVersion( array( 'key' => $key ) );
 		$msg = $this->getMessages();

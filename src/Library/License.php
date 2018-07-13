@@ -273,7 +273,7 @@ class License {
 	 *
 	 * @return string $key The key class property.
 	 */
-	protected function getKey() {
+	public function getKey() {
 		return $this->key;
 	}
 
