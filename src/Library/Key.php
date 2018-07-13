@@ -69,7 +69,6 @@ class Key {
 		$this->setValid();
 		$this->setLicense();
 		$this->notice = $this->setNotice();
-		$this->addNotices();
 	}
 
 	/**
@@ -311,16 +310,5 @@ class Key {
 
 		// Return back the transient data object.
 		return $data;
-	}
-
-	/**
-	 * Add additional admin notices.
-	 *
-	 * @since 2.1.0
-	 *
-	 * @see \Boldgrid\Library\Library\Notice()
-	 */
-	public function addNotices() {
-		$claimPremiumKey = new Notice( 'ClaimPremiumKey', $this );
 	}
 }
