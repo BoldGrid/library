@@ -23,7 +23,7 @@
 				class="button button-primary">Upgrade</a>
 		</p>
 		<?php } else {
-			include __DIR__ . './EnvatoFreeKey.php';
+			include __DIR__ . '/EnvatoFreeKey.php';
 		} ?>
 		<p><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
 	</div>
@@ -51,7 +51,7 @@
 		</form>
 		<?php
 		if ( $enableClaimMessage ) {
-			include __DIR__ . './Envato.php';
+			include __DIR__ . '/Envato.php';
 		} else {
 			// Display either the Envato message or the default signup message.
 			?>
