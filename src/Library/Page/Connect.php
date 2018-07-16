@@ -109,6 +109,13 @@ class Connect {
 			wp_enqueue_script( 'boldgrid-library-connect',
 				Configs::get( 'libraryUrl' ) .  'src/assets/js/connect.js',
 				array(), time() );
+
+			/**
+			 * Add additional scripts to Connect page.
+			 *
+			 * @since 2.3.7
+			 */
+			do_action( 'Boldgrid\Library\Library\Page\Connect\addScripts' );
 		}
 	}
 
