@@ -12,7 +12,8 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 2.3.7 In progress ###
-
+* Feature: JIRA BGTHEME-361 BoldGrid Connect Page.
+* Feature: JIRA BGTHEME-361 Admin Bar Menus.
 * Update:  JIRA WPB-3922    Updated license API to v2.
 
 ### 2.3.6 ###

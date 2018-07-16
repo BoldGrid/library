@@ -5,7 +5,7 @@
  * @package Boldgrid\Library
  * @subpackage \Library\Menu
  *
- * @version X.X.X
+ * @version 2.3.7
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -16,14 +16,14 @@ use Boldgrid\Library\Library\Filter;
 /**
 * Create the reseller menu in the upper left admin section.
  *
- * @since X.X.X
+ * @since 2.3.7
  */
 class Reseller {
 
 	/**
 	 * Reseller DB option.
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 *
 	 * @var array boldgrid_reseller option.
 	 */
@@ -32,7 +32,7 @@ class Reseller {
 	/**
 	 * Add Filters.
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 */
 	public function __construct() {
 		$this->resellerOption = get_option( 'boldgrid_reseller' );
@@ -45,7 +45,7 @@ class Reseller {
 	/**
 	 * Get the reseller data.
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 *
 	 * @return array Reseller information.
 	 */
@@ -76,7 +76,7 @@ class Reseller {
 	 * @hook: admin_bar_menu
 	 * @priority: 15
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 *
 	 * @param WP_Admin_Bar $wpAdminBar Admin Bar.
 	 */
@@ -87,7 +87,7 @@ class Reseller {
 	/**
 	 * Get the menu items for this location.
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 *
 	 * @return array Menu Items.
 	 */

@@ -96,7 +96,7 @@ class Configs {
 	/**
 	 * Set a new configuration item
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 *
 	 * @param  string $key Name of new item.
 	 */

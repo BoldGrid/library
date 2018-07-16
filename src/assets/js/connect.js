@@ -9,7 +9,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Constructor.
 		 *
-		 * @since X.X.X
+		 * @since 2.3.7
 		 */
 		init: function () {
 			$( self._onLoad );
@@ -18,7 +18,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * On DOM load.
 		 *
-		 * @since X.X.X
+		 * @since 2.3.7
 		 */
 		_onLoad: function() {
 			self._repositionNotice();
@@ -27,7 +27,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Reposition the notice into the correct location.
 		 *
-		 * @since X.X.X
+		 * @since 2.3.7
 		 */
 		_repositionNotice: function() {
 			var $connectKeySection = $( '.connect-key-prompt' );

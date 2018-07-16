@@ -51,7 +51,7 @@ class Key {
 	/**
 	 * @access protected
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 *
 	 * @var \Boldgrid\Library\Library\Notice
 	 */
@@ -96,7 +96,7 @@ class Key {
 	/**
 	 * Get the currently set notice.
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 *
 	 * @return \Boldgrid\Library\Library\Notice Notice set.
 	 */

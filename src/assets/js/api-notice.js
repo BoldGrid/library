@@ -141,7 +141,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	/**
 	 * When a user clicks on change connect key, change the presentation to key input.
 	 *
-	 * @since X.X.X
+	 * @since 2.3.7
 	 */
 	this._setupChangeKey = function() {
 		notice.find( 'a[data-action="change-connect-key"]' ).on( 'click', function ( e ) {
