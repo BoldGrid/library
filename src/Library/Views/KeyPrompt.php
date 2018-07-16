@@ -7,13 +7,19 @@
 		<h2 class="dashicons-before dashicons-admin-network">
 			<?php esc_html_e( 'Premium BoldGrid Connect Key', 'boldgrid-inspirations' )?></h2>
 		<p>
-			<?php esc_html_e( 'You have Premium Connect Key saved on this site. If needed, you can change your Connect Key with the link below.', 'boldgrid-inspirations' ); ?>
+			<?php esc_html_e( 'Awesome! You have Premium Connect Key saved on this site.' ) ?>
 		</p>
-		<p><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
+		<p>
+			<?php printf( esc_html__( 'Make sure you\'re getting the most out of your premium subscription by installing our other %sBoldGrid plugins%s. As a Premium user, you also have unlimited access to %sCloud WordPress%s where you can create new WordPress sites for free. If you need any help, our support team is eager to serve!', 'boldgrid-inspirations' ),
+				'<a href="https://www.boldgrid.com/wordpress-plugins/" target="_blank">', '</a>',
+				'<a href="https://www.boldgrid.com/central/get-it-now" target="_blank">', '</a>'
+			) ?>
+		</p>
+		<p class='change-key'><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
 	</div>
 	<div class="basic-key-active key-entry-message">
+		<?php esc_html_e( 'Free BoldGrid Connect Key', 'boldgrid-inspirations' )?></h2>
 		<h2 class="dashicons-before dashicons-admin-network">
-			<?php esc_html_e( 'Free BoldGrid Connect Key', 'boldgrid-inspirations' )?></h2>
 
 		<?php if ( ! $enableClaimMessage ) { ?>
 		<p>
@@ -25,7 +31,7 @@
 		<?php } else {
 			include __DIR__ . '/EnvatoFreeKey.php';
 		} ?>
-		<p><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
+		<p class='change-key'><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
 	</div>
 	<div class="api-notice">
 		<h2 class="dashicons-before dashicons-admin-network">

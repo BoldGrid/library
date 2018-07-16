@@ -21,8 +21,10 @@
 #container_boldgrid_api_key_notice .envato-claim-message,
 #container_boldgrid_api_key_notice .key-entry-message p {
 	padding-left: 70px;
+	font-size: 14px;
 }
 
+#container_boldgrid_api_key_notice .change-key,
 #container_boldgrid_api_key_notice .envato-claim-message {
 	margin-top: 20px;
 }
