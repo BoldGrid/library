@@ -18,8 +18,8 @@
 		<p class='change-key'><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
 	</div>
 	<div class="basic-key-active key-entry-message">
-		<?php esc_html_e( 'Free BoldGrid Connect Key', 'boldgrid-inspirations' )?></h2>
 		<h2 class="dashicons-before dashicons-admin-network">
+			<?php esc_html_e( 'Free BoldGrid Connect Key', 'boldgrid-inspirations' )?></h2>
 
 		<?php if ( ! $enableClaimMessage ) { ?>
 		<p>
