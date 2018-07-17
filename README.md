@@ -11,7 +11,7 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.4.1 In Progress ###
+### 2.4.1 ###
 * Fix: Display issue with key entry prompt HTML.
 
 ### 2.4.0 ###
