@@ -61,7 +61,7 @@ class Start {
 	/**
 	 * Setup the connect key prompts & validation.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @uses \Boldgrid\Library\Library\Key()
 	 */

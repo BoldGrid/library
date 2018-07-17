@@ -42,7 +42,7 @@ class License {
 	/**
 	 * API version number.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @var int
 	 */
@@ -392,7 +392,7 @@ class License {
 	 * the decoded initialization vector (iv) is 16 characters in length, and the "version" is
 	 * $this->apiVersion.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @param Object $license Current license data.
 	 *

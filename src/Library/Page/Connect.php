@@ -5,7 +5,7 @@
  * @package Boldgrid\Library
  * @subpackage \Library\Library\Page
  *
- * @version 2.3.7
+ * @version 2.4.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -19,14 +19,14 @@ use Boldgrid\Library\Library\Configs;
  *
  * Create the BoldGrid Connect Page.
  *
- * @since 2.3.7.
+ * @since 2.4.0.
  */
 class Connect {
 
 	/**
 	 * Add all filters for this class.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 */
 	public function __construct() {
 		Filter::add( $this );
@@ -35,7 +35,7 @@ class Connect {
 	/**
 	 * Run any needed methods on the Connect Page load.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @hook current_screen
 	 */
@@ -51,7 +51,7 @@ class Connect {
 	 * Standard ajax handler is bound when the notice is created. Notice is not
 	 * created during ajax call.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @hook admin_init
 	 */
@@ -66,7 +66,7 @@ class Connect {
 	/**
 	 * Setup the connect key notice.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 */
 	public static function setupNotice() {
 		Configs::get( 'start' )->setupKeyConnections();
@@ -76,7 +76,7 @@ class Connect {
 	/**
 	 * Check if the current screen is the connect screen.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @param  object  $screen Current Screen.
 	 * @return boolean         Is the screen the connect screen?
@@ -89,7 +89,7 @@ class Connect {
 	/**
 	 * Fiter the show prompt display to true.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @hook Boldgrid\Library\Library\Notice\KeyPrompt_display
 	 */
@@ -100,7 +100,7 @@ class Connect {
 	/**
 	 * Enqueue Scripts needed for this page.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @hook admin_enqueue_scripts
 	 */
@@ -112,7 +112,7 @@ class Connect {
 			/**
 			 * Add additional scripts to Connect page.
 			 *
-			 * @since 2.3.7
+			 * @since 2.4.0
 			 */
 			do_action( 'Boldgrid\Library\Library\Page\Connect\addScripts' );
 		}
@@ -121,7 +121,7 @@ class Connect {
 	/**
 	 * Create the BoldGird Connect Page.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @hook admin_menu
 	 */

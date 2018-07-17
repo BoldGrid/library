@@ -5,7 +5,7 @@
  * @package Boldgrid\Library
  * @subpackage \Library\Menu
  *
- * @version 2.3.7
+ * @version 2.4.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -16,14 +16,14 @@ use Boldgrid\Library\Library\Filter;
 /**
 * Create the BoldGrid Menu in the upper left of the admin screen.
  *
- * @since 2.3.7
+ * @since 2.4.0
  */
 class External {
 
 	/**
 	 * Add Filters.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 */
 	public function __construct() {
 		Filter::add( $this );
@@ -34,7 +34,7 @@ class External {
 	 *
 	 * @hook: admin_bar_menu
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @param WP_Admin_Bar $wpAdminBar Admin Bar.
 	 */
@@ -45,7 +45,7 @@ class External {
 	/**
 	 * Get the menu items for this location.
 	 *
-	 * @since 2.3.7
+	 * @since 2.4.0
 	 *
 	 * @return array Menu Items.
 	 */
