@@ -194,7 +194,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 * Set the API key.
 	 */
 	this.set = function( key ) {
-		var data, nonce, wpHttpReferer, notice;
+		var data, nonce, wpHttpReferer, $noticeContainer;
 		// Get the wpnonce and referer values.
 		nonce = $( '#set_key_auth', notice ).val();
 		wpHttpReferer = $( '[name="_wp_http_referer"]', notice ).val();
@@ -205,14 +205,14 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			'_wp_http_referer' : wpHttpReferer,
 		};
 
-		notice = $( '#container_boldgrid_api_key_notice' );
+		$noticeContainer = $( '#container_boldgrid_api_key_notice' );
 
 		var fail = function ( message ) {
 			message = message || 'An unexpected error occured. Please try again later.';
 
-			$( '#boldgrid-api-loading', notice ).hide();
-			$( '#submit_api_key', notice ).show();
-			$( '#boldgrid_api_key_notice_message', notice )
+			$( '#boldgrid-api-loading', $noticeContainer ).hide();
+			$( '#submit_api_key', $noticeContainer ).show();
+			$( '#boldgrid_api_key_notice_message', $noticeContainer )
 				.html( message )
 				.addClass( 'error-color' );
 		};
@@ -224,20 +224,20 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			// If the key was saved successfully.
 			if ( response.success ) {
 				// Change the notice from red to green.
-				notice.toggleClass( 'error' ).toggleClass( 'updated' );
-				notice.addClass( 'success-add-key' );
+				$noticeContainer.toggleClass( 'error' ).toggleClass( 'updated' );
+				$noticeContainer.addClass( 'success-add-key' );
 
 				// Initiate tracking iframe.
 				self.trackActivation();
 
-				$( '#boldgrid_api_key_notice_message', notice )
+				$( '#boldgrid_api_key_notice_message', $noticeContainer )
 					.html( response.data.message + ' <a class="dismiss-notification" onClick="window.location.reload(true)" style="cursor:pointer;"> Dismiss Notification</a>' );
 
 				// Remove the loading graphic since success.
-				$( '#boldgrid-api-loading', notice ).fadeOut();
+				$( '#boldgrid-api-loading', $noticeContainer ).fadeOut();
 
 				// Finally hide the input elements as we do not need them anymore.
-				$( '#boldgrid_api_key', notice ).fadeOut();
+				$( '#boldgrid_api_key', $noticeContainer ).fadeOut();
 
 				// Reload page after 3 seconds.
 				setTimeout( function() {
