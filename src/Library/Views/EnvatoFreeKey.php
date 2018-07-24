@@ -5,7 +5,9 @@
 		but your Envato purchase entitles you to a Premium Connect Key.' ) ?>
 	</p>
 	<p>
-		<?php _e( 'Please visit <a target="_blank" href="https://www.boldgrid.com/central/code/envato">BoldGrid Central</a>
-		to link your accounts and claim your Premium Connect Key.' ) ?>
+		<?php printf( __( 'Please visit %sBoldGrid Central%s
+		to link your accounts and claim your Premium Connect Key.' ),
+		'<a target="_blank" href="https://www.boldgrid.com/central/code/envato">',
+		'</a>' ) ?>
 	</p>
 </div>

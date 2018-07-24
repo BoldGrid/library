@@ -15,7 +15,7 @@
 				'<a href="https://www.boldgrid.com/central/get-it-now" target="_blank">', '</a>'
 			) ?>
 		</p>
-		<p class='change-key'><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
+		<p class='change-key'><a href="#" data-action="change-connect-key"><?php _e( 'Click here to change your Connect Key' ) ?></a></p>
 	</div>
 	<div class="basic-key-active key-entry-message">
 		<h2 class="dashicons-before dashicons-admin-network">
@@ -26,12 +26,12 @@
 			<?php esc_html_e( 'Thank you for adding your Connect Key. Try upgrading to a Premium subscription for full access to BoldGrid!', 'boldgrid-inspirations' ); ?>
 		</p>
 		<p><a target="_blank" href="https://www.boldgrid.com/connect-keys?source=library-prompt"
-				class="button button-primary">Upgrade</a>
+				class="button button-primary"><?php _e( 'Upgrade' ) ?></a>
 		</p>
 		<?php } else {
 			include __DIR__ . '/EnvatoFreeKey.php';
 		} ?>
-		<p class='change-key'><a href="#" data-action="change-connect-key">Click here to change your Connect Key</a></p>
+		<p class='change-key'><a href="#" data-action="change-connect-key"><?php _e( 'Click here to change your Connect Key' ) ?></a></p>
 	</div>
 	<div class="api-notice">
 		<h2 class="dashicons-before dashicons-admin-network">
