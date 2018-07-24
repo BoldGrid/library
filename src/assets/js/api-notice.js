@@ -231,7 +231,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				self.trackActivation();
 
 				$( '#boldgrid_api_key_notice_message', notice )
-					.html( response.data.message + ' <a onClick="window.location.reload(true)" style="cursor:pointer;"> Dismiss Notification</a>' );
+					.html( response.data.message + ' <a class="dismiss-notification" onClick="window.location.reload(true)" style="cursor:pointer;"> Dismiss Notification</a>' );
 
 				// Remove the loading graphic since success.
 				$( '#boldgrid-api-loading', notice ).fadeOut();

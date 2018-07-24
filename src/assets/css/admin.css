@@ -6,6 +6,7 @@
 	width: auto;
 }
 
+.settings_page_boldgrid-connect #container_boldgrid_api_key_notice .dismiss-notification,
 .settings_page_boldgrid-connect #container_boldgrid_api_key_notice .notice-dismiss {
 	display: none;
 }

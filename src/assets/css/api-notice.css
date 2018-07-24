@@ -61,6 +61,10 @@
 	animation-duration: 1.5s;
 }
 
+#container_boldgrid_api_key_notice.success-add-key .boldgridApiKeyLink {
+	display: none;
+}
+
 @keyframes tada {
 	from {
       -webkit-transform: scale3d(1, 1, 1);
