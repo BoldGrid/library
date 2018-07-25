@@ -131,7 +131,7 @@ class Call {
 		}
 
 		return $this->args = array(
-			'timeout' => 10, // Default timeout is 5 seconds, change to 10.
+			'timeout' => 15, // Default timeout is 5 seconds, change to 15.
 			'body' => $args
 		);
 	}
