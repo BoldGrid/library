@@ -120,7 +120,6 @@ class Call {
 	 * @return array $args The args class property.
 	 */
 	protected function setArgs( $args ) {
-
 		// Check for an API key being stored.
 		if ( $this->getKey() ) {
 			$args = wp_parse_args( $args, array( 'key' => $this->getKey() ) );
@@ -131,7 +130,10 @@ class Call {
 			$args = wp_parse_args( $args, array( 'site_hash' => $this->getSiteHash() ) );
 		}
 
-		return $this->args = array( 'body' => $args );
+		return $this->args = array(
+			'timeout' => 10, // Default timeout is 5 seconds, change to 10.
+			'body' => $args
+		);
 	}
 
 	/**
