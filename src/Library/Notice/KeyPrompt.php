@@ -95,6 +95,7 @@ class KeyPrompt {
 		$msg->success = esc_html__( 'Your api key has been saved successfully.', 'boldgrid-inspirations' );
 		$msg->error = sprintf( esc_html__( 'Your API key appears to be invalid!%sPlease try to enter your BoldGrid Connect Key again.', 'boldgrid-inspirations' ), '<br />' );
 		$msg->nonce = esc_html__( 'Security violation!  An invalid nonce was detected.', 'boldgrid-inspirations' );
+		$msg->timeout = esc_html__( 'Connection timed out. Please try again.', 'boldgrid-inspirations' );
 
 		return $this->messages = $msg;
 	}
@@ -198,7 +199,8 @@ class KeyPrompt {
 			$this->key->save( $data, $key );
 			wp_send_json_success( array( 'message' => $msg->success ) );
 		} else {
-			wp_send_json_error( array( 'message' => $msg->error ) );
+			$is_timeout = false !== strpos( $data, 'cURL error 28:' );
+			wp_send_json_error( array( 'message' => $is_timeout ? $msg->timeout : $msg->error ) );
 		}
 	}
 
