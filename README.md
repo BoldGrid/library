@@ -11,6 +11,10 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.4.2 ###
+* Bug fix: Show timeout message when saving key times out.
+* Bug fix: Misc bug fuxes.
+
 ### 2.4.1 ###
 * Fix: Display issue with key entry prompt HTML.
 
