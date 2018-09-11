@@ -6,7 +6,7 @@
  * @subpackage \Util
  *
  * @version 1.0.0
- * @author BoldGrid <wpb@boldgrid.com>
+ * @author BoldGrid <support@boldgrid.com>
  */
 
 namespace Boldgrid\Library\Util;
@@ -19,7 +19,6 @@ namespace Boldgrid\Library\Util;
  * @since 1.0.0
  */
 class Option {
-
 	/**
 	 * @access public
 	 *
@@ -57,7 +56,7 @@ class Option {
 	 * @return array Returns the option data from WordPress database.
 	 */
 	public static function getOption() {
-		return get_site_option( self::$name, array() );
+		return get_option( self::$name, array() );
 	}
 
 	/**
@@ -72,7 +71,7 @@ class Option {
 	 */
 	public static function set( $key, $value ) {
 		self::$option[ self::$key ][ $key ] = $value;
-		return update_site_option( self::$name, self::$option );
+		return update_option( self::$name, self::$option );
 	}
 
 	/**
@@ -86,7 +85,7 @@ class Option {
 	 */
 	public static function delete( $key ) {
 		unset( self::$option[ self::$key ][ $key ] );
-		return update_site_option( self::$name, self::$option );
+		return update_option( self::$name, self::$option );
 	}
 
 	/**

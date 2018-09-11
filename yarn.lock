@@ -645,6 +645,10 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
 
+jquery-toggles@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/jquery-toggles/-/jquery-toggles-4.0.0.tgz#820eebffb63dade7644eb5bc56198f0214726c19"
+
 js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"

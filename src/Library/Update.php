@@ -40,11 +40,15 @@ class Update {
 	 * @since 2.3.0
 	 *
 	 * @hook: auto_update_plugin
+	 *
+	 * @param  bool   $update Update API response.
+	 * @param  object $item   Item being updated.
+	 * @return bool
 	 */
-	public function auto_update_plugin() {
-		$pluginAutoupdate = \Boldgrid\Library\Util\Option::get( 'plugin_autoupdate' );
+	public function auto_update_plugin( $update, $item ) {
+		$connect_settings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
 
-		return ! empty( $pluginAutoupdate );
+		return ! empty( $connect_settings['autoupdate']['plugins'][ $item->plugin ] );
 	}
 
 	/**
@@ -53,10 +57,14 @@ class Update {
 	 * @since 2.3.0
 	 *
 	 * @hook: auto_update_theme
+	 *
+	 * @param  bool   $update Update API response.
+	 * @param  object $item   Item being updated.
+	 * @return bool
 	 */
-	public function auto_update_theme() {
-		$themeAutoupdate = \Boldgrid\Library\Util\Option::get( 'theme_autoupdate' );
+	public function auto_update_theme( $update, $item ) {
+		$connect_settings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
 
-		return ! empty( $themeAutoupdate );
+		return ! empty( $connect_settings['autoupdate']['themes'][ $item->theme ] );
 	}
 }

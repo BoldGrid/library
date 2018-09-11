@@ -6,7 +6,7 @@
  * @subpackage \Library\Library\Page
  *
  * @version 2.4.0
- * @author BoldGrid <wpb@boldgrid.com>
+ * @author BoldGrid <support@boldgrid.com>
  */
 
 namespace Boldgrid\Library\Library\Page;
@@ -98,7 +98,7 @@ class Connect {
 	}
 
 	/**
-	 * Enqueue Scripts needed for this page.
+	 * Enqueue scripts needed for this page.
 	 *
 	 * @since 2.4.0
 	 *
@@ -106,8 +106,39 @@ class Connect {
 	 */
 	public function addScripts() {
 		if ( $this->isConnectScreen( get_current_screen() ) ) {
-			wp_enqueue_script( 'boldgrid-library-connect',
-				Configs::get( 'libraryUrl' ) .  'src/assets/js/connect.js' );
+			// Enqueue boldgrid-library-connect js.
+			$handle = 'boldgrid-library-connect';
+
+			wp_register_script(
+				$handle,
+				Configs::get( 'libraryUrl' ) .  'src/assets/js/connect.js' ,
+				array( 'jquery' ),
+				date( 'Ymd' ),
+				false
+			);
+
+			$translation = array(
+				'settingsSaved' => __( 'Settings saved.' ),
+				'unknownError'  => __( 'Unknown error.', 'boldgrid-connect' ),
+				'ajaxError'     => __( 'Could not reach the AJAX URL address. HTTP error: ', 'boldgrid-connect' ),
+			);
+
+			wp_localize_script( $handle, 'BoldGridLibraryConnect', $translation );
+
+			wp_enqueue_script( $handle );
+
+			// Enqueue jquery-toggles js.
+			wp_enqueue_script(
+				'jquery-toggles',
+				Configs::get( 'libraryUrl' ) .  'build/toggles.min.js',
+				array( 'jquery' ),
+				date( 'Ymd' ),
+				true
+			);
+
+			// Enqueue jquery-toggles css.
+			wp_enqueue_style( 'jquery-toggles-full',
+				Configs::get( 'libraryUrl' ) .  'build/toggles-full.css', array(), date( 'Ymd' ) );
 
 			/**
 			 * Add additional scripts to Connect page.
@@ -136,5 +167,98 @@ class Connect {
 				include __DIR__ . '/../Views/Connect.php';
 			}
 		);
+	}
+
+	/**
+	 * AJAX callback for the Connect Settings page.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @uses $_POST['autoupdate'] Auto-update settings for plugins and themes.
+	 *
+	 * @hook wp_ajax_boldgrid_library_connect_settings_save
+	 */
+	public function saveSettings() {
+		// Check user permissions.
+		if ( ! current_user_can( 'update_plugins' ) ) {
+			wp_send_json_error( array(
+				'error' => __( 'User access violation!', 'boldgrid-connect' ),
+			) );
+		}
+
+		// Check security nonce and referer.
+		if ( ! check_admin_referer( 'boldgrid_library_connect_settings_save' ) ) {
+			wp_send_json_error( array(
+				'error' => __( 'Security violation! Please try again.', 'boldgrid-connect' ),
+			) );
+		}
+
+		// Read auto-update settings.
+		$autoupdate = ! empty( $_POST['autoupdate'] ) ? (array) $_POST['autoupdate'] : array();
+
+		// Merge settings.
+		$settings = array(
+			'autoupdate' => $autoupdate,
+		);
+
+		$boldgrid_settings = get_option( 'boldgrid_settings' );
+
+		$boldgrid_settings['connect_settings'] = $this->sanitizeSettings( $settings );
+
+		if ( update_option( 'boldgrid_settings', $boldgrid_settings, false ) ) {
+ 			wp_send_json_success( $settings );
+		} else {
+			wp_send_json_error( array(
+				'error' => esc_html__( 'Could not save settings to database.', 'boldgrid-connect' ),
+			) );
+		}
+	}
+
+	/**
+	 * Sanitize settings.
+	 *
+	 * @since 2.5.0
+	 *
+	 * @access protected
+	 *
+	 * @param  array $settings {
+	 *     Settings.
+	 *
+	 *     @type array $autoupdate {
+	 *         Auto-update settings.
+	 *
+	 *         @type array $plugins {
+	 *             Plugin auto-update settings.
+	 *
+	 *             @type string $$slug Plugin auto-update setting (1=Enabled, 2=Disabled).
+	 *         }
+	 *         @type array $themes {
+	 *             Theme auto-update settings.
+	 *
+	 *             @type string $$stylesheet Theme auto-update setting (1=Enabled, 2=Disabled).
+	 *         }
+	 *     }
+	 * }
+	 * @return array
+	 */
+	protected function sanitizeSettings( array $settings ) {
+		$result = array();
+
+		foreach ( $settings as $category => $group ) {
+			$category = sanitize_key( $category );
+
+			foreach ( $group as $groupName => $itemSetting ) {
+				$groupName = sanitize_key( $groupName );
+
+				foreach ( $itemSetting as $id => $val ) {
+					$id = sanitize_text_field( $id );
+					$val = (bool) $val;
+
+					$result[ $category ][ $groupName ][ $id ] = $val;
+				}
+			}
+		}
+
+		return $result;
 	}
 }

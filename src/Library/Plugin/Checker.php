@@ -75,7 +75,7 @@ class Checker {
 	 * @since 1.0.0
 	 *
 	 * @link https://developer.wordpress.org/reference/functions/get_site_option/
-	 * @see get_site_option()
+	 * @see get_option()
 	 * @see Boldgrid\Library\Util\Plugin::getFiltered()
 	 *
 	 * @return bool
@@ -83,7 +83,7 @@ class Checker {
 	public function findUpdated() {
 		$updated = array();
 
-		$boldgridSettings = get_site_option( 'boldgrid_settings' );
+		$boldgridSettings = get_option( 'boldgrid_settings' );
 
 		$plugins = get_site_transient( 'boldgrid_plugins_filtered' );
 
@@ -134,7 +134,7 @@ class Checker {
 			do_action( 'boldgrid_plugins_updated' );
 		}
 
-		update_site_option( 'boldgrid_settings', $boldgridSettings );
+		update_option( 'boldgrid_settings', $boldgridSettings );
 
 		return $updated;
 	}
