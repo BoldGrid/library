@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "js-lint": "prettier-eslint **/*.js --list-different",
-    "js-lint-fix": "prettier-eslint **/*.js --write"
+    "js-lint": "prettier-eslint **/*.js --list-different --ignore **/build/**",
+    "js-lint-fix": "prettier-eslint **/*.js --write --ignore **/build/**"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
