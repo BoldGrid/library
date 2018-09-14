@@ -8,85 +8,62 @@
  * @author     BoldGrid <support@boldgrid.com>
  */
 
-$settings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
+// Build markup container.
+$sections = array(
+	'sections' => array(
+		array(
+			'id'      => 'section_connect_key',
+			'title'   => __( 'BoldGrid Connect Key', 'boldgrid-connect' ),
+			'content' => include __DIR__ . '/Connect/ConnectKey.php',
+		),
+		array(
+			'id'      => 'section_auto_updates',
+			'title'   => __( 'Auto-Updates', 'boldgrid-connect' ),
+			'content' => include __DIR__ . '/Connect/AutoUpdates.php',
+		),
+		array(
+			'id'      => 'section_update_channels',
+			'title'   => __( 'Update Channels', 'boldgrid-connect' ),
+			'content' => include __DIR__ . '/Connect/UpdateChannels.php',
+		),
+	),
+	'post_col_right' => '
+		<p class="submit">
+			<input name="submit" id="submit" class="button button-primary" value="' .
+		esc_attr( 'Save Changes', 'boldgrid-connect' ) . '" type="submit">
+			<span class="spinner"></span>
+		</p>
+		<div id="settings-notice" class="notice notice-success inline"></div>
+	',
+);
 
-wp_nonce_field( 'boldgrid_library_connect_settings_save' );
+/**
+ * Render sections into markup.
+ *
+ * @since 2.5.0
+ *
+ * @param array $sections
+ *
+ * phpcs:disable WordPress.NamingConventions.ValidHookName
+ */
+$container = apply_filters( 'Boldgrid\Library\Ui\render_col_container', $sections );
 
+if ( is_array( $container ) ) {
+	$container = $this->core->lang['icon_warning'] . ' ' . __( 'Unable to display settings page. Unknown BoldGrid Library error.', 'boldgrid-connect' );
+}
+
+// Enqueue styles and scripts (registered in "\Boldgrid\Library\Ui::enqueue()").
+wp_enqueue_style( 'bglib-ui-css' );
+wp_enqueue_script( 'bglib-ui-js' );
+wp_enqueue_script( 'bglib-sticky' );
+
+// Display page.
 ?>
 <div class="wrap">
 	<h1>BoldGrid Connect</h1>
-	<div class="card connect-key-management">
-		<div class="connect-key-prompt"></div>
-	</div>
-	<div class="card auto-update-management div-table">
-		<div class="auto-upate-settings div-table-body">
-			<div class="div-table-row">
-				<div class="div-tableCell"><h2>Plugin Auto-Updates</h2></div>
-				<div class="div-tableCell">
-					<div class="div-table"><div class="div-table-body">
-						<div class="div-table-row">
-							<div class="div-tableCell">Toggle All Plugins</div>
-							<div class="toggle toggle-modern toggle-group" id="toggle-plugins"></div>
-						</div>
-						<div class="div-table-row"><br /></div>
-					<?php
-					$plugins = get_plugins();
-					foreach ( $plugins as $slug => $plugin_data ) {
-						$toggle = ! empty( $settings['autoupdate']['plugins'][ $slug ] ) ?
-							'true' : 'false';
-						?>
-						<div class="div-table-row plugin-update-setting">
-							<div class="div-tableCell"><?php echo $plugin_data['Name']; ?></div>
-							<div class="toggle toggle-modern plugin-toggle"
-								 data-plugin="<?php echo $slug; ?>"
-								 data-toggle-on="<?php echo $toggle; ?>"></div>
-						</div>
-						<?php
-					}
-					?>
-					</div></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="card auto-update-management div-table">
-		<div class="auto-upate-settings div-table-body">
-			<div class="div-table-row">
-				<div class="div-tableCell"><h2>Theme Auto-Updates</h2></div>
-				<div class="div-tableCell">
-					<div class="div-table"><div class="div-table-body">
-						<div class="div-table-row">
-							<div class="div-tableCell">Toggle All Themes</div>
-							<div class="toggle toggle-modern toggle-group" id="toggle-themes"></div>
-						</div>
-						<div class="div-table-row"><br /></div>
-					<?php
-					$themes = wp_get_themes();
-					foreach ( $themes as $stylesheet => $theme_data ) {
-						$toggle = ! empty( $settings['autoupdate']['themes'][ $stylesheet ] ) ?
-							'true' : 'false';
-						?>
-						<div class="div-table-row theme-update-setting">
-							<div class="div-tableCell">
-								<?php echo $theme_data['Name']; ?>
-							</div>
-							<div class="toggle toggle-modern theme-toggle"
-								data-stylesheet="<?php echo $stylesheet; ?>"
-								data-toggle-on="<?php echo $toggle; ?>"></div>
-						</div>
-						<?php
-					}
-					?>
-					</div></div>
-				</div>
-			</div>
-		</div>
-	</div>
+<?php
+wp_nonce_field( 'boldgrid_library_connect_settings_save' );
+
+echo $container; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+?>
 </div>
-
-<p class="submit">
-	<input name="submit" id="submit" class="button button-primary" value="Save Changes" type="submit">
-	<span class='spinner'></span>
-</p>
-
-<div id="settings-notice" class="notice notice-success inline"></div>

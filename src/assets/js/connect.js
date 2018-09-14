@@ -25,9 +25,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			// Initialize jquery-toggles.
 			$( '.toggle' ).toggles();
-
+			self._setMasterToggles();
 			$( '.toggle-group' ).on( 'click', self._toggleGroup );
-
+			$( '.toggle' ).not( '.toggle-group' ).on( 'click', self._setMasterToggles );
 			$( '#submit' ).on( 'click', self._submit );
 		},
 
@@ -45,16 +45,41 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		},
 
 		/**
+		 * Set master toggles.
+		 *
+		 * @since 2.5.0
+		 */
+		_setMasterToggles: function() {
+			var $masters = $( '.toggle-group' );
+
+			$masters.each( function() {
+				var $master = $( this ),
+					state = true;
+
+				$master
+					.closest( '.div-table-body' )
+					.find( '.toggle' )
+					.not( '.toggle-group' )
+					.each( function() {
+						if ( ! state || ! $( this ).data( 'toggles' ).active ) {
+							state = false;
+						}
+					} );
+
+					$master.toggles( state );
+			} );
+		},
+
+		/**
 		 * Handle form submission.
 		 *
 		 * @since 2.5.0
 		 */
 		_toggleGroup: function() {
 			var $this = $( this ),
-				$toggles = $this.parent().parent().find( '.toggle' ),
-				masterToggleState = $this.data('toggles').active;
+				$toggles = $this.parent().parent().find( '.toggle' );
 
-			$toggles.toggles( masterToggleState );
+			$toggles.toggles( $this.data( 'toggles' ).active );
 		},
 
 		/**
@@ -71,7 +96,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				data = {
 					action: 'boldgrid_library_connect_settings_save',
 					_wpnonce: $( '[name="_wpnonce"]' ).val(),
-					_wp_http_referer: $( '[name="_wp_http_referer"]' ).val()
+					_wp_http_referer: $( '[name="_wp_http_referer"]' ).val(),
+					plugin_release_channel: $( 'input[name="plugin_release_channel"]:checked' ).val(),
+					theme_release_channel: $( 'input[name="theme_release_channel"]:checked' ).val()
 				};
 
 			data.autoupdate = {};

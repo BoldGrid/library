@@ -46,9 +46,14 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_plugin( $update, $item ) {
-		$connect_settings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
+		// New settings.
+		$connectSettings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
 
-		return ! empty( $connect_settings['autoupdate']['plugins'][ $item->plugin ] );
+		// Old settings.
+		$pluginAutoupdate = \Boldgrid\Library\Util\Option::get( 'plugin_autoupdate' );
+
+		return ! empty( $connectSettings['autoupdate']['plugins'][ $item->plugin ] ) ||
+			! empty( $pluginAutoupdate );
 	}
 
 	/**
@@ -63,8 +68,13 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_theme( $update, $item ) {
-		$connect_settings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
+		// New settings.
+		$connectSettings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
 
-		return ! empty( $connect_settings['autoupdate']['themes'][ $item->theme ] );
+		// Old settings.
+		$themeAutoupdate = \Boldgrid\Library\Util\Option::get( 'theme_autoupdate' );
+
+		return ! empty( $connectSettings['autoupdate']['themes'][ $item->theme ] ) ||
+			! empty( $themeAutoupdate );
 	}
 }

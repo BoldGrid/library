@@ -72,16 +72,17 @@ class ReleaseChannel {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @hook: update_site_option_boldgrid_settings
+	 * @link https://developer.wordpress.org/reference/hooks/update_option_option/
+	 * @link https://developer.wordpress.org/reference/hooks/update_site_option_option/
 	 *
-	 * @param string $option The option name.
-	 * @param mixed  $new    New option value being set.
-	 * @param mixed  $old    Old option value being set.
+	 * @hook: update_option_boldgrid_settings
 	 *
-	 * @return mixed $new    The new option being set.
+	 * @param  mixed  $old    Old option value being set.
+	 * @param  mixed  $new    New option value being set.
+	 * @param  string $option The option name.
+	 * @return mixed  $new    The new option being set.
 	 */
-	public function updateChannel( $option, $new, $old ) {
-
+	public function updateChannel( $old, $new, $option ) {
 		// Plugin checks.
 		if ( ! empty( $old['release_channel'] ) || ! empty( $new['release_channel'] ) ) {
 			if ( $old['release_channel'] !== $new['release_channel'] ) {

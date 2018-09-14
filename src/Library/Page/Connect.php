@@ -174,7 +174,11 @@ class Connect {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @uses $_POST['autoupdate'] Auto-update settings for plugins and themes.
+	 * @uses $_POST['autoupdate']             Auto-update settings for plugins and themes.
+	 * @uses $_POST['plugin_release_channel'] Plugin release channel.
+	 * @uses $_POST['theme_release_channel']  Theme release channel.
+	 *
+	 * @see self::sanitizeSettings()
 	 *
 	 * @hook wp_ajax_boldgrid_library_connect_settings_save
 	 */
@@ -193,25 +197,27 @@ class Connect {
 			) );
 		}
 
-		// Read auto-update settings.
-		$autoupdate = ! empty( $_POST['autoupdate'] ) ? (array) $_POST['autoupdate'] : array();
-
-		// Merge settings.
-		$settings = array(
-			'autoupdate' => $autoupdate,
+		// Read settings form POST request, and merge settings with saved.
+		$boldgridSettings = array_merge(
+			get_option( 'boldgrid_settings' ),
+			$this->sanitizeSettings(
+				array(
+					'autoupdate'            => ! empty( $_POST['autoupdate'] ) ?
+						(array) $_POST['autoupdate'] : array(),
+					'release_channel'       => ! empty( $_POST['plugin_release_channel'] ) ?
+						sanitize_key( $_POST['plugin_release_channel'] ) : 'stable',
+					'theme_release_channel' => ! empty( $_POST['theme_release_channel'] ) ?
+						sanitize_key( $_POST['theme_release_channel'] ) : 'stable',
+				)
+			)
 		);
 
-		$boldgrid_settings = get_option( 'boldgrid_settings' );
+		// Remove deprecated settings from BoldGrid Settings.
+		unset( $boldgridSettings['plugin_autoupdate'], $boldgridSettings['theme_autoupdate'] );
 
-		$boldgrid_settings['connect_settings'] = $this->sanitizeSettings( $settings );
+		update_option( 'boldgrid_settings', $boldgridSettings, false );
 
-		if ( update_option( 'boldgrid_settings', $boldgrid_settings, false ) ) {
- 			wp_send_json_success( $settings );
-		} else {
-			wp_send_json_error( array(
-				'error' => esc_html__( 'Could not save settings to database.', 'boldgrid-connect' ),
-			) );
-		}
+		wp_send_json_success($boldgridSettings);
 	}
 
 	/**
@@ -224,39 +230,58 @@ class Connect {
 	 * @param  array $settings {
 	 *     Settings.
 	 *
-	 *     @type array $autoupdate {
+	 *     @type array  $autoupdate {
 	 *         Auto-update settings.
 	 *
 	 *         @type array $plugins {
 	 *             Plugin auto-update settings.
 	 *
-	 *             @type string $$slug Plugin auto-update setting (1=Enabled, 2=Disabled).
+	 *             @type string $slug Plugin auto-update setting (1=Enabled, 0=Disabled).
 	 *         }
 	 *         @type array $themes {
 	 *             Theme auto-update settings.
 	 *
-	 *             @type string $$stylesheet Theme auto-update setting (1=Enabled, 2=Disabled).
+	 *             @type string $stylesheet Theme auto-update setting (1=Enabled, 0=Disabled).
 	 *         }
 	 *     }
+	 *     @type string $release_channel        Plugin release channel.
+	 *     @type string $theme_release_channel  Theme release channel.
 	 * }
 	 * @return array
 	 */
 	protected function sanitizeSettings( array $settings ) {
 		$result = array();
 
-		foreach ( $settings as $category => $group ) {
+		foreach ( $settings['autoupdate'] as $category => $itemSetting ) {
 			$category = sanitize_key( $category );
 
-			foreach ( $group as $groupName => $itemSetting ) {
-				$groupName = sanitize_key( $groupName );
+			foreach ( $itemSetting as $id => $val ) {
+				$id = sanitize_text_field( $id );
+				$val = (bool) $val;
 
-				foreach ( $itemSetting as $id => $val ) {
-					$id = sanitize_text_field( $id );
-					$val = (bool) $val;
-
-					$result[ $category ][ $groupName ][ $id ] = $val;
-				}
+				$result['autoupdate'][ $category ][ $id ] = $val;
 			}
+		}
+
+		// Validate release channel settings.
+		$channels = array(
+			'stable',
+			'edge',
+			'candidate',
+		);
+
+		if ( empty( $settings['release_channel'] ) ||
+			! in_array( $settings['release_channel'], $channels, true ) ) {
+				$result['release_channel'] = 'stable';
+		} else {
+			$result['release_channel'] = $settings['release_channel'];
+		}
+
+		if ( empty( $settings['theme_release_channel'] ) ||
+			! in_array( $settings['theme_release_channel'], $channels, true ) ) {
+				$result['theme_release_channel'] = 'stable';
+		} else {
+			$result['theme_release_channel'] = $settings['theme_release_channel'];
 		}
 
 		return $result;
