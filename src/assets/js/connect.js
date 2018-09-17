@@ -26,8 +26,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			// Initialize jquery-toggles.
 			$( '.toggle' ).toggles();
 			self._setMasterToggles();
-			$( '.toggle-group' ).on( 'click', self._toggleGroup );
-			$( '.toggle' ).not( '.toggle-group' ).on( 'click', self._setMasterToggles );
+			$( '.toggle-group' ).on( 'click swipe contextmenu', self._toggleGroup );
+			$( '.toggle' ).not( '.toggle-group' )
+				.on( 'click swipe contextmenu', self._setMasterToggles );
 			$( '#submit' ).on( 'click', self._submit );
 		},
 
@@ -41,6 +42,32 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			setTimeout( function () {
 				$connectKeySection.after( $( '#container_boldgrid_api_key_notice' ) );
+			} );
+		},
+
+		/**
+		 * Set inputs for toggles.
+		 *
+		 * @since 2.5.0
+		 */
+		_setInputs: function() {
+			var $pluginToggles = $( '.plugin-toggle' ),
+				$themeToggles = $( '.theme-toggle' );
+
+			$pluginToggles.each( function() {
+				var $this = $( this );
+
+				$this.next( 'input' )
+					.attr( 'name', 'autoupdate[plugins][' + $this.data( 'plugin' ) + ']' )
+					.val( $this.data( 'toggles' ).active ? 1 : 0 );
+			} );
+
+			$themeToggles.each( function() {
+				var $this = $( this );
+
+				$this.next( 'input' )
+					.attr( 'name', 'autoupdate[themes][' + $this.data( 'stylesheet' ) + ']' )
+					.val( $this.data( 'toggles' ).active ? 1 : 0 );
 			} );
 		},
 
@@ -68,6 +95,8 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 					$master.toggles( state );
 			} );
+
+			self._setInputs();
 		},
 
 		/**
@@ -80,6 +109,8 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				$toggles = $this.parent().parent().find( '.toggle' );
 
 			$toggles.toggles( $this.data( 'toggles' ).active );
+
+			self._setInputs();
 		},
 
 		/**

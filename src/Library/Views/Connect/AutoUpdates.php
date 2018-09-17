@@ -9,7 +9,8 @@
  */
 
 // Get settings.
-$settings = \Boldgrid\Library\Util\Option::get( 'autoupdate' );
+\Boldgrid\Library\Util\Option::init();
+$autoupdateSettings = \Boldgrid\Library\Util\Option::get( 'autoupdate' );
 
 // Get deprecated settings.
 $pluginAutoupdate = (bool) \Boldgrid\Library\Util\Option::get( 'plugin_autoupdate' );
@@ -38,15 +39,18 @@ $return = '
 $plugins = get_plugins();
 
 foreach ( $plugins as $slug => $plugin_data ) {
-	$toggle = $pluginAutoupdate || ! empty( $settings['plugins'][ $slug ] ) ?
+	$toggle = $pluginAutoupdate || ! empty( $autoupdateSettings['plugins'][ $slug ] ) ?
 		'true' : 'false';
-	
+
 	$return .= '
 					<div class="div-table-row plugin-update-setting">
 						<div class="div-tableCell">' . $plugin_data['Name'] . '</div>
 						<div class="toggle toggle-modern plugin-toggle"
-							 data-plugin="' . $slug .'"
-							 data-toggle-on="' . $toggle . '"></div>
+							data-plugin="' . $slug . '"
+							data-toggle-on="' . $toggle . '">
+						</div>
+						<input type="hidden" name="autoupdate[plugins][' . $slug . ']"
+							value="' . ( 'true' === $toggle ? 1 : 0 ) . '" />
 					</div>
 ';
 }
@@ -73,15 +77,18 @@ $return .= '
 $themes = wp_get_themes();
 
 foreach ( $themes as $stylesheet => $theme_data ) {
-	$toggle = $themeAutoupdate || ! empty( $settings['themes'][ $stylesheet ] ) ?
+	$toggle = $themeAutoupdate || ! empty( $autoupdateSettings['themes'][ $stylesheet ] ) ?
 		'true' : 'false';
-	
+
 	$return .= '
 					<div class="div-table-row theme-update-setting">
 						<div class="div-tableCell">' . $theme_data['Name'] . '</div>
 						<div class="toggle toggle-modern theme-toggle"
 							data-stylesheet="' . $stylesheet . '"
-							data-toggle-on="' . $toggle . '"></div>
+							data-toggle-on="' . $toggle . '">
+						</div>
+						<input type="hidden" name="autoupdate[themes][' . $stylesheet . ']"
+							value="' . ( 'true' === $toggle ? 1 : 0 ) . '" />
 					</div>
 ';
 }

@@ -9,6 +9,7 @@
  */
 
 // Get settings.
+\Boldgrid\Library\Util\Option::init();
 $pluginReleaseChannel = \Boldgrid\Library\Util\Option::get( 'release_channel' );
 $themeReleaseChannel  = \Boldgrid\Library\Util\Option::get( 'theme_release_channel' );
 
@@ -25,6 +26,13 @@ if ( ! in_array( $pluginReleaseChannel, $channels, true ) ) {
 
 if ( ! in_array( $themeReleaseChannel, $channels, true ) ) {
 	$themeReleaseChannel = 'stable';
+}
+
+$showCandidateChoice = false;
+
+if ( 'candidate' === $pluginReleaseChannel || 'candidate' === $themeReleaseChannel ||
+	! empty( $_GET['channels'] ) ) {
+		$showCandidateChoice = true;
 }
 
 $return = '
@@ -60,12 +68,12 @@ $return .= '> Stable
 $return .='> Edge
 						</div>
 ';
-							
-if ( 'candidate' === $pluginReleaseChannel || ! empty( $_GET['channels'] ) ) {
+
+if ( $showCandidateChoice ) {
 	$return .='
 						<div class="div-tableCell">
 							<input type="radio" name="plugin_release_channel" value="candidate"';
-							
+
 	if ( 'candidate' === $pluginReleaseChannel ) {
 		$return .= ' checked="checked"';
 	}
@@ -108,7 +116,7 @@ $return .= '> Edge
 						</div>
 ';
 
-if ( 'candidate' === $themeReleaseChannel || ! empty( $_GET['channels'] ) ) {
+if ( $showCandidateChoice ) {
 	$return .= '
 						<div class="div-tableCell">
 							<input type="radio" name="theme_release_channel" value="candidate"';
@@ -116,7 +124,7 @@ if ( 'candidate' === $themeReleaseChannel || ! empty( $_GET['channels'] ) ) {
 	if ( 'candidate' === $themeReleaseChannel ) {
 		$return .= ' checked="checked"';
 	}
-	
+
 	$return .= '> Candidate
 						</div>
 ';

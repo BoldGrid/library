@@ -111,7 +111,7 @@ class Connect {
 
 			wp_register_script(
 				$handle,
-				Configs::get( 'libraryUrl' ) .  'src/assets/js/connect.js' ,
+				Configs::get( 'libraryUrl' ) . 'src/assets/js/connect.js' ,
 				array( 'jquery' ),
 				date( 'Ymd' ),
 				false
@@ -130,7 +130,7 @@ class Connect {
 			// Enqueue jquery-toggles js.
 			wp_enqueue_script(
 				'jquery-toggles',
-				Configs::get( 'libraryUrl' ) .  'build/toggles.min.js',
+				Configs::get( 'libraryUrl' ) . 'build/toggles.min.js',
 				array( 'jquery' ),
 				date( 'Ymd' ),
 				true
@@ -138,7 +138,7 @@ class Connect {
 
 			// Enqueue jquery-toggles css.
 			wp_enqueue_style( 'jquery-toggles-full',
-				Configs::get( 'libraryUrl' ) .  'build/toggles-full.css', array(), date( 'Ymd' ) );
+				Configs::get( 'libraryUrl' ) . 'build/toggles-full.css', array(), date( 'Ymd' ) );
 
 			/**
 			 * Add additional scripts to Connect page.
@@ -197,10 +197,10 @@ class Connect {
 			) );
 		}
 
-		// Read settings form POST request, and merge settings with saved.
+		// Read settings form POST request, sanitize, and merge settings with saved.
 		$boldgridSettings = array_merge(
 			get_option( 'boldgrid_settings' ),
-			$this->sanitizeSettings(
+			self::sanitizeSettings(
 				array(
 					'autoupdate'            => ! empty( $_POST['autoupdate'] ) ?
 						(array) $_POST['autoupdate'] : array(),
@@ -215,7 +215,7 @@ class Connect {
 		// Remove deprecated settings from BoldGrid Settings.
 		unset( $boldgridSettings['plugin_autoupdate'], $boldgridSettings['theme_autoupdate'] );
 
-		update_option( 'boldgrid_settings', $boldgridSettings, false );
+		update_option( 'boldgrid_settings', $boldgridSettings );
 
 		wp_send_json_success();
 	}
@@ -225,7 +225,7 @@ class Connect {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @access protected
+	 * @static
 	 *
 	 * @param  array $settings {
 	 *     Settings.
@@ -249,7 +249,7 @@ class Connect {
 	 * }
 	 * @return array
 	 */
-	protected function sanitizeSettings( array $settings ) {
+	public static function sanitizeSettings( array $settings ) {
 		$result = array();
 
 		foreach ( $settings['autoupdate'] as $category => $itemSetting ) {
@@ -257,9 +257,8 @@ class Connect {
 
 			foreach ( $itemSetting as $id => $val ) {
 				$id = sanitize_text_field( $id );
-				$val = (bool) $val;
 
-				$result['autoupdate'][ $category ][ $id ] = $val;
+				$result['autoupdate'][ $category ][ $id ] = (bool) $val;
 			}
 		}
 
