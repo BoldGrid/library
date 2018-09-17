@@ -11,7 +11,6 @@
 // Get settings.
 $pluginReleaseChannel = \Boldgrid\Library\Util\Option::get( 'release_channel' );
 $themeReleaseChannel  = \Boldgrid\Library\Util\Option::get( 'theme_release_channel' );
-var_dump( $pluginReleaseChannel, $themeReleaseChannel );
 
 // Validate release channel settings.
 $channels = array(
