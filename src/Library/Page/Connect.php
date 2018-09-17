@@ -217,7 +217,7 @@ class Connect {
 
 		update_option( 'boldgrid_settings', $boldgridSettings, false );
 
-		wp_send_json_success($boldgridSettings);
+		wp_send_json_success();
 	}
 
 	/**
