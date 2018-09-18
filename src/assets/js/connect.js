@@ -52,7 +52,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		_setInputs: function() {
 			var $pluginToggles = $( '.plugin-toggle' ),
-				$themeToggles = $( '.theme-toggle' );
+				$themeToggles = $( '.theme-toggle' ),
+				$pluginsDefault = $( '#toggle-default-plugins' ),
+				$themesDefault = $( '#toggle-default-themes' );
 
 			$pluginToggles.each( function() {
 				var $this = $( this );
@@ -69,6 +71,14 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					.attr( 'name', 'autoupdate[themes][' + $this.data( 'stylesheet' ) + ']' )
 					.val( $this.data( 'toggles' ).active ? 1 : 0 );
 			} );
+
+			$pluginsDefault
+				.next( 'input' )
+				.val( $pluginsDefault.data( 'toggles' ).active ? 1 : 0 );
+
+			$themesDefault
+				.next( 'input' )
+				.val( $themesDefault.data( 'toggles' ).active ? 1 : 0 );
 		},
 
 		/**

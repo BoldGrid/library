@@ -41,19 +41,30 @@ class Update {
 	 *
 	 * @hook: auto_update_plugin
 	 *
+	 * @see \Boldgrid\Library\Util\Option::get()
+	 *
 	 * @param  bool   $update Update API response.
 	 * @param  object $item   Item being updated.
 	 * @return bool
 	 */
 	public function auto_update_plugin( $update, $item ) {
+		$update = false;
+
 		// New settings.
-		$connectSettings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
+		$autoupdateSettings = \Boldgrid\Library\Util\Option::get( 'autoupdate' );
 
 		// Old settings.
 		$pluginAutoupdate = \Boldgrid\Library\Util\Option::get( 'plugin_autoupdate' );
 
-		return ! empty( $connectSettings['autoupdate']['plugins'][ $item->plugin ] ) ||
-			! empty( $pluginAutoupdate );
+		// Update if global setting is on, individual settings is on, or not set and default is on.
+		if ( ! empty( $pluginAutoupdate ) ||
+			! empty( $autoupdateSettings['plugins'][ $item->plugin ] ) ||
+			( ! isset( $autoupdateSettings['plugins'][ $item->plugin ] ) &&
+			! empty( $autoupdateSettings['plugins']['default'] ) ) ) {
+				$update = true;
+		}
+
+		return $update;
 	}
 
 	/**
@@ -63,18 +74,29 @@ class Update {
 	 *
 	 * @hook: auto_update_theme
 	 *
+	 * @see \Boldgrid\Library\Util\Option::get()
+	 *
 	 * @param  bool   $update Update API response.
 	 * @param  object $item   Item being updated.
 	 * @return bool
 	 */
 	public function auto_update_theme( $update, $item ) {
+		$update = false;
+
 		// New settings.
-		$connectSettings = \Boldgrid\Library\Util\Option::get( 'connect_settings' );
+		$autoupdateSettings = \Boldgrid\Library\Util\Option::get( 'autoupdate' );
 
 		// Old settings.
 		$themeAutoupdate = \Boldgrid\Library\Util\Option::get( 'theme_autoupdate' );
 
-		return ! empty( $connectSettings['autoupdate']['themes'][ $item->theme ] ) ||
-			! empty( $themeAutoupdate );
+		// Update if global setting is on, individual settings is on, or not set and default is on.
+		if ( ! empty( $themeAutoupdate ) ||
+			! empty( $autoupdateSettings['themes'][ $item->theme ] ) ||
+			( ! isset( $autoupdateSettings['themes'][ $item->theme ] ) &&
+			! empty( $autoupdateSettings['themes']['default'] ) ) ) {
+				$update = true;
+		}
+
+		return $update;
 	}
 }
