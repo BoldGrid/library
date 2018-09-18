@@ -191,3 +191,13 @@
 .spinner.hidden {
 	display: none;
 }
+
+div .dashicons {
+	vertical-align: bottom;
+}
+
+.dashicons-editor-help {
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+}

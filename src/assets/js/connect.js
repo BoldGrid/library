@@ -30,6 +30,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			$( '.toggle' ).not( '.toggle-group' )
 				.on( 'click swipe contextmenu', self._setMasterToggles );
 			$( '#submit' ).on( 'click', self._submit );
+			$( '.dashicons-editor-help' ).on( 'click', self._toggleHelp );
 		},
 
 		/**
@@ -200,6 +201,26 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					$spinner.removeClass( 'inline' );
 					$this.removeAttr( 'disabled' );
 				} );
+		},
+
+		/**
+		 * Handle form submission.
+		 *
+		 * @since 2.5.0
+		 */
+		_toggleHelp: function( e ) {
+			var id = $( this ).attr( 'data-id' );
+console.log( '_toggleHelp: ' + id );
+
+			e.preventDefault();
+
+			if ( id === undefined ) {
+				return false;
+			}
+
+			$( '.help[data-id="' + id + '"]' ).slideToggle();
+
+			return false;
 		}
 	};
 

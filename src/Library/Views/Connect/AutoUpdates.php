@@ -22,8 +22,21 @@ $return = '
 <div class="bg-box">
 	<div class="bg-box-top">
 		' . esc_html__( 'Auto-Updates', 'boldgrid-connect' ) . '
+		<span class="dashicons dashicons-editor-help" data-id="plugin-autoupdate"></span>
 	</div>
 	<div class="bg-box-bottom">
+
+		<p class="help" data-id="plugin-autoupdate">' .
+			sprintf(
+				// translators: 1: HTML anchor open tag, 2: HTML anchor close tag.
+				esc_html__(
+					'Automatically perform plugin and theme updates. This feature utilizes the %1$sauto_update_plugin%2$s and %1$sauto_update_theme%2$s WordPress filters, which enables automatic updates as they become available.',
+					'boldgrid-backup'
+				),
+				'<a target="_blank" href="https://codex.wordpress.org/Configuring_Automatic_Background_Updates#Plugin_.26_Theme_Updates_via_Filter">',
+				'</a>'
+			) .
+		'</p>
 
 <div class="card auto-update-management div-table">
 	<div class="auto-upate-settings div-table-body">
