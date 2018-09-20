@@ -210,7 +210,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		_toggleHelp: function( e ) {
 			var id = $( this ).attr( 'data-id' );
-console.log( '_toggleHelp: ' + id );
 
 			e.preventDefault();
 
