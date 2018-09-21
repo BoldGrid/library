@@ -62,14 +62,20 @@ $return = '
 
 $plugins = get_plugins();
 
-foreach ( $plugins as $slug => $plugin_data ) {
+foreach ( $plugins as $slug => $pluginData ) {
 	// Enable if global setting is on, individual settings is on, or not set and default is on.
 	$toggle = $pluginAutoupdate || ! empty( $autoupdateSettings['plugins'][ $slug ] ) ||
 		( ! isset( $autoupdateSettings['plugins'][ $slug ] ) && $pluginsDefault );
 
+	$itemTitle = $pluginData['Name'];
+
+	if ( is_plugin_active( $slug ) ) {
+		$itemTitle .= ' (active)';
+	}
+
 	$return .= '
 					<div class="div-table-row plugin-update-setting">
-						<div class="div-tableCell">' . $plugin_data['Name'] . '</div>
+						<div class="div-tableCell">' . $itemTitle . '</div>
 						<div class="toggle toggle-modern plugin-toggle"
 							data-plugin="' . $slug . '"
 							data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
@@ -108,16 +114,26 @@ $return .= '
 					<div class="div-table-row"><br /></div>
 ';
 
-$themes = wp_get_themes();
+$activeStylesheet = get_option( 'stylesheet' );
+$activeTemplate   = get_option( 'template' );
+$themes           = wp_get_themes();
 
-foreach ( $themes as $stylesheet => $theme_data ) {
+foreach ( $themes as $stylesheet => $theme ) {
 	// Enable if global setting is on, individual settings is on, or not set and default is on.
 	$toggle = $themeAutoupdate || ! empty( $autoupdateSettings['themes'][ $stylesheet ] ) ||
 		( ! isset( $autoupdateSettings['themes'][ $stylesheet ] ) && $themesDefault );
 
+	$itemTitle = $theme->get( 'Name' );
+
+	if ( $activeStylesheet === $stylesheet ) {
+		$itemTitle .= ' (active)';
+	} else if ( $activeStylesheet !== $activeTemplate ) {
+		$itemTitle .= ' (parent)';
+	}
+
 	$return .= '
 					<div class="div-table-row theme-update-setting">
-						<div class="div-tableCell">' . $theme_data['Name'] . '</div>
+						<div class="div-tableCell">' . $itemTitle . '</div>
 						<div class="toggle toggle-modern theme-toggle"
 							data-stylesheet="' . $stylesheet . '"
 							data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
