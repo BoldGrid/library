@@ -373,7 +373,7 @@ class License {
 	 *
 	 * @since 1.1.4
 	 *
-	 * @nohook
+	 * @hook Boldgrid\Library\License\isPremium
 	 *
 	 * @return bool
 	 */

@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.6.0 In progress ###
+* Feature: JIRA BGTHEME-576 Add filter to check for is premium.
+
 ### 2.4.2 ###
 * Bug fix: Show timeout message when saving key times out.
 * Bug fix: Misc bug fuxes.
