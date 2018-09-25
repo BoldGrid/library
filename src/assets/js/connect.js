@@ -24,7 +24,12 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			self._repositionNotice();
 
 			// Initialize jquery-toggles.
-			$( '.toggle' ).toggles();
+			$( '.toggle' ).toggles( {
+				text: {
+				    on: '',
+				    off: ''
+				  }
+			} );
 			self._setMasterToggles();
 			$( '.toggle-group' ).on( 'click swipe contextmenu', self._toggleGroup );
 			$( '.toggle' ).not( '.toggle-group' )
@@ -52,10 +57,19 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 2.5.0
 		 */
 		_setInputs: function() {
-			var $pluginToggles = $( '.plugin-toggle' ),
+			var $wpcoreToggles = $( '.wpcore-toggle' ),
+				$pluginToggles = $( '.plugin-toggle' ),
 				$themeToggles = $( '.theme-toggle' ),
 				$pluginsDefault = $( '#toggle-default-plugins' ),
 				$themesDefault = $( '#toggle-default-themes' );
+
+			$wpcoreToggles.each( function() {
+				var $this = $( this );
+
+				$this.next( 'input' )
+					.attr( 'name', 'autoupdate[wpcore][' + $this.data( 'wpcore' ) + ']' )
+					.val( $this.data( 'toggles' ).active ? 1 : 0 );
+			} );
 
 			$pluginToggles.each( function() {
 				var $this = $( this );
