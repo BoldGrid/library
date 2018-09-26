@@ -56,7 +56,7 @@ if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
 	$bbsLinkClose = '';
 
 	if ( empty( $_GET['page'] ) || 'boldgrid-backup-settings' !== $_GET['page'] ) {
-		$bbsLinkOpen = '<a target="_blank" href="' . admin_url( 'admin.php?page=boldgrid-backup-settings' ) . '">';
+		$bbsLinkOpen = '<a href="' . admin_url( 'admin.php?page=boldgrid-backup-settings&section=section_auto_rollback' ) . '">';
 		$bbsLinkClose = '</a>';
 	}
 
