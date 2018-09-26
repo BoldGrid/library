@@ -68,10 +68,9 @@ class Update {
 	 * @hook: auto_update_core
 	 *
 	 * @param  bool   $update Update API response.
-	 * @param  object $item   Item being updated.
 	 * @return bool
 	 */
-	public function auto_update_core( $update, $item ) {
+	public function auto_update_core( $update ) {
 		if ( ! $this->isBackupActive ) {
 			return $update;
 		}
@@ -87,10 +86,9 @@ class Update {
 	 * @hook: allow_major_auto_core_updates
 	 *
 	 * @param  bool   $update Update API response.
-	 * @param  object $item   Item being updated.
 	 * @return bool
 	 */
-	public function allow_major_auto_core_updates( $update, $item ) {
+	public function allow_major_auto_core_updates( $update ) {
 		if ( ! $this->isBackupActive ) {
 			return $update;
 		}
@@ -107,10 +105,9 @@ class Update {
 	 * @hook: allow_minor_auto_core_updates
 	 *
 	 * @param  bool   $update Update API response.
-	 * @param  object $item   Item being updated.
 	 * @return bool
 	 */
-	public function allow_minor_auto_core_updates( $update, $item ) {
+	public function allow_minor_auto_core_updates( $update ) {
 		if ( ! $this->isBackupActive ) {
 			return $update;
 		}
@@ -127,10 +124,9 @@ class Update {
 	 * @hook: allow_dev_auto_core_updates
 	 *
 	 * @param  bool   $update Update API response.
-	 * @param  object $item   Item being updated.
 	 * @return bool
 	 */
-	public function allow_dev_auto_core_updates( $update, $item ) {
+	public function allow_dev_auto_core_updates( $update ) {
 		if ( ! $this->isBackupActive ) {
 			return $update;
 		}
@@ -147,10 +143,9 @@ class Update {
 	 * @hook: auto_update_translation
 	 *
 	 * @param  bool   $update Update API response.
-	 * @param  object $item   Item being updated.
 	 * @return bool
 	 */
-	public function auto_update_translation( $update, $item ) {
+	public function auto_update_translation( $update ) {
 		if ( ! $this->isBackupActive ) {
 			return $update;
 		}

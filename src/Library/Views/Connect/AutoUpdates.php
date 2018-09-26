@@ -65,7 +65,7 @@ if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
 		sprintf(
 			// translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag..
 			esc_html__(
-				'You do not have %3$sAuto-Backup%4$s disabled in the %1$sBoldGrid Backup Settings%2$s.  Please consider enabling the setting.',
+				'You have %3$sAuto-Backup%4$s disabled in the %1$sBoldGrid Backup Settings%2$s.  Please consider enabling the setting.',
 				'boldgrid-backup'
 			),
 			$bbsLinkOpen,
