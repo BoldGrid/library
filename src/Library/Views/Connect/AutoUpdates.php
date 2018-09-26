@@ -8,11 +8,14 @@
  * @author     BoldGrid <support@boldgrid.com>
  */
 
-// Get settings.
+// Get BoldGrid settings.
 \Boldgrid\Library\Util\Option::init();
 $autoupdateSettings = \Boldgrid\Library\Util\Option::get( 'autoupdate' );
 $pluginsDefault     = ! empty( $autoupdateSettings['plugins']['default'] );
 $themesDefault      = ! empty( $autoupdateSettings['themes']['default'] );
+
+// Get BoldGrid Backup settings.
+$boldgridBackupSettings = get_site_option( 'boldgrid_backup_settings', array() );
 
 // Get deprecated settings.
 $pluginAutoupdate = (bool) \Boldgrid\Library\Util\Option::get( 'plugin_autoupdate' );
@@ -40,14 +43,41 @@ $return = '
 			sprintf(
 				// translators: 1: HTML anchor open tag, 2: HTML anchor close tag.
 				esc_html__(
-					'Automatically perform plugin and theme updates. This feature utilizes the %1$sauto_update_plugin%2$s and %1$sauto_update_theme%2$s WordPress filters, which enables automatic updates as they become available.',
+					'Automatically perform WordPress core, plugin, and theme updates. This feature utilizes %1$sWordPress filters%2$s, which enables automatic updates as they become available.',
 					'boldgrid-backup'
 				),
-				'<a target="_blank" href="https://codex.wordpress.org/Configuring_Automatic_Background_Updates#Plugin_.26_Theme_Updates_via_Filter">',
+				'<a target="_blank" href="https://codex.wordpress.org/Configuring_Automatic_Background_Updates">',
 				'</a>'
 			) .
 		'</p>
+';
+if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
+	$bbsLinkOpen  = '';
+	$bbsLinkClose = '';
 
+	if ( empty( $_GET['page'] ) || 'boldgrid-backup-settings' !== $_GET['page'] ) {
+		$bbsLinkOpen = '<a target="_blank" href="' . admin_url( 'admin.php?page=boldgrid-backup-settings' ) . '">';
+		$bbsLinkClose = '</a>';
+	}
+
+	$return .= '
+		<p>' .
+		sprintf(
+			// translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag..
+			esc_html__(
+				'You do not have %3$sAuto-Backup%4$s disabled in the %1$sBoldGrid Backup Settings%2$s.  Please consider enabling the setting.',
+				'boldgrid-backup'
+			),
+			$bbsLinkOpen,
+			'</a>',
+			'<em>',
+			'</em>'
+		) .
+		'</p>
+';
+}
+
+$return .= '
 <div class="card auto-update-management div-table">
 	<div class="auto-upate-settings div-table-body">
 		<div class="div-table-row">

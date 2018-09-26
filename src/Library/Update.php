@@ -34,16 +34,30 @@ class Update {
 	protected $settings;
 
 	/**
+	 * Is the BoldGrid Backup plugin active?
+	 *
+	 * @since 2.6.0
+	 *
+	 * @var bool
+	 */
+	protected $isBackupActive;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.3.0
 	 *
 	 * @see \Boldgrid\Library\Util\Option::get()
+	 *
+	 * @link https://developer.wordpress.org/reference/functions/is_plugin_active/
 	 */
 	public function __construct() {
 		Filter::add( $this );
 
 		$this->settings = (array) \Boldgrid\Library\Util\Option::get( 'autoupdate' );
+
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		$this->isBackupActive = \is_plugin_active( 'boldgrid-backup/boldgrid-backup.php' );
 	}
 
 	/**
@@ -58,6 +72,10 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_core( $update, $item ) {
+		if ( ! $this->isBackupActive ) {
+			return $update;
+		}
+
 		return $update || ! empty( $this->settings['wpcore']['all'] );
 	}
 
@@ -73,6 +91,10 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_major_auto_core_updates( $update, $item ) {
+		if ( ! $this->isBackupActive ) {
+			return $update;
+		}
+
 		return $update || ! empty( $this->settings['wpcore']['all'] ) ||
 			! empty( $this->settings['wpcore']['major'] );
 	}
@@ -89,6 +111,10 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_minor_auto_core_updates( $update, $item ) {
+		if ( ! $this->isBackupActive ) {
+			return $update;
+		}
+
 		return $update || ! empty( $this->settings['wpcore']['all'] ) ||
 			! empty( $this->settings['wpcore']['minor'] );
 	}
@@ -105,6 +131,10 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_dev_auto_core_updates( $update, $item ) {
+		if ( ! $this->isBackupActive ) {
+			return $update;
+		}
+
 		return $update || ! empty( $this->settings['wpcore']['all'] ) ||
 			! empty( $this->settings['wpcore']['dev'] );
 	}
@@ -121,6 +151,10 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_translation( $update, $item ) {
+		if ( ! $this->isBackupActive ) {
+			return $update;
+		}
+
 		return $update || ! empty( $this->settings['wpcore']['all'] ) ||
 			! empty( $this->settings['wpcore']['translation'] );
 	}
@@ -137,7 +171,9 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_plugin( $update, $item ) {
-		$update = false;
+		if ( ! $this->isBackupActive ) {
+			return $update;
+		}
 
 		// Old settings.
 		$pluginAutoupdate = \Boldgrid\Library\Util\Option::get( 'plugin_autoupdate' );
@@ -165,7 +201,9 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_theme( $update, $item ) {
-		$update = false;
+		if ( ! $this->isBackupActive ) {
+			return $update;
+		}
 
 		// Old settings.
 		$themeAutoupdate = \Boldgrid\Library\Util\Option::get( 'theme_autoupdate' );

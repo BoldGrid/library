@@ -16,16 +16,6 @@ $sections = array(
 			'title'   => __( 'BoldGrid Connect Key', 'boldgrid-connect' ),
 			'content' => include __DIR__ . '/Connect/ConnectKey.php',
 		),
-		array(
-			'id'      => 'section_auto_updates',
-			'title'   => __( 'Auto-Updates', 'boldgrid-connect' ),
-			'content' => include __DIR__ . '/Connect/AutoUpdates.php',
-		),
-		array(
-			'id'      => 'section_update_channels',
-			'title'   => __( 'Update Channels', 'boldgrid-connect' ),
-			'content' => include __DIR__ . '/Connect/UpdateChannels.php',
-		),
 	),
 	'post_col_right' => '
 		<p class="submit">
@@ -36,6 +26,20 @@ $sections = array(
 		<div id="settings-notice" class="notice notice-success inline"></div>
 	',
 );
+
+if ( is_plugin_active( 'boldgrid-backup/boldgrid-backup.php' ) ) {
+	array_push( $sections['sections'], array(
+		'id'      => 'section_auto_updates',
+		'title'   => __( 'Auto-Updates', 'boldgrid-connect' ),
+		'content' => include __DIR__ . '/Connect/AutoUpdates.php',
+	) );
+}
+
+array_push( $sections['sections'], array(
+	'id'      => 'section_update_channels',
+	'title'   => __( 'Update Channels', 'boldgrid-connect' ),
+	'content' => include __DIR__ . '/Connect/UpdateChannels.php',
+) );
 
 /**
  * Render sections into markup.

@@ -24,17 +24,27 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			self._repositionNotice();
 
 			// Initialize jquery-toggles.
-			$( '.toggle' ).toggles( {
-				text: {
-				    on: '',
-				    off: ''
-				  }
-			} );
+			$( '.toggle' )
+				.toggles( {
+					text: {
+						on: '',
+						off: ''
+					},
+					height: 15,
+					width: 40
+				} )
+				.find( '.toggle-on' )
+					.css( 'background-color', '#009CCD' );
+
 			self._setMasterToggles();
+
 			$( '.toggle-group' ).on( 'click swipe contextmenu', self._toggleGroup );
+
 			$( '.toggle' ).not( '.toggle-group' )
 				.on( 'click swipe contextmenu', self._setMasterToggles );
+
 			$( '#submit' ).on( 'click', self._submit );
+
 			$( '.dashicons-editor-help' ).on( 'click', self._toggleHelp );
 		},
 
