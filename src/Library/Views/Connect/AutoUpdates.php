@@ -144,6 +144,7 @@ $return .= '
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
 						<div class="div-tableCell">Default for New Plugins</div>
+						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light" id="toggle-default-plugins"
 							data-toggle-on="' . ( $pluginsDefault ? 'true' : 'false' ) . '">
 						</div>
@@ -153,6 +154,7 @@ $return .= '
 					<div class="div-table-row"><br /></div>
 					<div class="div-table-row">
 						<div class="div-tableCell">All Plugins</div>
+						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light toggle-group" id="toggle-plugins"></div>
 					</div>
 					<div class="div-table-row"><br /></div>
@@ -165,15 +167,14 @@ foreach ( $plugins as $slug => $pluginData ) {
 	$toggle = $pluginAutoupdate || ! empty( $autoupdateSettings['plugins'][ $slug ] ) ||
 		( ! isset( $autoupdateSettings['plugins'][ $slug ] ) && $pluginsDefault );
 
-	$itemTitle = $pluginData['Name'];
-
-	if ( is_plugin_active( $slug ) ) {
-		$itemTitle .= ' (active)';
-	}
+	$activeHtml = '<span class="dashicons dashicons-admin-plugins' .
+		( is_plugin_active( $slug ) ?
+			' autoupdate-item-active" title="active"' : '" title="inactive"' ) . '></span>';
 
 	$return .= '
 					<div class="div-table-row plugin-update-setting">
-						<div class="div-tableCell">' . $itemTitle . '</div>
+						<div class="div-tableCell">' . $pluginData['Name'] . '</div>
+						<div class="div-tableCell">' . $activeHtml . '</div>
 						<div class="toggle toggle-light plugin-toggle"
 							data-plugin="' . $slug . '"
 							data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
@@ -199,6 +200,7 @@ $return .= '
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
 						<div class="div-tableCell">Default for New Themes</div>
+						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light" id="toggle-default-themes"
 							data-toggle-on="' . ( $themesDefault ? 'true' : 'false' ) . '">
 						</div>
@@ -208,6 +210,7 @@ $return .= '
 					<div class="div-table-row"><br /></div>
 					<div class="div-table-row">
 						<div class="div-tableCell">All Themes</div>
+						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light toggle-group" id="toggle-themes"></div>
 					</div>
 					<div class="div-table-row"><br /></div>
@@ -222,17 +225,17 @@ foreach ( $themes as $stylesheet => $theme ) {
 	$toggle = $themeAutoupdate || ! empty( $autoupdateSettings['themes'][ $stylesheet ] ) ||
 		( ! isset( $autoupdateSettings['themes'][ $stylesheet ] ) && $themesDefault );
 
-	$itemTitle = $theme->get( 'Name' );
+	$isActive = $activeStylesheet === $stylesheet;
+	$isParent = $activeStylesheet !== $activeTemplate;
 
-	if ( $activeStylesheet === $stylesheet ) {
-		$itemTitle .= ' (active)';
-	} else if ( $activeStylesheet !== $activeTemplate ) {
-		$itemTitle .= ' (parent)';
-	}
+	$activeHtml = '<span class="dashicons dashicons-layout' .
+		( $isActive ? ' autoupdate-item-active" title="active"' : ( $isParent ?
+			' autoupdate-item-parent" title="parent"' : '" title="inactive"' ) ) . '</span>';
 
 	$return .= '
 					<div class="div-table-row theme-update-setting">
-						<div class="div-tableCell">' . $itemTitle . '</div>
+						<div class="div-tableCell">' . $theme->get( 'Name' ) . '</div>
+						<div class="div-tableCell">' . $activeHtml . '</div>
 						<div class="toggle toggle-light theme-toggle"
 							data-stylesheet="' . $stylesheet . '"
 							data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">

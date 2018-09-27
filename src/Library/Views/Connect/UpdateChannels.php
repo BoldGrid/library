@@ -39,8 +39,16 @@ $return = '
 <div class="bg-box">
 	<div class="bg-box-top">
 		' . esc_html__( 'Update Channels', 'boldgrid-connect' ) . '
+		<span class="dashicons dashicons-editor-help" data-id="update-channels"></span>
 	</div>
 	<div class="bg-box-bottom">
+
+		<p class="help" data-id="update-channels">' .
+			esc_html__(
+				'Update release channels determine which versions are retrieved from the BoldGrid Connect system.',
+				'boldgrid-backup'
+			) .
+		'</p>
 
 <div class="card auto-update-management div-table">
 	<div class="auto-upate-settings div-table-body">

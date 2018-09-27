@@ -201,3 +201,15 @@ div .dashicons {
 	position: relative;
 	cursor: pointer;
 }
+
+.toggle .toggle-on {
+	background-color: #009CCD;
+}
+
+.autoupdate-item-active {
+	color: #D54E21;
+}
+
+.autoupdate-item-parent {
+	color: #FF8D60;
+}

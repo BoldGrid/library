@@ -32,9 +32,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					},
 					height: 15,
 					width: 40
-				} )
-				.find( '.toggle-on' )
-					.css( 'background-color', '#009CCD' );
+				} );
 
 			self._setMasterToggles();
 
