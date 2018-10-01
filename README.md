@@ -15,6 +15,7 @@ composer require boldgrid/library
 * Feature: JIRA BGCONN-16   Added BoldGrid Connect settings for individual plugin and theme auto-updates.
 * Feature:                  Add filter to check for is premium.
 * Bug fix: JIRA BGCONN-19   Fixed display when the library is used in a theme.
+* Feature: JIRA BGCONN-23   Added mini Connect Key entry form.
 
 ### 2.4.2 ###
 * Bug fix: Show timeout message when saving key times out.
