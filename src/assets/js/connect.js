@@ -3,7 +3,7 @@
 var BOLDGRID = BOLDGRID || {};
 BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
-( function ( $ ) {
+( function( $ ) {
 	BOLDGRID.LIBRARY.Connect = {
 
 		/**
@@ -11,7 +11,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *
 		 * @since 2.4.0
 		 */
-		init: function () {
+		init: function() {
 			$( self._onLoad );
 		},
 
@@ -24,21 +24,21 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			self._repositionNotice();
 
 			// Initialize jquery-toggles.
-			$( '.toggle' )
-				.toggles( {
-					text: {
-						on: '',
-						off: ''
-					},
-					height: 15,
-					width: 40
-				} );
+			$( '.toggle' ).toggles( {
+				text: {
+					on: '',
+					off: ''
+				},
+				height: 15,
+				width: 40
+			} );
 
 			self._setMasterToggles();
 
 			$( '.toggle-group' ).on( 'click swipe contextmenu', self._toggleGroup );
 
-			$( '.toggle' ).not( '.toggle-group' )
+			$( '.toggle' )
+				.not( '.toggle-group' )
 				.on( 'click swipe contextmenu', self._setMasterToggles );
 
 			$( '#submit' ).on( 'click', self._submit );
@@ -54,7 +54,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		_repositionNotice: function() {
 			var $connectKeySection = $( '.connect-key-prompt' );
 
-			setTimeout( function () {
+			setTimeout( function() {
 				$connectKeySection.after( $( '#container_boldgrid_api_key_notice' ) );
 			} );
 		},
@@ -71,10 +71,16 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				$pluginsDefault = $( '#toggle-default-plugins' ),
 				$themesDefault = $( '#toggle-default-themes' );
 
+			// If the updates section is not in use, then just return.
+			if ( ! $pluginsDefault.data( 'toggles' ) ) {
+				return;
+			}
+
 			$wpcoreToggles.each( function() {
 				var $this = $( this );
 
-				$this.next( 'input' )
+				$this
+					.next( 'input' )
 					.attr( 'name', 'autoupdate[wpcore][' + $this.data( 'wpcore' ) + ']' )
 					.val( $this.data( 'toggles' ).active ? 1 : 0 );
 			} );
@@ -82,7 +88,8 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			$pluginToggles.each( function() {
 				var $this = $( this );
 
-				$this.next( 'input' )
+				$this
+					.next( 'input' )
 					.attr( 'name', 'autoupdate[plugins][' + $this.data( 'plugin' ) + ']' )
 					.val( $this.data( 'toggles' ).active ? 1 : 0 );
 			} );
@@ -90,18 +97,15 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			$themeToggles.each( function() {
 				var $this = $( this );
 
-				$this.next( 'input' )
+				$this
+					.next( 'input' )
 					.attr( 'name', 'autoupdate[themes][' + $this.data( 'stylesheet' ) + ']' )
 					.val( $this.data( 'toggles' ).active ? 1 : 0 );
 			} );
 
-			$pluginsDefault
-				.next( 'input' )
-				.val( $pluginsDefault.data( 'toggles' ).active ? 1 : 0 );
+			$pluginsDefault.next( 'input' ).val( $pluginsDefault.data( 'toggles' ).active ? 1 : 0 );
 
-			$themesDefault
-				.next( 'input' )
-				.val( $themesDefault.data( 'toggles' ).active ? 1 : 0 );
+			$themesDefault.next( 'input' ).val( $themesDefault.data( 'toggles' ).active ? 1 : 0 );
 		},
 
 		/**
@@ -126,7 +130,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 						}
 					} );
 
-					$master.toggles( state );
+				$master.toggles( state );
 			} );
 
 			self._setInputs();
@@ -139,7 +143,10 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		_toggleGroup: function() {
 			var $this = $( this ),
-				$toggles = $this.parent().parent().find( '.toggle' );
+				$toggles = $this
+					.parent()
+					.parent()
+					.find( '.toggle' );
 
 			$toggles.toggles( $this.data( 'toggles' ).active );
 
@@ -178,7 +185,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					plugin = $this.data( 'plugin' ),
 					value = $this.data( 'toggles' ).active ? 1 : 0;
 
-				data.autoupdate.plugins[ plugin ] = value;
+				data.autoupdate.plugins[plugin] = value;
 			} );
 
 			$themeUpdateSettings.each( function() {
@@ -186,29 +193,32 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					stylesheet = $this.data( 'stylesheet' ),
 					value = $this.data( 'toggles' ).active ? 1 : 0;
 
-				data.autoupdate.themes[ stylesheet ] = value;
+				data.autoupdate.themes[stylesheet] = value;
 			} );
 
-			jqxhr = $.post( ajaxurl, data, function( response ) {
-				if ( response.success !== undefined && true === response.success ) {
-					$notice
-						.removeClass( 'notice-error' )
-						.addClass( 'notice-success' )
-						.html( BoldGridLibraryConnect.settingsSaved );
-				} else if ( response.data !== undefined && response.data.error !== undefined ) {
-					$notice
-						.removeClass( 'notice-success' )
-						.addClass( 'notice-error' )
-						.html( response.data.error );
+			jqxhr = $.post(
+				ajaxurl,
+				data,
+				function( response ) {
+					if ( response.success !== undefined && true === response.success ) {
+						$notice
+							.removeClass( 'notice-error' )
+							.addClass( 'notice-success' )
+							.html( BoldGridLibraryConnect.settingsSaved );
+					} else if ( response.data !== undefined && response.data.error !== undefined ) {
+						$notice
+							.removeClass( 'notice-success' )
+							.addClass( 'notice-error' )
+							.html( response.data.error );
 
-					$this.removeAttr( 'disabled' );
-				} else {
-					$notice
-						.removeClass( 'notice-success' )
-						.addClass( 'notice-error' )
-						.html( BoldGridLibraryConnect.unknownError );
-					$this.removeAttr( 'disabled' );
-				}
+						$this.removeAttr( 'disabled' );
+					} else {
+						$notice
+							.removeClass( 'notice-success' )
+							.addClass( 'notice-error' )
+							.html( BoldGridLibraryConnect.unknownError );
+						$this.removeAttr( 'disabled' );
+					}
 				},
 				'json'
 			)

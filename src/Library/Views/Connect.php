@@ -50,24 +50,31 @@ array_push( $sections['sections'], array(
  *
  * phpcs:disable WordPress.NamingConventions.ValidHookName
  */
+if ( ! has_filter( 'Boldgrid\Library\Ui\render_col_container' ) ) {
+	$ui = new \Boldgrid\Library\Library\Ui();
+	$ui->enqueue();
+	add_filter( 'Boldgrid\Library\Ui\render_col_container' , array( $ui, 'render_col_container' ) );
+}
+
 $container = apply_filters( 'Boldgrid\Library\Ui\render_col_container', $sections );
 
 if ( is_array( $container ) ) {
-	$container = $this->core->lang['icon_warning'] . ' ' . __( 'Unable to display settings page. Unknown BoldGrid Library error.', 'boldgrid-connect' );
+	$container = '<div class="notice notice-error inline">' .
+		__( 'Unable to display settings page. Unknown BoldGrid Library error.', 'boldgrid-connect' ) .
+		'</div>';
+} else {
+	// Enqueue styles and scripts (registered in "\Boldgrid\Library\Ui::enqueue()").
+	wp_enqueue_style( 'bglib-ui-css' );
+	wp_enqueue_script( 'bglib-ui-js' );
+	wp_enqueue_script( 'bglib-sticky' );
+	wp_nonce_field( 'boldgrid_library_connect_settings_save' );
 }
-
-// Enqueue styles and scripts (registered in "\Boldgrid\Library\Ui::enqueue()").
-wp_enqueue_style( 'bglib-ui-css' );
-wp_enqueue_script( 'bglib-ui-js' );
-wp_enqueue_script( 'bglib-sticky' );
 
 // Display page.
 ?>
 <div class="wrap">
 	<h1>BoldGrid Connect</h1>
 <?php
-wp_nonce_field( 'boldgrid_library_connect_settings_save' );
-
 echo $container; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 ?>
 </div>

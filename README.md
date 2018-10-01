@@ -12,8 +12,9 @@ composer require boldgrid/library
 ## Changelog ##
 
 ### 2.6.0 In progress ###
-* Feature: JIRA BGCONN-16: Added BoldGrid Connect settings for individual plugin and theme auto-updates.
-* Feature: Add filter to check for is premium.
+* Feature: JIRA BGCONN-16   Added BoldGrid Connect settings for individual plugin and theme auto-updates.
+* Feature:                  Add filter to check for is premium.
+* Bug fix: JIRA BGCONN-19   Fixed display when the library is used in a theme.
 
 ### 2.4.2 ###
 * Bug fix: Show timeout message when saving key times out.
