@@ -13,6 +13,7 @@ composer require boldgrid/library
 
 ### 2.6.0 In progress ###
 * Feature: JIRA BGTHEME-576 Add filter to check for is premium.
+* Feature: JIRA BGCONN-23   Added mini Connect Key entry form.
 
 ### 2.4.2 ###
 * Bug fix: Show timeout message when saving key times out.

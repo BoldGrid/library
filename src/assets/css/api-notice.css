@@ -1,19 +1,23 @@
 #container_boldgrid_api_key_notice:not(.is-dismissible) {
 	display: none;
 }
+
 #container_boldgrid_api_key_notice .dashicons-before:before {
 	padding-right: .8em !important;
 	font-size: 58px !important;
 	color: #ff6600;
 }
+
 #container_boldgrid_api_key_notice {
 	width: 563px;
 	padding: 1.4em;
 }
+
 #requestKeyForm input {
 	width: 83%;
 	margin: .5em 0;
 }
+
 #requestKeyForm label {
 	display: block;
 }
@@ -43,14 +47,17 @@
 #container_boldgrid_api_key_notice[data-notice-state="basic-key-active"] .basic-key-active {
 	display: block;
 }
+
 #container_boldgrid_api_key_notice .boldgridApiKeyLink {
 	margin-top: 10px;
 	display: inline-block;
 }
+
 #container_boldgrid_api_key_notice[data-notice-state="basic-key-active"] .envato-claim-message {
 	padding-left: 0;
 	margin-bottom: 10px;
 }
+
 #container_boldgrid_api_key_notice.success-add-key .tos-box,
 #container_boldgrid_api_key_notice.success-add-key .envato-claim-message {
 	display: none;
@@ -105,12 +112,15 @@
 .boldgridApiKeyLink {
 	margin-left: 66px;
 }
+
 #requestKeyMessage {
 	margin-right: 66px;
 }
+
 .error-alerts {
 	color: red;
 }
+
 .error-color::before {
 	content: '*';
 	padding-right: 5px;
@@ -118,10 +128,12 @@
 .error-color {
 	color: red;
 }
+
 input#boldgrid_api_key {
 	margin-left: 66px !important;
 	width: 59%;
 }
+
 .boldgrid-wp-spin {
 	width: 20px;
 	height: 20px;
@@ -132,6 +144,7 @@ input#boldgrid_api_key {
 	-moz-animation: rotation 1.5s infinite linear;
 	-animation: rotation 1.5s infinite linear;
 }
+
 .boldgrid-wp-spin::after {
 	width: 4px;
 	height: 4px;
@@ -143,6 +156,7 @@ input#boldgrid_api_key {
 	display: block;
 	content: '';
 }
+
 @ -webkit-keyframes rotation {
 	from {
 		-webkit-transform: rotate(0deg);
@@ -151,6 +165,7 @@ input#boldgrid_api_key {
 		-webkit-transform: rotate(359deg);
 	}
 }
+
 @ -moz-keyframes rotation {
 	from {
 		-moz-transform: rotate(0deg);
@@ -159,6 +174,7 @@ input#boldgrid_api_key {
 		-moz-transform: rotate(359deg);
 	}
 }
+
 @ -keyframes rotation {
 	from {
 		-transform: rotate(0deg);
@@ -167,13 +183,31 @@ input#boldgrid_api_key {
 		-transform: rotate(359deg);
 	}
 }
+
 #boldgrid-api-loading {
 	margin-left: 423px;
 	margin-top: -2em;
 	display: none;
 }
+
 #requestKeyForm .spinner.inline {
 	visibility: visible;
 	float: none;
 	vertical-align: bottom;
+}
+
+.keyprompt-mini {
+	padding: 0 !important;
+}
+
+.keyprompt-mini input#boldgrid_api_key {
+	margin-left: 0 !important;
+}
+
+.keyprompt-mini .hidden {
+	display: none;
+}
+
+.keyprompt-mini #boldgrid_api_key_notice_message.error-color {
+	color: #dc3232;
 }
