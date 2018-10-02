@@ -91,8 +91,23 @@ class KeyPrompt {
 	 * @return object $messages Messages used by key prompt.
 	 */
 	private function setMessages() {
+		// Allowed html for wp_kses.
+		$allowed_html = array(
+			'a' => array(
+				'href' => array(),
+			),
+			'strong' => array(),
+		);
+
 		$msg = new \stdClass();
-		$msg->success = esc_html__( 'Your api key has been saved successfully.', 'boldgrid-inspirations' );
+		$msg->success = sprintf(
+			wp_kses(
+				/* translators: The Url to the BoldGrid Connect settings page. */
+				__( 'Your api key has been saved. To change, see <strong>Settings &#187; <a href="%1$s">BoldGrid Connect</strong>.', 'boldgrid-inspirations' ),
+				$allowed_html
+			),
+			admin_url( 'options-general.php?page=boldgrid-connect.php' )
+		);
 		$msg->error = sprintf( esc_html__( 'Your API key appears to be invalid!%sPlease try to enter your BoldGrid Connect Key again.', 'boldgrid-inspirations' ), '<br />' );
 		$msg->nonce = esc_html__( 'Security violation!  An invalid nonce was detected.', 'boldgrid-inspirations' );
 		$msg->timeout = esc_html__( 'Connection timed out. Please try again.', 'boldgrid-inspirations' );
