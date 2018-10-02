@@ -41,7 +41,7 @@ class KeyPromptMini {
 					<input id="tos-box" class="hidden" type="checkbox" value="0" checked="checked" />
 					<input type="text" id="boldgrid_api_key" maxlength="37" placeholder="XXXXXXXX - XXXXXXXX - XXXXXXXX - XXXXXXXX" autocomplete="off" />
 					<button id="submit_api_key" class="button button-primary">
-						<?php esc_html_e( 'Submit' ); ?>
+						<?php esc_html_e( 'Submit', 'boldgrid-inspirations' ); ?>
 					</button>
 					<span>
 						<div id="boldgrid-api-loading" class="boldgrid-wp-spin"></div>
