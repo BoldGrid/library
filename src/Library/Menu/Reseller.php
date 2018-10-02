@@ -59,7 +59,7 @@ class Reseller {
 			esc_url( $data['reseller_website_url'] ) : 'https://www.boldgrid.com/';
 
 		$data['reseller_title'] = ! empty( $data['reseller_title'] ) ?
-			esc_html__( $data['reseller_title'] ) : esc_html__( 'BoldGrid.com' );
+			esc_html( $data['reseller_title'] ) : esc_html( 'BoldGrid.com' );
 
 		$data['reseller_support_url'] = ! empty( $data['reseller_support_url'] ) ?
 			esc_url( $data['reseller_support_url'] ) : 'https://www.boldgrid.com/documentation';
