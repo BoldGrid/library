@@ -140,7 +140,7 @@ class License {
 	 * @return mixed $license The response object or error string of call.
 	 */
 	private function setLicense() {
-		if ( ! get_option( 'boldgrid_api_key' ) ) {
+		if ( ! $this->getApiKey() ) {
 			$license = 'Missing Connect Key';
 		} else if ( ! ( $license = $this->getTransient() ) || ! $this->isVersionValid( $license ) ) {
 			delete_site_transient( $this->getKey() );
@@ -321,6 +321,17 @@ class License {
 	 */
 	public function getLicenseString() {
 		return $this->licenseString;
+	}
+
+	/**
+	 * Get our API Key.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @hook Boldgrid\Library\License\getApiKey
+	 */
+	public function getApiKey() {
+		return get_option( 'boldgrid_api_key' );
 	}
 
 	/**
