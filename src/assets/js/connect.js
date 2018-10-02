@@ -3,7 +3,7 @@
 var BOLDGRID = BOLDGRID || {};
 BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
-( function ( $ ) {
+( function( $ ) {
 	BOLDGRID.LIBRARY.Connect = {
 
 		/**
@@ -11,7 +11,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *
 		 * @since 2.4.0
 		 */
-		init: function () {
+		init: function() {
 			$( self._onLoad );
 		},
 
@@ -32,7 +32,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		_repositionNotice: function() {
 			var $connectKeySection = $( '.connect-key-prompt' );
 
-			setTimeout( function () {
+			setTimeout( function() {
 				$connectKeySection.after( $( '#container_boldgrid_api_key_notice' ) );
 			} );
 		}
