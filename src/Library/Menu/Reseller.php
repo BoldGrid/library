@@ -119,23 +119,23 @@ class Reseller {
 				array(
 					'id' => 'reseller-support-center',
 					'parent' => 'reseller-adminbar-icon',
-					'title' => esc_html__( 'Support Center' ),
+					'title' => esc_html__( 'Support Center', 'boldgrid-connect' ),
 					'href' => $data['reseller_support_url'],
 					'meta' => array(
 						'class' => 'reseller-dropdown',
 						'target' => '_blank',
-						'title' => __( 'Support Center' ),
+						'title' => __( 'Support Center', 'boldgrid-connect' ),
 					),
 				),
 				array(
 					'id' => 'reseller-amp-login',
 					'parent' => 'reseller-adminbar-icon',
-					'title' => esc_html__( 'AMP Login' ),
+					'title' => esc_html__( 'AMP Login', 'boldgrid-connect' ),
 					'href' => $data['reseller_amp_url'],
 					'meta' => array(
 						'class' => 'reseller-dropdown',
 						'target' => '_blank',
-						'title' => __( 'Account Management' ),
+						'title' => __( 'Account Management', 'boldgrid-connect' ),
 					),
 				),
 			),
