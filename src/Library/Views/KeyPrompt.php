@@ -12,7 +12,7 @@
 		<p>
 			<?php printf( esc_html__( 'Make sure you\'re getting the most out of your premium subscription by installing our other %sBoldGrid plugins%s. As a Premium user, you also have unlimited access to %sCloud WordPress%s where you can create new WordPress sites for free. If you need any help, our support team is eager to serve!', 'boldgrid-inspirations' ),
 				'<a href="https://www.boldgrid.com/wordpress-plugins/" target="_blank">', '</a>',
-				'<a href="https://www.boldgrid.com/central/get-it-now" target="_blank">', '</a>'
+				'<a href="https://www.boldgrid.com/central/" target="_blank">', '</a>'
 			) ?>
 		</p>
 		<p class='change-key'><a href="#" data-action="change-connect-key"><?php _e( 'Click here to change your Connect Key' ) ?></a></p>
