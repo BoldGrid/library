@@ -26,7 +26,7 @@
 			<?php esc_html_e( 'Thank you for adding your Connect Key. Try upgrading to a Premium subscription for full access to BoldGrid!', 'boldgrid-inspirations' ); ?>
 		</p>
 		<p><a target="_blank" href="https://www.boldgrid.com/connect-keys?source=library-prompt"
-				class="button button-primary"><?php _e( 'Upgrade' ) ?></a>
+				class="button button-primary"><?php esc_html_e( 'Upgrade', 'boldgrid-inspirations' ) ?></a>
 		</p>
 		<?php } else {
 			include __DIR__ . '/EnvatoFreeKey.php';
