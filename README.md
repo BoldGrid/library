@@ -11,7 +11,7 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.6.0 In progress ###
+### 2.6.0 ###
 * Feature: JIRA BGTHEME-576 Add filter to check for is premium.
 * Feature: JIRA BGCONN-23   Added mini Connect Key entry form.
 * Update:                   Update success message after successful key entry.
