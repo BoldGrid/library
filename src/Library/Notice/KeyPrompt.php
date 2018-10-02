@@ -103,7 +103,7 @@ class KeyPrompt {
 		$msg->success = sprintf(
 			wp_kses(
 				/* translators: The Url to the BoldGrid Connect settings page. */
-				__( 'Your api key has been saved. To change, see <strong>Settings &#187; <a href="%1$s">BoldGrid Connect</strong>.', 'boldgrid-inspirations' ),
+				__( 'Your api key has been saved. To change, see <strong>Settings &#187; <a href="%1$s">BoldGrid Connect</a></strong>.', 'boldgrid-inspirations' ),
 				$allowed_html
 			),
 			admin_url( 'options-general.php?page=boldgrid-connect.php' )
