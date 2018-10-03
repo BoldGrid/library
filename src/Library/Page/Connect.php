@@ -106,8 +106,39 @@ class Connect {
 	 */
 	public function addScripts() {
 		if ( $this->isConnectScreen( get_current_screen() ) ) {
-			wp_enqueue_script( 'boldgrid-library-connect',
-				Configs::get( 'libraryUrl' ) .  'src/assets/js/connect.js' );
+			// Enqueue boldgrid-library-connect js.
+			$handle = 'boldgrid-library-connect';
+
+			wp_register_script(
+				$handle,
+				Configs::get( 'libraryUrl' ) . 'src/assets/js/connect.js' ,
+				array( 'jquery' ),
+				date( 'Ymd' ),
+				false
+			);
+
+			$translation = array(
+				'settingsSaved' => __( 'Settings saved.', 'boldgrid-connect' ),
+				'unknownError'  => __( 'Unknown error.', 'boldgrid-connect' ),
+				'ajaxError'     => __( 'Could not reach the AJAX URL address. HTTP error: ', 'boldgrid-connect' ),
+			);
+
+			wp_localize_script( $handle, 'BoldGridLibraryConnect', $translation );
+
+			wp_enqueue_script( $handle );
+
+			// Enqueue jquery-toggles js.
+			wp_enqueue_script(
+				'jquery-toggles',
+				Configs::get( 'libraryUrl' ) . 'build/toggles.min.js',
+				array( 'jquery' ),
+				date( 'Ymd' ),
+				true
+			);
+
+			// Enqueue jquery-toggles css.
+			wp_enqueue_style( 'jquery-toggles-full',
+				Configs::get( 'libraryUrl' ) . 'build/toggles-full.css', array(), date( 'Ymd' ) );
 
 			/**
 			 * Add additional scripts to Connect page.
@@ -128,8 +159,8 @@ class Connect {
 	public function addPage() {
 		add_submenu_page(
 			'options-general.php',
-			__( 'BoldGrid Connect' ),
-			__( 'BoldGrid Connect' ),
+			__( 'BoldGrid Connect', 'boldgrid-connect' ),
+			__( 'BoldGrid Connect', 'boldgrid-connect' ),
 			'manage_options',
 			'boldgrid-connect.php',
 			function () {
