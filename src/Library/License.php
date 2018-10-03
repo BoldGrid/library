@@ -113,7 +113,7 @@ class License {
 		);
 
 		$translations = array(
-			'unknownError' => __( 'Unknown error' ),
+			'unknownError' => __( 'Unknown error', 'boldgrid-connect' ),
 		);
 
 		wp_localize_script( 'bglib-license', 'bglibLicense', $translations );
@@ -391,7 +391,7 @@ class License {
 	public function isPremium( $product ) {
 		$isPremium = isset( $this->getData()->$product );
 
-		$this->licenseString = $isPremium ? __( 'Premium' ) : __( 'Free' );
+		$this->licenseString = $isPremium ? __( 'Premium', 'boldgrid-connect' ) : __( 'Free', 'boldgrid-connect' );
 
 		return $isPremium;
 	}
