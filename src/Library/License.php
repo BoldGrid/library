@@ -71,7 +71,7 @@ class License {
 	public function ajaxClear() {
 		$plugin = ! empty( $_POST['plugin'] ) ? sanitize_text_field( $_POST['plugin'] ) : null;
 		if( empty( $plugin ) ) {
-			wp_send_json_error( __( 'Unknown plugin.' ) );
+			wp_send_json_error( __( 'Unknown plugin.', $plugin ) );
 		}
 
 		if( ! current_user_can( 'manage_options' ) ) {
