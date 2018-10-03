@@ -118,7 +118,7 @@ class Connect {
 			);
 
 			$translation = array(
-				'settingsSaved' => __( 'Settings saved.' ),
+				'settingsSaved' => __( 'Settings saved.', 'boldgrid-connect' ),
 				'unknownError'  => __( 'Unknown error.', 'boldgrid-connect' ),
 				'ajaxError'     => __( 'Could not reach the AJAX URL address. HTTP error: ', 'boldgrid-connect' ),
 			);
@@ -159,8 +159,8 @@ class Connect {
 	public function addPage() {
 		add_submenu_page(
 			'options-general.php',
-			__( 'BoldGrid Connect' ),
-			__( 'BoldGrid Connect' ),
+			__( 'BoldGrid Connect', 'boldgrid-connect' ),
+			__( 'BoldGrid Connect', 'boldgrid-connect' ),
 			'manage_options',
 			'boldgrid-connect.php',
 			function () {
