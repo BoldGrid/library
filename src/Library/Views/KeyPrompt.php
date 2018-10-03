@@ -15,7 +15,7 @@
 				'<a href="https://www.boldgrid.com/central/" target="_blank">', '</a>'
 			) ?>
 		</p>
-		<p class='change-key'><a href="#" data-action="change-connect-key"><?php _e( 'Click here to change your Connect Key' ) ?></a></p>
+		<p class='change-key'><a href="#" data-action="change-connect-key"><?php _e( 'Click here to change your Connect Key', 'boldgrid-inspirations' ) ?></a></p>
 	</div>
 	<div class="basic-key-active key-entry-message">
 		<h2 class="dashicons-before dashicons-admin-network">
@@ -31,7 +31,7 @@
 		<?php } else {
 			include __DIR__ . '/EnvatoFreeKey.php';
 		} ?>
-		<p class='change-key'><a href="#" data-action="change-connect-key"><?php _e( 'Click here to change your Connect Key' ) ?></a></p>
+		<p class='change-key'><a href="#" data-action="change-connect-key"><?php _e( 'Click here to change your Connect Key', 'boldgrid-inspirations' ) ?></a></p>
 	</div>
 	<div class="api-notice">
 		<h2 class="dashicons-before dashicons-admin-network">
