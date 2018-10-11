@@ -81,11 +81,13 @@ $return .= '
 <div class="card auto-update-management div-table">
 	<div class="auto-upate-settings div-table-body">
 		<div class="div-table-row">
-			<div class="div-tableCell"><h2>WordPress Core</h2></div>
+			<div class="div-tableCell"><h2>' .
+	esc_html__( 'WordPress Core', 'boldgrid-connect' ) . '</h2></div>
 			<div class="div-tableCell">
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
-						<div class="div-tableCell">All Update Types</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'All Update Types', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light toggle-group wpcore-toggle"
 							data-wp-core="all"
 							data-toggle-on="' . ( $wpcoreAll ? 'true' : 'false' ) . '">
@@ -95,7 +97,8 @@ $return .= '
 					</div>
 					<div class="div-table-row"><br /></div>
 					<div class="div-table-row">
-						<div class="div-tableCell">Major Updates</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'Major Updates', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
 							data-wp-core="major"
 							data-toggle-on="' . ( $wpcoreMajor ? 'true' : 'false' ) . '">
@@ -104,7 +107,8 @@ $return .= '
 							value="' . ( $wpcoreMajor ? 1 : 0 ) . '" />
 					</div>
 					<div class="div-table-row">
-						<div class="div-tableCell">Minor Updates</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'Minor Updates', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
 							data-wp-core="minor"
 							data-toggle-on="' . ( $wpcoreMinor ? 'true' : 'false' ) . '">
@@ -113,7 +117,8 @@ $return .= '
 							value="' . ( $wpcoreMinor ? 1 : 0 ) . '" />
 					</div>
 					<div class="div-table-row">
-						<div class="div-tableCell">Development Updates</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'Development Updates', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
 							data-wp-core="dev"
 							data-toggle-on="' . ( $wpcoreDev ? 'true' : 'false' ) . '">
@@ -122,7 +127,8 @@ $return .= '
 							value="' . ( $wpcoreDev ? 1 : 0 ) . '" />
 					</div>
 					<div class="div-table-row">
-						<div class="div-tableCell">Translation Updates</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'Translation Updates', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
 							data-wp-core="translation"
 							data-toggle-on="' . ( $wpcoreTranslation ? 'true' : 'false' ) . '">
@@ -139,11 +145,13 @@ $return .= '
 <div class="card auto-update-management div-table">
 	<div class="auto-upate-settings div-table-body">
 		<div class="div-table-row">
-			<div class="div-tableCell"><h2>Plugins</h2></div>
+			<div class="div-tableCell"><h2>' .
+	esc_html__( 'Plugins', 'boldgrid-connect' ) . '</h2></div>
 			<div class="div-tableCell">
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
-						<div class="div-tableCell">Default for New Plugins</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'Default for New Plugins', 'boldgrid-connect' ) . '</div>
 						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light" id="toggle-default-plugins"
 							data-toggle-on="' . ( $pluginsDefault ? 'true' : 'false' ) . '">
@@ -153,7 +161,8 @@ $return .= '
 					</div>
 					<div class="div-table-row"><br /></div>
 					<div class="div-table-row">
-						<div class="div-tableCell">All Plugins</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'All Plugins', 'boldgrid-connect' ) . '</div>
 						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light toggle-group" id="toggle-plugins"></div>
 					</div>
@@ -195,11 +204,13 @@ $return .= '
 <div class="card auto-update-management div-table">
 	<div class="auto-upate-settings div-table-body">
 		<div class="div-table-row">
-			<div class="div-tableCell"><h2>Themes</h2></div>
+			<div class="div-tableCell"><h2>' .
+	esc_html__( 'Themes', 'boldgrid-connect' ) . '</h2></div>
 			<div class="div-tableCell">
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
-						<div class="div-tableCell">Default for New Themes</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'Default for New Themes', 'boldgrid-connect' ) . '</div>
 						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light" id="toggle-default-themes"
 							data-toggle-on="' . ( $themesDefault ? 'true' : 'false' ) . '">
@@ -209,7 +220,8 @@ $return .= '
 					</div>
 					<div class="div-table-row"><br /></div>
 					<div class="div-table-row">
-						<div class="div-tableCell">All Themes</div>
+						<div class="div-tableCell">' .
+	esc_html__( 'All Themes', 'boldgrid-connect' ) . '</div>
 						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light toggle-group" id="toggle-themes"></div>
 					</div>
