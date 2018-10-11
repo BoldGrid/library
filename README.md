@@ -99,3 +99,14 @@ composer require boldgrid/library
 ### 1.1.0 ###
 *                           Added action for when theme release channel changed.
 *                           Added Reseller class.
+
+## Development ##
+
+### Installing Dependencies
+Before you can use the development version of this plugin you must install the dependencies.
+
+```
+composer install -o --prefer-source
+yarn install
+gulp
+```
