@@ -70,19 +70,23 @@ class License {
 	 */
 	public function ajaxClear() {
 		$plugin = ! empty( $_POST['plugin'] ) ? sanitize_text_field( $_POST['plugin'] ) : null;
-		if( empty( $plugin ) ) {
-			wp_send_json_error( __( 'Unknown plugin.', $plugin ) );
+
+		if ( empty( $plugin ) ) {
+			wp_send_json_error( __( 'Unknown plugin.', 'boldgrid-connect' ) );
 		}
 
-		if( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( __( 'Access denied.', $plugin ) );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( __( 'Access denied.', 'boldgrid-connect' ) );
 		}
 
 		$success = $this->clearTransient();
-		if( ! $success ) {
+		if ( ! $success ) {
 			wp_send_json_error( array(
 				'string' => sprintf(
-					__( 'Failed to clear license data. Unable to delete site transient "%1$s".', $plugin ),
+					__(
+						'Failed to clear license data. Unable to delete site transient "%1$s".',
+						'boldgrid-connect'
+					),
 					$this->getKey()
 				),
 			));
@@ -391,7 +395,8 @@ class License {
 	public function isPremium( $product ) {
 		$isPremium = isset( $this->getData()->$product );
 
-		$this->licenseString = $isPremium ? __( 'Premium', 'boldgrid-connect' ) : __( 'Free', 'boldgrid-connect' );
+		$this->licenseString = $isPremium ?
+			__( 'Premium', 'boldgrid-connect' ) : __( 'Free', 'boldgrid-connect' );
 
 		return $isPremium;
 	}

@@ -173,7 +173,7 @@ class Call {
 
 		// Response should be an object.
 		if ( ! is_object( $this->response ) ) {
-			$this->error = __( 'An invalid response was returned.', 'boldgrid-inspirations' );
+			$this->error = __( 'An invalid response was returned.', 'boldgrid-connect' );
 			return false;
 		}
 

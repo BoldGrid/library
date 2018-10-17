@@ -63,7 +63,7 @@ class External {
 				array(
 					'id' => 'boldgrid-site-url',
 					'parent' => 'boldgrid-adminbar-icon',
-					'title' => __( 'BoldGrid.com', 'boldgrid-inspirations' ),
+					'title' => __( 'BoldGrid.com', 'boldgrid-connect' ),
 					'href' => 'https://www.boldgrid.com/',
 					'meta' => array(
 						'class' => 'boldgrid-dropdown',
@@ -74,7 +74,7 @@ class External {
 				array(
 					'id' => 'boldgrid-site-documentation',
 					'parent' => 'boldgrid-adminbar-icon',
-					'title' => __( 'Documentation', 'boldgrid-inspirations' ),
+					'title' => __( 'Documentation', 'boldgrid-connect' ),
 					'href' => 'https://www.boldgrid.com/docs',
 					'meta' => array(
 						'class' => 'boldgrid-dropdown',
@@ -85,7 +85,7 @@ class External {
 				array(
 					'id' => 'boldgrid-central-url',
 	 				'parent' => 'boldgrid-adminbar-icon',
-					'title' => __( 'BoldGrid Central', 'boldgrid-inspirations' ),
+					'title' => __( 'BoldGrid Central', 'boldgrid-connect' ),
 					'href' => 'https://www.boldgrid.com/central',
 					'meta' => array(
 						'class' => 'boldgrid-dropdown',
@@ -96,7 +96,7 @@ class External {
 				array(
 					'id' => 'boldgrid-connect-url',
 					'parent' => 'boldgrid-adminbar-icon',
-					'title' => __( 'BoldGrid Connect', 'boldgrid-inspirations' ),
+					'title' => __( 'BoldGrid Connect', 'boldgrid-connect' ),
 					'href' => get_admin_url( null, 'options-general.php?page=boldgrid-connect.php' ),
 					'meta' => array(
 						'class' => 'boldgrid-dropdown',
@@ -106,7 +106,7 @@ class External {
 				array(
 					'id' => 'boldgrid-feedback-url',
 					'parent' => 'boldgrid-adminbar-icon',
-					'title' => __( 'Feedback', 'boldgrid-inspirations' ),
+					'title' => __( 'Feedback', 'boldgrid-connect' ),
 					'href' => 'https://www.boldgrid.com/feedback',
 					'meta' => array(
 						'class' => 'boldgrid-dropdown',
