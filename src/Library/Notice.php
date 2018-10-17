@@ -96,6 +96,15 @@ class Notice {
 			$message,
 			$nonce
 		);
+
+		/*
+		 * Enqueue js required to allow for notices to be dismissed permanently.
+		 *
+		 * When notices (such as the "keyPrompt" notice) are shown by creating a new instance of
+		 * this class, the js is enqueued by the Filter::add call in the constructor. We do however
+		 * allow notices to be shown via this static method, and so we need to enqueue the js now.
+		 */
+		self::enqueue();
 	}
 
 	/**
@@ -226,7 +235,7 @@ class Notice {
 	 *
 	 * @hook: admin_enqueue_scripts
 	 */
-	public function enqueue() {
+	public static function enqueue() {
 		wp_enqueue_script(
 			'bglib-notice-js',
 			Configs::get( 'libraryUrl' ) . 'src/assets/js/notice.js'
