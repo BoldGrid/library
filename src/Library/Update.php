@@ -34,29 +34,16 @@ class Update {
 	protected $settings;
 
 	/**
-	 * Is updating enabled?
-	 *
-	 * @since 2.6.0
-	 *
-	 * @var bool
-	 */
-	protected $isEnabled;
-
-	/**
 	 * Constructor.
 	 *
 	 * @since 2.3.0
 	 *
 	 * @see \Boldgrid\Library\Util\Option::get()
-	 *
-	 * @link https://developer.wordpress.org/reference/functions/is_plugin_active/
 	 */
 	public function __construct() {
 		Filter::add( $this );
 
 		$this->settings = (array) \Boldgrid\Library\Util\Option::get( 'autoupdate' );
-
-		$this->isEnabled = apply_filters( 'Boldgrid\Library\Update\isEnalbed', false );
 	}
 
 	/**
@@ -70,7 +57,7 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_core( $update ) {
-		if ( ! $this->isEnabled ) {
+		if ( ! apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 			return $update;
 		}
 
@@ -88,7 +75,7 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_major_auto_core_updates( $update ) {
-		if ( ! $this->isEnabled ) {
+		if ( ! apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 			return $update;
 		}
 
@@ -107,7 +94,7 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_minor_auto_core_updates( $update ) {
-		if ( ! $this->isEnabled ) {
+		if ( ! apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 			return $update;
 		}
 
@@ -126,7 +113,7 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_dev_auto_core_updates( $update ) {
-		if ( ! $this->isEnabled ) {
+		if ( ! apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 			return $update;
 		}
 
@@ -145,7 +132,7 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_translation( $update ) {
-		if ( ! $this->isEnabled ) {
+		if ( ! apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 			return $update;
 		}
 
@@ -165,7 +152,7 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_plugin( $update, $item ) {
-		if ( ! $this->isEnabled ) {
+		if ( ! apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 			return $update;
 		}
 
@@ -195,7 +182,7 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_theme( $update, $item ) {
-		if ( ! $this->isEnabled ) {
+		if ( ! apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 			return $update;
 		}
 
