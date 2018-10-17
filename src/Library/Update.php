@@ -34,13 +34,13 @@ class Update {
 	protected $settings;
 
 	/**
-	 * Is the BoldGrid Backup plugin active?
+	 * Is updating enabled?
 	 *
 	 * @since 2.6.0
 	 *
 	 * @var bool
 	 */
-	protected $isBackupActive;
+	protected $isEnabled;
 
 	/**
 	 * Constructor.
@@ -56,8 +56,7 @@ class Update {
 
 		$this->settings = (array) \Boldgrid\Library\Util\Option::get( 'autoupdate' );
 
-		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-		$this->isBackupActive = \is_plugin_active( 'boldgrid-backup/boldgrid-backup.php' );
+		$this->isEnabled = apply_filters( 'Boldgrid\Library\Update\isEnalbed', false );
 	}
 
 	/**
@@ -71,7 +70,7 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_core( $update ) {
-		if ( ! $this->isBackupActive ) {
+		if ( ! $this->isEnabled ) {
 			return $update;
 		}
 
@@ -89,7 +88,7 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_major_auto_core_updates( $update ) {
-		if ( ! $this->isBackupActive ) {
+		if ( ! $this->isEnabled ) {
 			return $update;
 		}
 
@@ -108,7 +107,7 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_minor_auto_core_updates( $update ) {
-		if ( ! $this->isBackupActive ) {
+		if ( ! $this->isEnabled ) {
 			return $update;
 		}
 
@@ -127,7 +126,7 @@ class Update {
 	 * @return bool
 	 */
 	public function allow_dev_auto_core_updates( $update ) {
-		if ( ! $this->isBackupActive ) {
+		if ( ! $this->isEnabled ) {
 			return $update;
 		}
 
@@ -146,7 +145,7 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_translation( $update ) {
-		if ( ! $this->isBackupActive ) {
+		if ( ! $this->isEnabled ) {
 			return $update;
 		}
 
@@ -166,7 +165,7 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_plugin( $update, $item ) {
-		if ( ! $this->isBackupActive ) {
+		if ( ! $this->isEnabled ) {
 			return $update;
 		}
 
@@ -196,7 +195,7 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_theme( $update, $item ) {
-		if ( ! $this->isBackupActive ) {
+		if ( ! $this->isEnabled ) {
 			return $update;
 		}
 

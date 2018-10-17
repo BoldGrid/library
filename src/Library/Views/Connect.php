@@ -27,7 +27,14 @@ $sections = array(
 	',
 );
 
-if ( is_plugin_active( 'boldgrid-backup/boldgrid-backup.php' ) ) {
+/**
+ * Filter: Boldgrid\Library\Update\isEnalbed.
+ *
+ * Determine if updating via the BoldGrid Library is enabled.  Defaults to false.
+ *
+ * @since 2.7.0
+ */
+if ( apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 	array_push( $sections['sections'], array(
 		'id'      => 'section_auto_updates',
 		'title'   => __( 'Auto-Updates', 'boldgrid-connect' ),
