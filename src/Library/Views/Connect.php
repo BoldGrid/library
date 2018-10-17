@@ -18,12 +18,12 @@ $sections = array(
 		),
 	),
 	'post_col_right' => '
-		<p class="submit">
+	<div id="settings-notice" class="notice notice-success is-dismissible inline"></div>
+	<p class="submit">
 			<input name="submit" id="submit" class="button button-primary" value="' .
 		esc_attr( 'Save Changes', 'boldgrid-connect' ) . '" type="submit">
 			<span class="spinner"></span>
 		</p>
-		<div id="settings-notice" class="notice notice-success inline"></div>
 	',
 );
 
@@ -44,7 +44,7 @@ array_push( $sections['sections'], array(
 /**
  * Render sections into markup.
  *
- * @since 2.5.0
+ * @since 2.7.0
  *
  * @param array $sections
  *

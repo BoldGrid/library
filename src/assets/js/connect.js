@@ -62,7 +62,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Set inputs for toggles.
 		 *
-		 * @since 2.5.0
+		 * @since 2.7.0
 		 */
 		_setInputs: function() {
 			var $wpcoreToggles = $( '.wpcore-toggle' ),
@@ -111,7 +111,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Set master toggles.
 		 *
-		 * @since 2.5.0
+		 * @since 2.7.0
 		 */
 		_setMasterToggles: function() {
 			var $masters = $( '.toggle-group' );
@@ -139,7 +139,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Handle form submission.
 		 *
-		 * @since 2.5.0
+		 * @since 2.7.0
 		 */
 		_toggleGroup: function() {
 			var $this = $( this ),
@@ -156,12 +156,10 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Handle form submission.
 		 *
-		 * @since 2.5.0
+		 * @since 2.7.0
 		 */
 		_submit: function() {
 			var $this = $( this ),
-				$pluginUpdateSettings = $( '.plugin-update-setting .toggle' ),
-				$themeUpdateSettings = $( '.theme-update-setting .toggle' ),
 				$spinner = $this.next(),
 				$notice = $( '#settings-notice' ),
 				data = {
@@ -169,18 +167,18 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					_wpnonce: $( '[name="_wpnonce"]' ).val(),
 					_wp_http_referer: $( '[name="_wp_http_referer"]' ).val(),
 					plugin_release_channel: $( 'input[name="plugin_release_channel"]:checked' ).val(),
-					theme_release_channel: $( 'input[name="theme_release_channel"]:checked' ).val()
+					theme_release_channel: $( 'input[name="theme_release_channel"]:checked' ).val(),
+					autoupdate: {
+						plugins: {},
+						themes: {}
+					}
 				};
-
-			data.autoupdate = {};
-			data.autoupdate.plugins = {};
-			data.autoupdate.themes = {};
 
 			$this.attr( 'disabled', 'disabled' );
 
 			$spinner.addClass( 'inline' );
 
-			$pluginUpdateSettings.each( function() {
+			$( '.plugin-update-setting .toggle' ).each( function() {
 				var $this = $( this ),
 					plugin = $this.data( 'plugin' ),
 					value = $this.data( 'toggles' ).active ? 1 : 0;
@@ -188,7 +186,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				data.autoupdate.plugins[plugin] = value;
 			} );
 
-			$themeUpdateSettings.each( function() {
+			$( '.theme-update-setting .toggle' ).each( function() {
 				var $this = $( this ),
 					stylesheet = $this.data( 'stylesheet' ),
 					value = $this.data( 'toggles' ).active ? 1 : 0;
@@ -196,7 +194,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				data.autoupdate.themes[stylesheet] = value;
 			} );
 
-			jqxhr = $.post(
+			$.post(
 				ajaxurl,
 				data,
 				function( response ) {
@@ -210,7 +208,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 							.removeClass( 'notice-success' )
 							.addClass( 'notice-error' )
 							.html( response.data.error );
-
 						$this.removeAttr( 'disabled' );
 					} else {
 						$notice
@@ -222,23 +219,42 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				},
 				'json'
 			)
-				.fail( function() {
+				.fail( function( jqXHR ) {
 					$notice
 						.removeClass( 'notice-success' )
 						.addClass( 'notice-error' )
-						.html( BoldGridLibraryConnect.ajaxError + jqxhr.status + ' (' + jqxhr.statusText + ')' );
+						.html( BoldGridLibraryConnect.ajaxError + jqXHR.status + ' (' + jqXHR.statusText + ')' );
 				} )
 				.always( function() {
+					self._replaceNotice( $notice );
+
 					$notice.wrapInner( '<p></p>' ).show();
 					$spinner.removeClass( 'inline' );
 					$this.removeAttr( 'disabled' );
+					$( 'body' ).trigger( 'make_notices_dismissible' );
 				} );
+		},
+
+		/**
+		 * Replace the notice with a clone when removed by dismissal.
+		 *
+		 * @since 2.7.0
+		 */
+		_replaceNotice: function( $notice ) {
+			var $noticeClone = $notice.clone(),
+				$noticeNext = $notice.next();
+
+			$notice.one( 'click.wp-dismiss-notice', '.notice-dismiss', function() {
+				$noticeNext.before( $noticeClone );
+				$notice = $noticeClone;
+				$notice.hide();
+			} );
 		},
 
 		/**
 		 * Handle form submission.
 		 *
-		 * @since 2.5.0
+		 * @since 2.7.0
 		 */
 		_toggleHelp: function( e ) {
 			var id = $( this ).attr( 'data-id' );

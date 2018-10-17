@@ -172,7 +172,7 @@ class Connect {
 	/**
 	 * AJAX callback for the Connect Settings page.
 	 *
-	 * @since 2.5.0
+	 * @since 2.7.0
 	 *
 	 * @uses $_POST['autoupdate']             Auto-update settings for plugins and themes.
 	 * @uses $_POST['plugin_release_channel'] Plugin release channel.
@@ -223,7 +223,7 @@ class Connect {
 	/**
 	 * Sanitize settings.
 	 *
-	 * @since 2.5.0
+	 * @since 2.7.0
 	 *
 	 * @static
 	 *
