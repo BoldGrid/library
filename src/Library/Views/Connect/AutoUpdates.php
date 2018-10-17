@@ -30,6 +30,11 @@ $wpcoreDev         = ! empty( $wpcoreAutoupdates['dev'] );
 $wpcoreTranslation = ! empty( $wpcoreAutoupdates['translation'] );
 $wpcoreAll         = ! empty( $wpcoreAutoupdates['all'] ) ||
 	( $wpcoreMajor && $wpcoreMinor && $wpcoreDev && $wpcoreTranslation );
+$translations      = array(
+	'active'   => esc_attr__( 'active', 'boldgrid-connect' ),
+	'inactive' => esc_attr__( 'inactive', 'boldgrid-connect' ),
+	'parent'   => esc_attr__( 'parent', 'boldgrid-connect' ),
+);
 
 $return = '
 <div class="bg-box">
@@ -178,7 +183,8 @@ foreach ( $plugins as $slug => $pluginData ) {
 
 	$activeHtml = '<span class="dashicons dashicons-admin-plugins' .
 		( is_plugin_active( $slug ) ?
-			' autoupdate-item-active" title="active"' : '" title="inactive"' ) . '></span>';
+			' autoupdate-item-active" title="' . $translations['active'] .
+			'"' : '" title="' . $translations['inactive'] . '"' ) . '></span>';
 
 	$return .= '
 					<div class="div-table-row plugin-update-setting">
@@ -241,8 +247,10 @@ foreach ( $themes as $stylesheet => $theme ) {
 	$isParent = $activeStylesheet !== $activeTemplate;
 
 	$activeHtml = '<span class="dashicons dashicons-layout' .
-		( $isActive ? ' autoupdate-item-active" title="active"' : ( $isParent ?
-			' autoupdate-item-parent" title="parent"' : '" title="inactive"' ) ) . '</span>';
+		( $isActive ? ' autoupdate-item-active" title="' . $translations['active'] .
+			'"' : ( $isParent ?
+			' autoupdate-item-parent" title="' . $translations['parent'] .
+			'"' : '" title="' . $translations['inactive'] . '"' ) ) . '</span>';
 
 	$return .= '
 					<div class="div-table-row theme-update-setting">
