@@ -10,7 +10,6 @@ BOLDGRID.LIBRARY.Notice = function( $ ) {
 
 		/** Dismissible action **/
 		$notices.on( 'click', '.notice-dismiss', self.dismiss );
-
 	} );
 
 	/**
@@ -22,10 +21,10 @@ BOLDGRID.LIBRARY.Notice = function( $ ) {
 		var $notice = $( this ).closest( '.boldgrid-notice' );
 
 		$.post( ajaxurl, {
-			'action'  : 'dismissBoldgridNotice',
-			'notice' :  $notice.data( 'notice-id' ),
-			'set_key_auth' : $( '#set_key_auth', $notice ).val(),
-			'_wp_http_referer' : $( '[name="_wp_http_referer"]', $notice ).val(),
+			action: 'dismissBoldgridNotice',
+			notice: $notice.data( 'notice-id' ),
+			set_key_auth: $( '#set_key_auth', $notice ).val(),
+			_wp_http_referer: $( '[name="_wp_http_referer"]', $notice ).val()
 		} );
 	};
 };

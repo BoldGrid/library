@@ -41,8 +41,8 @@ BOLDGRID.LIBRARY.Ui = function( $ ) {
 		var width = document.body.clientWidth,
 			$leftNav = $( '.bg-left-nav' );
 
-		if( width >= 782 ) {
-			$leftNav.sticky( { topSpacing : 33 } );
+		if ( 782 <= width ) {
+			$leftNav.sticky( { topSpacing: 33 } );
 		} else {
 			$leftNav.unstick();
 		}
@@ -62,7 +62,7 @@ BOLDGRID.LIBRARY.Ui = function( $ ) {
 		self.setSticky();
 
 		$( window ).resize( self.setSticky );
-	});
+	} );
 };
 
 new BOLDGRID.LIBRARY.Ui( jQuery );

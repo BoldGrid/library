@@ -19,17 +19,15 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		clear: function( plugin, onSuccess, onError ) {
 			var data = {
-				'action' : 'bg_clear_license',
-				'plugin' : plugin,
+				action: 'bg_clear_license',
+				plugin: plugin
 			};
 
 			$.post( ajaxurl, data, function( response ) {
 				onSuccess( response );
-			}).error( function() {
+			} ).error( function() {
 				onError();
-			});
-		},
+			} );
+		}
 	};
-
-})( jQuery );
-
+} )( jQuery );
