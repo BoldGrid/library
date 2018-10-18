@@ -19,6 +19,10 @@
 	padding: 10px;
 }
 
+.bg-box-bottom > p:first-child {
+	margin-top: 0px;
+}
+
 .bg-box-bottom.premium {
 	border-left: 4px solid #46b450;
 }

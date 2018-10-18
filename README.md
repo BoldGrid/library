@@ -116,3 +116,10 @@ composer install -o --prefer-source
 yarn install
 gulp
 ```
+
+### Auto Updates
+To test / trigger auto updates, you can run the following:
+
+```
+wp option delete auto_updater.lock & wp transient delete --all && wp cron event run wp_version_check
+```
