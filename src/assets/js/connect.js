@@ -169,8 +169,12 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					plugin_release_channel: $( 'input[name="plugin_release_channel"]:checked' ).val(),
 					theme_release_channel: $( 'input[name="theme_release_channel"]:checked' ).val(),
 					autoupdate: {
-						plugins: {},
-						themes: {}
+						plugins: {
+							"default": $( '#toggle-default-plugins' ).data( 'toggles' ).active ? 1 : 0
+						},
+						themes: {
+							"default": $( '#toggle-default-themes' ).data( 'toggles' ).active ? 1 : 0
+						}
 					}
 				};
 
