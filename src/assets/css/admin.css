@@ -11,7 +11,9 @@
 	display: none;
 }
 .settings_page_boldgrid-connect .connect-key-management {
+	margin: 0;
 	max-width: 590px;
+	psdding: 0;
 }
 /** BoldGrid Connect Page End **/
 
@@ -131,13 +133,8 @@
 }
 /** Admin Bar Icons End **/
 
-.auto-update-management {
-	max-width: 590px;
-}
-
 .div-table {
 	display: table;
-	width: 100%;
 }
 
 .div-table-row {
@@ -170,7 +167,7 @@
 	display: table-row-group;
 }
 
-.auto-upate-settings .toggle {
+.auto-update-settings .toggle {
 	width: 50px;
 }
 

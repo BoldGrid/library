@@ -35,27 +35,17 @@ $translations      = array(
 	'inactive' => esc_attr__( 'inactive', 'boldgrid-connect' ),
 	'parent'   => esc_attr__( 'parent', 'boldgrid-connect' ),
 );
+$return            = '';
+$helpMarkup        = sprintf(
+	// translators: 1: HTML anchor open tag, 2: HTML anchor close tag.
+	esc_html__(
+		'Automatically perform WordPress core, plugin, and theme updates. This feature utilizes %1$sWordPress filters%2$s, which enables automatic updates as they become available.',
+		'boldgrid-backup'
+	),
+	'<a target="_blank" href="https://codex.wordpress.org/Configuring_Automatic_Background_Updates">',
+	'</a>'
+);
 
-$return = '
-<div class="bg-box">
-	<div class="bg-box-top">
-		' . esc_html__( 'Auto-Updates', 'boldgrid-connect' ) . '
-		<span class="dashicons dashicons-editor-help" data-id="plugin-autoupdate"></span>
-	</div>
-	<div class="bg-box-bottom">
-
-		<p class="help" data-id="plugin-autoupdate">' .
-			sprintf(
-				// translators: 1: HTML anchor open tag, 2: HTML anchor close tag.
-				esc_html__(
-					'Automatically perform WordPress core, plugin, and theme updates. This feature utilizes %1$sWordPress filters%2$s, which enables automatic updates as they become available.',
-					'boldgrid-backup'
-				),
-				'<a target="_blank" href="https://codex.wordpress.org/Configuring_Automatic_Background_Updates">',
-				'</a>'
-			) .
-		'</p>
-';
 if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
 	$bbsLinkOpen  = '';
 	$bbsLinkClose = '';
@@ -66,7 +56,7 @@ if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
 	}
 
 	$return .= '
-		<p>' .
+		<div><p>' .
 		sprintf(
 			// translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag..
 			esc_html__(
@@ -74,20 +64,25 @@ if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
 				'boldgrid-backup'
 			),
 			$bbsLinkOpen,
-			'</a>',
+			$bbsLinkClose,
 			'<em>',
 			'</em>'
 		) .
-		'</p>
-';
+		'</p></div>' . PHP_EOL;
 }
 
 $return .= '
-<div class="card auto-update-management div-table">
-	<div class="auto-upate-settings div-table-body">
+<div class="bg-box">
+	<div class="bg-box-top">
+		' . esc_html__( 'WordPress Core', 'boldgrid-connect' ) . '
+		<span class="dashicons dashicons-editor-help" data-id="core-autoupdate"></span>
+	</div>
+	<div class="bg-box-bottom">
+		<p class="help" data-id="core-autoupdate">' . $helpMarkup . '</p>
+
+<div class="auto-update-management div-table">
+	<div class="auto-update-settings div-table-body">
 		<div class="div-table-row">
-			<div class="div-tableCell"><h2>' .
-	esc_html__( 'WordPress Core', 'boldgrid-connect' ) . '</h2></div>
 			<div class="div-tableCell">
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
@@ -147,11 +142,20 @@ $return .= '
 	</div>
 </div>
 
-<div class="card auto-update-management div-table">
-	<div class="auto-upate-settings div-table-body">
+	</div>
+</div>
+
+<div class="bg-box">
+	<div class="bg-box-top">
+		' . esc_html__( 'Plugins', 'boldgrid-connect' ) . '
+		<span class="dashicons dashicons-editor-help" data-id="plugins-autoupdate"></span>
+	</div>
+	<div class="bg-box-bottom">
+		<p class="help" data-id="plugins-autoupdate">' . $helpMarkup . '</p>
+
+<div class="auto-update-management div-table">
+	<div class="auto-update-settings div-table-body">
 		<div class="div-table-row">
-			<div class="div-tableCell"><h2>' .
-	esc_html__( 'Plugins', 'boldgrid-connect' ) . '</h2></div>
 			<div class="div-tableCell">
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
@@ -207,11 +211,20 @@ $return .= '
 	</div>
 </div>
 
-<div class="card auto-update-management div-table">
-	<div class="auto-upate-settings div-table-body">
+	</div>
+</div>
+
+<div class="bg-box">
+	<div class="bg-box-top">
+		' . esc_html__( 'Themes', 'boldgrid-connect' ) . '
+		<span class="dashicons dashicons-editor-help" data-id="themes-autoupdate"></span>
+	</div>
+	<div class="bg-box-bottom">
+		<p class="help" data-id="themes-autoupdate">' . $helpMarkup . '</p>
+
+<div class="auto-update-management div-table">
+	<div class="auto-update-settings div-table-body">
 		<div class="div-table-row">
-			<div class="div-tableCell"><h2>' .
-	esc_html__( 'Themes', 'boldgrid-connect' ) . '</h2></div>
 			<div class="div-tableCell">
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">

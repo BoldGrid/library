@@ -1,6 +1,6 @@
 <?php
 /**
- * File: Connect.php
+ * File: UpdateChannels.php
  *
  * @package    Boldgrid\Library
  * @subpackage Library\Views
@@ -35,25 +35,24 @@ if ( 'candidate' === $pluginReleaseChannel || 'candidate' === $themeReleaseChann
 		$showCandidateChoice = true;
 }
 
+$helpMarkup = esc_html__(
+	'Update release channels determine which versions are retrieved from the BoldGrid Connect system.',
+	'boldgrid-backup'
+);
+
 $return = '
 <div class="bg-box">
 	<div class="bg-box-top">
-		' . esc_html__( 'Update Channels', 'boldgrid-connect' ) . '
-		<span class="dashicons dashicons-editor-help" data-id="update-channels"></span>
+		' . esc_html__( 'Plugins', 'boldgrid-connect' ) . '
+		<span class="dashicons dashicons-editor-help" data-id="plugins-update-channels"></span>
 	</div>
 	<div class="bg-box-bottom">
 
-		<p class="help" data-id="update-channels">' .
-			esc_html__(
-				'Update release channels determine which versions are retrieved from the BoldGrid Connect system.',
-				'boldgrid-backup'
-			) .
-		'</p>
+		<p class="help" data-id="plugins-update-channels">' . $helpMarkup . '</p>
 
-<div class="card auto-update-management div-table">
-	<div class="auto-upate-settings div-table-body">
+<div class="auto-update-management div-table">
+	<div class="auto-update-settings div-table-body">
 		<div class="div-table-row">
-			<div class="div-tableCell"><h2>Plugins</h2></div>
 			<div class="div-tableCell">
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row plugin-update-channel">
@@ -98,9 +97,20 @@ $return .= '
 		</div>
 	</div>
 
-	<div class="auto-upate-settings div-table-body">
+	</div>
+</div>
+
+<div class="bg-box">
+	<div class="bg-box-top">
+		' . esc_html__( 'Themes', 'boldgrid-connect' ) . '
+		<span class="dashicons dashicons-editor-help" data-id="themes-update-channels"></span>
+	</div>
+	<div class="bg-box-bottom">
+
+		<p class="help" data-id="themes-update-channels">' . $helpMarkup . '</p>
+
+	<div class="auto-update-settings div-table-body">
 		<div class="div-table-row">
-			<div class="div-tableCell"><h2>Themes</h2></div>
 			<div class="div-tableCell">
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row theme-update-channel">
