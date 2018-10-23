@@ -96,6 +96,7 @@ $return .= '
 			</div>
 		</div>
 	</div>
+</div>
 
 	</div>
 </div>
@@ -109,6 +110,7 @@ $return .= '
 
 		<p class="help" data-id="themes-update-channels">' . $helpMarkup . '</p>
 
+<div class="auto-update-management div-table">
 	<div class="auto-update-settings div-table-body">
 		<div class="div-table-row">
 			<div class="div-tableCell">
