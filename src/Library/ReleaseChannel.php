@@ -65,7 +65,7 @@ class ReleaseChannel {
 	}
 
 	/**
-	 * Update Plugin Channel
+	 * Update Plugin Channel.
 	 *
 	 * This methods fires when boldgrid_settings is updated.  We check the values
 	 * for the new plugin release channel to see if it changed here.
@@ -83,32 +83,36 @@ class ReleaseChannel {
 	 * @return mixed  $new    The new option being set.
 	 */
 	public function updateChannel( $old, $new, $option ) {
+		$old['release_channel']       = ! empty( $old['release_channel'] ) ?
+			$old['release_channel'] : null;
+		$new['release_channel']       = ! empty( $new['release_channel'] ) ?
+			$new['release_channel'] : 'stable';
+		$old['theme_release_channel'] = ! empty( $old['theme_release_channel'] ) ?
+			$old['theme_release_channel'] : null;
+		$new['theme_release_channel'] = ! empty( $new['theme_release_channel'] ) ?
+			$new['theme_release_channel'] : 'stable';
+
 		// Plugin checks.
-		if ( ! empty( $old['release_channel'] ) || ! empty( $new['release_channel'] ) ) {
-			if ( $old['release_channel'] !== $new['release_channel'] ) {
-				Util\Option::deletePluginTransients();
-				wp_update_plugins();
-			}
+		if ( $old['release_channel'] !== $new['release_channel'] ) {
+			Util\Option::deletePluginTransients();
+			wp_update_plugins();
 		}
 
 		// Theme checks.
-		if ( ! empty( $old['theme_release_channel'] ) || ! empty( $new['theme_release_channel'] ) ) {
-			if ( $old['theme_release_channel'] !== $new['theme_release_channel'] ) {
+		if ( $old['theme_release_channel'] !== $new['theme_release_channel'] ) {
+			/**
+			 * Action to take when theme release channel has changed.
+			 *
+			 * @since 1.1
+			 *
+			 * @param string $old Old theme release channel.
+			 * @param string $new New theme release channel.
+			 */
+			do_action( 'Boldgrid\Library\Library\ReleaseChannel\theme_channel_updated', $old['theme_release_channel'], $new['theme_release_channel'] );
 
-				/**
-				 * Action to take when theme release channel has changed.
-				 *
-				 * @since 1.1
-				 *
-				 * @param type string $old Old theme release channel.
-				 * @param type string $new New theme release channel.
-				 */
-				do_action( 'Boldgrid\Library\Library\ReleaseChannel\theme_channel_updated', $old['theme_release_channel'], $new['theme_release_channel'] );
-
-				delete_site_transient( 'boldgrid_api_data' );
-				delete_site_transient( 'update_themes' );
-				wp_update_themes();
-			}
+			delete_site_transient( 'boldgrid_api_data' );
+			delete_site_transient( 'update_themes' );
+			wp_update_themes();
 		}
 
 		return $new;
