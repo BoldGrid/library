@@ -93,6 +93,17 @@ class Ui {
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/sticky.js',
 			'jquery'
 		);
+
+		wp_register_style(
+			'bglib-attributes-css',
+			Library\Configs::get( 'libraryUrl' ) . 'src/assets/css/attributes.css'
+		);
+
+		wp_register_script(
+			'bglib-attributes-js',
+			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/attributes.js',
+			'jquery'
+		);
 	}
 
 	/**
