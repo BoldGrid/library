@@ -11,7 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.7.0 In progress ###
+Release date: Oct 30th, 2018
+
+### 2.7.0 ###
 * Feature: JIRA BGCONN-16   Added BoldGrid Connect settings for individual plugin and theme auto-updates.
 * Bug fix: JIRA BGCONN-19   Fixed display when the library is used in a theme.
 * Bug fix: JIRA BGBKUP-270  Dismissible notices are not staying dismissed.
