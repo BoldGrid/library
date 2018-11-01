@@ -52,6 +52,8 @@ class Load {
 		// Build the registration class.
 		$class = __NAMESPACE__ . '\\Registration\\' . ucfirst( $this->configs['type'] );
 
+		$this->filesystemFixes();
+
 		// Add hooks for registration.
 		$this->registration = new $class( $this->configs['file'] );
 
@@ -72,6 +74,21 @@ class Load {
 
 		// Initialize BoldGrid Library.
 		$this->load( $this->configs['loader'] );
+	}
+
+	/**
+	 * Avoid fatal errors due to certain filesystem types.
+	 *
+	 * This fix is only to prevent fatal errors. It is up to the plugins including this library to
+	 * test the filesystem and determine whether or not they're compatible.
+	 *
+	 * ftpext
+	 * Fatal error: Call to undefined function wp_generate_password() in wp-admin/includes/file.php
+	 */
+	public function filesystemFixes() {
+		if ( ! function_exists( 'wp_generate_password' ) ) {
+			require( ABSPATH . WPINC . '/pluggable.php' );
+		}
 	}
 
 	/**

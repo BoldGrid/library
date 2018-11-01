@@ -64,6 +64,16 @@ class Version {
 			WP_Filesystem();
 		}
 
+		/*
+		 * Avoid fatal errors due to the $wp_filesystem.
+		 *
+		 * This fix is only to prevent fatal errors. It is up to the plugins including this library
+		 * to test the filesystem and determine whether or not they're compatible.
+		 */
+		if ( is_null( $wp_filesystem ) ) {
+			return null;
+		}
+
 		// Get installed composer package data.
 		$vendor = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) );
 		$file = $wp_filesystem->get_contents(  $vendor . '/composer/installed.json' );
