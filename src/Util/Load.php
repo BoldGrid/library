@@ -226,4 +226,15 @@ class Load {
 	public function getPath() {
 		return $this->path;
 	}
+
+	/**
+	 * Determien whether or not the library is currently loaded.
+	 *
+	 * @since 2.7.1
+	 *
+	 * @return bool
+	 */
+	public function isLoaded() {
+		return class_exists( '\Boldgrid\Library\Library\Configs' );
+	}
 }
