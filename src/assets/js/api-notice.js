@@ -255,11 +255,12 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				message = response.data.message;
 
 				// Change the notice from red to green, and hide the form.
-				if ( ! isKeypromptMini ) {
+				if ( ! isKeypromptMini.length ) {
 					$noticeContainer.toggleClass( 'error' ).toggleClass( 'updated' );
 					$noticeContainer.addClass( 'success-add-key' );
 					message +=
 						' <a class="dismiss-notification" onClick="window.location.reload(true)" style="cursor:pointer;"> Dismiss Notification</a>';
+					$( '.tos-box', $noticeContainer ).fadeOut();
 				}
 
 				// Initiate tracking iframe.
@@ -277,7 +278,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				$( 'body' ).trigger( 'boldgrid-key-saved' );
 
 				// Reload page after 2 seconds, if not a mini key entry prompt.
-				if ( ! isKeypromptMini ) {
+				if ( ! isKeypromptMini.length ) {
 					setTimeout( function() {
 						window.location.reload();
 					}, 2000 );
