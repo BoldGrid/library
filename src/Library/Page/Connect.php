@@ -174,7 +174,7 @@ class Connect {
 	 *
 	 * @since 2.7.0
 	 *
-	 * @uses $_POST['autoupdate']             Auto-update settings for plugins and themes.
+	 * @uses $_POST['autoupdate']             Optional auto-update settings for plugins and themes.
 	 * @uses $_POST['plugin_release_channel'] Plugin release channel.
 	 * @uses $_POST['theme_release_channel']  Theme release channel.
 	 *
@@ -212,8 +212,10 @@ class Connect {
 			)
 		);
 
-		// Remove deprecated settings from BoldGrid Settings.
-		unset( $boldgridSettings['plugin_autoupdate'], $boldgridSettings['theme_autoupdate'] );
+		// If new auto-update settings were passed, then remove deprecated settings.
+		if ( ! empty( $_POST['autoupdate'] ) ) {
+			unset( $boldgridSettings['plugin_autoupdate'], $boldgridSettings['theme_autoupdate'] );
+		}
 
 		update_option( 'boldgrid_settings', $boldgridSettings );
 
@@ -231,7 +233,7 @@ class Connect {
 	 *     Settings.
 	 *
 	 *     @type array  $autoupdate {
-	 *         Auto-update settings.
+	 *         Optional auto-update settings.  This array does not always get included.
 	 *
 	 *         @type array $plugins {
 	 *             Plugin auto-update settings.
@@ -252,13 +254,15 @@ class Connect {
 	public static function sanitizeSettings( array $settings ) {
 		$result = array();
 
-		foreach ( $settings['autoupdate'] as $category => $itemSetting ) {
-			$category = sanitize_key( $category );
+		if ( ! empty( $settings['autoupdate'] ) && is_array( $settings['autoupdate'] ) ) {
+			foreach ( $settings['autoupdate'] as $category => $itemSetting ) {
+				$category = sanitize_key( $category );
 
-			foreach ( $itemSetting as $id => $val ) {
-				$id = sanitize_text_field( $id );
+				foreach ( $itemSetting as $id => $val ) {
+					$id = sanitize_text_field( $id );
 
-				$result['autoupdate'][ $category ][ $id ] = (bool) $val;
+					$result['autoupdate'][ $category ][ $id ] = (bool) $val;
+				}
 			}
 		}
 

@@ -27,21 +27,6 @@ $sections = array(
 	',
 );
 
-/**
- * Filter: Boldgrid\Library\Update\isEnalbed.
- *
- * Determine if updating via the BoldGrid Library is enabled.  Defaults to false.
- *
- * @since 2.7.0
- */
-if ( apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
-	array_push( $sections['sections'], array(
-		'id'      => 'section_auto_updates',
-		'title'   => __( 'Auto-Updates', 'boldgrid-connect' ),
-		'content' => include __DIR__ . '/Connect/AutoUpdates.php',
-	) );
-}
-
 array_push( $sections['sections'], array(
 	'id'      => 'section_update_channels',
 	'title'   => __( 'Update Channels', 'boldgrid-connect' ),

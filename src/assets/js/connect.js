@@ -167,20 +167,16 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					_wpnonce: $( '[name="_wpnonce"]' ).val(),
 					_wp_http_referer: $( '[name="_wp_http_referer"]' ).val(),
 					plugin_release_channel: $( 'input[name="plugin_release_channel"]:checked' ).val(),
-					theme_release_channel: $( 'input[name="theme_release_channel"]:checked' ).val(),
-					autoupdate: {
-						plugins: {
-							"default": $( '#toggle-default-plugins' ).data( 'toggles' ).active ? 1 : 0
-						},
-						themes: {
-							"default": $( '#toggle-default-themes' ).data( 'toggles' ).active ? 1 : 0
-						}
-					}
+					theme_release_channel: $( 'input[name="theme_release_channel"]:checked' ).val()
 				};
 
 			$this.attr( 'disabled', 'disabled' );
 
 			$spinner.addClass( 'inline' );
+
+			if ( $( '#toggle-default-plugins' ).length ) {
+				data.autoupdate.plugins['default'] = $( '#toggle-default-plugins' ).data( 'toggles' ).active ? 1 : 0
+			}
 
 			$( '.plugin-update-setting .toggle' ).each( function() {
 				var $this = $( this ),
@@ -189,6 +185,10 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 				data.autoupdate.plugins[plugin] = value;
 			} );
+
+			if ( $( '#toggle-default-themes' ).length ) {
+				data.autoupdate.themes['default'] = $( '#toggle-default-themes' ).data( 'toggles' ).active ? 1 : 0
+			}
 
 			$( '.theme-update-setting .toggle' ).each( function() {
 				var $this = $( this ),
