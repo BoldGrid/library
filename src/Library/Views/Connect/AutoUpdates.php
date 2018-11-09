@@ -31,9 +31,9 @@ $wpcoreTranslation = ! empty( $wpcoreAutoupdates['translation'] );
 $wpcoreAll         = ! empty( $wpcoreAutoupdates['all'] ) ||
 	( $wpcoreMajor && $wpcoreMinor && $wpcoreDev && $wpcoreTranslation );
 $translations      = array(
-	'active'   => esc_attr__( 'active', 'boldgrid-connect' ),
-	'inactive' => esc_attr__( 'inactive', 'boldgrid-connect' ),
-	'parent'   => esc_attr__( 'parent', 'boldgrid-connect' ),
+	'active'   => esc_attr__( 'Active', 'boldgrid-connect' ),
+	'inactive' => esc_attr__( 'Inactive', 'boldgrid-connect' ),
+	'parent'   => esc_attr__( 'Parent', 'boldgrid-connect' ),
 );
 $return            = '';
 $helpMarkup        = sprintf(
@@ -161,7 +161,6 @@ $return .= '
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
 	esc_html__( 'Default for New Plugins', 'boldgrid-connect' ) . '</div>
-						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light" id="toggle-default-plugins"
 							data-toggle-on="' . ( $pluginsDefault ? 'true' : 'false' ) . '">
 						</div>
@@ -172,36 +171,60 @@ $return .= '
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
 	esc_html__( 'All Plugins', 'boldgrid-connect' ) . '</div>
-						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light toggle-group" id="toggle-plugins"></div>
 					</div>
-					<div class="div-table-row"><br /></div>
 ';
 
 $plugins = get_plugins();
 
+// Split into groups: active/inactive.
+$pluginsActive   = array();
+$pluginsInactive = array();
+
 foreach ( $plugins as $slug => $pluginData ) {
-	// Enable if global setting is on, individual settings is on, or not set and default is on.
-	$toggle = $pluginAutoupdate || ! empty( $autoupdateSettings['plugins'][ $slug ] ) ||
-		( ! isset( $autoupdateSettings['plugins'][ $slug ] ) && $pluginsDefault );
+	if ( is_plugin_active( $slug ) ) {
+		$pluginsActive[ $slug ] = $pluginData;
+	} else {
+		$pluginsInactive[ $slug ] = $pluginData;
+	}
+}
 
-	$activeHtml = '<span class="dashicons dashicons-admin-plugins' .
-		( is_plugin_active( $slug ) ?
-			' autoupdate-item-active" title="' . $translations['active'] .
-			'"' : '" title="' . $translations['inactive'] . '"' ) . '></span>';
+$statuses = array(
+	'Active',
+	'Inactive',
+);
 
-	$return .= '
-					<div class="div-table-row plugin-update-setting">
-						<div class="div-tableCell">' . $pluginData['Name'] . '</div>
-						<div class="div-tableCell">' . $activeHtml . '</div>
-						<div class="toggle toggle-light plugin-toggle"
-							data-plugin="' . $slug . '"
-							data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
-						</div>
-						<input type="hidden" name="autoupdate[plugins][' . $slug . ']"
-							value="' . ( $toggle ? 1 : 0 ) . '" />
-					</div>
+foreach ( $statuses as $status ) {
+	$statusLower = strtolower( $status );
+
+	$return .= '<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
+		' bglib-collapsible-open' : '' ) . '">
+	<h3>
+		' . $translations[ $statusLower ] . '
+		<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower .
+		'" data-id="plugins-' . $statusLower . '"></span>
+	</h3>
+</div>
 ';
+
+	foreach ( ${ 'plugins' . $status } as $slug => $pluginData ) {
+		// Enable if global setting is on, individual settings is on, or not set and default is on.
+		$toggle = $pluginAutoupdate || ! empty( $autoupdateSettings['plugins'][ $slug ] ) ||
+			( ! isset( $autoupdateSettings['plugins'][ $slug ] ) && $pluginsDefault );
+
+		$return .= '
+			<div class="div-table-row plugin-update-setting bglib-collapsible" data-id="plugins-' .
+			$statusLower . '">
+				<div class="div-tableCell">' . $pluginData['Name'] . '</div>
+				<div class="toggle toggle-light plugin-toggle"
+					data-plugin="' . $slug . '"
+					data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
+				</div>
+				<input type="hidden" name="autoupdate[plugins][' . $slug . ']"
+					value="' . ( $toggle ? 1 : 0 ) . '" />
+			</div>
+		';
+	}
 }
 
 $return .= '
@@ -230,7 +253,6 @@ $return .= '
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
 	esc_html__( 'Default for New Themes', 'boldgrid-connect' ) . '</div>
-						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light" id="toggle-default-themes"
 							data-toggle-on="' . ( $themesDefault ? 'true' : 'false' ) . '">
 						</div>
@@ -241,7 +263,6 @@ $return .= '
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
 	esc_html__( 'All Themes', 'boldgrid-connect' ) . '</div>
-						<div class="div-tableCell"></div>
 						<div class="toggle toggle-light toggle-group" id="toggle-themes"></div>
 					</div>
 					<div class="div-table-row"><br /></div>
@@ -251,32 +272,60 @@ $activeStylesheet = get_option( 'stylesheet' );
 $activeTemplate   = get_option( 'template' );
 $themes           = wp_get_themes();
 
+// Split into groups: active/inactive.
+$themesActive   = array();
+$themesInactive = array();
+
 foreach ( $themes as $stylesheet => $theme ) {
-	// Enable if global setting is on, individual settings is on, or not set and default is on.
-	$toggle = $themeAutoupdate || ! empty( $autoupdateSettings['themes'][ $stylesheet ] ) ||
-		( ! isset( $autoupdateSettings['themes'][ $stylesheet ] ) && $themesDefault );
+	$isActive = $stylesheet === $activeStylesheet;
+	$isParent = ( $activeStylesheet !== $activeTemplate && $stylesheet === $activeTemplate );
 
-	$isActive = $activeStylesheet === $stylesheet;
-	$isParent = $activeStylesheet !== $activeTemplate;
+	if ( $isActive || $isParent ) {
+		$themesActive[ $stylesheet ] = $theme;
+	} else {
+		$themesInactive[ $stylesheet ] = $theme;
+	}
+}
 
-	$activeHtml = '<span class="dashicons dashicons-layout' .
-		( $isActive ? ' autoupdate-item-active" title="' . $translations['active'] .
-			'"' : ( $isParent ?
-			' autoupdate-item-parent" title="' . $translations['parent'] .
-			'"' : '" title="' . $translations['inactive'] . '"' ) ) . '</span>';
+$statuses = array(
+	'Active',
+	'Inactive',
+);
 
-	$return .= '
-					<div class="div-table-row theme-update-setting">
-						<div class="div-tableCell">' . $theme->get( 'Name' ) . '</div>
-						<div class="div-tableCell">' . $activeHtml . '</div>
-						<div class="toggle toggle-light theme-toggle"
-							data-stylesheet="' . $stylesheet . '"
-							data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
-						</div>
-						<input type="hidden" name="autoupdate[themes][' . $stylesheet . ']"
-							value="' . ( $toggle ? 1 : 0 ) . '" />
-					</div>
+foreach ( $statuses as $status ) {
+	$statusLower = strtolower( $status );
+
+	$return .= '<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
+		' bglib-collapsible-open' : '' ) . '">
+	<h3>
+		' . $translations[ $statusLower ] . '
+		<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower .
+		'" data-id="themes-' . $statusLower . '"></span>
+	</h3>
+</div>
 ';
+
+	foreach ( ${ 'themes' . $status } as $stylesheet => $theme ) {
+		$isParent = ( $activeStylesheet !== $activeTemplate && $stylesheet === $activeTemplate );
+
+		// Enable if global setting is on, individual settings is on, or not set and default is on.
+		$toggle = $themeAutoupdate || ! empty( $autoupdateSettings['themes'][ $stylesheet ] ) ||
+			( ! isset( $autoupdateSettings['themes'][ $stylesheet ] ) && $themesDefault );
+
+		$return .= '
+			<div class="div-table-row theme-update-setting bglib-collapsible" data-id="themes-' .
+			$statusLower . '"">
+				<div class="div-tableCell">' . $theme->get( 'Name' ) .
+				( $isParent ? ' (' . $translations['parent'] . ')' : '' ) . '</div>
+				<div class="toggle toggle-light theme-toggle"
+					data-stylesheet="' . $stylesheet . '"
+					data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
+				</div>
+				<input type="hidden" name="autoupdate[themes][' . $stylesheet . ']"
+					value="' . ( $toggle ? 1 : 0 ) . '" />
+			</div>
+		';
+	}
 }
 
 $return .= '

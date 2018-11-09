@@ -207,10 +207,23 @@ div .dashicons {
 	background-color: #009CCD;
 }
 
-.autoupdate-item-active {
-	color: #D54E21;
+.bglib-collapsible-control:not(.bglib-collapsible-open) ~ .bglib-collapsible {
+	display: none;
 }
 
-.autoupdate-item-parent {
-	color: #FF8D60;
+.bglib-collapsible-control .dashicons {
+	transform: rotateZ(0deg);
+	transition: 0.25s transform;
+}
+
+.bglib-collapsible-open .dashicons {
+	transform: rotateZ(-180deg);
+}
+
+.bglib-collapsible-control .dashicons {
+	vertical-align: middle;
+}
+
+.bglib-collapsible-control {
+	cursor: pointer;
 }

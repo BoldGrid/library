@@ -21,29 +21,40 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 2.4.0
 		 */
 		_onLoad: function() {
+			var $bgBox = $( '.bg-box' );
+
 			self._repositionNotice();
 
 			// Initialize jquery-toggles.
-			$( '.toggle' ).toggles( {
-				text: {
-					on: '',
-					off: ''
-				},
-				height: 15,
-				width: 40
-			} );
+			$bgBox
+				.find( '.toggle' )
+				.toggles( {
+					text: {
+						on: '',
+						off: ''
+					},
+					height: 15,
+					width: 40
+				} );
 
 			self._setMasterToggles();
 
-			$( '.toggle-group' ).on( 'click swipe contextmenu', self._toggleGroup );
+			$bgBox
+				.find( '.toggle-group' )
+				.on( 'click swipe contextmenu', self._toggleGroup );
 
-			$( '.toggle' )
+			$bgBox
+				.find( '.toggle' )
 				.not( '.toggle-group' )
 				.on( 'click swipe contextmenu', self._setMasterToggles );
 
 			$( '#submit' ).on( 'click', self._submit );
 
-			$( '.dashicons-editor-help' ).on( 'click', self._toggleHelp );
+			$bgBox.find( '.dashicons-editor-help' ).on( 'click', self._toggleHelp );
+
+			$bgBox.find( '.bglib-collapsible-control' ).on( 'click', function() {
+				$( this ).toggleClass( 'bglib-collapsible-open' );
+			} );
 		},
 
 		/**
@@ -65,11 +76,12 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 2.7.0
 		 */
 		_setInputs: function() {
-			var $wpcoreToggles = $( '.wpcore-toggle' ),
-				$pluginToggles = $( '.plugin-toggle' ),
-				$themeToggles = $( '.theme-toggle' ),
-				$pluginsDefault = $( '#toggle-default-plugins' ),
-				$themesDefault = $( '#toggle-default-themes' );
+			var $bgBox = $( '.bg-box' ),
+				$wpcoreToggles = $bgBox.find( '.wpcore-toggle' ),
+				$pluginToggles = $bgBox.find( '.plugin-toggle' ),
+				$themeToggles = $bgBox.find( '.theme-toggle' ),
+				$pluginsDefault = $bgBox.find( '#toggle-default-plugins' ),
+				$themesDefault = $bgBox.find( '#toggle-default-themes' );
 
 			// If the updates section is not in use, then just return.
 			if ( ! $pluginsDefault.data( 'toggles' ) ) {
@@ -114,7 +126,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 2.7.0
 		 */
 		_setMasterToggles: function() {
-			var $masters = $( '.toggle-group' );
+			var $masters = $( '.bg-box' ).find( '.toggle-group' );
 
 			$masters.each( function() {
 				var $master = $( this ),
@@ -137,7 +149,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		},
 
 		/**
-		 * Handle form submission.
+		 * Toggle an entire group on/off.
 		 *
 		 * @since 2.7.0
 		 */
@@ -162,6 +174,8 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			var $this = $( this ),
 				$spinner = $this.next(),
 				$notice = $( '#settings-notice' ),
+				$toggleDefaultPlugins = $bgBox.find( '#toggle-default-plugins' ),
+				$toggleDefaultThemes = $bgBox.find( '#toggle-default-themes' );
 				data = {
 					action: 'boldgrid_library_connect_settings_save',
 					_wpnonce: $( '[name="_wpnonce"]' ).val(),
@@ -174,11 +188,13 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			$spinner.addClass( 'inline' );
 
-			if ( $( '#toggle-default-plugins' ).length ) {
-				data.autoupdate.plugins['default'] = $( '#toggle-default-plugins' ).data( 'toggles' ).active ? 1 : 0
+			if ( $toggleDefaultPlugins.length ) {
+				data.autoupdate.plugins['default'] = $toggleDefaultPlugins
+					.data( 'toggles' )
+					.active ? 1 : 0
 			}
 
-			$( '.plugin-update-setting .toggle' ).each( function() {
+			$bgBox.find( '.plugin-update-setting .toggle' ).each( function() {
 				var $this = $( this ),
 					plugin = $this.data( 'plugin' ),
 					value = $this.data( 'toggles' ).active ? 1 : 0;
@@ -186,11 +202,13 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				data.autoupdate.plugins[plugin] = value;
 			} );
 
-			if ( $( '#toggle-default-themes' ).length ) {
-				data.autoupdate.themes['default'] = $( '#toggle-default-themes' ).data( 'toggles' ).active ? 1 : 0
+			if ( $toggleDefaultThemes.length ) {
+				data.autoupdate.themes['default'] = $toggleDefaultThemes
+					.data( 'toggles' )
+					.active ? 1 : 0
 			}
 
-			$( '.theme-update-setting .toggle' ).each( function() {
+			$bgBox.find( '.theme-update-setting .toggle' ).each( function() {
 				var $this = $( this ),
 					stylesheet = $this.data( 'stylesheet' ),
 					value = $this.data( 'toggles' ).active ? 1 : 0;
@@ -272,7 +290,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			$( '.help[data-id="' + id + '"]' ).slideToggle();
 
 			return false;
-		}
+		},
 	};
 
 	var self = BOLDGRID.LIBRARY.Connect;
