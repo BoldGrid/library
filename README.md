@@ -17,6 +17,7 @@ Release date: Oct 30th, 2018
 * Bug fix: JIRA BGCONN-29   Fixed API key entry form; removing inputs and displaying success message.
 * Update:  JIRA BGCONN-32   Removed auto-update section from settings.  It is still used by plugins.
 * Update:  JIRA BGCONN-33   Grouped auto-update plugins and themes, by active/inactive.
+* Update:  JIRA BGBKUP-285  Save settings and reload to the current section.
 
 ### 2.7.0 ###
 * Feature: JIRA BGCONN-16   Added BoldGrid Connect settings for individual plugin and theme auto-updates.

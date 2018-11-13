@@ -113,6 +113,8 @@ class Ui {
 	 *
 	 * @hook Boldgrid\Library\Ui\render_col_container
 	 *
+	 * @uses $_REQUEST['section'] Section to switch to on load.
+	 *
 	 * @param  array $sections {
 	 *     An array of data used to create a left and right columned page.
 	 *
@@ -134,7 +136,8 @@ class Ui {
 
 		$section_count = 0;
 
-		$show_section = ! empty( $_GET['section'] ) ? $_GET['section'] : null;
+		$show_section = ! empty( $_REQUEST['section'] ) ?
+			sanitize_key( $_REQUEST['section'] ) : null;
 
 		$content = '';
 		$navigation = '<ul class="bg-left-nav">';
