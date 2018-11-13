@@ -157,12 +157,15 @@ $return .= '
 	<div class="auto-update-settings div-table-body">
 		<div class="div-table-row">
 			<div class="div-tableCell">
+
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
 	esc_html__( 'Default for New Plugins', 'boldgrid-connect' ) . '</div>
-						<div class="toggle toggle-light" id="toggle-default-plugins"
-							data-toggle-on="' . ( $pluginsDefault ? 'true' : 'false' ) . '">
+						<div class="div-tableCell">
+							<div class="toggle toggle-light" id="toggle-default-plugins"
+								data-toggle-on="' . ( $pluginsDefault ? 'true' : 'false' ) . '">
+							</div>
 						</div>
 						<input type="hidden" name="autoupdate[plugins][default]"
 							value="' . ( $pluginsDefault ? 1 : 0 ) . '" />
@@ -171,7 +174,9 @@ $return .= '
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
 	esc_html__( 'All Plugins', 'boldgrid-connect' ) . '</div>
-						<div class="toggle toggle-light toggle-group" id="toggle-plugins"></div>
+						<div class="div-tableCell">
+							<div class="toggle toggle-light toggle-group" id="toggle-plugins"></div>
+						</div>
 					</div>
 ';
 
@@ -197,14 +202,14 @@ $statuses = array(
 foreach ( $statuses as $status ) {
 	$statusLower = strtolower( $status );
 
-	$return .= '<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
+	$return .= '<div class="div-table-contents">
+	<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
 		' bglib-collapsible-open' : '' ) . '">
-	<h3>
-		' . $translations[ $statusLower ] . '
-		<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower .
-		'" data-id="plugins-' . $statusLower . '"></span>
-	</h3>
-</div>
+		<div class="div-tableCell"><h3>' . $translations[ $statusLower ] . '</h3></div>
+		<div class="div-tableCell">
+			<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower . '"></span>
+		</div>
+	</div>
 ';
 
 	foreach ( ${ 'plugins' . $status } as $slug => $pluginData ) {
@@ -213,18 +218,21 @@ foreach ( $statuses as $status ) {
 			( ! isset( $autoupdateSettings['plugins'][ $slug ] ) && $pluginsDefault );
 
 		$return .= '
-			<div class="div-table-row plugin-update-setting bglib-collapsible" data-id="plugins-' .
-			$statusLower . '">
+			<div class="div-table-row plugin-update-setting bglib-collapsible">
 				<div class="div-tableCell">' . $pluginData['Name'] . '</div>
-				<div class="toggle toggle-light plugin-toggle"
-					data-plugin="' . $slug . '"
-					data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
+				<div class="div-tableCell">
+					<div class="toggle toggle-light plugin-toggle"
+						data-plugin="' . $slug . '"
+						data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
+					</div>
 				</div>
 				<input type="hidden" name="autoupdate[plugins][' . $slug . ']"
 					value="' . ( $toggle ? 1 : 0 ) . '" />
 			</div>
 		';
 	}
+	$return .= '</div>
+';
 }
 
 $return .= '
@@ -249,12 +257,15 @@ $return .= '
 	<div class="auto-update-settings div-table-body">
 		<div class="div-table-row">
 			<div class="div-tableCell">
+
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
 	esc_html__( 'Default for New Themes', 'boldgrid-connect' ) . '</div>
-						<div class="toggle toggle-light" id="toggle-default-themes"
-							data-toggle-on="' . ( $themesDefault ? 'true' : 'false' ) . '">
+						<div class="div-tableCell">
+							<div class="toggle toggle-light" id="toggle-default-themes"
+								data-toggle-on="' . ( $themesDefault ? 'true' : 'false' ) . '">
+							</div>
 						</div>
 						<input type="hidden" name="autoupdate[themes][default]"
 							value="' . ( 'true' === $themesDefault ? 1 : 0 ) . '" />
@@ -263,9 +274,10 @@ $return .= '
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
 	esc_html__( 'All Themes', 'boldgrid-connect' ) . '</div>
-						<div class="toggle toggle-light toggle-group" id="toggle-themes"></div>
+						<div class="div-tableCell">
+							<div class="toggle toggle-light toggle-group" id="toggle-themes"></div>
+						</div>
 					</div>
-					<div class="div-table-row"><br /></div>
 ';
 
 $activeStylesheet = get_option( 'stylesheet' );
@@ -295,14 +307,14 @@ $statuses = array(
 foreach ( $statuses as $status ) {
 	$statusLower = strtolower( $status );
 
-	$return .= '<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
+	$return .= '<div class="div-table-contents">
+	<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
 		' bglib-collapsible-open' : '' ) . '">
-	<h3>
-		' . $translations[ $statusLower ] . '
-		<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower .
-		'" data-id="themes-' . $statusLower . '"></span>
-	</h3>
-</div>
+		<div class="div-tableCell"><h3>' . $translations[ $statusLower ] . '</h3></div>
+		<div class="div-tableCell">
+			<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower .'"></span>
+		</div>
+	</div>
 ';
 
 	foreach ( ${ 'themes' . $status } as $stylesheet => $theme ) {
@@ -313,19 +325,23 @@ foreach ( $statuses as $status ) {
 			( ! isset( $autoupdateSettings['themes'][ $stylesheet ] ) && $themesDefault );
 
 		$return .= '
-			<div class="div-table-row theme-update-setting bglib-collapsible" data-id="themes-' .
-			$statusLower . '"">
+			<div class="div-table-row theme-update-setting bglib-collapsible">
 				<div class="div-tableCell">' . $theme->get( 'Name' ) .
 				( $isParent ? ' (' . $translations['parent'] . ')' : '' ) . '</div>
-				<div class="toggle toggle-light theme-toggle"
-					data-stylesheet="' . $stylesheet . '"
-					data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
+				<div class="div-tableCell">
+					<div class="toggle toggle-light theme-toggle"
+						data-stylesheet="' . $stylesheet . '"
+						data-toggle-on="' . ( $toggle ? 'true' : 'false' ) . '">
+					</div>
 				</div>
 				<input type="hidden" name="autoupdate[themes][' . $stylesheet . ']"
 					value="' . ( $toggle ? 1 : 0 ) . '" />
 			</div>
 		';
 	}
+
+	$return .= '</div>
+';
 }
 
 $return .= '

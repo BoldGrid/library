@@ -158,6 +158,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				$toggles = $this
 					.parent()
 					.parent()
+					.parent()
 					.find( '.toggle' );
 
 			$toggles.toggles( $this.data( 'toggles' ).active );
