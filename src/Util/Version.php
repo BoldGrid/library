@@ -64,19 +64,16 @@ class Version {
 			WP_Filesystem();
 		}
 
-		/*
-		 * Avoid fatal errors due to the $wp_filesystem.
-		 *
-		 * This fix is only to prevent fatal errors. It is up to the plugins including this library
-		 * to test the filesystem and determine whether or not they're compatible.
-		 */
-		if ( is_null( $wp_filesystem ) ) {
-			return null;
+		// Get installed composer package data.
+		$installedFile = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) ) . '/composer/installed.json';
+
+		if ( 'direct' === get_filesystem_method() ) {
+			$file = $wp_filesystem->get_contents(  $installedFile );
+		} else {
+			$installedUrl = str_replace( ABSPATH, get_site_url() . '/', $installedFile );
+			$file = wp_remote_retrieve_body( wp_remote_get( $installedUrl ) );
 		}
 
-		// Get installed composer package data.
-		$vendor = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) );
-		$file = $wp_filesystem->get_contents(  $vendor . '/composer/installed.json' );
 		$installed = json_decode( $file, true );
 
 		// Check for dep's installed version.
