@@ -240,7 +240,9 @@ div .dashicons {
 }
 
 .bglib-collapsible-control h3 {
-	margin: 2px 0px;
+	font-size: 13px;
+	font-weight: bold;
+	margin: 12px 0px;
 }
 
 .bglib-collapsible-control:hover {

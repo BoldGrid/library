@@ -99,8 +99,10 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			$pluginToggles.each( function() {
 				var $this = $( this );
+console.log( $this.next( 'input' ).attr( 'name', 'autoupdate[plugins][' + $this.data( 'plugin' ) + ']' ).val() );
 
 				$this
+					.parent()
 					.next( 'input' )
 					.attr( 'name', 'autoupdate[plugins][' + $this.data( 'plugin' ) + ']' )
 					.val( $this.data( 'toggles' ).active ? 1 : 0 );
@@ -110,6 +112,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				var $this = $( this );
 
 				$this
+					.parent()
 					.next( 'input' )
 					.attr( 'name', 'autoupdate[themes][' + $this.data( 'stylesheet' ) + ']' )
 					.val( $this.data( 'toggles' ).active ? 1 : 0 );
