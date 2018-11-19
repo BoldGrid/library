@@ -137,9 +137,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				$master
 					.closest( '.div-table-body' )
 					.find( '.toggle' )
-					.not( '.toggle-group' )
-					.not( '#toggle-default-plugins' )
-					.not( '#toggle-default-themes' )
+					.not( '.toggle-group,#toggle-default-plugins,#toggle-default-themes' )
 					.each( function() {
 						if ( ! state || ! $( this ).data( 'toggles' ).active ) {
 							state = false;
@@ -164,8 +162,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					.parent()
 					.parent()
 					.find( '.toggle' )
-					.not( '#toggle-default-plugins' )
-					.not( '#toggle-default-themes' );
+					.not( '#toggle-default-plugins,#toggle-default-themes' );
 
 			$toggles.toggles( $this.data( 'toggles' ).active );
 

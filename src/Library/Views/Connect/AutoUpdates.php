@@ -89,7 +89,7 @@ $return .= '
 						<div class="div-tableCell">' .
 	esc_html__( 'All Update Types', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light toggle-group wpcore-toggle"
-							data-wp-core="all"
+							data-wpcore="all"
 							data-toggle-on="' . ( $wpcoreAll ? 'true' : 'false' ) . '">
 						</div>
 						<input type="hidden" name="autoupdate[wpcore][all]"
@@ -100,7 +100,7 @@ $return .= '
 						<div class="div-tableCell">' .
 	esc_html__( 'Major Updates', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
-							data-wp-core="major"
+							data-wpcore="major"
 							data-toggle-on="' . ( $wpcoreMajor ? 'true' : 'false' ) . '">
 						</div>
 						<input type="hidden" name="autoupdate[wpcore][major]"
@@ -110,7 +110,7 @@ $return .= '
 						<div class="div-tableCell">' .
 	esc_html__( 'Minor Updates', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
-							data-wp-core="minor"
+							data-wpcore="minor"
 							data-toggle-on="' . ( $wpcoreMinor ? 'true' : 'false' ) . '">
 						</div>
 						<input type="hidden" name="autoupdate[wpcore][minor]"
@@ -120,7 +120,7 @@ $return .= '
 						<div class="div-tableCell">' .
 	esc_html__( 'Development Updates', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
-							data-wp-core="dev"
+							data-wpcore="dev"
 							data-toggle-on="' . ( $wpcoreDev ? 'true' : 'false' ) . '">
 						</div>
 						<input type="hidden" name="autoupdate[wpcore][dev]"
@@ -130,7 +130,7 @@ $return .= '
 						<div class="div-tableCell">' .
 	esc_html__( 'Translation Updates', 'boldgrid-connect' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
-							data-wp-core="translation"
+							data-wpcore="translation"
 							data-toggle-on="' . ( $wpcoreTranslation ? 'true' : 'false' ) . '">
 						</div>
 						<input type="hidden" name="autoupdate[wpcore][translation]"
