@@ -99,7 +99,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			$pluginToggles.each( function() {
 				var $this = $( this );
-console.log( $this.next( 'input' ).attr( 'name', 'autoupdate[plugins][' + $this.data( 'plugin' ) + ']' ).val() );
 
 				$this
 					.parent()
@@ -139,6 +138,7 @@ console.log( $this.next( 'input' ).attr( 'name', 'autoupdate[plugins][' + $this.
 					.closest( '.div-table-body' )
 					.find( '.toggle' )
 					.not( '.toggle-group' )
+					.not( '#toggle-default-plugins' )
 					.each( function() {
 						if ( ! state || ! $( this ).data( 'toggles' ).active ) {
 							state = false;
@@ -162,7 +162,8 @@ console.log( $this.next( 'input' ).attr( 'name', 'autoupdate[plugins][' + $this.
 					.parent()
 					.parent()
 					.parent()
-					.find( '.toggle' );
+					.find( '.toggle' )
+					.not( '#toggle-default-plugins' );
 
 			$toggles.toggles( $this.data( 'toggles' ).active );
 
