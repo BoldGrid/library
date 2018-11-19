@@ -15,8 +15,7 @@ Release date: Oct 30th, 2018
 
 ### 2.7.1 In progress ###
 * Bug fix: JIRA BGCONN-29   Fixed API key entry form; removing inputs and displaying success message.
-* Update:  JIRA BGCONN-32   Removed auto-update section from settings.  It is still used by plugins.
-* Update:  JIRA BGCONN-33   Grouped auto-update plugins and themes, by active/inactive.
+* Update:  JIRA BGCONN-32   Removed auto-update section from settings.  It is still used by the Backup plugin.
 * Update:  JIRA BGBKUP-285  Save settings and reload to the current section.
 
 ### 2.7.0 ###

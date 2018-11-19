@@ -21,40 +21,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 2.4.0
 		 */
 		_onLoad: function() {
-			var $bgBox = $( '.bg-box' );
-
 			self._repositionNotice();
 
-			// Initialize jquery-toggles.
-			$bgBox
-				.find( '.toggle' )
-				.toggles( {
-					text: {
-						on: '',
-						off: ''
-					},
-					height: 15,
-					width: 40
-				} );
-
-			self._setMasterToggles();
-
-			$bgBox
-				.find( '.toggle-group' )
-				.on( 'click swipe contextmenu', self._toggleGroup );
-
-			$bgBox
-				.find( '.toggle' )
-				.not( '.toggle-group' )
-				.on( 'click swipe contextmenu', self._setMasterToggles );
-
 			$( '#submit' ).on( 'click', self._submit );
-
-			$bgBox.find( '.dashicons-editor-help' ).on( 'click', self._toggleHelp );
-
-			$bgBox.find( '.bglib-collapsible-control' ).on( 'click', function() {
-				$( this ).toggleClass( 'bglib-collapsible-open' );
-			} );
 		},
 
 		/**
@@ -71,105 +40,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		},
 
 		/**
-		 * Set inputs for toggles.
-		 *
-		 * @since 2.7.0
-		 */
-		_setInputs: function() {
-			var $bgBox = $( '.bg-box' ),
-				$wpcoreToggles = $bgBox.find( '.wpcore-toggle' ),
-				$pluginToggles = $bgBox.find( '.plugin-toggle' ),
-				$themeToggles = $bgBox.find( '.theme-toggle' ),
-				$pluginsDefault = $bgBox.find( '#toggle-default-plugins' ),
-				$themesDefault = $bgBox.find( '#toggle-default-themes' );
-
-			// If the updates section is not in use, then just return.
-			if ( ! $pluginsDefault.data( 'toggles' ) ) {
-				return;
-			}
-
-			$wpcoreToggles.each( function() {
-				var $this = $( this );
-
-				$this
-					.next( 'input' )
-					.attr( 'name', 'autoupdate[wpcore][' + $this.data( 'wpcore' ) + ']' )
-					.val( $this.data( 'toggles' ).active ? 1 : 0 );
-			} );
-
-			$pluginToggles.each( function() {
-				var $this = $( this );
-
-				$this
-					.parent()
-					.next( 'input' )
-					.attr( 'name', 'autoupdate[plugins][' + $this.data( 'plugin' ) + ']' )
-					.val( $this.data( 'toggles' ).active ? 1 : 0 );
-			} );
-
-			$themeToggles.each( function() {
-				var $this = $( this );
-
-				$this
-					.parent()
-					.next( 'input' )
-					.attr( 'name', 'autoupdate[themes][' + $this.data( 'stylesheet' ) + ']' )
-					.val( $this.data( 'toggles' ).active ? 1 : 0 );
-			} );
-
-			$pluginsDefault.next( 'input' ).val( $pluginsDefault.data( 'toggles' ).active ? 1 : 0 );
-
-			$themesDefault.next( 'input' ).val( $themesDefault.data( 'toggles' ).active ? 1 : 0 );
-		},
-
-		/**
-		 * Set master toggles.
-		 *
-		 * @since 2.7.0
-		 */
-		_setMasterToggles: function() {
-			var $masters = $( '.bg-box' ).find( '.toggle-group' );
-
-			$masters.each( function() {
-				var $master = $( this ),
-					state = true;
-
-				$master
-					.closest( '.div-table-body' )
-					.find( '.toggle' )
-					.not( '.toggle-group,#toggle-default-plugins,#toggle-default-themes' )
-					.each( function() {
-						if ( ! state || ! $( this ).data( 'toggles' ).active ) {
-							state = false;
-						}
-					} );
-
-				$master.toggles( state );
-			} );
-
-			self._setInputs();
-		},
-
-		/**
-		 * Toggle an entire group on/off.
-		 *
-		 * @since 2.7.0
-		 */
-		_toggleGroup: function() {
-			var $this = $( this ),
-				$toggles = $this
-					.parent()
-					.parent()
-					.parent()
-					.find( '.toggle' )
-					.not( '#toggle-default-plugins,#toggle-default-themes' );
-
-			$toggles.toggles( $this.data( 'toggles' ).active );
-
-			self._setInputs();
-		},
-
-		/**
 		 * Handle form submission.
 		 *
 		 * @since 2.7.0
@@ -178,8 +48,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			var $this = $( this ),
 				$spinner = $this.next(),
 				$notice = $( '#settings-notice' ),
-				$toggleDefaultPlugins = $bgBox.find( '#toggle-default-plugins' ),
-				$toggleDefaultThemes = $bgBox.find( '#toggle-default-themes' );
 				data = {
 					action: 'boldgrid_library_connect_settings_save',
 					_wpnonce: $( '[name="_wpnonce"]' ).val(),
@@ -191,34 +59,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			$this.attr( 'disabled', 'disabled' );
 
 			$spinner.addClass( 'inline' );
-
-			if ( $toggleDefaultPlugins.length ) {
-				data.autoupdate.plugins['default'] = $toggleDefaultPlugins
-					.data( 'toggles' )
-					.active ? 1 : 0
-			}
-
-			$bgBox.find( '.plugin-update-setting .toggle' ).each( function() {
-				var $this = $( this ),
-					plugin = $this.data( 'plugin' ),
-					value = $this.data( 'toggles' ).active ? 1 : 0;
-
-				data.autoupdate.plugins[plugin] = value;
-			} );
-
-			if ( $toggleDefaultThemes.length ) {
-				data.autoupdate.themes['default'] = $toggleDefaultThemes
-					.data( 'toggles' )
-					.active ? 1 : 0
-			}
-
-			$bgBox.find( '.theme-update-setting .toggle' ).each( function() {
-				var $this = $( this ),
-					stylesheet = $this.data( 'stylesheet' ),
-					value = $this.data( 'toggles' ).active ? 1 : 0;
-
-				data.autoupdate.themes[stylesheet] = value;
-			} );
 
 			$.post(
 				ajaxurl,
