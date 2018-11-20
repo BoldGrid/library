@@ -11,14 +11,18 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-Release date: Oct 30th, 2018
+### 2.7.1 ###
 
-### 2.7.1 In progress ###
+Release date: Nov 20th, 2018
+
 * Bug fix: JIRA BGCONN-29   Fixed API key entry form; removing inputs and displaying success message.
 * Update:  JIRA BGCONN-32   Removed auto-update section from settings.  It is still used by the Backup plugin.
 * Update:  JIRA BGBKUP-285  Save settings and reload to the current section.
 
 ### 2.7.0 ###
+
+Release date: Oct 30th, 2018
+
 * Feature: JIRA BGCONN-16   Added BoldGrid Connect settings for individual plugin and theme auto-updates.
 * Feature:                  JS framework for Postbox settings.
 * Bug fix: JIRA BGCONN-19   Fixed display when the library is used in a theme.
