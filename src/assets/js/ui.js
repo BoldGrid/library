@@ -14,8 +14,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 BOLDGRID.LIBRARY.Ui = function( $ ) {
 	var self = this,
 		$sections,
-		$sectionLinks,
-		$selectedSection;
+		$sectionLinks;
 
 	/**
 	 * @summary Action to take when a user clicks on a navigation item.
@@ -50,15 +49,21 @@ BOLDGRID.LIBRARY.Ui = function( $ ) {
 	};
 
 	/**
-	 * @summary When the UI form is submitted, add the section id in the POST request.
+	 * @summary Take action when a form is submitted.
 	 *
-	 * @since 2.7.1
+	 * @since 1.7.0
 	 */
-	self.addSectionId = function() {
+	self.onFormSubmit = function() {
 		var $form = $( this ),
-			selectedSectionId = $form.find( 'ul.bg-left-nav li.active' ).data( 'section-id' );
+			activeSection,
+			sectionInput = $( '<input type="hidden" name="section" />' );
 
-		$form.append( '<input type="hidden" name="section" value="' + selectedSectionId + '">' );
+		// If the form does not already have a section, add it.
+		if( ! $form.find( '[name="section"]' ).length ) {
+			activeSection = $( '.bg-left-nav .active' ).attr( 'data-section-id' );
+			sectionInput.val( activeSection );
+			$form.append( sectionInput );
+		}
 	};
 
 	/**
@@ -69,16 +74,15 @@ BOLDGRID.LIBRARY.Ui = function( $ ) {
 	$( function() {
 		$sections = $( '.col-right-section' );
 		$sectionLinks = $( '[data-section-id]' );
-		$selectedSection = $( 'ul.bg-left-nav li.active' );
 
 		$sectionLinks.on( 'click', self.onClickSectionLink );
 
 		self.setSticky();
 
 		$( window ).resize( self.setSticky );
-
-		$selectedSection.closest( 'form' ).on( 'submit', self.addSectionId );
+		
+		$( 'form' ).on( 'submit', self.onFormSubmit );
 	} );
 };
 
-new BOLDGRID.LIBRARY.Ui( jQuery );
+BOLDGRID.LIBRARY.Ui( jQuery );
