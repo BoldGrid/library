@@ -17,4 +17,5 @@ before_script:
 
 script:
   - phpunit --debug
+  - yarn run prettier-eslint --version
   - yarn run js-lint
