@@ -32,7 +32,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "bash -c \"yarn install; gulp; rm -rf node_modules\""
+            "yarn install; gulp; rm -rf node_modules"
         ]
     }
 }
