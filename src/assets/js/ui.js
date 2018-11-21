@@ -1,7 +1,7 @@
 /**
  * BoldGrid Library UI/UX.
  *
- * @summary JavaScript to handle UI.
+ * @summary JavaScript to handle UI/UX.
  *
  * @since 1.1.7
  */
