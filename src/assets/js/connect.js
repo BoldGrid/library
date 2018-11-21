@@ -1,3 +1,11 @@
+/**
+ * BoldGrid Library Connect.
+ *
+ * @summary JavaScript to handle UI/UX.
+ *
+ * @since 2.4.0
+ */
+
 /* global ajaxurl,jQuery */
 
 var BOLDGRID = BOLDGRID || {};

@@ -12,8 +12,6 @@ env:
   - WP_VERSION=latest WP_MULTISITE=0
 
 before_script:
-  - nvm install 8.12.0
-  - npm install -g yarn
   - yarn install
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
