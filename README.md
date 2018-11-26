@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.7.2 ###
+
+Release date: Nov 26th, 2018
+
+* Update:                   Updated production build process to use composer post-autoload-dump hook.
+
 ### 2.7.1 ###
 
 Release date: Nov 20th, 2018
