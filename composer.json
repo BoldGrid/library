@@ -29,5 +29,10 @@
         "psr-4": {
             "Boldgrid\\Library\\Util\\": "src/Util"
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "yarn install; gulp; rm -rf node_modules"
+        ]
     }
 }

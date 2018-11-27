@@ -1,8 +1,8 @@
 /**
  * Handle page attributes within the editor.
  *
- * Specifically, handle the edit, ok, and cancel options. This replicates the edit, ok, and cancel
- * options native to meta boxes (such as the status and visibility settings in the publish meta box).
+ * Specifically, handle the edit, ok, and cancel options. This replicates the options native to
+ * meta boxes (such as the status and visibility settings in the publish meta box).
  *
  * @since 2.7.0
  */
