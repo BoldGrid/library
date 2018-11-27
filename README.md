@@ -11,6 +11,10 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.7.3 ###
+
+* Bug fix: JIRA BGCONN-35   Prevent Connect Key notice on block editor pages.
+
 ### 2.7.2 ###
 
 Release date: Nov 26th, 2018
