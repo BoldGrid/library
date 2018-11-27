@@ -7,7 +7,7 @@
 		<h2 class="dashicons-before dashicons-admin-network">
 			<?php esc_html_e( 'Premium BoldGrid Connect Key', 'boldgrid-connect' )?></h2>
 		<p>
-			<?php esc_html_e( 'Awesome! You have Premium Connect Key saved on this site.', 'boldgrid-connect' ) ?>
+			<?php esc_html_e( 'Awesome! You have a Premium Connect Key saved on this site.', 'boldgrid-connect' ) ?>
 		</p>
 		<p>
 			<?php printf( esc_html__( 'Make sure you\'re getting the most out of your premium subscription by installing our other %sBoldGrid plugins%s. As a Premium user, you also have access to %sCloud WordPress%s where you can create new WordPress sites for free. If you need any help, our support team is eager to serve!', 'boldgrid-connect' ),
