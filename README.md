@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.7.3 ###
+
+Release date: Nov 27th, 2018
+
+* Feature: Adding Crio's enzo to the admin icons font.
+
 ### 2.7.2 ###
 
 Release date: Nov 26th, 2018
