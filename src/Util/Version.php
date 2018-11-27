@@ -28,10 +28,12 @@ class Version {
 	 * @since 1.0.0
 	 *
 	 * @var string $dependency The dependency to get the normalized version of.
+	 * @var string $product    The product identifier.
 	 * @var mixed  $version    Normalized version number if found, or null.
 	 */
 	private
 		$dependency,
+		$product,
 		$version;
 
 	/**
@@ -40,8 +42,10 @@ class Version {
 	 * @since 1.0.0
 	 *
 	 * @param string $dependency The dependency to check the version data of.
+	 * @param string $product    The product identifier.
 	 */
-	public function __construct( $dependency ) {
+	public function __construct( $dependency, $product = null ) {
+		$this->product = $product;
 		$this->dependency = $dependency;
 		$this->version = $this->setVersion();
 	}
@@ -64,9 +68,15 @@ class Version {
 			WP_Filesystem();
 		}
 
-		// Get installed composer package data.
-		$installedFile = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) ) . '/composer/installed.json';
+		// First, get the path to 'vendor/composer/installed.json'.
+		if ( method_exists( 'Boldgrid\Library\Util\Load', 'determinePath' ) ) {
+			$installedFile = trailingslashit( \Boldgrid\Library\Util\Load::determinePath( $this->product ) ) . 'vendor/composer/installed.json';
+		} else {
+			// This is suitable when activating a single plugin, but will result in false data if bulk.
+			$installedFile = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) ) . '/composer/installed.json';
+		}
 
+		// Then, read the contents of 'vendor/composer/installed.json'.
 		if ( 'direct' === get_filesystem_method() ) {
 			$file = $wp_filesystem->get_contents(  $installedFile );
 		} else {

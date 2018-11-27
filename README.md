@@ -11,6 +11,10 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.7.3 In progress ###
+
+* Bug fix:                  Bad library versions registered during bulk plugin activation.
+
 ### 2.7.2 ###
 
 Release date: Nov 26th, 2018

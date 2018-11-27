@@ -77,6 +77,45 @@ class Load {
 	}
 
 	/**
+	 * Determine the path to a product.
+	 *
+	 * The path to a product is the parent directory of the vendor folder. So, the path we return is
+	 * assumed to have a vendor folder.
+	 *
+	 * The contents of this method were originall in self::setPath(), but have been moved here for
+	 * reusability.
+	 *
+	 * @since 2.7.3
+	 *
+	 * @param  string $product The product identifier.
+	 * @return string
+	 */
+	public static function determinePath( $product ) {
+		// Loading from must use plugin directory?
+		if ( ! is_file( $path = trailingslashit( WPMU_PLUGIN_DIR ) . $product ) ) {
+
+			// Loading from plugin directory?
+			if ( ! is_file( $path = trailingslashit( WP_PLUGIN_DIR ) . $product ) ) {
+
+				// Loading from a parent theme directory?
+				$path = get_template_directory() . '/inc/boldgrid-theme-framework/includes/theme';
+			}
+		}
+
+		// Loading from framework path override directory?
+		if ( defined( 'BGTFW_PATH' ) ) {
+			$dir = ABSPATH . trim( BGTFW_PATH, '/' ) . '/includes';
+			if ( is_dir( $dir . '/vendor/boldgrid/library' ) ) {
+				$path = $dir . '/theme';
+			}
+		}
+
+		$path = dirname( $path );
+
+		return $path;
+	}
+
+	/**
 	 * Avoid fatal errors due to certain filesystem types.
 	 *
 	 * This fix is only to prevent fatal errors. It is up to the plugins including this library to
@@ -130,8 +169,6 @@ class Load {
 	/**
 	 * Sets the path class property.
 	 *
-	 * This will determine the path to the found product's library to load.
-	 *
 	 * @since  1.0.0
 	 *
 	 * @return string $path Path to the library to load.
@@ -141,27 +178,7 @@ class Load {
 		$path = false;
 
 		if ( ! empty( $found->product ) ) {
-
-			// Loading from must use plugin directory?
-			if ( ! is_file( $path = trailingslashit( WPMU_PLUGIN_DIR ) . $found->product ) ) {
-
-				// Loading from plugin directory?
-				if ( ! is_file( $path = trailingslashit( WP_PLUGIN_DIR ) . $found->product ) ) {
-
-					// Loading from a parent theme directory?
-					$path = get_template_directory() . '/inc/boldgrid-theme-framework/includes/theme';
-				}
-			}
-
-			// Loading from framework path override directory?
-			if ( defined( 'BGTFW_PATH' ) ) {
-				$dir = ABSPATH . trim( BGTFW_PATH, '/' ) . '/includes';
-				if ( is_dir( $dir . '/vendor/boldgrid/library' ) ) {
-					$path = $dir . '/theme';
-				}
-			}
-
-			$path = dirname( $path );
+			$path = self::determinePath( $found->product );
 		}
 
 		return $this->path = $path;
