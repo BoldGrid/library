@@ -3,7 +3,7 @@
  * BoldGrid Library Key Prompt Notice
  *
  * @package Boldgrid\Library
- * @subpackage \Util
+ * @subpackage \Notice
  *
  * @version 1.0.0
  * @author BoldGrid <wpb@boldgrid.com>
@@ -161,30 +161,14 @@ class KeyPrompt {
 	 * @see \Boldgrid\Library\Library\Notice::isDismissed()
 	 *
 	 * @hook: admin_notices
-	 *
-	 * @global $pagenow The current page/script filename, according to WordPress.
-	 * @global $post    The current post object.
 	 */
 	public function keyNotice() {
-		global $pagenow;
-		global $post;
-
-		$post_pages = array(
-			'post.php',
-			'post-new.php',
-		);
-
 		$display_notice = apply_filters(
 			'Boldgrid\Library\Library\Notice\KeyPrompt_display',
 			( ! Library\Notice::isDismissed( $this->userNoticeKey ) )
 		);
 
-		// Display notice if not disabled and not on a Gutenburg editor page.
-		$is_using_gutenberg = in_array( $pagenow, $post_pages, true ) &&
-			function_exists( 'register_block_type' ) &&
-			apply_filters( 'use_block_editor_for_post', true, $post );
-
-		if ( $display_notice && ! $is_using_gutenberg ) {
+		if ( $display_notice ) {
 			$current_user = wp_get_current_user();
 			$email = $current_user->user_email;
 			$first_name = empty( $current_user->user_firstname ) ? '' : $current_user->user_firstname;
