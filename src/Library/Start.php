@@ -113,6 +113,7 @@ class Start {
 		Configs::setItem( 'menu-reseller', new Menu\Reseller() );
 		Configs::setItem( 'page-connect', new Page\Connect() );
 		Configs::setItem( 'assets', new Asset() );
+		new Editor();
 	}
 
 	/**

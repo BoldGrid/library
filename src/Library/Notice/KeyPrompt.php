@@ -3,7 +3,7 @@
  * BoldGrid Library Key Prompt Notice
  *
  * @package Boldgrid\Library
- * @subpackage \Util
+ * @subpackage \Notice
  *
  * @version 1.0.0
  * @author BoldGrid <wpb@boldgrid.com>
