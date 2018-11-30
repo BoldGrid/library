@@ -149,7 +149,7 @@ class Load {
 				if ( ! is_file( $path = trailingslashit( WP_PLUGIN_DIR ) . $found->product ) ) {
 
 					// Loading from a parent theme directory?
-					$path = get_template_directory() . '/theme';
+					$path = get_template_directory() . '/inc/boldgrid-theme-framework/includes/theme';
 				}
 			}
 
