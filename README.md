@@ -14,6 +14,7 @@ composer require boldgrid/library
 ### 2.7.4 In progress ###
 
 * Bug fix: JIRA BGCONN-35   Prevent Connect Key notice on block editor pages.
+* Update:  JIRA BGTHEME-691 Updated theme library load path.
 
 ### 2.7.3 ###
 
