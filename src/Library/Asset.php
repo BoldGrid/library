@@ -28,6 +28,20 @@ class Asset {
 	}
 
 	/**
+	 * Add front end scripts.
+	 *
+	 * @since 2.7.5
+	 *
+	 * @hook wp_enqueue_scripts
+	 */
+	public function addWpScripts() {
+		if ( is_user_logged_in() ) {
+			// Enqueue on front end for logged in users so they get BoldGrid logo in admin bar.
+			$this->EnqueueAdminIcon();
+		}
+	}
+
+	/**
 	 * Add styles for all admin pages.
 	 *
 	 * @since 2.4.0
@@ -37,6 +51,21 @@ class Asset {
 	public function addStyles() {
 		wp_enqueue_style( 'bglib-admin',
 			Configs::get( 'libraryUrl' ) . 'src/assets/css/admin.css' );
+
+		$this->EnqueueAdminIcon();
+	}
+
+	/**
+	 * Enqueue admin icon css.
+	 *
+	 * Used to show BoldGrid font / logo. Separate method created for reusability on front end vs
+	 * back end.
+	 *
+	 * @since 2.7.5
+	 */
+	public function EnqueueAdminIcon() {
+		wp_enqueue_style( 'bglib-admin-icon',
+			Configs::get( 'libraryUrl' ) . 'src/assets/css/admin-icon.css' );
 	}
 }
  ?>
