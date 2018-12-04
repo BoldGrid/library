@@ -11,11 +11,15 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.7.5 in progress ###
+### 2.7.5 ###
+
+Release date: Dec 4th, 2018
 
 * Bug fix: BoldGrid logo not showing in front end admin bar.
 
 ### 2.7.4 ###
+
+Release date: Dec 4th, 2018
 
 * Bug fix: JIRA BGCONN-35   Prevent Connect Key notice on block editor pages.
 
