@@ -187,10 +187,10 @@ $pluginsActive   = array();
 $pluginsInactive = array();
 
 foreach ( $plugins as $slug => $pluginData ) {
-	if ( is_plugin_active( $slug ) ) {
-		$pluginsActive[ $slug ] = $pluginData;
-	} else {
+	if ( is_plugin_inactive( $slug ) ) {
 		$pluginsInactive[ $slug ] = $pluginData;
+	} else {
+		$pluginsActive[ $slug ] = $pluginData;
 	}
 }
 
