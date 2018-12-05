@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.7.6 ###
+
+Release date: Dec 5th, 2018
+
+* Update: Inverse logic fixes, is_plugin_active vs is_plugin_inactive.
+
 ### 2.7.5 ###
 
 Release date: Dec 4th, 2018
