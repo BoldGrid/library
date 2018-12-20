@@ -17,7 +17,10 @@ use Boldgrid\Library\Library\Configs;
  */
 class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 
-	private $backup, $backup_premium;
+	private
+		$backup,
+		$backup_premium,
+		$key = 'CONNECT-KEY';
 
 	private static $configs;
 
@@ -29,7 +32,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	public function setUp() {
 
 		// Setup our configs.
-		update_site_option( 'boldgrid_api_key', 'CONNECT-KEY' );
+		update_site_option( 'boldgrid_api_key', $this->key );
 		// Initialization needed so the constructor will include library.global.php.
 		new \Boldgrid\Library\Library\Configs();
 		// Configs are a real problem in this test. If we can get configs, save them.
@@ -52,23 +55,8 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 		// Reset our configs.
 		Configs::set( self::$configs );
 
-		$this->assertNotContains( 'key=', $this->backup->getDownloadUrl() );
+		$this->assertEquals( $this->backup->getDownloadUrl(), 'https://api.boldgrid.com/v1/plugins/boldgrid-backup/download?key=' . $this->key );
 
-		$this->assertContains( 'key=', $this->backup_premium->getDownloadUrl() );
-	}
-
-	/**
-	 * Test isWporgPlugin.
-	 *
-	 * @since 2.7.7
-	 */
-	public function testIsWporgPlugin() {
-
-		// Reset our configs.
-		Configs::set( self::$configs );
-
-		$this->assertTrue( $this->backup->isWporgPlugin() );
-
-		$this->assertNotTrue( $this->backup_premium->isWporgPlugin() );
+		$this->assertEquals( $this->backup_premium->getDownloadUrl(), 'https://api.boldgrid.com/v1/plugins/boldgrid-backup-premium/download?key=' . $this->key );
 	}
 }
