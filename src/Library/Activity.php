@@ -27,7 +27,7 @@ class Activity {
 	 * @since 2.7.7
 	 * @var bool
 	 */
-	private static $filters_added = false;
+	private static $filtersAdded = false;
 
 	/**
 	 * The option name where activity data is stored.
@@ -35,7 +35,7 @@ class Activity {
 	 * @since 2.7.7
 	 * @var string
 	 */
-	private $option_name = 'bglib_activity';
+	private $optionName = 'bglib_activity';
 
 	/**
 	 * The name of the plugin this class represents.
@@ -55,13 +55,10 @@ class Activity {
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
 
-		if ( ! self::$filters_added ) {
+		if ( ! self::$filtersAdded ) {
 			Filter::add( $this );
-			self::$filters_added = true;
+			self::$filtersAdded = true;
 		}
-
-		// Debug.
-		// delete_option( $this->option_name );
 	}
 
 	/**
@@ -79,7 +76,7 @@ class Activity {
 	public function add( $activity, $count = 1, $config_path = null ) {
 		$added = false;
 
-		$plugin_activities = $this->get_plugin_activities();
+		$plugin_activities = $this->getPluginActivities();
 
 		if ( ! isset( $plugin_activities[ $activity ] ) ) {
 			$plugin_activities[ $activity ] = $count;
@@ -87,9 +84,9 @@ class Activity {
 			$plugin_activities[ $activity ] += $count;
 		}
 
-		$added = $this->save_plugin_activities( $plugin_activities );
+		$added = $this->savePluginActivities( $plugin_activities );
 
-		if ( ! empty( $config_path ) ) {
+		if ( $added && ! empty( $config_path ) ) {
 			$this->maybeAddRatingPrompt( $activity, $config_path );
 		}
 
@@ -103,8 +100,8 @@ class Activity {
 	 *
 	 * @return array
 	 */
-	public function get_activities() {
-		return get_option( $this->option_name, array() );
+	public function getActivities() {
+		return get_option( $this->optionName, array() );
 	}
 
 	/**
@@ -116,7 +113,7 @@ class Activity {
 	 * @var    string $config_path The full path to the config file.
 	 * @return array               An array of configs.
 	 */
-	public function get_activity_configs( $activity, $config_path ) {
+	public function getActivityConfigs( $activity, $config_path ) {
 		$configs = array();
 
 		if ( file_exists( $config_path ) ) {
@@ -134,8 +131,8 @@ class Activity {
 	 * @param  string $activity The name of the activity.
 	 * @return int              The activity's count.
 	 */
-	public function get_activity_count( $activity ) {
-		$plugin_activities = $this->get_plugin_activities();
+	public function getActivityCount( $activity ) {
+		$plugin_activities = $this->getPluginActivities();
 
 		return empty( $plugin_activities[ $activity ] ) ? 0 : $plugin_activities[ $activity ];
 	}
@@ -147,8 +144,8 @@ class Activity {
 	 *
 	 * @return array
 	 */
-	public function get_plugin_activities() {
-		$activities = $this->get_activities();
+	public function getPluginActivities() {
+		$activities = $this->getActivities();
 
 		if ( ! isset( $activities[ $this->plugin ] ) ) {
 			$activities[ $this->plugin ] = array();
@@ -169,11 +166,11 @@ class Activity {
 	public function maybeAddRatingPrompt( $activity, $config_path ) {
 		$added = false;
 
-		$configs = $this->get_activity_configs( $activity, $config_path );
+		$configs = $this->getActivityConfigs( $activity, $config_path );
 
-		if ( isset( $configs['threshold'] ) && $this->get_activity_count( $activity ) >= $configs['threshold'] ) {
+		if ( isset( $configs['threshold'] ) && $this->getActivityCount( $activity ) >= $configs['threshold'] ) {
 			$rating_prompt = new \Boldgrid\Library\Library\RatingPrompt();
-			$added = $rating_prompt->add_prompt( $configs['prompt'] );
+			$added = $rating_prompt->addPrompt( $configs['prompt'] );
 		}
 
 		return $added;
@@ -189,8 +186,8 @@ class Activity {
 	 * @param  array $activities An array of activities.
 	 * @return bool              Whether or not the activities were updated successfully.
 	 */
-	public function save_activities( $activities ) {
-		return update_option( $this->option_name, $activities );
+	public function saveActivities( $activities ) {
+		return update_option( $this->optionName, $activities );
 	}
 
 	/**
@@ -201,11 +198,11 @@ class Activity {
 	 * @param  array $plugin_activities An array of activities.
 	 * @return bool                     Whether or not the activities were updated successfully.
 	 */
-	public function save_plugin_activities( $plugin_activities ) {
-		$activities = $this->get_activities();
+	public function savePluginActivities( $plugin_activities ) {
+		$activities = $this->getActivities();
 
 		$activities[ $this->plugin ] = $plugin_activities;
 
-		return $this->save_activities( $activities );
+		return $this->saveActivities( $activities );
 	}
 }

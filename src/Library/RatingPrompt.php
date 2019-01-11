@@ -5,7 +5,7 @@
  * @package Boldgrid\Library
  * @subpackage \Library\License
  *
- * @version 1.0.0
+ * @version 2.7.7
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -18,7 +18,7 @@ use Boldgrid\Library\Library;
  *
  * This class is responsible for displaying admin notices asking for feedback / a rating on wp.org.
  *
- * @since x.x.x
+ * @since 2.7.7
  */
 class RatingPrompt {
 	/**
@@ -32,12 +32,29 @@ class RatingPrompt {
 	private static $filtersAdded = false;
 
 	/**
+	 * The minimum amount of time between showing different prompts.
+	 *
+	 * @since 2.7.7
+	 * @var int
+	 * @see self::getLastDismissal()
+	 */
+	private $minInterval = 0;
+
+	/**
 	 * The option name where rating prompts are stored.
 	 *
 	 * @since 2.7.7
 	 * @var string
 	 */
 	private $optionName = 'bglib_rating_prompt';
+
+	/**
+	 * The role required to see a rating prompt.
+	 *
+	 * @since 2.7.7
+	 * @var string
+	 */
+	private $userRole = 'update_plugins';
 
 	/**
 	 * Initialize class and set class properties.
@@ -51,10 +68,7 @@ class RatingPrompt {
 			self::$filtersAdded = true;
 		}
 
-		// Debug code to delete all rating prompts.
-		if( isset( $_GET['reset'] ) && '1' === $_GET['reset'] ) {
-			delete_option( $this->optionName );
-		}
+		$this->minInterval = 2 * DAY_IN_SECONDS;
 	}
 
 	/**
@@ -70,6 +84,15 @@ class RatingPrompt {
 	public function addPrompt( $prompt ) {
 		$added = false;
 
+		/*
+		 * Determine whether to add the new prompt or not.
+		 *
+		 * If we've already a prompt for user_did_this_x_times, don't add another prompt for the
+		 * same thing.
+		 *
+		 * If a plugin has already been dismissed, no need to add any additional rating prompts,
+		 * they will never be showing.
+		 */
 		if ( ! $this->isPrompt( $prompt['name'] ) && ! $this->isPluginDismissed( $prompt['plugin'] ) ) {
 			$prompt['time_added'] = time();
 
@@ -89,16 +112,16 @@ class RatingPrompt {
 	 * @since 2.7.7
 	 */
 	public function admin_notices() {
-		// testing
-		$prompts = $this->getPrompts();
-		// echo '<pre>PROMPTS = ' . print_r( $prompts,1) . '</pre>';
+		if ( ! current_user_can( $this->userRole ) ) {
+			return;
+		}
 
 		$prompt = $this->getNext();
-		// echo '<pre>NEXT PROMPT = '; print_r( $prompt ); echo '</pre>';
+		if ( empty( $prompt ) ) {
+			return;
+		}
 
 		$slides = $this->getPromptSlides( $prompt );
-		//echo '<pre>$slides = ' . print_r( $slides,1 ) . '</pre>';
-
 		if ( ! empty( $slides ) ) {
 			echo '<div class="notice notice-success bglib-rating-prompt is-dismissible" data-slide-name="' . esc_attr( $prompt['name'] ) . '">';
 			foreach ( $slides as $slide ) {
@@ -117,7 +140,7 @@ class RatingPrompt {
 	 * @hook wp_ajax_blib_rating_prompt_dismiss
 	 */
 	public function ajaxDismiss() {
-		if ( ! current_user_can( 'update_plugins' ) ) {
+		if ( ! current_user_can( $this->userRole ) ) {
 			wp_send_json_error( __( 'Permission denied.', 'boldgrid-backup' ) );
 		}
 
@@ -131,11 +154,77 @@ class RatingPrompt {
 
 		if ( 'dismiss' === $type ) {
 			$dismissed = $this->updatePromptKey( $name, 'time_dismissed', time() );
-			$dismissed ? wp_send_json_success() : wp_send_json_error( 'Error dismissing prompt' );
+			$dismissed ? wp_send_json_success() : wp_send_json_error( __( 'Error dismissing prompt', 'boldgrid-backup' ) );
 		} else if ( 'snooze' === $type ) {
-			$snoozed = $this->updatePromptKey( $name, 'time_snoozed_until', time() + $snooze_length );
-			$snoozed ? wp_send_json_success() : wp_send_json_error( 'Error snoozing prompt' );
+			$time_snoozed_set = $this->updatePromptKey( $name, 'time_snoozed', time() );
+			$snoozed          = $this->updatePromptKey( $name, 'time_snoozed_until', time() + $snooze_length );
+			$time_snoozed_set && $snoozed ? wp_send_json_success() : wp_send_json_error( __( 'Error snoozing prompt', 'boldgrid-backup' ) );
+		} else {
+			wp_send_json_error( __( 'Unknown action.', 'boldgrid-backup' ) );
 		}
+	}
+
+	/**
+	 * Get an array of attributes for a decision's <a> tag.
+	 *
+	 * @since 2.7.7
+	 *
+	 * @param  array $decision A decision from a slide.
+	 * @return array
+	 */
+	public function getDecisionAttributes( $decision ) {
+		$attributes = array();
+
+		$action = isset( $decision['snooze'] ) ? 'snooze' : 'dismiss';
+
+		$attributes['data-action'] = esc_attr( $action );
+
+		if ( isset( $decision['link'] ) ) {
+			$attributes['href'] = esc_url( $decision['link'] );
+			$attributes['target'] = '_blank';
+		} else {
+			$attributes['href'] = '';
+		}
+
+		if ( isset( $decision['snooze'] ) ) {
+			$attributes['data-snooze'] = esc_attr( $decision['snooze'] );
+		}
+
+		if ( isset( $decision['slide'] ) ) {
+			$attributes['data-next-slide'] = esc_attr( $decision['slide'] );
+		}
+
+		return $attributes;
+	}
+
+	/**
+	 * Get the time of the last dismissal or snooze, whichever is latest.
+	 *
+	 * One reason this is used is to ensure prompts don't show one after another for the user. For
+	 * example, if the user just dismissed a rating prompt, we may not want to show them another
+	 * prompt for at least 2 days.
+	 *
+	 * @since 2.7.7
+	 *
+	 * @return int
+	 */
+	public function getLastDismissal() {
+		$lastDismissal = 0;
+
+		$prompts = $this->getPrompts();
+		foreach ( $prompts as $prompt ) {
+			$promptDismissal = 0;
+
+			if ( ! empty( $prompt['time_dismissed'] ) ) {
+				$promptDismissal = $prompt['time_dismissed'];
+			} elseif ( ! empty( $prompt['time_snoozed'] ) ) {
+				$promptDismissal = $prompt['time_snoozed'];
+			}
+
+			$lastDismissal = $promptDismissal > $lastDismissal ? $promptDismissal : $lastDismissal;
+		}
+
+		return $lastDismissal;
 	}
 
 	/**
@@ -144,6 +233,10 @@ class RatingPrompt {
 	 * @since 2.7.7
 	 */
 	public function admin_enqueue_scripts() {
+		if ( ! current_user_can( $this->userRole ) ) {
+			return;
+		}
+
 		$prompt = $this->getNext();
 
 		if ( ! empty( $prompt ) ) {
@@ -173,49 +266,62 @@ class RatingPrompt {
 
 		if ( ! empty( $prompt['slides'] ) ) {
 			foreach ( $prompt['slides'] as $slide_id => $slide ) {
+				$slideMarkup = $this->getSlideMarkup( $slide_id, $slide );
 
-				$slide_markup = '<div data-slide-id="' . esc_attr( $slide_id ) . '">';
-
-				$slide_markup .= '<p>' . $slide['text'] . '</p>';
-
-				if ( ! empty( $slide['decisions'] ) ) {
-					$slide_decisions = array();
-
-					foreach( $slide['decisions'] as $decision ) {
-						$action = isset( $decision['snooze'] ) ? 'snooze' : 'dismiss';
-
-						$markup = '<a data-action="' . esc_attr( $action ) . '" data-parent="0" ';
-
-						if ( isset( $decision['link'] ) ) {
-							$markup .= 'href="' . $decision['link'] . '" target="_blank" ';
-						} else {
-							$markup .= 'href="" ';
-						}
-
-						if ( isset( $decision['snooze'] ) ) {
-							$markup .= 'data-snooze="' . esc_attr( $decision['snooze'] ) . '" ';
-						}
-
-						if ( isset( $decision['slide'] ) ) {
-							$markup .= 'data-next-slide="' . esc_attr( $decision['slide'] ) . '" ';
-						}
-
-						$markup .= '>' . $decision['text'] . '</a>';
-
-						$slide_decisions[] = $markup;
-					}
-					$slide_markup .= '<ul><li>' . implode( '</li><li>', $slide_decisions ) . '</li></ul>';
-				}
-
-				$slide_markup .= '</div>';
-
-				$slides[$slide_id] = $slide_markup;
+				$slides[$slide_id] = $slideMarkup;
 			}
 		}
 
-		// echo '<pre>$slides = ' . htmlspecialchars( print_r( $slides,1) ) . '</pre>';
-
 		return $slides;
+	}
+
+	/**
+	 * Get the markup for an individual slide.
+	 *
+	 * @since 2.7.7
+	 *
+	 * @param  string $slide_id The id of a slide.
+	 * @param  array  $slide    A array of slide configs.
+	 * @return string
+	 */
+	public function getSlideMarkup( $slide_id, $slide ) {
+		$slideMarkup = '<div data-slide-id="' . esc_attr( $slide_id ) . '">';
+
+		$slideMarkup .= '<p>' . $slide['text'] . '</p>';
+
+		if ( ! empty( $slide['decisions'] ) ) {
+			$slide_decisions = array();
+
+			foreach( $slide['decisions'] as $decision ) {
+				$attributes = $this->getDecisionAttributes( $decision );
+
+				$markup = '<a ';
+				foreach ( $attributes as $key => $value ) {
+					$markup .= $key . '="' . $value . '" ';
+				}
+				$markup .= '>' . esc_html( $decision['text'] ) . '</a>';
+
+				$slide_decisions[] = $markup;
+			}
+			$slideMarkup .= '<ul><li>' . implode( '</li><li>', $slide_decisions ) . '</li></ul>';
+		}
+
+		$slideMarkup .= '</div>';
+
+		return $slideMarkup;
+	}
+
+	/**
+	 * Whether or not the minimum amount of time between showing prompts has been reached.
+	 *
+	 * @since 2.7.7
+	 *
+	 * @see self::getLastDismissal().
+	 *
+	 * @return bool
+	 */
+	public function isMinInterval() {
+		return time() > $this->getLastDismissal() + $this->minInterval;
 	}
 
 	/**
@@ -275,7 +381,7 @@ class RatingPrompt {
 	}
 
 	/**
-	 * Whether or not a prompt (by name) exists.
+	 * Whether or not a prompt (by prompt name) exists.
 	 *
 	 * @since 2.7.7
 	 *
@@ -297,17 +403,17 @@ class RatingPrompt {
 	 * @return array
 	 */
 	public function getPluginPrompts( $plugin ) {
-		$plugin_prompts = array();
+		$pluginPrompts = array();
 
 		$prompts = $this->getPrompts();
 
 		foreach ( $prompts as $prompt ) {
 			if ( $prompt['plugin'] === $plugin ) {
-				$plugin_prompts[] = $prompt;
+				$pluginPrompts[] = $prompt;
 			}
 		}
 
-		return $plugin_prompts;
+		return $pluginPrompts;
 	}
 
 	/**
@@ -318,20 +424,24 @@ class RatingPrompt {
 	 * @since 2.7.7
 	 */
 	public function getNext() {
-		$next_prompt = array();
+		$nextPrompt = array();
 		$prompts = $this->getPrompts();
 
 		foreach ( $prompts as $prompt ) {
 			$is_dismissed      = isset( $prompt['time_dismissed'] );
-			$is_newer          = empty( $next_prompt ) || ( ! $is_dismissed && $prompt['time_added'] < $next_prompt['time_added'] );
+			$is_newer          = empty( $nextPrompt ) || ( ! $is_dismissed && $prompt['time_added'] < $nextPrompt['time_added'] );
 			$is_still_snoozing = ! empty( $prompt['time_snoozed_until'] ) && $prompt['time_snoozed_until'] > time();
 
 			if ( ! $is_dismissed && $is_newer && ! $is_still_snoozing ) {
-				$next_prompt = $prompt;
+				$nextPrompt = $prompt;
 			}
 		}
 
-		return $next_prompt;
+		if ( ! $this->isMinInterval() ) {
+			$nextPrompt = array();
+		}
+
+		return $nextPrompt;
 	}
 
 	/**
@@ -344,7 +454,7 @@ class RatingPrompt {
 	 * @param  array $prompt_to_save A prompt.
 	 * @return bool                  Whether or not the prompt was found and updated.
 	 */
-	public function savePrompt( $prompt_to_save ) {
+	public function updatePrompt( $prompt_to_save ) {
 		$found = false;
 
 		$prompts = $this->getPrompts();
@@ -393,6 +503,6 @@ class RatingPrompt {
 
 		$prompt[$key] = $value;
 
-		return $this->savePrompt( $prompt );
+		return $this->updatePrompt( $prompt );
 	}
 }

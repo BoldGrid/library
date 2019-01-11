@@ -1,10 +1,10 @@
 /**
  * Handle rating prompts in the dashboard.
  *
- * @since xxx
+ * @since 2.7.7
  */
 
-/* global jQuery */
+/* global ajaxurl, jQuery */
 
 var BOLDGRID = BOLDGRID || {};
 BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
@@ -15,12 +15,10 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	var self;
 
 	BOLDGRID.LIBRARY.RatingPrompt = {
-		test: 'test',
-
 		/**
 		 * @summary Dismiss (or snooze) a rating prompt.
 		 *
-		 * @since xxx
+		 * @since 2.7.7
 		 *
 		 * @param string name
 		 * @param string type
@@ -33,32 +31,27 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					'length': length,
 					'name': name,
 					'security': $( '.bglib-rating-prompt #_wpnonce' ).val()
-				},
-				successCallback,
-				errorCallback;
-
-			console.log( data );
+				};
 
 			$.ajax( {
 				url: ajaxurl,
 				data: data,
 				type: 'post',
-				dataType: 'json',
-				success: successCallback,
-				error: errorCallback
+				dataType: 'json'
 			} );
 		},
 
 		/**
 		 * @summary Take action when a decision is clicked.
+		 *
+		 * @since 2.7.7
 		 */
 		onClickDecision: function() {
 			var $decision = $( this ),
 				$slides = $( '.bglib-rating-prompt [data-slide-id]' ),
 				action = $decision.attr( 'data-action' ),
 				name = $decision.closest( '.bglib-rating-prompt' ).attr( 'data-slide-name' ),
-				nextSlide = $decision.attr( 'data-next-slide' ),
-				snooze_length;
+				nextSlide = $decision.attr( 'data-next-slide' );
 
 			// Handle the toggle to another slide.
 			if ( nextSlide ) {
@@ -68,27 +61,20 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			// Handle dismissing / snoozing.
 			if ( 'dismiss' === action ) {
-				//self.dismiss( name, 'dismiss', 0 );
+				self.dismiss( name, 'dismiss', 0 );
 			} else if ( 'snooze' === action ) {
-				//self.dismiss( name, 'snooze', $decision.attr( 'data-snooze' ) );
+				self.dismiss( name, 'snooze', $decision.attr( 'data-snooze' ) );
 			}
 
 			if ( 0 === $decision.attr( 'href' ).length ) {
 				return false;
 			}
 		},
-
-
 	};
 
 	self = BOLDGRID.LIBRARY.RatingPrompt;
 
 	$( function() {
-//		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.edit', BOLDGRID.LIBRARY.Attributes.onClickEdit );
-//		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.button-cancel', BOLDGRID.LIBRARY.Attributes.onClickCancel );
-//		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.button', BOLDGRID.LIBRARY.Attributes.onClickOk );
-//		self.initValuesDisplayed();
-
 		$( 'body' ).on( 'click', '.notice.bglib-rating-prompt li a', BOLDGRID.LIBRARY.RatingPrompt.onClickDecision );
 	} );
 })( jQuery );
