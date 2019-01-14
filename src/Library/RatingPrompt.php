@@ -152,15 +152,18 @@ class RatingPrompt {
 		$type          = sanitize_text_field( $_POST['type'] );
 		$snooze_length = (int) $_POST['length'];
 
-		if ( 'dismiss' === $type ) {
-			$dismissed = $this->updatePromptKey( $name, 'time_dismissed', time() );
-			$dismissed ? wp_send_json_success() : wp_send_json_error( __( 'Error dismissing prompt', 'boldgrid-backup' ) );
-		} else if ( 'snooze' === $type ) {
-			$time_snoozed_set = $this->updatePromptKey( $name, 'time_snoozed', time() );
-			$snoozed          = $this->updatePromptKey( $name, 'time_snoozed_until', time() + $snooze_length );
-			$time_snoozed_set && $snoozed ? wp_send_json_success() : wp_send_json_error( __( 'Error snoozing prompt', 'boldgrid-backup' ) );
-		} else {
-			wp_send_json_error( __( 'Unknown action.', 'boldgrid-backup' ) );
+		switch( $type ) {
+			case 'dismiss':
+				$dismissed = $this->updatePromptKey( $name, 'time_dismissed', time() );
+				$dismissed ? wp_send_json_success() : wp_send_json_error( __( 'Error dismissing prompt', 'boldgrid-backup' ) );
+				break;
+			case 'snooze':
+				$time_snoozed_set = $this->updatePromptKey( $name, 'time_snoozed', time() );
+				$snoozed          = $this->updatePromptKey( $name, 'time_snoozed_until', time() + $snooze_length );
+				$time_snoozed_set && $snoozed ? wp_send_json_success() : wp_send_json_error( __( 'Error snoozing prompt', 'boldgrid-backup' ) );
+				break;
+			default:
+				wp_send_json_error( __( 'Unknown action.', 'boldgrid-backup' ) );
 		}
 	}
 
@@ -243,12 +246,15 @@ class RatingPrompt {
 			wp_enqueue_script(
 				'bglib-rating-prompt-js',
 				Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/rating-prompt.js',
-				'jquery'
+				'jquery',
+				date( 'Ymd' )
 			);
 
 			wp_enqueue_style(
 				'bglib-rating-prompt-css',
-				Library\Configs::get( 'libraryUrl' ) . 'src/assets/css/rating-prompt.css'
+				Library\Configs::get( 'libraryUrl' ) . 'src/assets/css/rating-prompt.css',
+				array(),
+				date( 'Ymd' )
 			);
 		}
 	}
@@ -329,7 +335,7 @@ class RatingPrompt {
 	 *
 	 * @since 2.7.7
 	 *
-	 * @param  string $name
+	 * @param  string $name The name of a prompt.
 	 * @return array
 	 */
 	public function getPrompt( $name ) {
@@ -428,11 +434,11 @@ class RatingPrompt {
 		$prompts = $this->getPrompts();
 
 		foreach ( $prompts as $prompt ) {
-			$is_dismissed      = isset( $prompt['time_dismissed'] );
-			$is_newer          = empty( $nextPrompt ) || ( ! $is_dismissed && $prompt['time_added'] < $nextPrompt['time_added'] );
-			$is_still_snoozing = ! empty( $prompt['time_snoozed_until'] ) && $prompt['time_snoozed_until'] > time();
+			$isDismissed      = isset( $prompt['time_dismissed'] );
+			$isOlder          = empty( $nextPrompt ) || ( ! $isDismissed && $prompt['time_added'] < $nextPrompt['time_added'] );
+			$isStillSnoozing  = ! empty( $prompt['time_snoozed_until'] ) && $prompt['time_snoozed_until'] > time();
 
-			if ( ! $is_dismissed && $is_newer && ! $is_still_snoozing ) {
+			if ( ! $isDismissed && $isOlder && ! $isStillSnoozing ) {
 				$nextPrompt = $prompt;
 			}
 		}
