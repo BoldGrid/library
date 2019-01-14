@@ -14,7 +14,9 @@ require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Configs.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Filter.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Reseller.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Util/Plugin.php';
+require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Plugin/Plugin.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/RatingPrompt.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Util/Option.php';
 
 require $_tests_dir . '/includes/bootstrap.php';
+
