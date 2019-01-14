@@ -231,6 +231,17 @@ class RatingPrompt {
 	}
 
 	/**
+	 * Get the minInterval value.
+	 *
+	 * @since 2.7.7
+	 *
+	 * @return int
+	 */
+	public function getMinInterval() {
+		return $this->minInterval;
+	}
+
+	/**
 	 * Admin enqueue scripts.
 	 *
 	 * @since 2.7.7
