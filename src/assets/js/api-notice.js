@@ -40,7 +40,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				$genericError =
 					'There was an error communicating with the BoldGrid Connect Key server.  Please try again.',
 				$submit = $form.find( '#requestKey' ),
-				$spinner = $form.find( '.spinner' );
+				$spinner = $form.find( '.spinner' ),
+				$tos = $form.find( '#requestTos' );
 
 			$( '.error-color' ).removeClass( 'error-color' );
 
@@ -67,6 +68,11 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 					.find( '#emailAddr' )
 					.prev()
 					.addClass( 'error-color' );
+				return false;
+			}
+			if ( ! $tos.prop( 'checked' ) ) {
+				$alertBox.text( 'You must agree to the Terms of Service before continuing.' );
+				$tos.closest( 'label' ).addClass( 'error-color' );
 				return false;
 			}
 

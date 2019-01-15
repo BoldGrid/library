@@ -3,7 +3,7 @@
 }
 
 #container_boldgrid_api_key_notice .dashicons-before:before {
-	padding-right: .8em !important;
+	padding-right: .73em !important;
 	font-size: 58px !important;
 	color: #ff6600;
 }
@@ -13,7 +13,7 @@
 	padding: 1.4em;
 }
 
-#requestKeyForm input {
+#requestKeyForm input:not( [type='checkbox'] ) {
 	width: 83%;
 	margin: .5em 0;
 }
@@ -108,9 +108,15 @@
 #boldgrid_api_key_notice_message,
 .tos-box,
 .key-request-content,
-.enterKeyLink,
-.boldgridApiKeyLink {
+.api-notice .boldgridApiKeyLink {
 	margin-left: 66px;
+}
+
+/* Have a Connect Key to enter? */
+.enterKeyLink {
+	float: right;
+	margin: 0 40px 0 0;
+	padding-top: 6px;
 }
 
 #requestKeyMessage {

@@ -61,7 +61,7 @@
 		} else {
 			// Display either the Envato message or the default signup message.
 			?>
-				<p><a href="#" class="boldgridApiKeyLink">
+				<p><a href="#" class="boldgridApiKeyLink button button-secondary">
 				<?php
 			esc_html_e( 'Don\'t have a Connect Key yet or lost your Key?', 'boldgrid-connect' );
 				?>
@@ -74,29 +74,23 @@
 	?>
 	<div class="new-api-key hidden">
 		<h2 class="dashicons-before dashicons-admin-network">
-			<?php esc_html_e( 'Request a BoldGrid Connect Key', 'boldgrid-connect' ); ?>
+			<?php esc_html_e( 'Request or Reset a BoldGrid Connect Key', 'boldgrid-connect' ); ?>
 		</h2>
-		<a href="#" class="enterKeyLink">
-			<?php esc_html_e( 'Have a Connect Key to enter?', 'boldgrid-connect' ); ?>
-		</a>
-		<br />
-		<br />
 		<div class="key-request-content">
 			<p id="requestKeyMessage">
 				<?php printf(
 					esc_html__(
-						'There are two types of BoldGrid Connect Keys, a free key or an Official Host Premium Connect Key.
-						%sA Premium Connect Key is highly recommended and may already come with your hosting account.%s
-						If you do not have a Premium Connect Key, then you may request a free key below.
-						Please visit %sour site%s for full details.%s
-						If you have lost your key, you can have it resent by entering your information below.',
+						'You may obtain two different types of Connect Keys: A Free Key or a Premium Connect Key (%4$sclick here%5$s for the benefits of a Premium Key).
+						%1$sA Premium Connect Key is highly recommended and may already come with your hosting account.%2$s
+						%3$s
+						To get your Free Key (or to have it emailed to you if you\'ve lost it), enter your info below:',
 						'boldgrid-connect'
 					),
 					'<b>',
 					'</b>',
-					"<a href='https://www.boldgrid.com/get-it-now/' target='_blank'>",
-					'</a>',
-					'<br /><br />' );
+					'<br /><br />',
+					'<a href="https://www.boldgrid.com/connect-keys/" target="_blank">',
+					'</a>' );
 				?>
 				<br />
 			</p>
@@ -114,14 +108,22 @@
 					<?php esc_html_e( 'E-mail', 'boldgrid-connect' ); ?>:
 				</label>
 				<input type="text" id="emailAddr" maxlength="50" placeholder="your@name.com" value="<?php echo esc_attr( $email ); ?>" />
-				<br />
+				<p>
+					<label>
+						<input id="requestTos" type="checkbox" value="0">
+						<?php printf( esc_html__( 'Check here to agree to our %sTerms of Use and Privacy Policy%s.', 'boldgrid-connect' ), '<a href="https://www.boldgrid.com/software-privacy-policy/" target="_blank">', '</a>' ); ?>
+					</label>
+				</p>
 				<input type="hidden" id="siteUrl" value="<?php echo get_admin_url(); ?>" />
-				<br />
 				<button id="requestKey" class="button button-primary">
 					<?php esc_html_e( 'Submit', 'boldgrid-connect' ); ?>
 				</button>
 				<span class="spinner"></span>
 				<input type="hidden" id="generate-api-key" value="<?php echo esc_attr( $api ); ?>" />
+
+				<a href="#" class="enterKeyLink">
+					<?php esc_html_e( 'Have a Connect Key to enter?', 'boldgrid-connect' ); ?>
+				</a>
 			</form>
 		</div>
 	</div>

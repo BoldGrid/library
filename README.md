@@ -13,7 +13,11 @@ composer require boldgrid/library
 
 ### 2.7.7 ###
 
+Release date: Jan 15, 2019
+
 * Update: Add method to get a plugin's download url from the api server.
+* Update: New system that asks user for bug fixes / new features, or requests plugin rating.
+* Update: Minor updates to the BoldGrid Connect Key prompt.
 
 ### 2.7.6 ###
 
