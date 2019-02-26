@@ -46,7 +46,7 @@ class RatingPrompt {
 	 * @since 2.7.7
 	 * @var string
 	 */
-	private $optionName = 'boldgrid-library_rating_prompt';
+	private $optionName = 'bglib_rating_prompt';
 
 	/**
 	 * The role required to see a rating prompt.
@@ -123,7 +123,7 @@ class RatingPrompt {
 
 		$slides = $this->getPromptSlides( $prompt );
 		if ( ! empty( $slides ) ) {
-			echo '<div class="notice notice-success boldgrid-library-rating-prompt is-dismissible" data-slide-name="' . esc_attr( $prompt['name'] ) . '">';
+			echo '<div class="notice notice-success bglib-rating-prompt is-dismissible" data-slide-name="' . esc_attr( $prompt['name'] ) . '">';
 			foreach ( $slides as $slide ) {
 				echo $slide;
 			}

@@ -51,18 +51,9 @@ class Version {
 	 *
 	 * @since  1.0.0
 	 *
-	 * @global $wp_filesystem The WordPress Filesystem API object.
-	 *
 	 * @return mixed $version Normalized version number if found or null.
 	 */
 	public function setVersion() {
-// 		global $wp_filesystem;
-
-// 		// Ensure that the WP Filesystem API is loaded.
-// 		if ( empty( $wp_filesystem ) ) {
-// 			require_once ABSPATH . '/wp-admin/includes/file.php';
-// 			WP_Filesystem();
-// 		}
 		$wp_filesystem = self::getWpFilesystem();
 
 		// Get installed composer package data.
@@ -92,7 +83,14 @@ class Version {
 	}
 
 	/**
+	 * Get the wp filesystem.
 	 *
+	 * The code in this method use to be inline in another method, and has been separated for
+	 * usability.
+	 *
+	 * @since 2.8.0
+	 *
+	 * @return WP_Filesystem
 	 */
 	public static function getWpFilesystem() {
 		global $wp_filesystem;

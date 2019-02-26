@@ -43,7 +43,12 @@ class Reseller {
 	}
 
 	/**
+	 * Get a specific attribute of our reseller.
 	 *
+	 * @since 2.8.0
+	 *
+	 * @param  string $attribute The specific attribute to get.
+	 * @return string
 	 */
 	public function getAttribute( $attribute ) {
 		$data = $this->getData();

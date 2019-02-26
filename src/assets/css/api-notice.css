@@ -2,6 +2,7 @@
 	display: none;
 }
 
+
 /*
  * #.# BoldGrid Connect Key icon.
  *
@@ -9,7 +10,7 @@
  */
 #container_boldgrid_api_key_notice .dashicons {
 	float: left;
-    margin-left: -66px;
+	margin-left: -66px;
 }
 
 #container_boldgrid_api_key_notice .dashicons:before {
@@ -114,10 +115,6 @@
       transform: scale3d(1, 1, 1);
     }
 }
-
-/* #requestKeyMessage { */
-/* 	margin-right: 66px; */
-/* } */
 
 .error-alerts {
 	color: red;

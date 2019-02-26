@@ -130,8 +130,6 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			e.preventDefault();
 		} );
 
-		// $( '#boldgrid-api-loading', notice ).hide();
-
 		/**
 		 * Handle the "Submit" button click.
 		 */

@@ -33,7 +33,11 @@ class Start {
 		$key;
 
 	/**
+	 * The BoldGrid Library's text domain.
 	 *
+	 * @since 2.8.0
+	 * @access private
+	 * @var string
 	 */
 	private $textdomain = 'boldgrid-library';
 
@@ -123,7 +127,9 @@ class Start {
 	}
 
 	/**
+	 * Load the library's text domain.
 	 *
+	 * @since 2.8.0
 	 */
 	private function loadPluginTextdomain() {
 		load_textdomain( $this->textdomain, $this->configs->get( 'libraryDir' ) . 'languages/' . $this->textdomain . '-' . get_locale() . '.mo' );

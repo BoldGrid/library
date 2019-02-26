@@ -40,6 +40,13 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 	</div>
 	<div class="api-notice">
 		<?php
+		/**
+		 * Allow plugins to add a heading to the key prompt.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param Ambiguous $heading
+		 */
 		$heading = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\header', false );
 		echo ! empty( $heading ) ? '<h1>' . esc_html( $heading ) . '</h1>' : '';
 		?>

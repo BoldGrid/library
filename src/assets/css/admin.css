@@ -67,6 +67,7 @@
 	vertical-align: bottom;
 	margin-left: 0px;
 }
+/* When a spinner ends up flush right to an element, add .spinner-left to give it some left margin. */
 .spinner.spinner-left {
 	margin-left: 5px;
 }
@@ -154,6 +155,7 @@ div .dashicons {
 .boldgrid-library-collapsible-control + .div-table-row > .div-tableCell:first-of-type {
 	padding-top: 10px;
 }
+
 
 /*
  * #.# BoldGrid Orange

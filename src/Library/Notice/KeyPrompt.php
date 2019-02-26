@@ -99,7 +99,7 @@ class KeyPrompt {
 			'strong' => array(),
 		);
 
-		$msg = new \stdClass();
+		$msg          = new \stdClass();
 		$msg->success = sprintf(
 			wp_kses(
 				/* translators: The Url to the BoldGrid Connect settings page. */
@@ -108,12 +108,12 @@ class KeyPrompt {
 			),
 			admin_url( 'options-general.php?page=boldgrid-connect.php' )
 		);
-		$msg->error = sprintf(
+		$msg->error   = sprintf(
 			// translators: 1 A br / break tag.
 			esc_html__( 'Your API key appears to be invalid!%sPlease try to enter your BoldGrid Connect Key again.', 'boldgrid-library' ),
 			'<br />'
 		);
-		$msg->nonce = esc_html__( 'Security violation!  An invalid nonce was detected.', 'boldgrid-library' );
+		$msg->nonce   = esc_html__( 'Security violation!  An invalid nonce was detected.', 'boldgrid-library' );
 		$msg->timeout = esc_html__( 'Connection timed out. Please try again.', 'boldgrid-library' );
 
 		return $this->messages = $msg;
@@ -147,7 +147,7 @@ class KeyPrompt {
 				'firstRequired'       => esc_html__( 'First name is required.', 'boldgrid-library' ),
 				'keyRequired'         => esc_html__( 'You must enter a valid BoldGrid Connect Key.', 'boldgrid-library' ),
 				'lastRequired'        => esc_html__( 'Last name is required.', 'boldgrid-library' ),
-				'tosRequired'         => esc_html__( 'You must agree to the Terms of Service before continuing.', 'bglig' ),
+				'tosRequired'         => esc_html__( 'You must agree to the Terms of Service before continuing.', 'boldgrid-library' ),
 				'unexpectedError'     => esc_html__( 'An unexpected error occured. Please try again later.', 'boldgrid-library' ),
 			)
 		);
