@@ -56,13 +56,14 @@ class Version {
 	 * @return mixed $version Normalized version number if found or null.
 	 */
 	public function setVersion() {
-		global $wp_filesystem;
+// 		global $wp_filesystem;
 
-		// Ensure that the WP Filesystem API is loaded.
-		if ( empty( $wp_filesystem ) ) {
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-			WP_Filesystem();
-		}
+// 		// Ensure that the WP Filesystem API is loaded.
+// 		if ( empty( $wp_filesystem ) ) {
+// 			require_once ABSPATH . '/wp-admin/includes/file.php';
+// 			WP_Filesystem();
+// 		}
+		$wp_filesystem = self::getWpFilesystem();
 
 		// Get installed composer package data.
 		$installedFile = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) ) . '/composer/installed.json';
@@ -88,6 +89,21 @@ class Version {
 		}
 
 		return $version;
+	}
+
+	/**
+	 *
+	 */
+	public static function getWpFilesystem() {
+		global $wp_filesystem;
+
+		// Ensure that the WP Filesystem API is loaded.
+		if ( empty( $wp_filesystem ) ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
+		return $wp_filesystem;
 	}
 
 	/**

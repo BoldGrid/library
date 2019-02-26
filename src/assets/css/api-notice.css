@@ -2,7 +2,17 @@
 	display: none;
 }
 
-#container_boldgrid_api_key_notice .dashicons-before:before {
+/*
+ * #.# BoldGrid Connect Key icon.
+ *
+ * Styles needed specifically for the key icon.
+ */
+#container_boldgrid_api_key_notice .dashicons {
+	float: left;
+    margin-left: -66px;
+}
+
+#container_boldgrid_api_key_notice .dashicons:before {
 	padding-right: .73em !important;
 	font-size: 58px !important;
 	color: #ff6600;
@@ -10,7 +20,7 @@
 
 #container_boldgrid_api_key_notice {
 	width: 563px;
-	padding: 1.4em;
+	padding: 1.4em 1.4em 1.4em 66px;
 }
 
 #requestKeyForm input:not( [type='checkbox'] ) {
@@ -105,23 +115,9 @@
     }
 }
 
-#boldgrid_api_key_notice_message,
-.tos-box,
-.key-request-content,
-.api-notice .boldgridApiKeyLink {
-	margin-left: 66px;
-}
-
-/* Have a Connect Key to enter? */
-.enterKeyLink {
-	float: right;
-	margin: 0 40px 0 0;
-	padding-top: 6px;
-}
-
-#requestKeyMessage {
-	margin-right: 66px;
-}
+/* #requestKeyMessage { */
+/* 	margin-right: 66px; */
+/* } */
 
 .error-alerts {
 	color: red;
@@ -136,64 +132,7 @@
 }
 
 input#boldgrid_api_key {
-	margin-left: 66px !important;
 	width: 59%;
-}
-
-.boldgrid-wp-spin {
-	width: 20px;
-	height: 20px;
-	float: left;
-	border-radius: 100%;
-	background-color: #a3a3a3;
-	-webkit-animation: rotation 1.5s infinite linear;
-	-moz-animation: rotation 1.5s infinite linear;
-	-animation: rotation 1.5s infinite linear;
-}
-
-.boldgrid-wp-spin::after {
-	width: 4px;
-	height: 4px;
-	border-radius: 100%;
-	background-color: #fff;
-	position: relative;
-	left: 10px;
-	top: 5px;
-	display: block;
-	content: '';
-}
-
-@ -webkit-keyframes rotation {
-	from {
-		-webkit-transform: rotate(0deg);
-	}
-	to {
-		-webkit-transform: rotate(359deg);
-	}
-}
-
-@ -moz-keyframes rotation {
-	from {
-		-moz-transform: rotate(0deg);
-	}
-	to {
-		-moz-transform: rotate(359deg);
-	}
-}
-
-@ -keyframes rotation {
-	from {
-		-transform: rotate(0deg);
-	}
-	to {
-		-transform: rotate(359deg);
-	}
-}
-
-#boldgrid-api-loading {
-	margin-left: 423px;
-	margin-top: -2em;
-	display: none;
 }
 
 #requestKeyForm .spinner.inline {

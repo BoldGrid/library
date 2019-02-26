@@ -46,7 +46,7 @@ class RatingPrompt {
 	 * @since 2.7.7
 	 * @var string
 	 */
-	private $optionName = 'bglib_rating_prompt';
+	private $optionName = 'boldgrid-library_rating_prompt';
 
 	/**
 	 * The role required to see a rating prompt.
@@ -123,11 +123,11 @@ class RatingPrompt {
 
 		$slides = $this->getPromptSlides( $prompt );
 		if ( ! empty( $slides ) ) {
-			echo '<div class="notice notice-success bglib-rating-prompt is-dismissible" data-slide-name="' . esc_attr( $prompt['name'] ) . '">';
+			echo '<div class="notice notice-success boldgrid-library-rating-prompt is-dismissible" data-slide-name="' . esc_attr( $prompt['name'] ) . '">';
 			foreach ( $slides as $slide ) {
 				echo $slide;
 			}
-			wp_nonce_field( 'bglib-rating-prompt' );
+			wp_nonce_field( 'boldgrid-library-rating-prompt' );
 			echo '</div>';
 		}
 	}
@@ -141,11 +141,11 @@ class RatingPrompt {
 	 */
 	public function ajaxDismiss() {
 		if ( ! current_user_can( $this->userRole ) ) {
-			wp_send_json_error( __( 'Permission denied.', 'boldgrid-backup' ) );
+			wp_send_json_error( __( 'Permission denied.', 'boldgrid-library' ) );
 		}
 
-		if( ! check_ajax_referer( 'bglib-rating-prompt', 'security', false ) ) {
-			wp_send_json_error( __( 'Invalid nonce.', 'boldgrid-backup' ) );
+		if( ! check_ajax_referer( 'boldgrid-library-rating-prompt', 'security', false ) ) {
+			wp_send_json_error( __( 'Invalid nonce.', 'boldgrid-library' ) );
 		}
 
 		$name          = sanitize_text_field( $_POST['name'] );
@@ -155,15 +155,15 @@ class RatingPrompt {
 		switch( $type ) {
 			case 'dismiss':
 				$dismissed = $this->updatePromptKey( $name, 'time_dismissed', time() );
-				$dismissed ? wp_send_json_success() : wp_send_json_error( __( 'Error dismissing prompt', 'boldgrid-backup' ) );
+				$dismissed ? wp_send_json_success() : wp_send_json_error( __( 'Error dismissing prompt', 'boldgrid-library' ) );
 				break;
 			case 'snooze':
 				$time_snoozed_set = $this->updatePromptKey( $name, 'time_snoozed', time() );
 				$snoozed          = $this->updatePromptKey( $name, 'time_snoozed_until', time() + $snooze_length );
-				$time_snoozed_set && $snoozed ? wp_send_json_success() : wp_send_json_error( __( 'Error snoozing prompt', 'boldgrid-backup' ) );
+				$time_snoozed_set && $snoozed ? wp_send_json_success() : wp_send_json_error( __( 'Error snoozing prompt', 'boldgrid-library' ) );
 				break;
 			default:
-				wp_send_json_error( __( 'Unknown action.', 'boldgrid-backup' ) );
+				wp_send_json_error( __( 'Unknown action.', 'boldgrid-library' ) );
 		}
 	}
 
@@ -255,14 +255,14 @@ class RatingPrompt {
 
 		if ( ! empty( $prompt ) ) {
 			wp_enqueue_script(
-				'bglib-rating-prompt-js',
+				'boldgrid-library-rating-prompt-js',
 				Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/rating-prompt.js',
 				'jquery',
 				date( 'Ymd' )
 			);
 
 			wp_enqueue_style(
-				'bglib-rating-prompt-css',
+				'boldgrid-library-rating-prompt-css',
 				Library\Configs::get( 'libraryUrl' ) . 'src/assets/css/rating-prompt.css',
 				array(),
 				date( 'Ymd' )

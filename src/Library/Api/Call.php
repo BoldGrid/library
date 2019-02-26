@@ -69,7 +69,7 @@ class Call {
 		if ( $availability->getAvailable() ) {
 			$this->call();
 		} else {
-			$this->error = 'The API was not able to be reached from this server!';
+			$this->error = __( 'The API was not able to be reached from this server!', 'boldgrid-library' );
 		}
 	}
 
@@ -173,7 +173,7 @@ class Call {
 
 		// Response should be an object.
 		if ( ! is_object( $this->response ) ) {
-			$this->error = __( 'An invalid response was returned.', 'boldgrid-connect' );
+			$this->error = __( 'An invalid response was returned.', 'boldgrid-library' );
 			return false;
 		}
 

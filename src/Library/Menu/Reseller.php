@@ -43,6 +43,15 @@ class Reseller {
 	}
 
 	/**
+	 *
+	 */
+	public function getAttribute( $attribute ) {
+		$data = $this->getData();
+
+		return ! empty ( $data[$attribute] ) ? $data[$attribute] : '';
+	}
+
+	/**
 	 * Get the reseller data.
 	 *
 	 * @since 2.4.0
@@ -119,23 +128,23 @@ class Reseller {
 				array(
 					'id' => 'reseller-support-center',
 					'parent' => 'reseller-adminbar-icon',
-					'title' => esc_html__( 'Support Center', 'boldgrid-connect' ),
+					'title' => esc_html__( 'Support Center', 'boldgrid-library' ),
 					'href' => $data['reseller_support_url'],
 					'meta' => array(
 						'class' => 'reseller-dropdown',
 						'target' => '_blank',
-						'title' => __( 'Support Center', 'boldgrid-connect' ),
+						'title' => __( 'Support Center', 'boldgrid-library' ),
 					),
 				),
 				array(
 					'id' => 'reseller-amp-login',
 					'parent' => 'reseller-adminbar-icon',
-					'title' => esc_html__( 'AMP Login', 'boldgrid-connect' ),
+					'title' => esc_html__( 'AMP Login', 'boldgrid-library' ),
 					'href' => $data['reseller_amp_url'],
 					'meta' => array(
 						'class' => 'reseller-dropdown',
 						'target' => '_blank',
-						'title' => __( 'Account Management', 'boldgrid-connect' ),
+						'title' => __( 'Account Management', 'boldgrid-library' ),
 					),
 				),
 			),

@@ -31,9 +31,9 @@ $wpcoreTranslation = ! empty( $wpcoreAutoupdates['translation'] );
 $wpcoreAll         = ! empty( $wpcoreAutoupdates['all'] ) ||
 	( $wpcoreMajor && $wpcoreMinor && $wpcoreDev && $wpcoreTranslation );
 $translations      = array(
-	'active'   => esc_attr__( 'Active', 'boldgrid-connect' ),
-	'inactive' => esc_attr__( 'Inactive', 'boldgrid-connect' ),
-	'parent'   => esc_attr__( 'Parent', 'boldgrid-connect' ),
+	'active'   => esc_attr__( 'Active', 'boldgrid-library' ),
+	'inactive' => esc_attr__( 'Inactive', 'boldgrid-library' ),
+	'parent'   => esc_attr__( 'Parent', 'boldgrid-library' ),
 );
 $return            = '';
 $helpMarkup        = sprintf(
@@ -61,7 +61,7 @@ if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
 			// translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag..
 			esc_html__(
 				'You have %3$sAuto-Backup%4$s disabled in the %1$sBoldGrid Backup Settings%2$s.  Please consider enabling the setting.',
-				'boldgrid-backup'
+				'boldgrid-library'
 			),
 			$bbsLinkOpen,
 			$bbsLinkClose,
@@ -74,7 +74,7 @@ if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
 $return .= '
 <div class="bg-box">
 	<div class="bg-box-top">
-		' . esc_html__( 'WordPress Core', 'boldgrid-connect' ) . '
+		' . esc_html__( 'WordPress Core', 'boldgrid-library' ) . '
 		<span class="dashicons dashicons-editor-help" data-id="core-autoupdate"></span>
 	</div>
 	<div class="bg-box-bottom">
@@ -87,7 +87,7 @@ $return .= '
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'All Update Types', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'All Update Types', 'boldgrid-library' ) . '</div>
 						<div class="toggle toggle-light toggle-group wpcore-toggle"
 							data-wpcore="all"
 							data-toggle-on="' . ( $wpcoreAll ? 'true' : 'false' ) . '">
@@ -98,7 +98,7 @@ $return .= '
 					<div class="div-table-row"><br /></div>
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'Major Updates', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'Major Updates', 'boldgrid-library' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
 							data-wpcore="major"
 							data-toggle-on="' . ( $wpcoreMajor ? 'true' : 'false' ) . '">
@@ -108,7 +108,7 @@ $return .= '
 					</div>
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'Minor Updates', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'Minor Updates', 'boldgrid-library' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
 							data-wpcore="minor"
 							data-toggle-on="' . ( $wpcoreMinor ? 'true' : 'false' ) . '">
@@ -118,7 +118,7 @@ $return .= '
 					</div>
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'Development Updates', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'Development Updates', 'boldgrid-library' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
 							data-wpcore="dev"
 							data-toggle-on="' . ( $wpcoreDev ? 'true' : 'false' ) . '">
@@ -128,7 +128,7 @@ $return .= '
 					</div>
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'Translation Updates', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'Translation Updates', 'boldgrid-library' ) . '</div>
 						<div class="toggle toggle-light wpcore-toggle"
 							data-wpcore="translation"
 							data-toggle-on="' . ( $wpcoreTranslation ? 'true' : 'false' ) . '">
@@ -147,7 +147,7 @@ $return .= '
 
 <div class="bg-box">
 	<div class="bg-box-top">
-		' . esc_html__( 'Plugins', 'boldgrid-connect' ) . '
+		' . esc_html__( 'Plugins', 'boldgrid-library' ) . '
 		<span class="dashicons dashicons-editor-help" data-id="plugins-autoupdate"></span>
 	</div>
 	<div class="bg-box-bottom">
@@ -161,7 +161,7 @@ $return .= '
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'Default for New Plugins', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'Default for New Plugins', 'boldgrid-library' ) . '</div>
 						<div class="div-tableCell">
 							<div class="toggle toggle-light" id="toggle-default-plugins"
 								data-toggle-on="' . ( $pluginsDefault ? 'true' : 'false' ) . '">
@@ -173,7 +173,7 @@ $return .= '
 					<div class="div-table-row"><br /></div>
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'All Plugins', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'All Plugins', 'boldgrid-library' ) . '</div>
 						<div class="div-tableCell">
 							<div class="toggle toggle-light toggle-group" id="toggle-plugins"></div>
 						</div>
@@ -203,11 +203,11 @@ foreach ( $statuses as $status ) {
 	$statusLower = strtolower( $status );
 
 	$return .= '<div class="div-table-contents">
-	<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
-		' bglib-collapsible-open' : '' ) . '">
+	<div class="div-table-row boldgrid-library-collapsible-control' . ( 'Inactive' !== $status ?
+		' boldgrid-library-collapsible-open' : '' ) . '">
 		<div class="div-tableCell"><h3>' . $translations[ $statusLower ] . '</h3></div>
 		<div class="div-tableCell">
-			<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower . '"></span>
+			<span class="dashicons dashicons-arrow-down-alt2 boldgrid-library-collapsible-' . $statusLower . '"></span>
 		</div>
 	</div>
 ';
@@ -218,7 +218,7 @@ foreach ( $statuses as $status ) {
 			( ! isset( $autoupdateSettings['plugins'][ $slug ] ) && $pluginsDefault );
 
 		$return .= '
-			<div class="div-table-row plugin-update-setting bglib-collapsible">
+			<div class="div-table-row plugin-update-setting boldgrid-library-collapsible">
 				<div class="div-tableCell">' . $pluginData['Name'] . '</div>
 				<div class="div-tableCell">
 					<div class="toggle toggle-light plugin-toggle"
@@ -247,7 +247,7 @@ $return .= '
 
 <div class="bg-box">
 	<div class="bg-box-top">
-		' . esc_html__( 'Themes', 'boldgrid-connect' ) . '
+		' . esc_html__( 'Themes', 'boldgrid-library' ) . '
 		<span class="dashicons dashicons-editor-help" data-id="themes-autoupdate"></span>
 	</div>
 	<div class="bg-box-bottom">
@@ -261,7 +261,7 @@ $return .= '
 				<div class="div-table"><div class="div-table-body">
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'Default for New Themes', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'Default for New Themes', 'boldgrid-library' ) . '</div>
 						<div class="div-tableCell">
 							<div class="toggle toggle-light" id="toggle-default-themes"
 								data-toggle-on="' . ( $themesDefault ? 'true' : 'false' ) . '">
@@ -273,7 +273,7 @@ $return .= '
 					<div class="div-table-row"><br /></div>
 					<div class="div-table-row">
 						<div class="div-tableCell">' .
-	esc_html__( 'All Themes', 'boldgrid-connect' ) . '</div>
+	esc_html__( 'All Themes', 'boldgrid-library' ) . '</div>
 						<div class="div-tableCell">
 							<div class="toggle toggle-light toggle-group" id="toggle-themes"></div>
 						</div>
@@ -308,11 +308,11 @@ foreach ( $statuses as $status ) {
 	$statusLower = strtolower( $status );
 
 	$return .= '<div class="div-table-contents">
-	<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
-		' bglib-collapsible-open' : '' ) . '">
+	<div class="div-table-row boldgrid-library-collapsible-control' . ( 'Inactive' !== $status ?
+		' boldgrid-library-collapsible-open' : '' ) . '">
 		<div class="div-tableCell"><h3>' . $translations[ $statusLower ] . '</h3></div>
 		<div class="div-tableCell">
-			<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower .'"></span>
+			<span class="dashicons dashicons-arrow-down-alt2 boldgrid-library-collapsible-' . $statusLower .'"></span>
 		</div>
 	</div>
 ';
@@ -325,7 +325,7 @@ foreach ( $statuses as $status ) {
 			( ! isset( $autoupdateSettings['themes'][ $stylesheet ] ) && $themesDefault );
 
 		$return .= '
-			<div class="div-table-row theme-update-setting bglib-collapsible">
+			<div class="div-table-row theme-update-setting boldgrid-library-collapsible">
 				<div class="div-tableCell">' . $theme->get( 'Name' ) .
 				( $isParent ? ' (' . $translations['parent'] . ')' : '' ) . '</div>
 				<div class="div-tableCell">

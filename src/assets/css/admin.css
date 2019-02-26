@@ -67,6 +67,9 @@
 	vertical-align: bottom;
 	margin-left: 0px;
 }
+.spinner.spinner-left {
+	margin-left: 5px;
+}
 .spinner.inline.middle {
 	vertical-align: middle;
 }
@@ -76,6 +79,13 @@
 
 div .dashicons {
 	vertical-align: bottom;
+}
+
+/* WordPress has .dashicons-before, but not .dashicons-after. */
+.dashicons-before.dashicons-after:before {
+	float: right;
+	margin-top: 0.2em;
+	padding-left: 0.3em;
 }
 
 .dashicons-editor-help {
@@ -92,23 +102,23 @@ div .dashicons {
 	background-color: #009CCD;
 }
 
-.bglib-collapsible-control:not(.bglib-collapsible-open) ~ .bglib-collapsible {
+.boldgrid-library-collapsible-control:not(.boldgrid-library-collapsible-open) ~ .boldgrid-library-collapsible {
 	display: none;
 }
 
-.bglib-collapsible-control .dashicons {
+.boldgrid-library-collapsible-control .dashicons {
 	transform: rotateZ(0deg);
 }
 
-.bglib-collapsible-open .dashicons {
+.boldgrid-library-collapsible-open .dashicons {
 	transform: rotateZ(-180deg);
 }
 
-.bglib-collapsible-control .dashicons {
+.boldgrid-library-collapsible-control .dashicons {
 	vertical-align: middle;
 }
 
-.bglib-collapsible-control {
+.boldgrid-library-collapsible-control {
 	cursor: pointer;
 }
 
@@ -118,29 +128,89 @@ div .dashicons {
 	height: 20px;
 }
 
-.bglib-collapsible-control .div-tableCell {
+.boldgrid-library-collapsible-control .div-tableCell {
 	border-bottom: 1px solid #e2e4e7;
 	border-top: 1px solid #e2e4e7;
 }
 
-.bglib-collapsible-control h3 {
+.boldgrid-library-collapsible-control h3 {
 	font-size: 13px;
 	font-weight: bold;
 	margin: 12px 0px;
 }
 
-.bglib-collapsible-control:hover {
+.boldgrid-library-collapsible-control:hover {
 	background-color: #f2f2f2;
 }
 
-.bglib-collapsible-control span {
+.boldgrid-library-collapsible-control span {
 	right: 0;
 }
 
-.bglib-collapsible-control .div-tableCell:last-of-type {
+.boldgrid-library-collapsible-control .div-tableCell:last-of-type {
 	text-align: center;
 }
 
-.bglib-collapsible-control + .div-table-row > .div-tableCell:first-of-type {
+.boldgrid-library-collapsible-control + .div-table-row > .div-tableCell:first-of-type {
 	padding-top: 10px;
+}
+
+/*
+ * #.# BoldGrid Orange
+ *
+ * Style various elements with BoldGrid's orange color.
+ *
+ * When replacing various WordPress blues and other colors, here's a list of WordPress colors as
+ * replaced by BoldGrid colors.
+ *
+ * #0085ba / #f95b26
+ * #0073aa / #f84d13
+ * #006799 / #f04207
+ * #66c6e4 / #fcb49c
+ * #008ec2 / #f96a39
+ * #007cb2 / #e05f33
+ * #33b3db / #fa865f
+ */
+
+.boldgrid-orange {
+	color: #f95b26;
+}
+
+.boldgrid-orange-important {
+	color: #f95b26 !important;
+}
+
+.boldgrid-orange-border {
+	border: 1px solid #f95b26;
+}
+
+.wp-core-ui .button.boldgrid-orange {
+	background: #f95b26;
+	border-color: #f84d13 #f04207 #f04207;
+	box-shadow: 0 1px 0 #f04207;
+	text-decoration: none;
+	text-shadow: 0 -1px 1px #f04207, 1px 0 1px #f04207, 0 1px 1px #f04207, -1px 0 1px #f04207;
+}
+
+.wp-core-ui .button.boldgrid-orange:hover {
+	background: #f96a39;
+	border-color: #f04207;
+}
+
+.wp-core-ui .button.boldgrid-orange:focus {
+	box-shadow: 0 1px 0 #f84d13, 0 0 2px 1px #fa865f;
+	background: #f96a39;
+	border-color: #f04207;
+}
+
+.wp-core-ui .button.boldgrid-orange:active {
+	background: #f84d13;
+	border-color: #f04207;
+	box-shadow: inset 0 2px 0 #f04207;
+}
+
+.wp-core-ui .button.boldgrid-orange[disabled] {
+	background: #f96a39 !important;
+    border-color: #e05f33 !important;
+	color: #fcb49c !important;
 }

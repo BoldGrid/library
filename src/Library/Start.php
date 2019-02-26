@@ -33,6 +33,11 @@ class Start {
 		$key;
 
 	/**
+	 *
+	 */
+	private $textdomain = 'boldgrid-library';
+
+	/**
 	 * Initialize class and set class properties.
 	 *
 	 * @since 1.0.0
@@ -99,7 +104,6 @@ class Start {
 	 * @uses \Boldgrid\Library\Library\Plugin\Checker::run()
 	 */
 	public function init() {
-
 		// Registration class runs Filter::add($this) in __construct.
 		$registration = new \Boldgrid\Library\Library\Registration();
 
@@ -114,6 +118,15 @@ class Start {
 		Configs::setItem( 'page-connect', new Page\Connect() );
 		Configs::setItem( 'assets', new Asset() );
 		new Editor();
+
+		$this->loadPluginTextdomain();
+	}
+
+	/**
+	 *
+	 */
+	private function loadPluginTextdomain() {
+		load_textdomain( $this->textdomain, $this->configs->get( 'libraryDir' ) . 'languages/' . $this->textdomain . '-' . get_locale() . '.mo' );
 	}
 
 	/**

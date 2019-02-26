@@ -49,7 +49,7 @@ class Asset {
 	 * @hook admin_enqueue_scripts
 	 */
 	public function addStyles() {
-		wp_enqueue_style( 'bglib-admin',
+		wp_enqueue_style( 'boldgrid-library-admin',
 			Configs::get( 'libraryUrl' ) . 'src/assets/css/admin.css' );
 
 		$this->EnqueueAdminIcon();
@@ -64,7 +64,7 @@ class Asset {
 	 * @since 2.7.5
 	 */
 	public function EnqueueAdminIcon() {
-		wp_enqueue_style( 'bglib-admin-icon',
+		wp_enqueue_style( 'boldgrid-library-admin-icon',
 			Configs::get( 'libraryUrl' ) . 'src/assets/css/admin-icon.css' );
 	}
 }

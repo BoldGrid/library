@@ -13,7 +13,7 @@ $sections = array(
 	'sections' => array(
 		array(
 			'id'      => 'section_connect_key',
-			'title'   => __( 'BoldGrid Connect Key', 'boldgrid-connect' ),
+			'title'   => __( 'BoldGrid Connect Key', 'boldgrid-library' ),
 			'content' => include __DIR__ . '/Connect/ConnectKey.php',
 		),
 	),
@@ -21,7 +21,7 @@ $sections = array(
 	<div id="settings-notice" class="notice notice-success is-dismissible inline"></div>
 	<p class="submit">
 			<input name="submit" id="submit" class="button button-primary" value="' .
-		esc_attr( 'Save Changes', 'boldgrid-connect' ) . '" type="submit">
+		esc_attr( 'Save Changes', 'boldgrid-library' ) . '" type="submit">
 			<span class="spinner"></span>
 		</p>
 	',
@@ -29,7 +29,7 @@ $sections = array(
 
 array_push( $sections['sections'], array(
 	'id'      => 'section_update_channels',
-	'title'   => __( 'Update Channels', 'boldgrid-connect' ),
+	'title'   => __( 'Update Channels', 'boldgrid-library' ),
 	'content' => include __DIR__ . '/Connect/UpdateChannels.php',
 ) );
 
@@ -52,13 +52,13 @@ $container = apply_filters( 'Boldgrid\Library\Ui\render_col_container', $section
 
 if ( is_array( $container ) ) {
 	$container = '<div class="notice notice-error inline">' .
-		__( 'Unable to display settings page. Unknown BoldGrid Library error.', 'boldgrid-connect' ) .
+		__( 'Unable to display settings page. Unknown BoldGrid Library error.', 'boldgrid-library' ) .
 		'</div>';
 } else {
 	// Enqueue styles and scripts (registered in "\Boldgrid\Library\Ui::enqueue()").
-	wp_enqueue_style( 'bglib-ui-css' );
-	wp_enqueue_script( 'bglib-ui-js' );
-	wp_enqueue_script( 'bglib-sticky' );
+	wp_enqueue_style( 'boldgrid-library-ui-css' );
+	wp_enqueue_script( 'boldgrid-library-ui-js' );
+	wp_enqueue_script( 'boldgrid-library-sticky' );
 	wp_nonce_field( 'boldgrid_library_connect_settings_save' );
 }
 

@@ -1,4 +1,4 @@
-.bglib-misc-pub-section:before {
+.boldgrid-library-misc-pub-section:before {
   /* Taken from wp-admin/css/edit.css */
   font: normal 20px/1 dashicons;
   speak: none;
@@ -10,30 +10,30 @@
   color: #82878c;
 }
 
-.bglib-misc-pub-section .dashicons-lock:before {
+.boldgrid-library-misc-pub-section .dashicons-lock:before {
 	content: "\f160";
 }
 
-.bglib-misc-pub-section .options {
+.boldgrid-library-misc-pub-section .options {
   margin: 10px 0px;
   display: none;
 }
 
-.bglib-misc-pub-section .options > label {
+.boldgrid-library-misc-pub-section .options > label {
   display: block;
 }
 
-.bglib-misc-pub-section .value-displayed {
+.boldgrid-library-misc-pub-section .value-displayed {
   font-weight: bold;
 }
 
-.bglib-misc-pub-section .value-displayed .template-subtitle,
-.bglib-page-title .template-subtitle {
+.boldgrid-library-misc-pub-section .value-displayed .template-subtitle,
+.boldgrid-library-page-title .template-subtitle {
   display: inline;
   margin: 0;
 }
 
-#bglib-attributes-meta-box div.inside {
+#boldgrid-library-attributes-meta-box div.inside {
   margin: 0px;
   padding: 0px;
 }
