@@ -11,6 +11,10 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.8.0 In progress ###
+
+* Update: Made translation ready. Text domain changed to boldgrid-library.
+
 ### 2.7.7 ###
 
 Release date: Jan 15th, 2019
