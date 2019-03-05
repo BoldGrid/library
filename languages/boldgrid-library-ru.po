@@ -1,0 +1,401 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-05T13:44:49-05:00\n"
+"PO-Revision-Date: 2019-03-05 13:46-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"привет библиотекаProject-Id-Version: \n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+#: Library/Page/Connect.php:121
+msgid "Settings saved."
+msgstr "привет библиотека"
+
+#: Library/Page/Connect.php:122
+msgid "Unknown error."
+msgstr "привет библиотека"
+
+#: Library/Page/Connect.php:123
+msgid "Could not reach the AJAX URL address. HTTP error: "
+msgstr "привет библиотека"
+
+#: Library/Page/Connect.php:189
+msgid "User access violation!"
+msgstr "привет библиотека"
+
+#: Library/Page/Connect.php:196
+msgid "Security violation! Please try again."
+msgstr "привет библиотека"
+
+#: Library/RatingPrompt.php:144
+msgid "Permission denied."
+msgstr "привет библиотека"
+
+#: Library/RatingPrompt.php:148
+msgid "Invalid nonce."
+msgstr "привет библиотека"
+
+#: Library/RatingPrompt.php:158
+msgid "Error dismissing prompt"
+msgstr "привет библиотека"
+
+#: Library/RatingPrompt.php:163
+msgid "Error snoozing prompt"
+msgstr "привет библиотека"
+
+#: Library/RatingPrompt.php:166
+msgid "Unknown action."
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPromptMini.php:44 Library/Views/KeyPrompt.php:76
+#: Library/Views/KeyPrompt.php:152
+msgid "Submit"
+msgstr "привет библиотека"
+
+#: Library/Views/EnvatoFreeKey.php:4
+msgid ""
+"Thank you for your Envato Market purchase. You currently have a Free Connect "
+"Key entered, but your Envato purchase entitles you to a Premium Connect Key."
+msgstr "привет библиотека"
+
+#. translators: 1 The opening anchor tag linking to BoldGrid Central's Envato page, 2 its closing anchor tag.
+#: Library/Views/EnvatoFreeKey.php:9 Library/Views/Envato.php:6
+msgid ""
+"Please visit %1$sBoldGrid Central%2$s to link your accounts and claim your "
+"Premium Connect Key."
+msgstr "привет библиотека %1$sпривет библиотека%2$s привет библиотека."
+
+#: Library/Views/Connect.php:16
+msgid "BoldGrid Connect Key"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect.php:32
+msgid "Update Channels"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect.php:55
+msgid "Unable to display settings page. Unknown BoldGrid Library error."
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:11
+msgid "Premium BoldGrid Connect Key"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:13
+msgid "Awesome! You have a Premium Connect Key saved on this site."
+msgstr "привет библиотека"
+
+#. translators: 1 The opening anchor tag linking to the the "WordPress Plugins" page on Boldgrid.com, 2 its closing anchor tag, 3 the opening anchor tag to BoldGrid Central, 4 its closing anchor tag.
+#: Library/Views/KeyPrompt.php:18
+msgid ""
+"Make sure you're getting the most out of your premium subscription by "
+"installing our other %1$sBoldGrid plugins%2$s. As a Premium user, you also "
+"have access to %3$sCloud WordPress%4$s where you can create new WordPress "
+"sites for free. If you need any help, our support team is eager to serve!"
+msgstr ""
+"привет библиотека %1$sпривет библиотека%2$s привет библиотека %3$sпривет "
+"библиотека%3$s привет библиотека!"
+
+#: Library/Views/KeyPrompt.php:23 Library/Views/KeyPrompt.php:39
+msgid "Click here to change your Connect Key"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:27
+msgid "Free BoldGrid Connect Key"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:31
+msgid ""
+"Thank you for adding your Connect Key. Try upgrading to a Premium "
+"subscription for full access to BoldGrid!"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:34
+msgid "Upgrade"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:55
+msgid "Enter Your BoldGrid Connect Key for us to install and you'll be set:"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:58
+msgid "Already have your Key? Enter it below and click Submit:"
+msgstr "привет библиотека"
+
+#. translators: 1 The opening anchor tag to BoldGrid's TOS page, 2 its closing anchor tag.
+#: Library/Views/KeyPrompt.php:67
+msgid "I agree to the %1$sTerms of Use and Privacy Policy%2$s."
+msgstr "привет библиотека %1$sпривет библиотека%2$s."
+
+#: Library/Views/KeyPrompt.php:91
+msgid "Don't have a Key or lost your Key?"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:93
+msgid "Get a BoldGrid Connect Key"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:104
+msgid "Request or Reset a BoldGrid Connect Key"
+msgstr "привет библиотека"
+
+#. translators: 1 An opening strong tag, 2 its closing strong tag, 3 two line breaks, 4 the opening anchor tag linking to BoldGrid's "Connect Key" pages, 5 its closing anchor tag.
+#: Library/Views/KeyPrompt.php:110
+msgid ""
+"You may obtain two different types of Connect Keys: A Free Key or a Premium "
+"Connect Key (%4$sclick here%5$s for the benefits of a Premium Key).\n"
+"\t\t\t\t\t\t%1$sA Premium Connect Key is highly recommended and may already "
+"come with your hosting account.%2$s\n"
+"\t\t\t\t\t\t%3$s\n"
+"\t\t\t\t\t\tTo get your Free Key (or to have it emailed to you if you've "
+"lost it), enter your info below:"
+msgstr ""
+"привет библиотека (%4$sпривет библиотека%5$s привет библиотека) %1$sпривет "
+"библиотека.%2$s %3$s привет библиотека."
+
+#: Library/Views/KeyPrompt.php:128 Library/Views/KeyPrompt.php:130
+msgid "First Name"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:132 Library/Views/KeyPrompt.php:134
+msgid "Last Name"
+msgstr "привет библиотека"
+
+#: Library/Views/KeyPrompt.php:136
+msgid "E-mail"
+msgstr "привет библиотека"
+
+#. translators: 1 The opening anchor tag linking to BoldGrid's TOS, 2 its closing anchor tag.
+#: Library/Views/KeyPrompt.php:144
+msgid "Check here to agree to our %1$sTerms of Use and Privacy Policy%2$s."
+msgstr "привет библиотека %1$sпривет библиотека%2$s."
+
+#: Library/Views/KeyPrompt.php:160
+msgid "Have a Connect Key to enter?"
+msgstr "привет библиотека"
+
+#: Library/Views/ConnectionIssue.php:3
+msgid "BoldGrid Connection Issue"
+msgstr "привет библиотека"
+
+#: Library/Views/ConnectionIssue.php:6
+msgid ""
+"There was an issue reaching the BoldGrid Connect server. Some BoldGrid "
+"features may be temporarily unavailable. Please try again in a moment."
+msgstr "привет библиотека"
+
+#. translators: 1 The opening anchor tag to BoldGrid's status page, 2 its closing anchor tag.
+#: Library/Views/ConnectionIssue.php:11
+msgid ""
+"If the issue persists, then please feel free to check our %1$sBoldGrid Status"
+"%2$s page."
+msgstr "привет библиотека %1$sпривет библиотека%2$s."
+
+#: Library/Views/Connect/AutoUpdates.php:34
+msgid "Active"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:35
+msgid "Inactive"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:36
+msgid "Parent"
+msgstr "привет библиотека"
+
+#. translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag..
+#: Library/Views/Connect/AutoUpdates.php:62
+msgid ""
+"You have %3$sAuto-Backup%4$s disabled in the %1$sBoldGrid Backup Settings"
+"%2$s.  Please consider enabling the setting."
+msgstr ""
+"привет библиотека %3$sпривет библиотека%4$s привет библиотека %1$sпривет "
+"библиотека%2$s. привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:77
+msgid "WordPress Core"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:90
+msgid "All Update Types"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:101
+msgid "Major Updates"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:111
+msgid "Minor Updates"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:121
+msgid "Development Updates"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:131
+msgid "Translation Updates"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:150
+#: Library/Views/Connect/UpdateChannels.php:46
+msgid "Plugins"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:164
+msgid "Default for New Plugins"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:176
+msgid "All Plugins"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:250
+#: Library/Views/Connect/UpdateChannels.php:106
+msgid "Themes"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:264
+msgid "Default for New Themes"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/AutoUpdates.php:276
+msgid "All Themes"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/UpdateChannels.php:38
+msgid ""
+"Update release channels determine which versions are retrieved from the "
+"BoldGrid Connect system."
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/UpdateChannels.php:126
+msgid "Stable"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/UpdateChannels.php:135
+msgid "Edge"
+msgstr "привет библиотека"
+
+#: Library/Views/Connect/UpdateChannels.php:148
+msgid "Candidate"
+msgstr "привет библиотека"
+
+#: Library/Views/Envato.php:3
+msgid "Thank you for your Envato Market purchase"
+msgstr "привет библиотека"
+
+#: Library/Api/Call.php:72
+msgid "The API was not able to be reached from this server!"
+msgstr "привет библиотека"
+
+#: Library/Api/Call.php:176
+msgid "An invalid response was returned."
+msgstr "привет библиотека"
+
+#: Library/License.php:75
+msgid "Unknown plugin."
+msgstr "привет библиотека"
+
+#: Library/License.php:79
+msgid "Access denied."
+msgstr "привет библиотека"
+
+#. translators: 1 The name of a transient that we were unable to delete.
+#: Library/License.php:87
+msgid "Failed to clear license data. Unable to delete site transient \"%1$s\"."
+msgstr "привет библиотека. привет библиотека \"%1$s\"."
+
+#: Library/License.php:118
+msgid "Unknown error"
+msgstr "привет библиотека"
+
+#: Library/License.php:397
+msgid "Free"
+msgstr "привет библиотека"
+
+#. translators: The Url to the BoldGrid Connect settings page.
+#: Library/Notice/KeyPrompt.php:106
+msgid ""
+"Your api key has been saved. To change, see <strong>Settings &#187; <a href="
+"\"%1$s\">BoldGrid Connect</a></strong>."
+msgstr ""
+"привет библиотека. привет библиотека <strong>привет библиотека <a href=\"%1$s"
+"\">привет библиотека</a></strong>"
+
+#. translators: 1 A br / break tag.
+#: Library/Notice/KeyPrompt.php:113
+msgid ""
+"Your API key appears to be invalid!%sPlease try to enter your BoldGrid "
+"Connect Key again."
+msgstr "привет библиотека%sпривет библиотека"
+
+#: Library/Notice/KeyPrompt.php:116
+msgid "Security violation!  An invalid nonce was detected."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:117
+msgid "Connection timed out. Please try again."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:144
+msgid "Click here to enter your BoldGrid Connect Key."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:145
+msgid "Please enter a valid e-mail address."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:146
+msgid ""
+"There was an error communicating with the BoldGrid Connect Key server.  "
+"Please try again."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:147
+msgid "First name is required."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:148
+msgid "You must enter a valid BoldGrid Connect Key."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:149
+msgid "Last name is required."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:150
+msgid "You must agree to the Terms of Service before continuing."
+msgstr "привет библиотека"
+
+#: Library/Notice/KeyPrompt.php:151
+msgid "An unexpected error occured. Please try again later."
+msgstr "привет библиотека"
+
+#: Library/Menu/External.php:77 Library/Menu/External.php:82
+msgid "Documentation"
+msgstr "привет библиотека"
+
+#: Library/Menu/External.php:109 Library/Menu/External.php:114
+msgid "Feedback"
+msgstr "привет библиотека"
+
+#: Library/Menu/Reseller.php:136 Library/Menu/Reseller.php:141
+msgid "Support Center"
+msgstr "привет библиотека"
+
+#: Library/Menu/Reseller.php:147
+msgid "AMP Login"
+msgstr "привет библиотека"
+
+#: Library/Menu/Reseller.php:152
+msgid "Account Management"
+msgstr "привет библиотека"

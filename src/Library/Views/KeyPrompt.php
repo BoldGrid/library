@@ -88,7 +88,7 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 			// Display either the Envato message or the default signup message.
 			?>
 				<p>
-					<?php esc_html_e( 'Don\'t have a Key or lost your Key?'); ?><br />
+					<?php esc_html_e( 'Don\'t have a Key or lost your Key?', 'boldgrid-library' ); ?><br />
 					<a href="#" class="boldgridApiKeyLink button button-primary">
 						<?php esc_html_e( 'Get a BoldGrid Connect Key', 'boldgrid-library' ); ?>
 					</a>
