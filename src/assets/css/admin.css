@@ -103,23 +103,23 @@ div .dashicons {
 	background-color: #009CCD;
 }
 
-.boldgrid-library-collapsible-control:not(.boldgrid-library-collapsible-open) ~ .boldgrid-library-collapsible {
+.bglib-collapsible-control:not(.bglib-collapsible-open) ~ .bglib-collapsible {
 	display: none;
 }
 
-.boldgrid-library-collapsible-control .dashicons {
+.bglib-collapsible-control .dashicons {
 	transform: rotateZ(0deg);
 }
 
-.boldgrid-library-collapsible-open .dashicons {
+.bglib-collapsible-open .dashicons {
 	transform: rotateZ(-180deg);
 }
 
-.boldgrid-library-collapsible-control .dashicons {
+.bglib-collapsible-control .dashicons {
 	vertical-align: middle;
 }
 
-.boldgrid-library-collapsible-control {
+.bglib-collapsible-control {
 	cursor: pointer;
 }
 
@@ -129,30 +129,30 @@ div .dashicons {
 	height: 20px;
 }
 
-.boldgrid-library-collapsible-control .div-tableCell {
+.bglib-collapsible-control .div-tableCell {
 	border-bottom: 1px solid #e2e4e7;
 	border-top: 1px solid #e2e4e7;
 }
 
-.boldgrid-library-collapsible-control h3 {
+.bglib-collapsible-control h3 {
 	font-size: 13px;
 	font-weight: bold;
 	margin: 12px 0px;
 }
 
-.boldgrid-library-collapsible-control:hover {
+.bglib-collapsible-control:hover {
 	background-color: #f2f2f2;
 }
 
-.boldgrid-library-collapsible-control span {
+.bglib-collapsible-control span {
 	right: 0;
 }
 
-.boldgrid-library-collapsible-control .div-tableCell:last-of-type {
+.bglib-collapsible-control .div-tableCell:last-of-type {
 	text-align: center;
 }
 
-.boldgrid-library-collapsible-control + .div-table-row > .div-tableCell:first-of-type {
+.bglib-collapsible-control + .div-table-row > .div-tableCell:first-of-type {
 	padding-top: 10px;
 }
 

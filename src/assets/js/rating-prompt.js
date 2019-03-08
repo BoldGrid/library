@@ -30,7 +30,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 					'type': type,
 					'length': length,
 					'name': name,
-					'security': $( '.boldgrid-library-rating-prompt #_wpnonce' ).val()
+					'security': $( '.bglib-rating-prompt #_wpnonce' ).val()
 				};
 
 			$.ajax( {
@@ -48,15 +48,15 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		onClickDecision: function() {
 			var $decision = $( this ),
-				$slides = $( '.boldgrid-library-rating-prompt [data-slide-id]' ),
+				$slides = $( '.bglib-rating-prompt [data-slide-id]' ),
 				action = $decision.attr( 'data-action' ),
-				name = $decision.closest( '.boldgrid-library-rating-prompt' ).attr( 'data-slide-name' ),
+				name = $decision.closest( '.bglib-rating-prompt' ).attr( 'data-slide-name' ),
 				nextSlide = $decision.attr( 'data-next-slide' );
 
 			// Handle the toggle to another slide.
 			if ( nextSlide ) {
 				$slides.hide();
-				$( '.boldgrid-library-rating-prompt [data-slide-id="' + nextSlide + '"]' ).show();
+				$( '.bglib-rating-prompt [data-slide-id="' + nextSlide + '"]' ).show();
 			}
 
 			// Handle dismissing / snoozing.
@@ -75,6 +75,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	self = BOLDGRID.LIBRARY.RatingPrompt;
 
 	$( function() {
-		$( 'body' ).on( 'click', '.notice.boldgrid-library-rating-prompt li a', BOLDGRID.LIBRARY.RatingPrompt.onClickDecision );
+		$( 'body' ).on( 'click', '.notice.bglib-rating-prompt li a', BOLDGRID.LIBRARY.RatingPrompt.onClickDecision );
 	} );
 })( jQuery );

@@ -106,8 +106,8 @@ class Connect {
 	 */
 	public function addScripts() {
 		if ( $this->isConnectScreen( get_current_screen() ) ) {
-			// Enqueue boldgrid-library-connect js.
-			$handle = 'boldgrid-library-connect';
+			// Enqueue bglib-connect js.
+			$handle = 'bglib-connect';
 
 			wp_register_script(
 				$handle,

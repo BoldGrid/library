@@ -57,7 +57,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				$parent;
 
 			if( displayValue === undefined ) {
-				$parent = $element.closest( '.boldgrid-library-misc-pub-section' );
+				$parent = $element.closest( '.bglib-misc-pub-section' );
 				inputType = self.getSectionInput( $parent );
 
 				switch( inputType ) {
@@ -137,7 +137,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * Key: VALUE Edit
 		 *
 		 * The above example can be further broken down with the following markup example:
-		 * <div class="misc-pub-section boldgrid-library-misc-pub-section">
+		 * <div class="misc-pub-section bglib-misc-pub-section">
 		 *     Status: <span class="value-displayed">Published</span> <a>Edit</a>
 		 * </div>
 		 *
@@ -172,12 +172,12 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		},
 
 		/**
-		 * Initialize all .boldgrid-library-misc-pub-section feilds.
+		 * Initialize all .bglib-misc-pub-section feilds.
 		 *
 		 * @since 2.7.0
 		 */
 		initValuesDisplayed: function() {
-			$( '.boldgrid-library-misc-pub-section' ).each( function() {
+			$( '.bglib-misc-pub-section' ).each( function() {
 				self.initValueDisplayed( $( this ) );
 			});
 		},
@@ -193,7 +193,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		onClickEdit: function() {
 			var $edit = $( this ),
-				$section = $edit.closest( '.boldgrid-library-misc-pub-section' );
+				$section = $edit.closest( '.bglib-misc-pub-section' );
 
 			$section.find( '.options' ).slideToggle( 'fast' );
 			$edit.toggle();
@@ -211,7 +211,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		onClickCancel: function() {
 			var $cancel = $( this ),
-				$section = $cancel.closest( '.boldgrid-library-misc-pub-section' );
+				$section = $cancel.closest( '.bglib-misc-pub-section' );
 
 			$section
 				.find( '.options' ).slideToggle( 'fast' ).end()
@@ -230,7 +230,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		onClickOk: function() {
 			var $ok = $( this ),
-				$section = $ok.closest( '.boldgrid-library-misc-pub-section' ),
+				$section = $ok.closest( '.bglib-misc-pub-section' ),
 				$selected = self.getSectionChecked( $section ),
 				displayValue = self.getDisplayValue( $selected );
 
@@ -247,9 +247,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	self = BOLDGRID.LIBRARY.Attributes;
 
 	$( function() {
-		$( 'body' ).on( 'click', '.boldgrid-library-misc-pub-section a.edit', BOLDGRID.LIBRARY.Attributes.onClickEdit );
-		$( 'body' ).on( 'click', '.boldgrid-library-misc-pub-section a.button-cancel', BOLDGRID.LIBRARY.Attributes.onClickCancel );
-		$( 'body' ).on( 'click', '.boldgrid-library-misc-pub-section a.button', BOLDGRID.LIBRARY.Attributes.onClickOk );
+		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.edit', BOLDGRID.LIBRARY.Attributes.onClickEdit );
+		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.button-cancel', BOLDGRID.LIBRARY.Attributes.onClickCancel );
+		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.button', BOLDGRID.LIBRARY.Attributes.onClickOk );
 		self.initValuesDisplayed();
 	} );
 })( jQuery );

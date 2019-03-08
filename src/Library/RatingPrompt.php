@@ -127,7 +127,7 @@ class RatingPrompt {
 			foreach ( $slides as $slide ) {
 				echo $slide;
 			}
-			wp_nonce_field( 'boldgrid-library-rating-prompt' );
+			wp_nonce_field( 'bglib-rating-prompt' );
 			echo '</div>';
 		}
 	}
@@ -144,7 +144,7 @@ class RatingPrompt {
 			wp_send_json_error( __( 'Permission denied.', 'boldgrid-library' ) );
 		}
 
-		if( ! check_ajax_referer( 'boldgrid-library-rating-prompt', 'security', false ) ) {
+		if( ! check_ajax_referer( 'bglib-rating-prompt', 'security', false ) ) {
 			wp_send_json_error( __( 'Invalid nonce.', 'boldgrid-library' ) );
 		}
 
@@ -255,14 +255,14 @@ class RatingPrompt {
 
 		if ( ! empty( $prompt ) ) {
 			wp_enqueue_script(
-				'boldgrid-library-rating-prompt-js',
+				'bglib-rating-prompt-js',
 				Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/rating-prompt.js',
 				'jquery',
 				date( 'Ymd' )
 			);
 
 			wp_enqueue_style(
-				'boldgrid-library-rating-prompt-css',
+				'bglib-rating-prompt-css',
 				Library\Configs::get( 'libraryUrl' ) . 'src/assets/css/rating-prompt.css',
 				array(),
 				date( 'Ymd' )

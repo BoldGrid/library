@@ -56,9 +56,9 @@ if ( is_array( $container ) ) {
 		'</div>';
 } else {
 	// Enqueue styles and scripts (registered in "\Boldgrid\Library\Ui::enqueue()").
-	wp_enqueue_style( 'boldgrid-library-ui-css' );
-	wp_enqueue_script( 'boldgrid-library-ui-js' );
-	wp_enqueue_script( 'boldgrid-library-sticky' );
+	wp_enqueue_style( 'bglib-ui-css' );
+	wp_enqueue_script( 'bglib-ui-js' );
+	wp_enqueue_script( 'bglib-sticky' );
 	wp_nonce_field( 'boldgrid_library_connect_settings_save' );
 }
 

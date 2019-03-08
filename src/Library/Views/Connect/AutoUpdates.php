@@ -203,11 +203,11 @@ foreach ( $statuses as $status ) {
 	$statusLower = strtolower( $status );
 
 	$return .= '<div class="div-table-contents">
-	<div class="div-table-row boldgrid-library-collapsible-control' . ( 'Inactive' !== $status ?
-		' boldgrid-library-collapsible-open' : '' ) . '">
+	<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
+		' bglib-collapsible-open' : '' ) . '">
 		<div class="div-tableCell"><h3>' . $translations[ $statusLower ] . '</h3></div>
 		<div class="div-tableCell">
-			<span class="dashicons dashicons-arrow-down-alt2 boldgrid-library-collapsible-' . $statusLower . '"></span>
+			<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower . '"></span>
 		</div>
 	</div>
 ';
@@ -218,7 +218,7 @@ foreach ( $statuses as $status ) {
 			( ! isset( $autoupdateSettings['plugins'][ $slug ] ) && $pluginsDefault );
 
 		$return .= '
-			<div class="div-table-row plugin-update-setting boldgrid-library-collapsible">
+			<div class="div-table-row plugin-update-setting bglib-collapsible">
 				<div class="div-tableCell">' . $pluginData['Name'] . '</div>
 				<div class="div-tableCell">
 					<div class="toggle toggle-light plugin-toggle"
@@ -308,11 +308,11 @@ foreach ( $statuses as $status ) {
 	$statusLower = strtolower( $status );
 
 	$return .= '<div class="div-table-contents">
-	<div class="div-table-row boldgrid-library-collapsible-control' . ( 'Inactive' !== $status ?
-		' boldgrid-library-collapsible-open' : '' ) . '">
+	<div class="div-table-row bglib-collapsible-control' . ( 'Inactive' !== $status ?
+		' bglib-collapsible-open' : '' ) . '">
 		<div class="div-tableCell"><h3>' . $translations[ $statusLower ] . '</h3></div>
 		<div class="div-tableCell">
-			<span class="dashicons dashicons-arrow-down-alt2 boldgrid-library-collapsible-' . $statusLower .'"></span>
+			<span class="dashicons dashicons-arrow-down-alt2 bglib-collapsible-' . $statusLower .'"></span>
 		</div>
 	</div>
 ';
@@ -325,7 +325,7 @@ foreach ( $statuses as $status ) {
 			( ! isset( $autoupdateSettings['themes'][ $stylesheet ] ) && $themesDefault );
 
 		$return .= '
-			<div class="div-table-row theme-update-setting boldgrid-library-collapsible">
+			<div class="div-table-row theme-update-setting bglib-collapsible">
 				<div class="div-tableCell">' . $theme->get( 'Name' ) .
 				( $isParent ? ' (' . $translations['parent'] . ')' : '' ) . '</div>
 				<div class="div-tableCell">

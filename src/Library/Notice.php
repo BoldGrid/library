@@ -237,7 +237,7 @@ class Notice {
 	 */
 	public static function enqueue() {
 		wp_enqueue_script(
-			'boldgrid-library-notice-js',
+			'bglib-notice-js',
 			Configs::get( 'libraryUrl' ) . 'src/assets/js/notice.js'
 		);
 	}

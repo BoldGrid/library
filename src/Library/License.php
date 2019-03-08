@@ -108,8 +108,10 @@ class License {
 	 * @hook: admin_enqueue_scripts
 	 */
 	public function registerScripts() {
+		$handle = 'bglib-license';
+
 		wp_register_script(
-			'boldgrid-library-license',
+			$handle,
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/license.js',
 			'jQuery'
 		);
@@ -118,7 +120,7 @@ class License {
 			'unknownError' => __( 'Unknown error', 'boldgrid-library' ),
 		);
 
-		wp_localize_script( 'boldgrid-library-license', 'boldgrid-libraryLicense', $translations );
+		wp_localize_script( $handle, 'bglibLicense', $translations );
 	}
 
 	/**

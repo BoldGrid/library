@@ -128,11 +128,11 @@ class KeyPrompt {
 	 */
 	public static function enqueue() {
 		wp_enqueue_style(
-			'boldgrid-library-api-notice-css',
+			'bglib-api-notice-css',
 			Library\Configs::get( 'libraryUrl' ) .  'src/assets/css/api-notice.css'
 		);
 
-		$handle = 'boldgrid-library-api-notice-js';
+		$handle = 'bglib-api-notice-js';
 		wp_register_script(
 			$handle,
 			Library\Configs::get( 'libraryUrl' ) .  'src/assets/js/api-notice.js'

@@ -78,29 +78,29 @@ class Ui {
 	 */
 	public function enqueue() {
 		wp_register_style(
-			'boldgrid-library-ui-css',
+			'bglib-ui-css',
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/css/ui.css'
 		);
 
 		wp_register_script(
-			'boldgrid-library-ui-js',
+			'bglib-ui-js',
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/ui.js',
 			'jquery.sticky-kit'
 		);
 
 		wp_register_script(
-			'boldgrid-library-sticky',
+			'bglib-sticky',
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/sticky.js',
 			'jquery'
 		);
 
 		wp_register_style(
-			'boldgrid-library-attributes-css',
+			'bglib-attributes-css',
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/css/attributes.css'
 		);
 
 		wp_register_script(
-			'boldgrid-library-attributes-js',
+			'bglib-attributes-js',
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/attributes.js',
 			'jquery'
 		);
