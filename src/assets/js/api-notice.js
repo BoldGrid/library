@@ -293,7 +293,10 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 				.before( '<div class="notice notice-success is-dismissible bg-key-saved" style="display:block;"><p>' + message + '</p></div>' );
 
 			// Trigger an event, for others to do things.
-			$( 'body' ).trigger( 'boldgrid-key-saved', response.data );
+			$( 'body' )
+				.addClass( 'boldgrid-key-saved' )
+				.trigger( 'boldgrid-key-saved', response.data );
+
 			if ( typeof IMHWPB !== 'undefined' && typeof IMHWPB.configs !== 'undefined' ) {
 				IMHWPB.configs.api_key   = response.data.api_key;
 				IMHWPB.configs.site_hash = response.data.site_hash;

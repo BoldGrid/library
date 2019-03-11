@@ -7,8 +7,10 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 	data-notice-state="<?php echo \Boldgrid\Library\Library\Notice\KeyPrompt::getState() ?>"
 	>
 	<div class="premium-key-active key-entry-message">
-		<h2 class="dashicons-before dashicons-admin-network">
-			<?php esc_html_e( 'Premium BoldGrid Connect Key', 'boldgrid-library' )?></h2>
+		<h2>
+			<span class="dashicons dashicons-admin-network"></span>
+			<?php esc_html_e( 'Premium BoldGrid Connect Key', 'boldgrid-library' )?>
+		</h2>
 		<p>
 			<?php esc_html_e( 'Awesome! You have a Premium Connect Key saved on this site.', 'boldgrid-library' ) ?>
 		</p>
@@ -23,8 +25,10 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 		<p class='change-key'><a href="#" data-action="change-connect-key"><?php _e( 'Click here to change your Connect Key', 'boldgrid-library' ) ?></a></p>
 	</div>
 	<div class="basic-key-active key-entry-message">
-		<h2 class="dashicons-before dashicons-admin-network">
-			<?php esc_html_e( 'Free BoldGrid Connect Key', 'boldgrid-library' )?></h2>
+		<h2>
+			<span class="dashicons dashicons-admin-network"></span>
+			<?php esc_html_e( 'Free BoldGrid Connect Key', 'boldgrid-library' )?>
+		</h2>
 
 		<?php if ( ! $enableClaimMessage ) { ?>
 		<p>
@@ -100,7 +104,8 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 
 	?>
 	<div class="new-api-key hidden">
-		<h2 class="dashicons-before dashicons-admin-network">
+		<h2>
+			<span class="dashicons dashicons-admin-network"></span>
 			<?php esc_html_e( 'Request or Reset a BoldGrid Connect Key', 'boldgrid-library' ); ?>
 		</h2>
 		<div class="key-request-content">

@@ -33,12 +33,6 @@
 	display: block;
 }
 
-#container_boldgrid_api_key_notice .envato-claim-message,
-#container_boldgrid_api_key_notice .key-entry-message p {
-	padding-left: 70px;
-	font-size: 14px;
-}
-
 #container_boldgrid_api_key_notice .change-key,
 #container_boldgrid_api_key_notice .envato-claim-message {
 	margin-top: 20px;
@@ -152,4 +146,21 @@ input#boldgrid_api_key {
 
 .keyprompt-mini #boldgrid_api_key_notice_message.error-color {
 	color: #dc3232;
+}
+
+
+/**
+ * #.# After key saved successfully within Dashboard > Settings > BoldGrid Connect.
+ *
+ * On this page, the connect key input form is contained within the BoldGrid Library's UI interface.
+ * To give the, "Your key saved successfully!" message a clean look on the page, we add the
+ * .boldgrid-key-saved class to the body and make the following adjustments.
+ */
+.settings_page_boldgrid-connect.boldgrid-key-saved .bg-key-saved {
+	margin-top: 0px;
+}
+
+.settings_page_boldgrid-connect.boldgrid-key-saved .connect-key-management {
+	background: none;
+	border: none;
 }
