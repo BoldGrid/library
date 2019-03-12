@@ -56,7 +56,7 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 		?>
 		<h2>
 			<span class="dashicons dashicons-admin-network"></span>
-			<?php esc_html_e( 'Enter Your BoldGrid Connect Key for us to install and you\'ll be set:', 'boldgrid-library' ); ?>
+			<?php esc_html_e( 'Enter your BoldGrid Connect Key to use BoldGrid', 'boldgrid-library' ); ?>
 		</h2>
 		<p id="boldgrid_api_key_notice_message" style="margin-top:2em">
 			<?php esc_html_e( 'Already have your Key? Enter it below and click Submit:', 'boldgrid-library' ); ?>
