@@ -57,6 +57,10 @@ class Start {
 		$configs = $this->filterConfigs( $configs );
 
 		$this->configs = new Configs( $configs );
+
+		// Load text domain right after configs are set, otherwise not everything will be translated.
+		$this->loadPluginTextdomain();
+
 		$this->releaseChannel = new ReleaseChannel;
 		Configs::setItem( 'start', $this );
 
@@ -122,8 +126,6 @@ class Start {
 		Configs::setItem( 'page-connect', new Page\Connect() );
 		Configs::setItem( 'assets', new Asset() );
 		new Editor();
-
-		$this->loadPluginTextdomain();
 	}
 
 	/**
