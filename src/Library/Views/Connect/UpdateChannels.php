@@ -63,7 +63,7 @@ if ( 'stable' === $pluginReleaseChannel ) {
 	$return .= ' checked="checked"';
 }
 
-$return .= '> Stable
+$return .= '> ' . esc_html__( 'Stable', 'boldgrid-library' ) . '
 						</div>
 						<div class="div-tableCell">
 							<input type="radio" name="plugin_release_channel" value="edge"';
@@ -72,7 +72,7 @@ $return .= '> Stable
 								$return .= ' checked="checked"';
 							}
 
-$return .='> Edge
+$return .='> ' . esc_html__( 'Edge', 'boldgrid-library' ) . '
 						</div>
 ';
 
@@ -85,7 +85,7 @@ if ( $showCandidateChoice ) {
 		$return .= ' checked="checked"';
 	}
 
-	$return .= '> Candidate
+	$return .= '> ' . esc_html__( 'Candidate', 'boldgrid-library' ) . '
 						</div>
 ';
 }
