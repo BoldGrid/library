@@ -128,37 +128,10 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 				<br />
 			</p>
 			<p class="error-alerts"></p>
-			<form id="requestKeyForm">
-				<label>
-					<?php esc_html_e( 'First Name', 'boldgrid-library' ); ?>:
-				</label>
-				<input type="text" id="firstName" maxlength="50" placeholder="<?php esc_attr_e( 'First Name', 'boldgrid-library' ); ?>" value="<?php echo esc_attr( $first_name ); ?>" />
-				<label>
-					<?php esc_html_e( 'Last Name', 'boldgrid-library' ); ?>:
-				</label>
-				<input type="text" id="lastName" maxlength="50" placeholder="<?php esc_attr_e( 'Last Name', 'boldgrid-library' ); ?>" value="<?php echo esc_attr( $last_name ); ?>" />
-				<label>
-					<?php esc_html_e( 'E-mail', 'boldgrid-library' ); ?>:
-				</label>
-				<input type="text" id="emailAddr" maxlength="50" placeholder="your@name.com" value="<?php esc_attr( $email ); ?>" />
-				<p>
-					<label>
-						<input id="requestTos" type="checkbox" value="0">
-						<?php printf(
-							// translators: 1 The opening anchor tag linking to BoldGrid's TOS, 2 its closing anchor tag.
-							esc_html__( 'Check here to agree to our %1$sTerms of Use and Privacy Policy%2$s.', 'boldgrid-library' ),
-							'<a href="https://www.boldgrid.com/software-privacy-policy/" target="_blank">',
-							'</a>'
-						); ?>
-					</label>
-				</p>
-				<input type="hidden" id="siteUrl" value="<?php echo get_admin_url(); ?>" />
-				<button id="requestKey" class="button button-primary">
-					<?php esc_html_e( 'Submit', 'boldgrid-library' ); ?>
-				</button>
-				<span class="spinner"></span>
-				<input type="hidden" id="generate-api-key" value="<?php echo esc_attr( $api ); ?>" />
-			</form>
+			<p style="margin-top:1em;">Please visit BoldGrid Central to sign up and get your Connect Key.</p>
+			<p style="margin-top:1em;">
+				<a class="button-primary" href="https://www.boldgrid.com/central/new-key?wp-url=<?php echo get_admin_url(); ?>">BoldGrid Central<a>
+			</p>
 
 			<p style="margin-top:2em;">
 				<a href="#" class="enterKeyLink">
