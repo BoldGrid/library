@@ -125,10 +125,9 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 				<br />
 			</p>
 			<p class="error-alerts"></p>
-			<p><?php _e( 'Please visit BoldGrid Central to sign up and get your Connect Key.', 'boldgrid-library' ); ?></p>
+			<p><?php esc_html_e( 'Please visit BoldGrid Central to sign up and get your Connect Key.', 'boldgrid-library' ); ?></p>
 			<p>
-				<a class="button-primary" target="_blank" href="https://www.boldgrid.com/central/account/new-key?wp-url=<?php echo urlencode( get_admin_url() ); ?>"
-					><?php _e( 'BoldGrid Central', 'boldgrid-library' ); ?><a>
+				<a class="button-primary" target="_blank" href="https://www.boldgrid.com/central/account/new-key?wp-url=<?php echo urlencode( get_admin_url() ); ?>">BoldGrid Central<a>
 			</p>
 
 			<p style="margin-top:2em;">
