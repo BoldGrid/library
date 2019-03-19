@@ -24,15 +24,6 @@
 	padding: 1.4em 1.4em 1.4em 66px;
 }
 
-#requestKeyForm input:not( [type='checkbox'] ) {
-	width: 83%;
-	margin: .5em 0;
-}
-
-#requestKeyForm label {
-	display: block;
-}
-
 #container_boldgrid_api_key_notice .change-key,
 #container_boldgrid_api_key_notice .envato-claim-message {
 	margin-top: 20px;
@@ -124,12 +115,6 @@
 
 input#boldgrid_api_key {
 	width: 59%;
-}
-
-#requestKeyForm .spinner.inline {
-	visibility: visible;
-	float: none;
-	vertical-align: bottom;
 }
 
 .keyprompt-mini {

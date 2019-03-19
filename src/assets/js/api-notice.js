@@ -28,110 +28,15 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			$( '.api-notice', notice ).fadeIn( 'slow' );
 		} );
 
-		/** Submit action **/
-		$( '#requestKeyForm' ).submit( function( event ) {
-			event.preventDefault();
-
-			var posting,
-				$form = $( this ),
-				$firstName = $form.find( '#firstName' ).val(),
-				$lastName = $form.find( '#lastName' ).val(),
-				$email = $form.find( '#emailAddr' ).val(),
-				$link = $form.find( '#siteUrl' ).val(),
-				$alertBox = $( '.error-alerts' ),
-				$genericError = self.lang.errorCommunicating,
-				$submit = $form.find( '#requestKey' ),
-				$spinner = $form.find( '.spinner' ),
-				$tos = $form.find( '#requestTos' );
-
-			$( '.error-color' ).removeClass( 'error-color' );
-
-			// Basic js checks before server-side verification.
-			if ( ! $firstName ) {
-				$alertBox.text( self.lang.firstRequired );
-				$form
-					.find( '#firstName' )
-					.prev()
-					.addClass( 'error-color' );
-				return false;
-			}
-			if ( ! $lastName ) {
-				$alertBox.text( self.lang.lastRequired );
-				$form
-					.find( '#lastName' )
-					.prev()
-					.addClass( 'error-color' );
-				return false;
-			}
-			if ( ! ( -1 < $email.indexOf( '@' ) && -1 < $email.indexOf( '.' ) ) ) {
-				$alertBox.text( self.lang.emailRequired );
-				$form
-					.find( '#emailAddr' )
-					.prev()
-					.addClass( 'error-color' );
-				return false;
-			}
-			if ( ! $tos.prop( 'checked' ) ) {
-				$alertBox.text( self.lang.tosRequired );
-				$tos.closest( 'label' ).addClass( 'error-color' );
-				return false;
-			}
-
-			$submit.prop( 'disabled', 'disabled' );
-			$spinner.addClass( 'inline' );
-
-			posting = $.post( $( '#generate-api-key' ).val(), {
-				first: $firstName,
-				last: $lastName,
-				email: $email,
-				link: $link
-			} );
-
-			posting
-				.done( function( response ) {
-					$alertBox.text( $genericError );
-					if ( 200 === response.status ) {
-						$( '.key-request-content' )
-							.text( response.message )
-							.append( '<p><a href="#" class="enterKeyLink">' + self.lang.clickEnterKey + '</a></p>' );
-					}
-				} )
-				.fail( function( post ) {
-					var message = post.responseJSON.message;
-					if ( 0 <= message.indexOf( 'First name' ) ) {
-						$form
-							.find( '#firstName' )
-							.prev()
-							.addClass( 'error-color' );
-					}
-					if ( 0 <= message.indexOf( 'Last name' ) ) {
-						$form
-							.find( '#lastName' )
-							.prev()
-							.addClass( 'error-color' );
-					}
-					if ( 0 <= message.indexOf( 'e-mail' ) ) {
-						$form
-							.find( '#emailAddr' )
-							.prev()
-							.addClass( 'error-color' );
-					}
-					$alertBox.text( message );
-
-					$submit.prop( 'disabled', false );
-					$spinner.removeClass( 'inline' );
-				} );
-		} );
-
 		/**
-		 * When the submit button is pressed.
+		 * Handle the form submission when a user is saving their connect key.
 		 */
 		$( '#boldgrid-api-form' ).submit( function( e ) {
 			e.preventDefault();
 		} );
 
 		/**
-		 * Handle the "Submit" button click.
+		 * Handle the "Submit" button click (when a user is saving their connect key).
 		 */
 		$( '#submit_api_key', notice ).on( 'click', function() {
 			var $submitButton = $( this ),
