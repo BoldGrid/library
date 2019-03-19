@@ -111,26 +111,24 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 		<div class="key-request-content">
 			<p id="requestKeyMessage">
 				<?php printf(
-					// translators: 1 An opening strong tag, 2 its closing strong tag, 3 two line breaks, 4 the opening anchor tag linking to BoldGrid's "Connect Key" pages, 5 its closing anchor tag.
+					// translators: 1 An opening strong tag, 2 its closing strong tag, 3 the opening anchor tag linking to BoldGrid's "Connect Key" pages, 4 its closing anchor tag.
 					esc_html__(
-						'You may obtain two different types of Connect Keys: A Free Key or a Premium Connect Key (%4$sclick here%5$s for the benefits of a Premium Key).
-						%1$sA Premium Connect Key is highly recommended and may already come with your hosting account.%2$s
-						%3$s
-						To get your Free Key (or to have it emailed to you if you\'ve lost it), enter your info below:',
+						'You may obtain two different types of Connect Keys: A Free Key or a Premium Connect Key (%3$sclick here%4$s for the benefits of a Premium Key).
+						%1$sA Premium Connect Key is highly recommended and may already come with your hosting account.%2$s',
 						'boldgrid-library'
 					),
 					'<strong>',
 					'</strong>',
-					'<br /><br />',
-					'<a href="https://www.boldgrid.com/connect-keys/" target="_blank">',
+					'<a href="https://www.boldgrid.com/connect-keys?source=library-prompt" target="_blank">',
 					'</a>' );
 				?>
 				<br />
 			</p>
 			<p class="error-alerts"></p>
-			<p style="margin-top:1em;">Please visit BoldGrid Central to sign up and get your Connect Key.</p>
+			<p style="margin-top:1em;"><?php _e( 'Please visit BoldGrid Central to sign up and get your Connect Key.', 'boldgrid-library' ); ?></p>
 			<p style="margin-top:1em;">
-				<a class="button-primary" href="https://www.boldgrid.com/central/new-key?wp-url=<?php echo get_admin_url(); ?>">BoldGrid Central<a>
+				<a class="button-primary" target="_blank" href="https://www.boldgrid.com/central/account/new-key?wp-url=<?php echo urlencode( get_admin_url() ); ?>"
+					><?php _e( 'BoldGrid Central', 'boldgrid-library' ); ?><a>
 			</p>
 
 			<p style="margin-top:2em;">
