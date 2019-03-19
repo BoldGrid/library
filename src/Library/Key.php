@@ -69,6 +69,8 @@ class Key {
 		$this->setValid();
 		$this->setLicense();
 		$this->notice = $this->setNotice();
+
+		Filter::add( $this );
 	}
 
 	/**
@@ -172,6 +174,35 @@ class Key {
 	}
 
 	/**
+	 * Add a key.
+	 *
+	 * @since 2.8.0
+	 *
+	 * @param string $key A hashed key.
+	 * @return bool True on success, false on failure.
+	 */
+	public function addKey( $key ) {
+		/*
+		 * @todo The majority of this method has been copied from
+		 * Boldgrid\Library\Library\Notice\KeyPrompt\addKey() because the logic to add a key should
+		 * be in this class and not the KeyPrompt class. that KeyPrompt method needs to be refactored.
+		 */
+
+		// When adding Keys, delete the transient to make sure we get new license info.
+		delete_site_transient( 'bg_license_data' );
+		delete_site_transient( 'boldgrid_api_data' );
+
+		$data = $this->callCheckVersion( array( 'key' => $key ) );
+
+		if ( is_object( $data ) ) {
+			$this->save( $data, $key );
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Call the API check-version endpoint for API data.
 	 *
 	 * @since  1.0.0
@@ -196,6 +227,43 @@ class Key {
 
 		// Return the API response.
 		return $response;
+	}
+
+	/**
+	 * Handle the submission of an api key via a post call.
+	 *
+	 * @since 2.8.0
+	 *
+	 * @hook admin_init
+	 */
+	public function postNewKey() {
+		if ( empty( $_POST['activateKey'] ) ) {
+			return;
+		}
+
+		if ( empty( $_GET['nonce'] ) || ! wp_verify_nonce( $_GET['nonce'], 'bglib-key-prompt') ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'update_plugins' ) ) {
+			return;
+		}
+
+		$key = md5( $_POST['activateKey'] );
+
+		// @todo: Need error handling just in case the key failed to be added.
+		$this->addKey( $key );
+
+		$postAction = ! empty( $_GET['post_new_key'] ) ? $_GET['post_new_key'] : '';
+
+		/**
+		 * Take action after a key has been successfully saved.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param string $postAction The action to take afterwards.
+		 */
+		do_action( 'Boldgrid\Library\Key\postNewKey', $postAction );
 	}
 
 	/**

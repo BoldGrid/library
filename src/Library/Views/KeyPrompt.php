@@ -1,5 +1,24 @@
 <?php
 $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
+
+/**
+ * Action to take after a new key has been added.
+ *
+ * @since 2.8.0
+ */
+$postNewKey = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\postNewKey', '' );
+
+// The return URL if requesting to get a new key.
+$returnUrl = add_query_arg( array(
+	'nonce'        => wp_create_nonce( 'bglib-key-prompt' ),
+	'post_new_key' => $postNewKey,
+), get_admin_url() );
+
+// The URL to get a new key.
+$newKeyUrl = add_query_arg( array(
+	'wp-url' => urlencode( $returnUrl ),
+), 'https://www.boldgrid.com/central/account/new-key' );
+
 ?>
 <div id="container_boldgrid_api_key_notice"
 	class="boldgrid-notice library error notice is-dismissible <?php echo ! empty( $classes ) ? implode( ' ', $classes ) : ''; ?>"
@@ -127,7 +146,7 @@ $classes = apply_filters( 'Boldgrid\Library\Views\KeyPrompt\classes', array() );
 			<p class="error-alerts"></p>
 			<p><?php esc_html_e( 'Please visit BoldGrid Central to sign up and get your Connect Key.', 'boldgrid-library' ); ?></p>
 			<p>
-				<a class="button-primary" target="_blank" href="https://www.boldgrid.com/central/account/new-key?wp-url=<?php echo urlencode( get_admin_url() ); ?>">BoldGrid Central<a>
+				<a class="button-primary" href="<?php echo $newKeyUrl; ?>">BoldGrid Central<a>
 			</p>
 
 			<p style="margin-top:2em;">

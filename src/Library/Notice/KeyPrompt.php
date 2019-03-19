@@ -223,6 +223,12 @@ class KeyPrompt {
 	 */
 	public function addKey() {
 
+		/*
+		 * @todo A section of this code has been duplicated in Boldgrid\Library\Library\Key\addKey()
+		 * because the code for saving a key should be in the Key class and not the KeyPrompt class.
+		 * This method needs to be refactored using that addKey method.
+		 */
+
 		// When adding Keys, delete the transient to make sure we get new license info.
 		delete_site_transient( 'bg_license_data' );
 		delete_site_transient( 'boldgrid_api_data' );
