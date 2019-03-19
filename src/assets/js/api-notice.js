@@ -2,31 +2,36 @@ var BOLDGRID = BOLDGRID || {};
 BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 BOLDGRID.LIBRARY.Api = function( $ ) {
-	var notice,
-		self = this;
+	var self = this;
 
 	self.lang = BoldGridLibraryApiNotice;
+
+	/**
+	 * The container for all the key actions.
+	 *
+	 * This is the #container_boldgrid_api_key_notice, which is also the .notice.
+	 *
+	 * @since 2.8.0
+	 */
+	self.notice;
 
 	/**
 	 * Set key if parameter is set.
 	 */
 	$( function() {
+		self.init();
+
 		var $activateKey = self.GetURLParameter( 'activateKey' );
-		notice = $( '#container_boldgrid_api_key_notice' );
+
+		self.notice = $( '#container_boldgrid_api_key_notice' );
 
 		if ( $activateKey ) {
 			document.getElementById( 'boldgrid_api_key' ).value = $activateKey;
 		}
 
 		/** Toggle the forms around **/
-		$( '.boldgridApiKeyLink', notice ).on( 'click', function() {
-			$( '.api-notice', notice ).hide();
-			$( '.new-api-key', notice ).fadeIn( 'slow' );
-		} );
-		$( notice ).on( 'click', '.enterKeyLink', function() {
-			$( '.new-api-key', notice ).hide();
-			$( '.api-notice', notice ).fadeIn( 'slow' );
-		} );
+		$( self.notice ).on( 'click', '.boldgridApiKeyLink', self.showNewForm );
+		$( self.notice ).on( 'click', '.enterKeyLink', self.showKeyForm );
 
 		/**
 		 * Handle the form submission when a user is saving their connect key.
@@ -38,7 +43,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 		/**
 		 * Handle the "Submit" button click (when a user is saving their connect key).
 		 */
-		$( '#submit_api_key', notice ).on( 'click', function() {
+		$( '#submit_api_key', self.notice ).on( 'click', function() {
 			var $submitButton = $( this ),
 				$spinner = $submitButton.parent().find( '.spinner' );
 
@@ -46,25 +51,25 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 
 			// Require the TOS box be checked.
 			if ( ! $( '#tos-box:checked' ).length ) {
-				$( '#boldgrid_api_key_notice_message', notice )
+				$( '#boldgrid_api_key_notice_message', self.notice )
 					.html( self.lang.tosRequired )
 					.addClass( 'error-color' );
 				return false;
 			}
 
 			// Validate the connect key.
-			var key = $( '#boldgrid_api_key', notice )
+			var key = $( '#boldgrid_api_key', self.notice )
 				.val()
 				.replace( /[^a-z0-9]/gi, '' )
 				.replace( /(.{8})/g, '$1-' )
 				.slice( 0, -1 );
 			if ( ! key || 35 !== key.length ) {
-				$( '#boldgrid_api_key_notice_message', notice )
+				$( '#boldgrid_api_key_notice_message', self.notice )
 					.html( self.lang.keyRequired )
 					.addClass( 'error-color' );
 				return false;
 			}
-			$( '#boldgrid_api_key_notice_message', notice ).removeClass( 'error-color' );
+			$( '#boldgrid_api_key_notice_message', self.notice ).removeClass( 'error-color' );
 
 			self.set( key );
 
@@ -82,9 +87,9 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 * @since 2.4.0
 	 */
 	this._setupChangeKey = function() {
-		notice.find( 'a[data-action="change-connect-key"]' ).on( 'click', function( e ) {
+		self.notice.find( 'a[data-action="change-connect-key"]' ).on( 'click', function( e ) {
 			e.preventDefault();
-			notice.attr( 'data-notice-state', 'no-key-added' );
+			self.notice.attr( 'data-notice-state', 'no-key-added' );
 		} );
 	};
 
@@ -143,8 +148,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 		var data, nonce, wpHttpReferer, $noticeContainer, $spinner, fail, success;
 
 		// Get the wpnonce and referer values.
-		nonce = $( '#set_key_auth', notice ).val();
-		wpHttpReferer = $( '[name="_wp_http_referer"]', notice ).val();
+		nonce = $( '#set_key_auth', self.notice ).val();
+		wpHttpReferer = $( '[name="_wp_http_referer"]', self.notice ).val();
 		data = {
 			action: 'addKey',
 			api_key: key,
@@ -229,6 +234,39 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			fail();
 		} );
 	};
+
+	/**
+	 * Init.
+	 *
+	 * @since 2.8.0
+	 */
+	this.init = function() {
+		/*
+		 * When the user clicks to go to BoldGrid Central to get a new connect key, show the key
+		 * input form so it's ready for them when they get back.
+		 */
+		$( '.key-request-content .button-primary' ).on( 'click', self.showKeyForm );
+	}
+
+	/**
+	 * Show the form for the user to enter their key.
+	 *
+	 * @since 2.8.0
+	 */
+	this.showKeyForm = function() {
+		$( '.new-api-key', self.notice ).hide();
+		$( '.api-notice', self.notice ).fadeIn( 'slow' );
+	}
+
+	/**
+	 * Show the form for the user to get a new key.
+	 *
+	 * @since 2.8.0
+	 */
+	this.showNewForm = function() {
+		$( '.api-notice', self.notice ).hide();
+		$( '.new-api-key', self.notice ).fadeIn( 'slow' );
+	}
 };
 
 new BOLDGRID.LIBRARY.Api( jQuery );
