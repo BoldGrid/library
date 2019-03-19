@@ -13,85 +13,11 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 *
 	 * @since 2.8.0
 	 */
-	self.notice;
+	self.$notice;
 
-	/**
-	 * Set key if parameter is set.
-	 */
 	$( function() {
 		self.init();
-
-		var $activateKey = self.GetURLParameter( 'activateKey' );
-
-		self.notice = $( '#container_boldgrid_api_key_notice' );
-
-		if ( $activateKey ) {
-			document.getElementById( 'boldgrid_api_key' ).value = $activateKey;
-		}
-
-		/** Toggle the forms around **/
-		$( self.notice ).on( 'click', '.boldgridApiKeyLink', self.showNewForm );
-		$( self.notice ).on( 'click', '.enterKeyLink', self.showKeyForm );
-
-		/**
-		 * Handle the form submission when a user is saving their connect key.
-		 */
-		$( '#boldgrid-api-form' ).submit( function( e ) {
-			e.preventDefault();
-		} );
-
-		/**
-		 * Handle the "Submit" button click (when a user is saving their connect key).
-		 */
-		$( '#submit_api_key', self.notice ).on( 'click', function() {
-			var $submitButton = $( this ),
-				$spinner = $submitButton.parent().find( '.spinner' );
-
-			$( '#boldgrid_api_key_notice_message' ).empty();
-
-			// Require the TOS box be checked.
-			if ( ! $( '#tos-box:checked' ).length ) {
-				$( '#boldgrid_api_key_notice_message', self.notice )
-					.html( self.lang.tosRequired )
-					.addClass( 'error-color' );
-				return false;
-			}
-
-			// Validate the connect key.
-			var key = $( '#boldgrid_api_key', self.notice )
-				.val()
-				.replace( /[^a-z0-9]/gi, '' )
-				.replace( /(.{8})/g, '$1-' )
-				.slice( 0, -1 );
-			if ( ! key || 35 !== key.length ) {
-				$( '#boldgrid_api_key_notice_message', self.notice )
-					.html( self.lang.keyRequired )
-					.addClass( 'error-color' );
-				return false;
-			}
-			$( '#boldgrid_api_key_notice_message', self.notice ).removeClass( 'error-color' );
-
-			self.set( key );
-
-			// Disable the submit button and show the spinner.
-			$submitButton.attr( 'disabled', true );
-			$spinner.addClass( 'inline' );
-		} );
-
-		self._setupChangeKey();
 	} );
-
-	/**
-	 * When a user clicks on change connect key, change the presentation to key input.
-	 *
-	 * @since 2.4.0
-	 */
-	this._setupChangeKey = function() {
-		self.notice.find( 'a[data-action="change-connect-key"]' ).on( 'click', function( e ) {
-			e.preventDefault();
-			self.notice.attr( 'data-notice-state', 'no-key-added' );
-		} );
-	};
 
 	/**
 	 * Get parameter from URL
@@ -113,6 +39,9 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 		}
 	};
 
+	/**
+	 * Track activation.
+	 */
 	this.trackActivation = function() {
 
 		// Create iframe element.
@@ -143,13 +72,16 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 
 	/**
 	 * Set the API key.
+	 *
+	 * This function makes an ajax call to save the api key. It is triggered by this.onClickSubmit
+	 * once the input form / key is validated.
 	 */
 	this.set = function( key ) {
-		var data, nonce, wpHttpReferer, $noticeContainer, $spinner, fail, success;
+		var data, nonce, wpHttpReferer, $spinner, fail, success;
 
 		// Get the wpnonce and referer values.
-		nonce = $( '#set_key_auth', self.notice ).val();
-		wpHttpReferer = $( '[name="_wp_http_referer"]', self.notice ).val();
+		nonce = $( '#set_key_auth', self.$notice ).val();
+		wpHttpReferer = $( '[name="_wp_http_referer"]', self.$notice ).val();
 		data = {
 			action: 'addKey',
 			api_key: key,
@@ -157,9 +89,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			_wp_http_referer: wpHttpReferer
 		};
 
-		$noticeContainer = $( '#container_boldgrid_api_key_notice' );
-
-		$spinner = $noticeContainer.find( '.api-notice .spinner' );
+		$spinner = self.$notice.find( '.api-notice .spinner' );
 
 		// The Connect key was not validated successfully.
 		fail = function( message ) {
@@ -167,38 +97,38 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 
 			// Hide the spinner and enable the submit button.
 			$spinner.removeClass( 'inline' );
-			$( '#submit_api_key', $noticeContainer ).attr( 'disabled', false );
+			$( '#submit_api_key', self.$notice ).attr( 'disabled', false );
 
 			// Display the error message to the user.
-			$( '#boldgrid_api_key_notice_message', $noticeContainer )
+			$( '#boldgrid_api_key_notice_message', self.$notice )
 				.html( message )
 				.addClass( 'error-color' );
 		};
 
 		success = function( response ) {
 			var message = response.data.message,
-				isKeypromptMini = $( '.keyprompt-mini', $noticeContainer );
+				isKeypromptMini = $( '.keyprompt-mini', self.$notice );
 
 			// Change the notice from red to green, and hide the form.
 			if ( ! isKeypromptMini.length ) {
-				$noticeContainer
+				self.$notice
 					.toggleClass( 'error' )
 					.toggleClass( 'updated' )
 					.addClass( 'success-add-key' );
 
 				message += ' <a class="notice-dismiss" onClick="window.location.reload(true)" style="cursor:pointer;"></a>';
-				$( '.tos-box', $noticeContainer ).fadeOut();
+				$( '.tos-box', self.$notice ).fadeOut();
 			}
 
 			// Initiate tracking iframe.
 			self.trackActivation();
 
-			$( '#boldgrid_api_key_notice_message', $noticeContainer ).html( message );
+			$( '#boldgrid_api_key_notice_message', self.$notice ).html( message );
 
 			$spinner.fadeOut();
 
 			// Hide the prompt and show the success message.
-			$noticeContainer
+			self.$notice
 				.hide()
 				.before( '<div class="notice notice-success is-dismissible bg-key-saved" style="display:block;"><p>' + message + '</p></div>' );
 
@@ -217,7 +147,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			 * 1. This is a mini key entry prompt.
 			 * 2. The notice has the no-refresh class (may be dyanmically added by other scripts).
 			 */
-			if ( ! isKeypromptMini.length && ! $noticeContainer.hasClass( 'no-refresh' ) ) {
+			if ( ! isKeypromptMini.length && ! self.$notice.hasClass( 'no-refresh' ) ) {
 				setTimeout( function() {
 					window.location.reload();
 				}, 2000 );
@@ -241,11 +171,80 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 * @since 2.8.0
 	 */
 	this.init = function() {
+		var $activateKey = self.GetURLParameter( 'activateKey' );
+
+		self.$notice = $( '#container_boldgrid_api_key_notice' );
+
+		if ( $activateKey ) {
+			document.getElementById( 'boldgrid_api_key' ).value = $activateKey;
+		}
+
 		/*
 		 * When the user clicks to go to BoldGrid Central to get a new connect key, show the key
 		 * input form so it's ready for them when they get back.
 		 */
 		$( '.key-request-content .button-primary' ).on( 'click', self.showKeyForm );
+
+		// Toggle the forms around,
+		$( self.$notice ).on( 'click', '.boldgridApiKeyLink', self.showNewForm );
+		$( self.$notice ).on( 'click', '.enterKeyLink', self.showKeyForm );
+
+		// Handle the form submission when a user is saving their connect key.
+		$( '#boldgrid-api-form' ).submit( function( e ) {
+			e.preventDefault();
+		} );
+
+		$( '#submit_api_key', self.$notice ).on( 'click', self.onClickSubmit );
+
+		// When a user clicks on change connect key, change the presentation to key input.
+		self.$notice.find( 'a[data-action="change-connect-key"]' ).on( 'click', function( e ) {
+			e.preventDefault();
+			self.$notice.attr( 'data-notice-state', 'no-key-added' );
+		} );
+
+	}
+
+	/**
+	 * Handle the "Submit" button click (when a user is saving their connect key).
+	 *
+	 * This method validates the form / key, and then calls this.set to actually save the connect
+	 * key.
+	 *
+	 * @since 2.8.0
+	 */
+	this.onClickSubmit = function() {
+		var $submitButton = $( this ),
+			$spinner = $submitButton.parent().find( '.spinner' ),
+			key = $( '#boldgrid_api_key', self.$notice )
+				.val()
+				.replace( /[^a-z0-9]/gi, '' )
+				.replace( /(.{8})/g, '$1-' )
+				.slice( 0, -1 );
+
+		$( '#boldgrid_api_key_notice_message' ).empty();
+
+		// Require the TOS box be checked.
+		if ( ! $( '#tos-box:checked' ).length ) {
+			$( '#boldgrid_api_key_notice_message', self.$notice )
+				.html( self.lang.tosRequired )
+				.addClass( 'error-color' );
+			return false;
+		}
+
+		// Validate the connect key.
+		if ( ! key || 35 !== key.length ) {
+			$( '#boldgrid_api_key_notice_message', self.$notice )
+				.html( self.lang.keyRequired )
+				.addClass( 'error-color' );
+			return false;
+		}
+		$( '#boldgrid_api_key_notice_message', self.$notice ).removeClass( 'error-color' );
+
+		self.set( key );
+
+		// Disable the submit button and show the spinner.
+		$submitButton.attr( 'disabled', true );
+		$spinner.addClass( 'inline' );
 	}
 
 	/**
@@ -254,8 +253,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 * @since 2.8.0
 	 */
 	this.showKeyForm = function() {
-		$( '.new-api-key', self.notice ).hide();
-		$( '.api-notice', self.notice ).fadeIn( 'slow' );
+		$( '.new-api-key', self.$notice ).hide();
+		$( '.api-notice', self.$notice ).fadeIn( 'slow' );
 	}
 
 	/**
@@ -264,8 +263,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	 * @since 2.8.0
 	 */
 	this.showNewForm = function() {
-		$( '.api-notice', self.notice ).hide();
-		$( '.new-api-key', self.notice ).fadeIn( 'slow' );
+		$( '.api-notice', self.$notice ).hide();
+		$( '.new-api-key', self.$notice ).fadeIn( 'slow' );
 	}
 };
 
