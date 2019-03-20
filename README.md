@@ -11,8 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.8.0 In progress ###
+### 2.8.0 ###
 
+* New feature: "Get a new key" updated to link to BoldGrid Central, and automatically add the key given.
 * Update: Made translation ready. Text domain changed to boldgrid-library.
 
 ### 2.7.7 ###
