@@ -144,7 +144,7 @@ $newKeyUrl = add_query_arg( array(
 				<br />
 			</p>
 			<p class="error-alerts"></p>
-			<p><?php esc_html_e( 'Please visit BoldGrid Central to sign up and get your Connect Key.', 'boldgrid-library' ); ?></p>
+			<p><?php esc_html_e( 'Check with your host or visit BoldGrid Central to sign up and get your Connect Key.', 'boldgrid-library' ); ?></p>
 			<p>
 				<a class="button-primary" href="<?php echo $newKeyUrl; ?>">BoldGrid Central<a>
 			</p>
