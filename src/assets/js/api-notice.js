@@ -179,12 +179,6 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			document.getElementById( 'boldgrid_api_key' ).value = $activateKey;
 		}
 
-		/*
-		 * When the user clicks to go to BoldGrid Central to get a new connect key, show the key
-		 * input form so it's ready for them when they get back.
-		 */
-		$( '.key-request-content .button-primary' ).on( 'click', self.showKeyForm );
-
 		// Toggle the forms around,
 		$( self.$notice ).on( 'click', '.boldgridApiKeyLink', self.showNewForm );
 		$( self.$notice ).on( 'click', '.enterKeyLink', self.showKeyForm );
