@@ -53,7 +53,7 @@ $newKeyUrl = add_query_arg( array(
 		<p>
 			<?php esc_html_e( 'Thank you for adding your Connect Key. Try upgrading to a Premium subscription for full access to BoldGrid!', 'boldgrid-library' ); ?>
 		</p>
-		<p><a target="_blank" href="https://www.boldgrid.com/get-premium-boldgrid-connect-key/?source=library-prompt"
+		<p><a target="_blank" href="https://www.boldgrid.com/connect-keys?source=library-prompt"
 				class="button button-primary"><?php esc_html_e( 'Upgrade', 'boldgrid-library' ) ?></a>
 		</p>
 		<?php } else {
@@ -138,7 +138,7 @@ $newKeyUrl = add_query_arg( array(
 					),
 					'<strong>',
 					'</strong>',
-					'<a href="https://www.boldgrid.com/get-premium-boldgrid-connect-key/?source=library-prompt" target="_blank">',
+					'<a href="https://www.boldgrid.com/connect-keys?source=library-prompt" target="_blank">',
 					'</a>' );
 				?>
 				<br />
