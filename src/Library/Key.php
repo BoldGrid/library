@@ -230,43 +230,6 @@ class Key {
 	}
 
 	/**
-	 * Handle the submission of an api key via a post call.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @hook admin_init
-	 */
-	public function postNewKey() {
-		if ( empty( $_POST['activateKey'] ) ) {
-			return;
-		}
-
-		if ( empty( $_GET['nonce'] ) || ! wp_verify_nonce( $_GET['nonce'], 'bglib-key-prompt') ) {
-			return;
-		}
-
-		if ( ! current_user_can( 'update_plugins' ) ) {
-			return;
-		}
-
-		$key = md5( $_POST['activateKey'] );
-
-		// @todo: Need error handling just in case the key failed to be added.
-		$this->addKey( $key );
-
-		$postAction = ! empty( $_GET['post_new_key'] ) ? $_GET['post_new_key'] : '';
-
-		/**
-		 * Take action after a key has been successfully saved.
-		 *
-		 * @since 2.8.0
-		 *
-		 * @param string $postAction The action to take afterwards.
-		 */
-		do_action( 'Boldgrid\Library\Key\postNewKey', $postAction );
-	}
-
-	/**
 	 * Verify API data status.
 	 *
 	 * @since 1.1.6

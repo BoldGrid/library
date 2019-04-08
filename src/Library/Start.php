@@ -118,6 +118,9 @@ class Start {
 		// Update class runs Filter::add($this) in __construct.
 		$update = new \Boldgrid\Library\Library\Update();
 
+		// PostNewKey class runs Filter::add($this) in __construct.
+		$postNewKey = new \Boldgrid\Library\Library\Key\PostNewKey();
+
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
 
