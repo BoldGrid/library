@@ -8,8 +8,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-04-01T08:36:11-04:00\n"
-"PO-Revision-Date: 2019-04-01T08:36:11-04:00\n"
+"POT-Creation-Date: 2019-04-10T08:17:55-04:00\n"
+"PO-Revision-Date: 2019-04-10T08:17:55-04:00\n"
 "X-Generator: WP-CLI 2.0.1\n"
 "X-Domain: boldgrid-library\n"
 
@@ -54,7 +54,7 @@ msgid "Unknown action."
 msgstr ""
 
 #: Library/Views/KeyPromptMini.php:44
-#: Library/Views/KeyPrompt.php:99
+#: Library/Views/KeyPrompt.php:82
 msgid "Submit"
 msgstr ""
 
@@ -80,73 +80,73 @@ msgstr ""
 msgid "Unable to display settings page. Unknown BoldGrid Library error."
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:31
+#: Library/Views/KeyPrompt.php:14
 msgid "Premium BoldGrid Connect Key"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:34
+#: Library/Views/KeyPrompt.php:17
 msgid "Awesome! You have a Premium Connect Key saved on this site."
 msgstr ""
 
 #. translators: 1 The opening anchor tag linking to the the "WordPress Plugins" page on Boldgrid.com, 2 its closing anchor tag, 3 the opening anchor tag to BoldGrid Central, 4 its closing anchor tag.
-#: Library/Views/KeyPrompt.php:39
+#: Library/Views/KeyPrompt.php:22
 msgid "Make sure you're getting the most out of your premium subscription by installing our other %1$sBoldGrid plugins%2$s. As a Premium user, you also have access to %3$sCloud WordPress%4$s where you can create new WordPress sites for free. If you need any help, our support team is eager to serve!"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:44
-#: Library/Views/KeyPrompt.php:62
+#: Library/Views/KeyPrompt.php:27
+#: Library/Views/KeyPrompt.php:45
 msgid "Click here to change your Connect Key"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:49
+#: Library/Views/KeyPrompt.php:32
 msgid "Free BoldGrid Connect Key"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:54
+#: Library/Views/KeyPrompt.php:37
 msgid "Thank you for adding your Connect Key. Try upgrading to a Premium subscription for full access to BoldGrid!"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:57
+#: Library/Views/KeyPrompt.php:40
 msgid "Upgrade"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:78
+#: Library/Views/KeyPrompt.php:61
 msgid "Enter your BoldGrid Connect Key to use BoldGrid"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:81
+#: Library/Views/KeyPrompt.php:64
 msgid "Already have your Key? Enter it below and click Submit:"
 msgstr ""
 
 #. translators: 1 The opening anchor tag to BoldGrid's TOS page, 2 its closing anchor tag.
-#: Library/Views/KeyPrompt.php:90
+#: Library/Views/KeyPrompt.php:73
 msgid "I agree to the %1$sTerms of Use and Privacy Policy%2$s."
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:114
+#: Library/Views/KeyPrompt.php:97
 msgid "Don't have a Key or lost your Key?"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:116
+#: Library/Views/KeyPrompt.php:99
 msgid "Get a BoldGrid Connect Key"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:128
+#: Library/Views/KeyPrompt.php:111
 msgid "Request or Reset a BoldGrid Connect Key"
 msgstr ""
 
 #. translators: 1 An opening strong tag, 2 its closing strong tag, 3 the opening anchor tag linking to BoldGrid's "Connect Key" pages, 4 its closing anchor tag.
-#: Library/Views/KeyPrompt.php:134
+#: Library/Views/KeyPrompt.php:117
 msgid ""
 "You may obtain two different types of Connect Keys: A Free Key or a Premium Connect Key (%3$sclick here%4$s for the benefits of a Premium Key).\n"
 "\t\t\t\t\t\t%1$sA Premium Connect Key is highly recommended and may already come with your hosting account.%2$s"
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:147
+#: Library/Views/KeyPrompt.php:130
 msgid "Check with your host or visit BoldGrid Central to sign up and get your Connect Key."
 msgstr ""
 
-#: Library/Views/KeyPrompt.php:154
+#: Library/Views/KeyPrompt.php:137
 msgid "Have a Connect Key to enter?"
 msgstr ""
 
