@@ -13,6 +13,8 @@ composer require boldgrid/library
 
 ### 2.8.0 ###
 
+Release date: Apr 16th, 2019
+
 * New feature: "Get a new key" updated to link to BoldGrid Central, and automatically add the key given.
 * New feature: Adding German translations, de_DE.
 * Update: Made translation ready. Text domain changed to boldgrid-library.
