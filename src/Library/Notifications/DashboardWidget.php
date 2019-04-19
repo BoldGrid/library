@@ -13,6 +13,7 @@ namespace Boldgrid\Library\Library\Notifications;
 
 use Boldgrid\Library\Library\Configs;
 use Boldgrid\Library\Library\Filter;
+use Boldgrid\Library\Library\License;
 use Boldgrid\Library\Library\Plugin\Updater;
 
 /**
@@ -31,6 +32,26 @@ class DashboardWidget {
 	}
 
 	/**
+	 * Enqueue scripts.
+	 *
+	 * @since 2.9.0
+	 *
+	 * @param string $hook
+	 */
+	public function admin_enqueue_scripts( $hook ) {
+		wp_register_style(
+			'bglib-dashboard-widget-css',
+			Configs::get( 'libraryUrl' ) . 'src/assets/css/dashboard-widget.css'
+		);
+
+		switch( $hook ) {
+			case 'index.php':
+				wp_enqueue_style( 'bglib-dashboard-widget-css' );
+				break;
+		}
+	}
+
+	/**
 	 * Display our Dashboard widget.
 	 *
 	 * The following visual should help show how things are setup:
@@ -46,13 +67,26 @@ class DashboardWidget {
 	public function displayWidget() {
 		$items = $this->getItems();
 
+		// Some items will not have a wrapper. Setup the default.
+		$defaultWrapper = array(
+			'attributes' => array(),
+		);
+
 		foreach( $items as $item ) {
-			// Print our container for this item.
-			echo '<div ';
+			$item['wrapper'] = empty( $item['wrapper'] ) ? $defaultWrapper : $item['wrapper'];
+
+			// Generate the attributes of our div container.
+			$attributes = '';
 			foreach( $item['wrapper']['attributes'] as $attribute => $value ) {
-				echo $attribute . '="' . esc_attr( $value ) . '" ';
+				$attributes .= $attribute . '="' . esc_attr( $value ) . '" ';
 			}
-			echo '>';
+
+			// Print our container for this item.
+			echo '<div ' . $attributes . '>';
+
+			if ( ! empty( $item['title'] ) ) {
+				echo '<p><strong>' . esc_html( $item['title'] ) . '</strong></p>';
+			}
 
 			echo implode( '', $item['subItems'] );
 
@@ -69,9 +103,11 @@ class DashboardWidget {
 	 * @return array
 	 */
 	public function getItems() {
-		$items = array();
+		// Add plugins.
+		$items = $this->getItemsPlugins();
 
-		$items = array_merge( $items, $this->getItemsPlugins() );
+		// Add Connect Key.
+		array_push( $items, $this->getItemKey() );
 
 		return $items;
 	}
@@ -122,6 +158,81 @@ class DashboardWidget {
 		unset( $plugins );
 
 		return $activePlugins;
+	}
+
+	/**
+	 * Get our "BoldGrid Connect Key" item for the dashboard widget.
+	 *
+	 * @since 2.9.0
+	 *
+	 * @return array
+	 */
+	public function getItemKey( ) {
+		$subItems = array();
+
+		/*
+		 * Get our license string: "None", "Free", "Premium".
+		 *
+		 * Be default, the license string is based on a single product's license. Instead of using
+		 * this logic, below we are trying to figure out a key's license (and not a product's license).
+		 *
+		 * To get the license, we need to check if a particular product is premium. To do that, we
+		 * will set our product to be the plugin that is loading the library.
+		 */
+		$license = new License();
+		$key     = $license->getApiKey();
+		if ( empty( $key ) ) {
+			$licenseString = 'None';
+		} else {
+			$product = Configs::getFileSlug();
+			// Call isPermium(), which sets the license string.
+			$license->isPremium( $product );
+			$licenseString = $license->getLicenseString();
+		}
+
+		switch( $licenseString ) {
+			case 'None':
+				$subItems[] = '
+				<p>
+					<span class="dashicons dashicons-admin-network"></span>
+					<a href="' . admin_url( 'options-general.php?page=boldgrid-connect.php' ) . '">' .
+						esc_html( 'Please install your Connect Key', 'boldgrid-library' ) . '
+					</a>
+				</p>';
+				$subItems[] = '
+				<p>
+					<a href="' . esc_url( Configs::get( 'getNewKey' ) ) . '">' . esc_html__( 'Click here to access BoldGrid Central and obtain a key', 'boldgrid-library' ) . '</a>
+				</p>';
+				break;
+			case 'Free':
+				$subItems[] = '
+				<p>
+					<span class="dashicons dashicons-admin-network boldgrid-orange"></span> ' .
+					esc_html( 'Free Connect Key Installed', 'boldgrid-library' ) . '
+				</p>';
+				$subItems[] = '
+				<p>
+					<a href="' . esc_url( Configs::get( 'learnMore' ) ) . '">' .
+						esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) . '
+					</a>
+				</p>';
+				break;
+			case 'Premium':
+				$subItems[] = '
+				<p>
+					<span class="dashicons dashicons-admin-network boldgrid-orange"></span> ' .
+					esc_html( 'Premium Connect Key Installed', 'boldgrid-library' ) . '
+				</p>';
+				break;
+		}
+
+		$item = array(
+			'type'     => 'key',
+			'subItems' => $subItems,
+			'title'    => 'BoldGrid Connect Key',
+		);
+
+		return $item;
 	}
 
 	/**

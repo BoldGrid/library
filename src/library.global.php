@@ -15,6 +15,9 @@ return array(
 	// When the user needs a Connect Key, the "Get it now" button links here (filters get applied).
 	'getNewKey' => 'https://www.boldgrid.com/central/account/new-key',
 
+	// Click here for the benefits of a Premium Key.
+	'learnMore' => 'https://www.boldgrid.com/connect-keys?source=library-prompt',
+
 	// Enable key validation in library.
 	'keyValidate' => true,
 

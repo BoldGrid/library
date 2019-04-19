@@ -1,0 +1,9 @@
+/* The key icon. */
+#boldgrid-notifications .dashicons-admin-network {
+	margin-right: 10px;
+}
+
+/* Sub items (exluding the first, which is the heading. */
+#boldgrid-notifications .inside > div > *:not(:first-child) {
+	padding-left: 15px;
+}

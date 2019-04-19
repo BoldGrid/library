@@ -106,6 +106,23 @@ class Configs {
 	}
 
 	/**
+	 * Get the slug of the product that is loading the library.
+	 *
+	 * The configs include a "file" setting, which indicate which product is actually loading the
+	 * library. If the file is "boldgrid-backup/boldgrid-backup.php" for example, this method will
+	 * return "boldgrid-backup".
+	 *
+	 * @since 2.9.0
+	 *
+	 * @return string
+	 */
+	public static function getFileSlug() {
+		$file = explode( '/', self::get('file') );
+
+		return $file[0];
+	}
+
+	/**
 	 * Get plugins from our configs.
 	 *
 	 * @since 2.9.0
