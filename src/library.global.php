@@ -82,4 +82,36 @@ return array(
 		'get_theme_data' => '/api/open/get-theme-data',
 		'get_asset'      => '/api/open/get-asset',
 	),
+
+	/*
+	 * A list of BoldGrid (and related) plugins.
+	 *
+	 * @since 2.9.0
+	 *
+	 * @todo Above, there are 2 additional arrays of plugins. They should all be combined into 1 and
+	 *       use attributes to indicated which group they belong to, such as:
+	 *       # inNotificationsWidget
+	 *       # isInstallable
+	 *       # isWpOrg
+	 *       We can then use Boldgrid\Library\Library\Configs( $filters ) to get our plugins, such as:
+	 *       Configs::getPlugins( array( 'inNotificationsWidget' => true ) )
+	 */
+	'plugins' => array(
+		array(
+			'file'                  => 'boldgrid-inspirations/boldgrid-inspirations.php',
+			'inNotificationsWidget' => true,
+		),
+		array(
+			'file'                  => 'boldgrid-backup/boldgrid-backup.php',
+			'inNotificationsWidget' => true,
+		),
+		array(
+			'file'                  => 'boldgrid-easy-seo/boldgrid-easy-seo.php',
+			'inNotificationsWidget' => true,
+		),
+		array(
+			'file'                  => 'post-and-page-builder/post-and-page-builder.php',
+			'inNotificationsWidget' => true,
+		),
+	),
 );

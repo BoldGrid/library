@@ -121,6 +121,9 @@ class Start {
 		// PostNewKey class runs Filter::add($this) in __construct.
 		$postNewKey = new \Boldgrid\Library\Library\Key\PostNewKey();
 
+		// WidgetNotifications class runs Filter::add($this) in __construct.
+		$dashboardWidget = new \Boldgrid\Library\Library\Notifications\DashboardWidget();
+
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
 
