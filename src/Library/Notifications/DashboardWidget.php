@@ -58,22 +58,20 @@ class DashboardWidget {
 	 * ----
 	 * BoldGrid Notifications
 	 * # Item
-	 * ## <div $attributes
-	 * ### sub items
-	 * ## </div>
+	 * ## icon | title | version
+	 * ## sub items
 	 *
 	 * @since 2.9.0
 	 */
 	public function displayWidget() {
 		$items = $this->getItems();
 
-		// Some items will not have a wrapper. Setup the default.
-		$defaultWrapper = array(
-			'attributes' => array(),
-		);
-
 		foreach( $items as $item ) {
-			$item['wrapper'] = empty( $item['wrapper'] ) ? $defaultWrapper : $item['wrapper'];
+			if ( empty( $item['wrapper']['attributes']['class'] ) ) {
+				$item['wrapper']['attributes']['class'] = 'bglib-item';
+			} else {
+				$item['wrapper']['attributes']['class'] .= ' bglib-item';
+			}
 
 			// Generate the attributes of our div container.
 			$attributes = '';
@@ -81,17 +79,22 @@ class DashboardWidget {
 				$attributes .= $attribute . '="' . esc_attr( $value ) . '" ';
 			}
 
-			// Print our container for this item.
-			echo '<div ' . $attributes . '>';
-
-			if ( ! empty( $item['title'] ) ) {
-				echo '<p><strong>' . esc_html( $item['title'] ) . '</strong></p>';
-			}
-
-			echo implode( '', $item['subItems'] );
-
-			// Close our container.
-			echo '</div>';
+			echo '
+			<div ' . $attributes . '>
+				<div class="bglib-icon-container">' .
+					$item['icon'] . '
+				</div>
+				<div class="bglib-title-container">
+					<p class="bglib-title">' . esc_html( $item['title'] ) . '</p>
+				</div>
+				<div class="bglib-version-container">
+					<p class="bglib-version ' . esc_attr( $item['version']['class'] ) . '"> ' . $item['version']['markup'] . '</p>
+				</div>
+				<div style="clear:both;"></div>
+				<div class="bglib-subitems">'
+					. implode( '', $item['subItems'] ) . '
+				</div>
+			</div>';
 		}
 	}
 
@@ -192,42 +195,42 @@ class DashboardWidget {
 
 		switch( $licenseString ) {
 			case 'None':
-				$subItems[] = '
-				<p>
-					<span class="dashicons dashicons-admin-network"></span>
+				$icon          = '<span class="dashicons dashicons-admin-network"></span>';
+				$versionClass  = 'dashicons-before dashicons-warning';
+				$versionMarkup = '
 					<a href="' . admin_url( 'options-general.php?page=boldgrid-connect.php' ) . '">' .
 						esc_html( 'Please install your Connect Key', 'boldgrid-library' ) . '
-					</a>
-				</p>';
-				$subItems[] = '
-				<p>
-					<a href="' . esc_url( Configs::get( 'getNewKey' ) ) . '">' . esc_html__( 'Click here to access BoldGrid Central and obtain a key', 'boldgrid-library' ) . '</a>
-				</p>';
+					</a>';
+				$subItems[]    = '
+					<p>
+						<a href="' . esc_url( Configs::get( 'getNewKey' ) ) . '">' . esc_html__( 'Click here to access BoldGrid Central and obtain a key', 'boldgrid-library' ) . '</a>
+					</p>';
 				break;
 			case 'Free':
-				$subItems[] = '
-				<p>
-					<span class="dashicons dashicons-admin-network boldgrid-orange"></span> ' .
-					esc_html( 'Free Connect Key Installed', 'boldgrid-library' ) . '
-				</p>';
-				$subItems[] = '
-				<p>
-					<a href="' . esc_url( Configs::get( 'learnMore' ) ) . '">' .
-						esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) . '
-					</a>
-				</p>';
+				$icon          = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
+				$versionClass  = 'dashicons-before dashicons-yes';
+				$versionMarkup = __( 'Free Connect Key Installed', 'boldgrid-library' );
+				$subItems[]    = '
+					<p>
+						<a href="' . esc_url( Configs::get( 'learnMore' ) ) . '">' .
+							esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) . '
+						</a>
+					</p>';
 				break;
 			case 'Premium':
-				$subItems[] = '
-				<p>
-					<span class="dashicons dashicons-admin-network boldgrid-orange"></span> ' .
-					esc_html( 'Premium Connect Key Installed', 'boldgrid-library' ) . '
-				</p>';
+				$icon          = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
+				$versionClass  = 'dashicons-before dashicons-yes';
+				$versionMarkup = __( 'Premium Connect Key Installed', 'boldgrid-library' );
 				break;
 		}
 
 		$item = array(
 			'type'     => 'key',
+			'icon'     => $icon,
+			'version'  => array(
+				'markup' => $versionMarkup,
+				'class'  => $versionClass,
+			),
 			'subItems' => $subItems,
 			'title'    => 'BoldGrid Connect Key',
 		);
@@ -246,38 +249,42 @@ class DashboardWidget {
 	public function getItemPlugin( $plugin ) {
 		$subItems = array();
 
-		// Add the heading.
-		$subItems[] = '<p><strong>' . esc_html( $plugin->getData( 'Name' ) ) . '</strong></p>';
+		$icons = $plugin->getIcons();
+		$icon  = empty( $icons ) ? '<span class="dashicons dashicons-admin-plugins"></span>' : '<img src="' . array_values( $icons )[0] . '" />';
 
 		// Adding the plugin's version info.
-		$subItems[] =
-		'<div style="text-align:right;">
-			<span class="bglib-plugin-version">' .
-				sprintf(
-					__( 'Version %1$s', 'boldgrid-library' ),
-					$plugin->getData( 'Version' )
-				) . '
-			</span> -
-			<span class="bglib-version-status">' .
-				( ! $plugin->hasUpdate() ? esc_html__( 'Up to Date', 'boldgrid-library' ) : esc_html__( 'Update Available', 'boldgrid-library' ) ) . '
-			</span>
-		</div>';
+		$versionMarkup = '<span class="bglib-version-status">';
+		switch( $plugin->hasUpdate() ) {
+			case true:
+				$versionMarkup .= __( 'Update Available', 'boldgrid-library' );
+				$versionClass   = 'dashicons-before dashicons-warning';
 
-		// If applicable, add a notice in which the user can upgrade the plugin.
-		if ( $plugin->hasUpdate() ) {
-			$updater = new Updater( $plugin->getSlug() );
-			$subItems[] = $updater->getMarkup();
+				// Add the markup to upgdate the plugin.
+				$updater    = new Updater( $plugin->getSlug() );
+				$subItems[] = $updater->getMarkup();
+				break;
+			case false:
+				$versionMarkup .= __( 'Up to Date', 'boldgrid-library' );
+				$versionClass   = 'dashicons-before dashicons-yes';
+				break;
 		}
+		$versionMarkup .= '</span>';
 
 		$item = array(
-			'type'         => 'plugin',
-			'subItems'     => $subItems,
-			'wrapper' => array(
+			'type'     => 'plugin',
+			'title'    => $plugin->getData( 'Name' ),
+			'version'  => array(
+				'markup' => $versionMarkup,
+				'class'  => $versionClass,
+			),
+			'subItems' => $subItems,
+			'wrapper'  => array(
 				'attributes' => array(
 					'class'       => 'bglib-plugin-notifications',
 					'data-plugin' => $plugin->getFile(),
 				),
-			)
+			),
+			'icon'    => $icon,
 		);
 
 		return $item;

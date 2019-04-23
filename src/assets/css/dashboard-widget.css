@@ -1,9 +1,110 @@
-/* The key icon. */
-#boldgrid-notifications .dashicons-admin-network {
+/**
+ * #.# Widget.
+ *
+ * Configure the widget itself.
+ */
+
+#boldgrid-notifications .inside {
+	padding: 0px;
+	margin: 0px;
+}
+
+
+/**
+ * #.# Containers
+ *
+ * Configure the containers for the icon, title, and version.
+ */
+
+/* Icon container. */
+.bglib-item .bglib-icon-container {
+	float: left;
+	width: 30px;
 	margin-right: 10px;
 }
 
-/* Sub items (exluding the first, which is the heading. */
-#boldgrid-notifications .inside > div > *:not(:first-child) {
-	padding-left: 15px;
+/* Title container. */
+.bglib-item .bglib-title-container {
+	float: left;
+	width: calc(100% - 30px - 10px - 40% - 15px);
+}
+
+/* Version container. */
+.bglib-item .bglib-version-container {
+	float: right;
+	width: 40%;
+	text-align: right;
+}
+
+
+/**
+ * #.# Icon.
+ *
+ * Configure the icon.
+ */
+
+.bglib-item .bglib-icon-container img,
+.bglib-item .bglib-icon-container span {
+	width: 100%;
+	font-size: 2em;
+}
+
+
+/**
+ * #.# Title.
+ *
+ * Configure the title.
+ */
+.bglib-title {
+	font-weight: bold;
+	margin-bottom: .5em;
+	margin-top: 0px;
+}
+
+
+/**
+ * #.# Version
+ *
+ * Configure the version.
+ */
+
+.bglib-version {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-size: .85em;
+}
+
+
+/**
+ * #.# Items
+ *
+ * Configure items and sub items.
+ */
+
+/* The item is the container for an individual product and all of its notices. */
+.bglib-item {
+	padding: 10px;
+	padding-bottom: 0px;
+}
+
+.bglib-subitems .notice {
+	margin-bottom: 0px;
+}
+
+
+/**
+ * #.# Icons.
+ *
+ * Configure badges, icons, etc.
+ */
+
+.bglib-item .dashicons:before,
+.bglib-item .dashicons-before:before {
+	/* By default, give icons a lighter color. */
+	color: #aaa;
+}
+
+.bglib-item .dashicons-warning::before {
+	/* Matches the orange color of the left border of a .notice-warning. */
+	color: #ffb900;
 }

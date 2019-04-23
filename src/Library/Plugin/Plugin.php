@@ -74,6 +74,23 @@ class Plugin {
 	}
 
 	/**
+	 * Get an array of the plugin's icons.
+	 *
+	 * @since 2.9.0
+	 *
+	 * @return array
+	 */
+	public function getIcons() {
+		$updates = $this->getUpdatePlugins();
+
+		$icons = array();
+		$icons = ! empty( $updates->response[ $this->file ]->icons ) ? $updates->response[ $this->file ]->icons : $icons;
+		$icons = ! empty( $updates->no_update[ $this->file ]->icons ) ? $updates->no_update[ $this->file ]->icons : $icons;
+
+		return $icons;
+	}
+
+	/**
 	 * Get data via the get_plugin_data() function.
 	 *
 	 * If a $key is passed in, return that key, otherwise return all data.
