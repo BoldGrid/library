@@ -85,6 +85,7 @@
 .bglib-item {
 	padding: 10px;
 	padding-bottom: 0px;
+	min-height: 35px;
 }
 
 .bglib-subitems .notice {
@@ -107,4 +108,9 @@
 .bglib-item .dashicons-warning::before {
 	/* Matches the orange color of the left border of a .notice-warning. */
 	color: #ffb900;
+}
+
+.bglib-item .dashicons-info::before {
+	/* Matches the blue color of a highlighted menu item. */
+	color: #0073aa;
 }

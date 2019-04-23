@@ -67,6 +67,15 @@ class DashboardWidget {
 		$items = $this->getItems();
 
 		foreach( $items as $item ) {
+			/**
+			 * Allow items to be filtered.
+			 *
+			 * @since 2.9.0
+			 *
+			 * @param array $item The item to be filtered.
+			 */
+			$item = apply_filters( 'Boldgrid\Library\Notifications\DashboardWidget\displayWidget\\' . $item['type'] . '-' . $item['slug'], $item );
+
 			if ( empty( $item['wrapper']['attributes']['class'] ) ) {
 				$item['wrapper']['attributes']['class'] = 'bglib-item';
 			} else {
@@ -226,6 +235,7 @@ class DashboardWidget {
 
 		$item = array(
 			'type'     => 'key',
+			'slug'     => 'bck',
 			'icon'     => $icon,
 			'version'  => array(
 				'markup' => $versionMarkup,
@@ -272,6 +282,7 @@ class DashboardWidget {
 
 		$item = array(
 			'type'     => 'plugin',
+			'slug'     => $plugin->getSlug(),
 			'title'    => $plugin->getData( 'Name' ),
 			'version'  => array(
 				'markup' => $versionMarkup,
