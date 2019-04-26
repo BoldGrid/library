@@ -117,4 +117,20 @@ return array(
 			'inNotificationsWidget' => true,
 		),
 	),
+
+	// An array of dashboard widgets that are placed at the top of the dashboard.
+	'dashboardWidgetOrder' => array(
+		'boldgrid-notifications'   => array(
+			'container' => 'normal',
+			'priority'  => 'core',
+		),
+		'boldgrid_feedback_widget' => array(
+			'container' => 'side',
+			'priority'  => 'core',
+		),
+		'boldgrid_news_widget'     => array(
+			'container' => 'side',
+			'priority'  => 'core',
+		),
+	),
 );

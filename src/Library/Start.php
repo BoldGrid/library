@@ -121,6 +121,10 @@ class Start {
 		// PostNewKey class runs Filter::add($this) in __construct.
 		$postNewKey = new \Boldgrid\Library\Library\Key\PostNewKey();
 
+		// Dashboard's init method instantiates classes, which run Filter::add($this) in __construct.
+		$dashboard = new \Boldgrid\Library\Library\Dashboard();
+		$dashboard->init();
+
 		// WidgetNotifications class runs Filter::add($this) in __construct.
 		$dashboardWidget = new \Boldgrid\Library\Library\Notifications\DashboardWidget();
 
