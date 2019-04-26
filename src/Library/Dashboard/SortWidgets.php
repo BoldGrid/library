@@ -118,9 +118,6 @@ class SortWidgets {
 			}
 		}
 		update_user_meta( $userId, 'meta-box-order_dashboard', $userWidgetOrder );
-
-		// Finally, flag that we have updated the user's dashboard widget sort order.
-		update_user_meta( $userId, 'bglibDashboardOrder', 1 );
 	}
 
 	/**
@@ -176,5 +173,8 @@ class SortWidgets {
 				$this->sortGlobal();
 				break;
 		}
+
+		// Flag that we have updated the user's dashboard widget sort order.
+		update_user_meta( $userId, 'bglibDashboardOrder', 1 );
 	}
 }
