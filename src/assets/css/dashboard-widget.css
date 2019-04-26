@@ -17,20 +17,20 @@
  */
 
 /* Icon container. */
-.bglib-item .bglib-icon-container {
+#boldgrid-notifications .bglib-item .bglib-icon-container {
 	float: left;
 	width: 30px;
 	margin-right: 10px;
 }
 
 /* Title container. */
-.bglib-item .bglib-title-container {
+#boldgrid-notifications .bglib-item .bglib-title-container {
 	float: left;
 	width: calc(100% - 30px - 10px - 40% - 15px);
 }
 
 /* Version container. */
-.bglib-item .bglib-version-container {
+#boldgrid-notifications .bglib-item .bglib-version-container {
 	float: right;
 	width: 40%;
 	text-align: right;
@@ -43,8 +43,8 @@
  * Configure the icon.
  */
 
-.bglib-item .bglib-icon-container img,
-.bglib-item .bglib-icon-container span {
+#boldgrid-notifications .bglib-item .bglib-icon-container img,
+#boldgrid-notifications .bglib-item .bglib-icon-container span {
 	width: 100%;
 	font-size: 2em;
 }
@@ -55,7 +55,7 @@
  *
  * Configure the title.
  */
-.bglib-title {
+#boldgrid-notifications .bglib-title {
 	font-weight: bold;
 	margin-bottom: .5em;
 	margin-top: 0px;
@@ -68,7 +68,7 @@
  * Configure the version.
  */
 
-.bglib-version {
+#boldgrid-notifications .bglib-version {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	font-size: .85em;
@@ -82,13 +82,13 @@
  */
 
 /* The item is the container for an individual product and all of its notices. */
-.bglib-item {
+#boldgrid-notifications .bglib-item {
 	padding: 10px;
 	padding-bottom: 0px;
 	min-height: 35px;
 }
 
-.bglib-subitems .notice {
+#boldgrid-notifications .bglib-subitems .notice {
 	margin-bottom: 0px;
 }
 
@@ -99,18 +99,18 @@
  * Configure badges, icons, etc.
  */
 
-.bglib-item .dashicons:before,
-.bglib-item .dashicons-before:before {
+#boldgrid-notifications .bglib-item .dashicons:before,
+#boldgrid-notifications .bglib-item .dashicons-before:before {
 	/* By default, give icons a lighter color. */
 	color: #aaa;
 }
 
-.bglib-item .dashicons-warning::before {
-	/* Matches the orange color of the left border of a .notice-warning. */
-	color: #ffb900;
+#boldgrid-notifications .bglib-item .dashicons-warning::before {
+	/* Matches the red color of the warning used on the dashboard for "PHP Update Required". */
+	color: #df3232;
 }
 
-.bglib-item .dashicons-info::before {
+#boldgrid-notifications .bglib-item .dashicons-info::before {
 	/* Matches the blue color of a highlighted menu item. */
 	color: #0073aa;
 }

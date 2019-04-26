@@ -124,6 +124,9 @@ class Start {
 		// WidgetNotifications class runs Filter::add($this) in __construct.
 		$dashboardWidget = new \Boldgrid\Library\Library\Notifications\DashboardWidget();
 
+		// NewsWidget class runs Filter::add($this) in __construct.
+		$newsWidget = new \Boldgrid\Library\Library\NewsWidget();
+
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
 
