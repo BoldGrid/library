@@ -44,6 +44,7 @@ class Version {
 	 * @param string $dependency The dependency to check the version data of.
 	 *                           For example: "boldgrid/library".
 	 * @param string $product    The product identifier.
+	 *                           For example: "plugin/plugin.php".
 	 */
 	public function __construct( $dependency, $product = null ) {
 		$this->product = $product;
