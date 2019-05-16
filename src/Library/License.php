@@ -72,21 +72,19 @@ class License {
 		$plugin = ! empty( $_POST['plugin'] ) ? sanitize_text_field( $_POST['plugin'] ) : null;
 
 		if ( empty( $plugin ) ) {
-			wp_send_json_error( __( 'Unknown plugin.', 'boldgrid-connect' ) );
+			wp_send_json_error( __( 'Unknown plugin.', 'boldgrid-library' ) );
 		}
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( __( 'Access denied.', 'boldgrid-connect' ) );
+			wp_send_json_error( __( 'Access denied.', 'boldgrid-library' ) );
 		}
 
 		$success = $this->clearTransient();
 		if ( ! $success ) {
 			wp_send_json_error( array(
 				'string' => sprintf(
-					__(
-						'Failed to clear license data. Unable to delete site transient "%1$s".',
-						'boldgrid-connect'
-					),
+					// translators: 1 The name of a transient that we were unable to delete.
+					__( 'Failed to clear license data. Unable to delete site transient "%1$s".', 'boldgrid-library' ),
 					$this->getKey()
 				),
 			));
@@ -110,17 +108,19 @@ class License {
 	 * @hook: admin_enqueue_scripts
 	 */
 	public function registerScripts() {
+		$handle = 'bglib-license';
+
 		wp_register_script(
-			'bglib-license',
+			$handle,
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/license.js',
 			'jQuery'
 		);
 
 		$translations = array(
-			'unknownError' => __( 'Unknown error', 'boldgrid-connect' ),
+			'unknownError' => __( 'Unknown error', 'boldgrid-library' ),
 		);
 
-		wp_localize_script( 'bglib-license', 'bglibLicense', $translations );
+		wp_localize_script( $handle, 'bglibLicense', $translations );
 	}
 
 	/**
@@ -396,7 +396,7 @@ class License {
 		$isPremium = isset( $this->getData()->$product );
 
 		$this->licenseString = $isPremium ?
-			__( 'Premium', 'boldgrid-connect' ) : __( 'Free', 'boldgrid-connect' );
+			__( 'Premium', 'boldgrid-connect' ) : __( 'Free', 'boldgrid-library' );
 
 		return $isPremium;
 	}

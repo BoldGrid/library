@@ -11,9 +11,45 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.7.3 In progress ###
+### 2.8.0 ###
 
-* Bug fix:                  Bad library versions registered during bulk plugin activation.
+Release date: Apr 16th, 2019
+
+* New feature: "Get a new key" updated to link to BoldGrid Central, and automatically add the key given.
+* New feature: Adding German translations, de_DE.
+* Update: Made translation ready. Text domain changed to boldgrid-library.
+
+### 2.7.7 ###
+
+Release date: Jan 15th, 2019
+
+* Update: Add method to get a plugin's download url from the api server.
+* Update: New system that asks user for bug fixes / new features, or requests plugin rating.
+* Update: Minor updates to the BoldGrid Connect Key prompt.
+
+### 2.7.6 ###
+
+Release date: Dec 5th, 2018
+
+* Update: Inverse logic fixes, is_plugin_active vs is_plugin_inactive.
+
+### 2.7.5 ###
+
+Release date: Dec 4th, 2018
+
+* Bug fix: BoldGrid logo not showing in front end admin bar.
+
+### 2.7.4 ###
+
+Release date: Dec 4th, 2018
+
+* Bug fix: JIRA BGCONN-35   Prevent Connect Key notice on block editor pages.
+
+### 2.7.3 ###
+
+Release date: Nov 27th, 2018
+
+* Feature: Adding Crio's enzo to the admin icons font.
 
 ### 2.7.2 ###
 

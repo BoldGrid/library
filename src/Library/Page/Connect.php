@@ -106,8 +106,8 @@ class Connect {
 	 */
 	public function addScripts() {
 		if ( $this->isConnectScreen( get_current_screen() ) ) {
-			// Enqueue boldgrid-library-connect js.
-			$handle = 'boldgrid-library-connect';
+			// Enqueue bglib-connect js.
+			$handle = 'bglib-connect';
 
 			wp_register_script(
 				$handle,
@@ -118,9 +118,9 @@ class Connect {
 			);
 
 			$translation = array(
-				'settingsSaved' => __( 'Settings saved.', 'boldgrid-connect' ),
-				'unknownError'  => __( 'Unknown error.', 'boldgrid-connect' ),
-				'ajaxError'     => __( 'Could not reach the AJAX URL address. HTTP error: ', 'boldgrid-connect' ),
+				'settingsSaved' => __( 'Settings saved.', 'boldgrid-library' ),
+				'unknownError'  => __( 'Unknown error.', 'boldgrid-library' ),
+				'ajaxError'     => __( 'Could not reach the AJAX URL address. HTTP error: ', 'boldgrid-library' ),
 			);
 
 			wp_localize_script( $handle, 'BoldGridLibraryConnect', $translation );
@@ -159,8 +159,8 @@ class Connect {
 	public function addPage() {
 		add_submenu_page(
 			'options-general.php',
-			__( 'BoldGrid Connect', 'boldgrid-connect' ),
-			__( 'BoldGrid Connect', 'boldgrid-connect' ),
+			'BoldGrid Connect',
+			'BoldGrid Connect',
 			'manage_options',
 			'boldgrid-connect.php',
 			function () {
@@ -186,14 +186,14 @@ class Connect {
 		// Check user permissions.
 		if ( ! current_user_can( 'update_plugins' ) ) {
 			wp_send_json_error( array(
-				'error' => __( 'User access violation!', 'boldgrid-connect' ),
+				'error' => __( 'User access violation!', 'boldgrid-library' ),
 			) );
 		}
 
 		// Check security nonce and referer.
 		if ( ! check_admin_referer( 'boldgrid_library_connect_settings_save' ) ) {
 			wp_send_json_error( array(
-				'error' => __( 'Security violation! Please try again.', 'boldgrid-connect' ),
+				'error' => __( 'Security violation! Please try again.', 'boldgrid-library' ),
 			) );
 		}
 

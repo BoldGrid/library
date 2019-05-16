@@ -69,6 +69,8 @@ class Key {
 		$this->setValid();
 		$this->setLicense();
 		$this->notice = $this->setNotice();
+
+		Filter::add( $this );
 	}
 
 	/**
@@ -168,6 +170,35 @@ class Key {
 		// If we don't have a key stored, or this is not a valid response when calling.
 		if ( ! Configs::get( 'key' ) || ! self::$valid || $forceDisplay ) {
 			return new Notice( 'keyPrompt', $this );
+		}
+	}
+
+	/**
+	 * Add a key.
+	 *
+	 * @since 2.8.0
+	 *
+	 * @param string $key A hashed key.
+	 * @return bool True on success, false on failure.
+	 */
+	public function addKey( $key ) {
+		/*
+		 * @todo The majority of this method has been copied from
+		 * Boldgrid\Library\Library\Notice\KeyPrompt\addKey() because the logic to add a key should
+		 * be in this class and not the KeyPrompt class. that KeyPrompt method needs to be refactored.
+		 */
+
+		// When adding Keys, delete the transient to make sure we get new license info.
+		delete_site_transient( 'bg_license_data' );
+		delete_site_transient( 'boldgrid_api_data' );
+
+		$data = $this->callCheckVersion( array( 'key' => $key ) );
+
+		if ( is_object( $data ) ) {
+			$this->save( $data, $key );
+			return true;
+		} else {
+			return false;
 		}
 	}
 

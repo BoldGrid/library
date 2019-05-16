@@ -33,6 +33,15 @@ class Start {
 		$key;
 
 	/**
+	 * The BoldGrid Library's text domain.
+	 *
+	 * @since 2.8.0
+	 * @access private
+	 * @var string
+	 */
+	private $textdomain = 'boldgrid-library';
+
+	/**
 	 * Initialize class and set class properties.
 	 *
 	 * @since 1.0.0
@@ -48,6 +57,10 @@ class Start {
 		$configs = $this->filterConfigs( $configs );
 
 		$this->configs = new Configs( $configs );
+
+		// Load text domain right after configs are set, otherwise not everything will be translated.
+		$this->loadPluginTextdomain();
+
 		$this->releaseChannel = new ReleaseChannel;
 		Configs::setItem( 'start', $this );
 
@@ -99,12 +112,14 @@ class Start {
 	 * @uses \Boldgrid\Library\Library\Plugin\Checker::run()
 	 */
 	public function init() {
-
 		// Registration class runs Filter::add($this) in __construct.
 		$registration = new \Boldgrid\Library\Library\Registration();
 
 		// Update class runs Filter::add($this) in __construct.
 		$update = new \Boldgrid\Library\Library\Update();
+
+		// PostNewKey class runs Filter::add($this) in __construct.
+		$postNewKey = new \Boldgrid\Library\Library\Key\PostNewKey();
 
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
@@ -113,6 +128,16 @@ class Start {
 		Configs::setItem( 'menu-reseller', new Menu\Reseller() );
 		Configs::setItem( 'page-connect', new Page\Connect() );
 		Configs::setItem( 'assets', new Asset() );
+		new Editor();
+	}
+
+	/**
+	 * Load the library's text domain.
+	 *
+	 * @since 2.8.0
+	 */
+	private function loadPluginTextdomain() {
+		load_textdomain( $this->textdomain, $this->configs->get( 'libraryDir' ) . 'languages/' . $this->textdomain . '-' . get_locale() . '.mo' );
 	}
 
 	/**

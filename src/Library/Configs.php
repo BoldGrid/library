@@ -38,6 +38,7 @@ class Configs {
 	 */
 	public function __construct( $configs = null ) {
 		$defaults = include_once dirname( __DIR__ ) . '/library.global.php';
+
 		self::set( $configs, $defaults );
 	}
 
@@ -53,6 +54,15 @@ class Configs {
 	 */
 	public static function set( $configs, $defaults = null ) {
 		$defaults = $defaults ? $defaults : self::get();
+
+		/**
+		 * Allow the default configs to be filtered.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param array $defaults
+		 */
+		$defaults = apply_filters( 'Boldgrid\Library\Configs\set', $defaults );
 
 		// Check if local library file is added.
 		$localPath = dirname( __DIR__ ) . '/library.local.php';

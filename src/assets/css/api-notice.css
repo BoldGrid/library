@@ -2,30 +2,26 @@
 	display: none;
 }
 
-#container_boldgrid_api_key_notice .dashicons-before:before {
-	padding-right: .8em !important;
+
+/*
+ * #.# BoldGrid Connect Key icon.
+ *
+ * Styles needed specifically for the key icon.
+ */
+#container_boldgrid_api_key_notice .dashicons {
+	float: left;
+	margin-left: -66px;
+}
+
+#container_boldgrid_api_key_notice .dashicons:before {
+	padding-right: .73em !important;
 	font-size: 58px !important;
 	color: #ff6600;
 }
 
 #container_boldgrid_api_key_notice {
 	width: 563px;
-	padding: 1.4em;
-}
-
-#requestKeyForm input {
-	width: 83%;
-	margin: .5em 0;
-}
-
-#requestKeyForm label {
-	display: block;
-}
-
-#container_boldgrid_api_key_notice .envato-claim-message,
-#container_boldgrid_api_key_notice .key-entry-message p {
-	padding-left: 70px;
-	font-size: 14px;
+	padding: 1.4em 1.4em 1.4em 66px;
 }
 
 #container_boldgrid_api_key_notice .change-key,
@@ -105,18 +101,6 @@
     }
 }
 
-#boldgrid_api_key_notice_message,
-.tos-box,
-.key-request-content,
-.enterKeyLink,
-.boldgridApiKeyLink {
-	margin-left: 66px;
-}
-
-#requestKeyMessage {
-	margin-right: 66px;
-}
-
 .error-alerts {
 	color: red;
 }
@@ -130,70 +114,7 @@
 }
 
 input#boldgrid_api_key {
-	margin-left: 66px !important;
 	width: 59%;
-}
-
-.boldgrid-wp-spin {
-	width: 20px;
-	height: 20px;
-	float: left;
-	border-radius: 100%;
-	background-color: #a3a3a3;
-	-webkit-animation: rotation 1.5s infinite linear;
-	-moz-animation: rotation 1.5s infinite linear;
-	-animation: rotation 1.5s infinite linear;
-}
-
-.boldgrid-wp-spin::after {
-	width: 4px;
-	height: 4px;
-	border-radius: 100%;
-	background-color: #fff;
-	position: relative;
-	left: 10px;
-	top: 5px;
-	display: block;
-	content: '';
-}
-
-@ -webkit-keyframes rotation {
-	from {
-		-webkit-transform: rotate(0deg);
-	}
-	to {
-		-webkit-transform: rotate(359deg);
-	}
-}
-
-@ -moz-keyframes rotation {
-	from {
-		-moz-transform: rotate(0deg);
-	}
-	to {
-		-moz-transform: rotate(359deg);
-	}
-}
-
-@ -keyframes rotation {
-	from {
-		-transform: rotate(0deg);
-	}
-	to {
-		-transform: rotate(359deg);
-	}
-}
-
-#boldgrid-api-loading {
-	margin-left: 423px;
-	margin-top: -2em;
-	display: none;
-}
-
-#requestKeyForm .spinner.inline {
-	visibility: visible;
-	float: none;
-	vertical-align: bottom;
 }
 
 .keyprompt-mini {
@@ -210,4 +131,21 @@ input#boldgrid_api_key {
 
 .keyprompt-mini #boldgrid_api_key_notice_message.error-color {
 	color: #dc3232;
+}
+
+
+/**
+ * #.# After key saved successfully within Dashboard > Settings > BoldGrid Connect.
+ *
+ * On this page, the connect key input form is contained within the BoldGrid Library's UI interface.
+ * To give the, "Your key saved successfully!" message a clean look on the page, we add the
+ * .boldgrid-key-saved class to the body and make the following adjustments.
+ */
+.settings_page_boldgrid-connect.boldgrid-key-saved .bg-key-saved {
+	margin-top: 0px;
+}
+
+.settings_page_boldgrid-connect.boldgrid-key-saved .connect-key-management {
+	background: none;
+	border: none;
 }

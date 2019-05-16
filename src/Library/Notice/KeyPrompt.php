@@ -3,7 +3,7 @@
  * BoldGrid Library Key Prompt Notice
  *
  * @package Boldgrid\Library
- * @subpackage \Util
+ * @subpackage \Notice
  *
  * @version 1.0.0
  * @author BoldGrid <wpb@boldgrid.com>
@@ -99,18 +99,22 @@ class KeyPrompt {
 			'strong' => array(),
 		);
 
-		$msg = new \stdClass();
+		$msg          = new \stdClass();
 		$msg->success = sprintf(
 			wp_kses(
 				/* translators: The Url to the BoldGrid Connect settings page. */
-				__( 'Your api key has been saved. To change, see <strong>Settings &#187; <a href="%1$s">BoldGrid Connect</a></strong>.', 'boldgrid-inspirations' ),
+				__( 'Your api key has been saved. To change, see <strong>Settings &#187; <a href="%1$s">BoldGrid Connect</a></strong>.', 'boldgrid-library' ),
 				$allowed_html
 			),
 			admin_url( 'options-general.php?page=boldgrid-connect.php' )
 		);
-		$msg->error = sprintf( esc_html__( 'Your API key appears to be invalid!%sPlease try to enter your BoldGrid Connect Key again.', 'boldgrid-inspirations' ), '<br />' );
-		$msg->nonce = esc_html__( 'Security violation!  An invalid nonce was detected.', 'boldgrid-inspirations' );
-		$msg->timeout = esc_html__( 'Connection timed out. Please try again.', 'boldgrid-inspirations' );
+		$msg->error   = sprintf(
+			// translators: 1 A br / break tag.
+			esc_html__( 'Your API key appears to be invalid!%sPlease try to enter your BoldGrid Connect Key again.', 'boldgrid-library' ),
+			'<br />'
+		);
+		$msg->nonce   = esc_html__( 'Security violation!  An invalid nonce was detected.', 'boldgrid-library' );
+		$msg->timeout = esc_html__( 'Connection timed out. Please try again.', 'boldgrid-library' );
 
 		return $this->messages = $msg;
 	}
@@ -122,15 +126,32 @@ class KeyPrompt {
 	 *
 	 * @hook: admin_enqueue_scripts
 	 */
-	public function enqueue() {
+	public static function enqueue() {
 		wp_enqueue_style(
 			'bglib-api-notice-css',
 			Library\Configs::get( 'libraryUrl' ) .  'src/assets/css/api-notice.css'
 		);
-		wp_enqueue_script(
-			'bglib-api-notice-js',
+
+		$handle = 'bglib-api-notice-js';
+		wp_register_script(
+			$handle,
 			Library\Configs::get( 'libraryUrl' ) .  'src/assets/js/api-notice.js'
 		);
+		wp_localize_script(
+			$handle,
+			'BoldGridLibraryApiNotice',
+			array(
+				'clickEnterKey'       => esc_html__( 'Click here to enter your BoldGrid Connect Key.', 'boldgrid-library' ),
+				'emailRequired'       => esc_html__( 'Please enter a valid e-mail address.', 'boldgrid-library' ),
+				'errorCommunicating'  => esc_html__( 'There was an error communicating with the BoldGrid Connect Key server.  Please try again.', 'boldgrid-library' ),
+				'firstRequired'       => esc_html__( 'First name is required.', 'boldgrid-library' ),
+				'keyRequired'         => esc_html__( 'You must enter a valid BoldGrid Connect Key.', 'boldgrid-library' ),
+				'lastRequired'        => esc_html__( 'Last name is required.', 'boldgrid-library' ),
+				'tosRequired'         => esc_html__( 'You must agree to the Terms of Service before continuing.', 'boldgrid-library' ),
+				'unexpectedError'     => esc_html__( 'An unexpected error occured. Please try again later.', 'boldgrid-library' ),
+			)
+		);
+		wp_enqueue_script( $handle );
 	}
 
 	/**
@@ -202,7 +223,13 @@ class KeyPrompt {
 	 */
 	public function addKey() {
 
-		//When adding Keys, delete the transient to make sure we get new license info.
+		/*
+		 * @todo A section of this code has been duplicated in Boldgrid\Library\Library\Key\addKey()
+		 * because the code for saving a key should be in the Key class and not the KeyPrompt class.
+		 * This method needs to be refactored using that addKey method.
+		 */
+
+		// When adding Keys, delete the transient to make sure we get new license info.
 		delete_site_transient( 'bg_license_data' );
 		delete_site_transient( 'boldgrid_api_data' );
 
@@ -212,7 +239,11 @@ class KeyPrompt {
 
 		if ( is_object( $data ) ) {
 			$this->key->save( $data, $key );
-			wp_send_json_success( array( 'message' => $msg->success ) );
+			wp_send_json_success( array(
+				'message'   => $msg->success,
+				'site_hash' => $data->result->data->site_hash,
+				'api_key'   => apply_filters( 'Boldgrid\Library\License\getApiKey', false ),
+			) );
 		} else {
 			$is_timeout = false !== strpos( $data, 'cURL error 28:' );
 			wp_send_json_error( array( 'message' => $is_timeout ? $msg->timeout : $msg->error ) );

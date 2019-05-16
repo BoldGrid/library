@@ -12,6 +12,9 @@ return array(
 	'apiData' => get_site_transient( 'boldgrid_api_data' ),
 	'themeData' => get_site_transient( 'boldgrid_theme_data' ),
 
+	// When the user needs a Connect Key, the "Get it now" button links here (filters get applied).
+	'getNewKey' => 'https://www.boldgrid.com/central/account/new-key',
+
 	// Enable key validation in library.
 	'keyValidate' => true,
 

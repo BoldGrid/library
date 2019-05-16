@@ -17,122 +17,6 @@
 }
 /** BoldGrid Connect Page End **/
 
-/** Admin Bar Icons **/
-@font-face {
-	font-family: 'boldgrid';
-	src: url('../fonts/boldgrid.eot?-k3w47');
-	src: url('../fonts/boldgrid.eot?#iefix-k3w47')
-		format('embedded-opentype'), url('../fonts/boldgrid.woff?-k3w47')
-		format('woff'), url('../fonts/boldgrid.ttf?-k3w47') format('truetype'),
-		url('../fonts/boldgrid.svg?-k3w47#boldgrid') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'bg-admin-icons';
-	src: url('../fonts/bg-admin-icons.eot?11633397');
-	src: url('../fonts/bg-admin-icons.eot?11633397#iefix')
-		format('embedded-opentype'),
-		url('../fonts/bg-admin-icons.woff?11633397') format('woff'),
-		url('../fonts/bg-admin-icons.ttf?11633397') format('truetype'),
-		url('../fonts/bg-admin-icons.svg?11633397#bg-admin-icons')
-		format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-#toplevel_page_boldgrid-transactions .wp-menu-image::before,
-#toplevel_page_boldgrid-inspirations .wp-menu-image:not(.dashicons-lightbulb)::before {
-	content: "\e801";
-	font-family: "bg-admin-icons";
-	font-style: normal;
-	font-weight: normal;
-	font-size: 19px;
-	speak: none;
-	display: inline-block;
-	text-decoration: inherit;
-	width: 1em;
-	margin-right: .2em;
-	text-align: center;
-	/* opacity: .8; */
-	/* For safety - reset parent styles, that can break glyph codes*/
-	font-variant: normal;
-	text-transform: none;
-	/* fix buttons height, for twitter bootstrap */
-	line-height: 1em;
-	/* Animation center compensation - margins should be symmetric */
-	/* remove if not needed */
-	margin-left: .2em;
-	/* You can be more comfortable with increased icons size */
-	/* font-size: 120%; */
-	/* Font smoothing. That was taken from TWBS */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.toplevel_page_boldgrid-inspirations #step-2 .theme-browser .theme .theme-screenshot {
-	overflow: visible;
-}
-
-.toplevel_page_boldgrid-inspirations #step-2 .theme-browser .theme .theme-name {
-	position: relative;
-}
-
-.theme-install-php  .theme-browser .theme .theme-screenshot img,
-.toplevel_page_boldgrid-inspirations #step-2 .theme-browser .theme .theme-screenshot img {
-	transition: opacity 0s;
-}
-
-.theme-install-php .theme-browser .theme .theme-name,
-.toplevel_page_boldgrid-inspirations #step-2 .theme-browser .theme .theme-name {
-	background-color: #FAFAFA;
-}
-
-#toplevel_page_boldgrid-transactions .wp-menu-image::before {
-	content: "\e800";
-}
-
-.whh-icon:before {
-	content: "\e601";
-	font-family: 'boldgrid';
-	speak: none;
-	font-size: large;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.imh-icon:before {
-	content: "\e602";
-	font-family: 'boldgrid';
-	speak: none;
-	font-size: large;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.boldgrid-icon:before {
-	content: "\e600";
-	font-family: 'boldgrid';
-	speak: none;
-	font-size: large;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-/** Admin Bar Icons End **/
-
 /** div-table classes Start **/
 .div-table {
 	display: table;
@@ -183,6 +67,10 @@
 	vertical-align: bottom;
 	margin-left: 0px;
 }
+/* When a spinner ends up flush right to an element, add .spinner-left to give it some left margin. */
+.spinner.spinner-left {
+	margin-left: 5px;
+}
 .spinner.inline.middle {
 	vertical-align: middle;
 }
@@ -192,6 +80,13 @@
 
 div .dashicons {
 	vertical-align: bottom;
+}
+
+/* WordPress has .dashicons-before, but not .dashicons-after. */
+.dashicons-before.dashicons-after:before {
+	float: right;
+	margin-top: 0.2em;
+	padding-left: 0.3em;
 }
 
 .dashicons-editor-help {
@@ -259,4 +154,65 @@ div .dashicons {
 
 .bglib-collapsible-control + .div-table-row > .div-tableCell:first-of-type {
 	padding-top: 10px;
+}
+
+
+/*
+ * #.# BoldGrid Orange
+ *
+ * Style various elements with BoldGrid's orange color.
+ *
+ * When replacing various WordPress blues and other colors, here's a list of WordPress colors as
+ * replaced by BoldGrid colors.
+ *
+ * #0085ba / #f95b26
+ * #0073aa / #f84d13
+ * #006799 / #f04207
+ * #66c6e4 / #fcb49c
+ * #008ec2 / #f96a39
+ * #007cb2 / #e05f33
+ * #33b3db / #fa865f
+ */
+
+.boldgrid-orange {
+	color: #f95b26;
+}
+
+.boldgrid-orange-important {
+	color: #f95b26 !important;
+}
+
+.boldgrid-orange-border {
+	border: 1px solid #f95b26;
+}
+
+.wp-core-ui .button.boldgrid-orange {
+	background: #f95b26;
+	border-color: #f84d13 #f04207 #f04207;
+	box-shadow: 0 1px 0 #f04207;
+	text-decoration: none;
+	text-shadow: 0 -1px 1px #f04207, 1px 0 1px #f04207, 0 1px 1px #f04207, -1px 0 1px #f04207;
+}
+
+.wp-core-ui .button.boldgrid-orange:hover {
+	background: #f96a39;
+	border-color: #f04207;
+}
+
+.wp-core-ui .button.boldgrid-orange:focus {
+	box-shadow: 0 1px 0 #f84d13, 0 0 2px 1px #fa865f;
+	background: #f96a39;
+	border-color: #f04207;
+}
+
+.wp-core-ui .button.boldgrid-orange:active {
+	background: #f84d13;
+	border-color: #f04207;
+	box-shadow: inset 0 2px 0 #f04207;
+}
+
+.wp-core-ui .button.boldgrid-orange[disabled] {
+	background: #f96a39 !important;
+    border-color: #e05f33 !important;
+	color: #fcb49c !important;
 }
