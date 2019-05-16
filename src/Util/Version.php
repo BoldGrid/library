@@ -42,6 +42,7 @@ class Version {
 	 * @since 1.0.0
 	 *
 	 * @param string $dependency The dependency to check the version data of.
+	 *                           For example: "boldgrid/library".
 	 * @param string $product    The product identifier.
 	 */
 	public function __construct( $dependency, $product = null ) {
@@ -58,7 +59,7 @@ class Version {
 	 * @return mixed $version Normalized version number if found or null.
 	 */
 	public function setVersion() {
-		$wp_filesystem = self::getWpFilesystem();
+		$version = null;
 
 		// First, get the path to 'vendor/composer/installed.json'.
 		if ( method_exists( 'Boldgrid\Library\Util\Load', 'determinePath' ) ) {
@@ -68,18 +69,11 @@ class Version {
 			$installedFile = wp_normalize_path( realpath( __DIR__ . '/../../../../' ) ) . '/composer/installed.json';
 		}
 
-		// Then, read the contents of 'vendor/composer/installed.json'.
-		if ( 'direct' === get_filesystem_method() ) {
-			$file = $wp_filesystem->get_contents(  $installedFile );
-		} else {
-			$installedUrl = str_replace( ABSPATH, get_site_url() . '/', $installedFile );
-			$file = wp_remote_retrieve_body( wp_remote_get( $installedUrl ) );
-		}
-
+		// Get the contents of the 'vendor/composer/installed.json' file as an array.
+		$file      = $this->getContents( $installedFile );
 		$installed = json_decode( $file, true );
 
 		// Check for dep's installed version.
-		$version = null;
 		if ( $installed ) {
 			foreach( $installed as $key => $value ) {
 				if ( $value['name'] === $this->getDependency() ) {
@@ -112,6 +106,31 @@ class Version {
 		}
 
 		return $wp_filesystem;
+	}
+
+	/**
+	 * Get the contents of a file.
+	 *
+	 * @since  2.8.1
+	 *
+	 * @param  string $filepath The path to a file.
+	 * @return string
+	 */
+	public function getContents( $filepath ) {
+		$wp_filesystem = self::getWpFilesystem();
+
+		$file = '';
+
+		if ( $wp_filesystem->exists( $filepath ) ) {
+			if ( 'direct' === get_filesystem_method() ) {
+				$file = $wp_filesystem->get_contents(  $filepath );
+			} else {
+				$installedUrl = str_replace( ABSPATH, get_site_url() . '/', $filepath );
+				$file = wp_remote_retrieve_body( wp_remote_get( $installedUrl ) );
+			}
+		}
+
+		return $file;
 	}
 
 	/**
