@@ -63,7 +63,7 @@ class Version {
 		$version = null;
 
 		// First, get the path to 'vendor/composer/installed.json'.
-		if ( method_exists( 'Boldgrid\Library\Util\Load', 'determinePath' ) ) {
+		if ( ! empty( $this->product ) && method_exists( 'Boldgrid\Library\Util\Load', 'determinePath' ) ) {
 			$installedFile = trailingslashit( \Boldgrid\Library\Util\Load::determinePath( $this->product ) ) . 'vendor/composer/installed.json';
 		} else {
 			// This is suitable when activating a single plugin, but will result in false data if bulk.
