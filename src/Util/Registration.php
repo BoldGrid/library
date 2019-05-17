@@ -61,7 +61,7 @@ class Registration implements Registration\RegistrationInterface {
 	public function register() {
 
 		// Check the dependency version.
-		$version = new Version( $this->getDependency() );
+		$version = new Version( $this->getDependency(), $this->product );
 		Option::set( $this->getProduct(), $version->getVersion() );
 	}
 
