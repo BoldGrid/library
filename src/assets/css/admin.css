@@ -216,3 +216,9 @@ div .dashicons {
     border-color: #e05f33 !important;
 	color: #fcb49c !important;
 }
+
+#boldgrid_rss_widget .rss-date {
+	margin-left: 1em;
+	color: #72777c;
+	font-size: 13px;
+}

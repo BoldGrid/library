@@ -11,6 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.9.0 In progress =
+* New feature: Added A BoldGrid RSS feed to the dashboard.
+
 ### 2.8.2 ###
 
 Release date: June 7th, 2019
