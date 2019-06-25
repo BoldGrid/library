@@ -53,7 +53,7 @@ class Rss {
 	 */
 	public function render_widget() {
 		// Build the URL address.  Include some info to get custom news.
-		$url     = 'https://dev.boldgrid.com/tag/dashboard/feed/?';
+		$url     = 'https://www.boldgrid.com/tag/dashboard/feed/?';
 		$plugins = [];
 
 		foreach ( get_plugins() as $slug => $info ) {
