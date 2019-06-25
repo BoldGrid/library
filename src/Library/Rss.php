@@ -52,8 +52,23 @@ class Rss {
 	 * @since 1.11.0
 	 */
 	public function render_widget() {
+		// Build the URL address.  Include some info to get custom news.
+		$url     = 'https://www.boldgrid.com/tag/dashboard/feed/?';
+		$plugins = [];
+
+		foreach ( get_plugins() as $slug => $info ) {
+			$plugins[] = $slug . '-' . $info['Version'];
+		}
+
+		$data = [
+			'key'       => Configs::get( 'key' ),
+			'plugins'   => implode( ',', $plugins ),
+			'wpversion' => get_bloginfo( 'version' ),
+		];
+		$url .= 'data=' . rawurlencode( gzdeflate( http_build_query( $data ) ) );
+
 		// Get a SimplePie feed object from the specified feed source.
-		$rss      = fetch_feed( 'https://www.boldgrid.com/tag/dashboard/feed/' );
+		$rss      = fetch_feed( $url );
 		$maxItems = 0;
 
 		if ( ! is_wp_error( $rss ) ) {
@@ -71,15 +86,8 @@ class Rss {
 				<li><?php esc_html_e( 'There are no updates to show right now.', 'boldgrid-library' ); ?></li>
 				<?php
 			} else {
-				$dateFormat  = get_option( 'date_format' );
-				$timeFormat  = get_option( 'time_format' );
-				$allowedTags = [
-					'a' => [
-						'href'   => [],
-						'target' => [],
-						'title'  => [],
-					],
-				];
+				$dateFormat = get_option( 'date_format' );
+				$timeFormat = get_option( 'time_format' );
 
 				foreach ( $rssItems as $item ) {
 					?>
@@ -98,7 +106,13 @@ class Rss {
 								esc_attr( $item->get_date( 'l, ' . $dateFormat . ' ' . $timeFormat ) ),
 								esc_html( wp_html_excerpt( $item->get_content(), 250 ) . ' ...' )
 							),
-							$allowedTags
+							[
+								'a' => [
+									'href'   => [],
+									'target' => [],
+									'title'  => [],
+								],
+							]
 						);
 						?>
 					</li></div>
