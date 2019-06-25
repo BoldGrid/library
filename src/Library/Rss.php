@@ -53,19 +53,24 @@ class Rss {
 	 */
 	public function render_widget() {
 		// Build the URL address.  Include some info to get custom news.
-		$url     = 'https://www.boldgrid.com/tag/dashboard/feed/?';
+		$url     = 'https://dev.boldgrid.com/tag/dashboard/feed/?';
 		$plugins = [];
 
 		foreach ( get_plugins() as $slug => $info ) {
-			$plugins[] = $slug . '-' . $info['Version'];
+			$plugins[] = [
+				'slug'    => $slug,
+				'version' => $info['Version'],
+				'active'  => is_plugin_active( $slug ),
+			];
 		}
 
-		$data = [
-			'key'       => Configs::get( 'key' ),
-			'plugins'   => implode( ',', $plugins ),
-			'wpversion' => get_bloginfo( 'version' ),
-		];
-		$url .= 'data=' . rawurlencode( gzdeflate( http_build_query( $data ) ) );
+		$url .= 'data=' . rawurlencode( gzdeflate( wp_json_encode(
+			[
+				'key'       => Configs::get( 'key' ),
+				'plugins'   => $plugins,
+				'wpversion' => get_bloginfo( 'version' ),
+			]
+		) ) );
 
 		// Get a SimplePie feed object from the specified feed source.
 		$rss      = fetch_feed( $url );
