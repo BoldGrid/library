@@ -82,4 +82,5 @@ return array(
 		'get_theme_data' => '/api/open/get-theme-data',
 		'get_asset'      => '/api/open/get-asset',
 	),
+	'rssUrl' => 'https://www.boldgrid.com/tag/dashboard/feed/',
 );

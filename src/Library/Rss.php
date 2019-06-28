@@ -31,7 +31,7 @@ class Rss {
 	/**
 	 * Add the widget to the WordPress dashboard.
 	 *
-	 * @since 1.11.0
+	 * @since 2.0.0
 	 *
 	 * @hook: wp_dashboard_setup
 	 */
@@ -52,23 +52,29 @@ class Rss {
 	 * @since 1.11.0
 	 */
 	public function render_widget() {
-		// Build the URL address.  Include some info to get custom news.
-		$url     = 'https://www.boldgrid.com/tag/dashboard/feed/?';
-		$plugins = [];
+		// Build the URL address.  Include some info to get custom BoldGrid news.
+		$url       = Configs::get('rssUrl') . '?key=' . Configs::get('key');
+		$plugins   = [];
+		$bgPlugins = array_merge(
+			array_keys(Configs::get('pluginInstaller')['plugins']),
+			array_keys(Configs::get('pluginInstaller')['wporgPlugins'])
+		);
 
+		// Get data for only BoldGrid plugins.
 		foreach ( get_plugins() as $slug => $info ) {
-			$plugins[] = [
-				'slug'    => $slug,
-				'version' => $info['Version'],
-				'active'  => is_plugin_active( $slug ),
-			];
+			if ( preg_grep('~' . strtok($slug, '/') . '~', $bgPlugins) ) {
+				$plugins[] = [
+					'slug'    => $slug,
+					'version' => $info['Version'],
+					'active'  => is_plugin_active( $slug ),
+				];
+			}
 		}
 
-		$url .= 'data=' . rawurlencode( gzdeflate( wp_json_encode(
+		$url .= '&data=' . rawurlencode( gzdeflate( wp_json_encode(
 			[
-				'key'       => Configs::get( 'key' ),
-				'plugins'   => $plugins,
-				'wpversion' => get_bloginfo( 'version' ),
+				'locale'  => get_locale(),
+				'plugins' => $plugins,
 			]
 		) ) );
 
