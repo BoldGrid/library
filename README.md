@@ -13,6 +13,8 @@ composer require boldgrid/library
 
 ### 2.9.1 ###
 
+Release date: July 25th, 2019
+
 * Update: Added a trailing slash to Central url for the Reseller.
 
 ### 2.9.0 ###
