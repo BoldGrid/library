@@ -11,7 +11,7 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.9.1 ###
+### 2.9.2 ###
 
 Release date: August 1st, 2019
 
