@@ -69,8 +69,6 @@ class Card {
 	 * @return mixed.
 	 */
 	public function print( $echo = true ) {
-		$have_title_content  = ! empty( $this->title ) || ! empty( $this->subTitle );
-
 		// Create the opening tag.
 		$markup = '<div class="bglib-card" ';
 		if ( ! empty( $this->id ) ) {
