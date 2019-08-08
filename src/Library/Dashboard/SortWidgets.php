@@ -131,6 +131,11 @@ class SortWidgets {
 		foreach ( $this->getConfigs() as $id => $configs ) {
 			$widget = $this->getWidget( $id );
 
+			$invalidData = empty( $widget['container'] ) || empty( $widget['priority'] );
+			if ( $invalidData  ) {
+				continue;
+			}
+
 			// First, remove the widget from where it is now.
 			unset( $wp_meta_boxes['dashboard'][$widget['container']][$widget['priority']][$id] );
 
