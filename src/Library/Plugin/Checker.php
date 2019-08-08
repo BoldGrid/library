@@ -71,14 +71,14 @@ class Checker {
 	 * Find updated/new BoldGrid plugins.
 	 *
 	 * Check for post-update actions for BoldGrid plugins.
+	 * The updated plugins' data is collected and returned.
+	 * We also mark the last check timestamp for each plugin in the boldgrid_settings WP Option.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @link https://developer.wordpress.org/reference/functions/get_site_option/
-	 * @see get_option()
 	 * @see Boldgrid\Library\Util\Plugin::getFiltered()
 	 *
-	 * @return bool
+	 * @return array Array of plugins' data that was updated.
 	 */
 	public function findUpdated() {
 		$updated = array();
@@ -87,11 +87,13 @@ class Checker {
 
 		$plugins = get_site_transient( 'boldgrid_plugins_filtered' );
 
+		// If our filtered plugin transient has expired or is empty, then build and save it.
 		if ( empty( $plugins ) ) {
 			$plugins = \Boldgrid\Library\Library\Util\Plugin::getFiltered( $this->pluginPattern );
 			set_site_transient( 'boldgrid_plugins_filtered', $plugins );
 		}
 
+		// Iterate through our plugins and build the updated array and mark as checked in settings.
 		foreach ( $plugins as $slug => $data ) {
 			if ( empty( $boldgridSettings['plugins_checked'][ $slug ][ $data['Version'] ] ) ) {
 				$updated[ $slug ] = $data;
@@ -125,7 +127,10 @@ class Checker {
 			$boldgridSettings['plugins_checked'][ $slug ][ $data['Version'] ] = time();
 		}
 
-		if ( $updated ) {
+		// If plugin information was updated, then save boldgrid_settings and delete transients.
+		if ( ! empty( $updated ) ) {
+			update_option( 'boldgrid_settings', $boldgridSettings );
+
 			/**
 			 * When one or more BoldGrid plugins are updated or new, then delete plugin transients.
 			 *
@@ -133,8 +138,6 @@ class Checker {
 			 */
 			do_action( 'boldgrid_plugins_updated' );
 		}
-
-		update_option( 'boldgrid_settings', $boldgridSettings );
 
 		return $updated;
 	}

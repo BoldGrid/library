@@ -11,10 +11,41 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.9.0 In progress ###
+### In progress ###
 
 * New feature: Show BoldGrid News widget in the dashboard.
 * New feature: Show BoldGrid Notifications widget in the dashboard.
+
+### 2.9.2 ###
+
+Release date: August 1st, 2019
+
+* Bug fix: Optimized plugin checker.
+* Updated: Updated deps.
+
+### 2.9.1 ###
+
+Release date: July 25th, 2019
+
+* Update: Added a trailing slash to Central url for the Reseller.
+
+### 2.9.0 ###
+
+Release date: July 2nd, 2019
+
+* New feature: Added A BoldGrid RSS feed to the dashboard.
+
+### 2.8.2 ###
+
+Release date: June 7th, 2019
+
+* Update: Updated dependencies.
+
+### 2.8.1 ###
+
+Release date: May 21st, 2019
+
+* Bug fix: Ensure correct library versions are set during bulk activation.
 
 ### 2.8.0 ###
 

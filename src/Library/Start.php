@@ -139,6 +139,9 @@ class Start {
 		Configs::setItem( 'page-connect', new Page\Connect() );
 		Configs::setItem( 'assets', new Asset() );
 		new Editor();
+
+		// Instantiate the BoldGrid RSS feed widget for the WordPress Dashboard.
+		new Rss();
 	}
 
 	/**

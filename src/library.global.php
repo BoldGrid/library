@@ -89,7 +89,7 @@ return array(
 	/*
 	 * A list of BoldGrid (and related) plugins.
 	 *
-	 * @since 2.9.0
+	 * @since xxx
 	 *
 	 * @todo Above, there are 2 additional arrays of plugins. They should all be combined into 1 and
 	 *       use attributes to indicated which group they belong to, such as:
@@ -133,4 +133,6 @@ return array(
 			'priority'  => 'core',
 		),
 	),
+
+	'rssUrl' => 'https://www.boldgrid.com/tag/dashboard/feed/',
 );

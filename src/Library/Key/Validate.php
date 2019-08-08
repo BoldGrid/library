@@ -41,7 +41,7 @@ class Validate {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $key The API key to validate.
+	 * @param string $key The API key to validate.
 	 */
 	public function __construct( $key ) {
 		$this->setKey( $key );

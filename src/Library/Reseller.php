@@ -25,7 +25,7 @@ class Reseller {
 	 *
 	 * @var string
 	 */
-	public $centralUrl = 'https://www.boldgrid.com/central';
+	public $centralUrl = 'https://www.boldgrid.com/central/';
 
 	/**
 	 * Reseller data.
@@ -44,6 +44,21 @@ class Reseller {
 	public function __construct() {
 		$this->setData();
 		Filter::add( $this );
+	}
+
+	/**
+	 * Whether or not the reseller has a unique coin url.
+	 *
+	 * By default, the "purchase more coins" url (reseller_coin_url) is set to be the BoldGrid
+	 * Central url (https://www.boldgrid.com/central/). This method returns true if the reseller
+	 * has their own coin url.
+	 *
+	 * @since 2.9.1
+	 *
+	 * @return bool
+	 */
+	public function hasCoinUrl() {
+		return trailingslashit( $this->centralUrl ) !== trailingslashit( $this->data['reseller_coin_url'] );
 	}
 
 	/**
