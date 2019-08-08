@@ -37,6 +37,16 @@ class Card {
 	public $icon;
 
 	/**
+	 * Features.
+	 *
+	 * An array of features.
+	 *
+	 * @since xxx
+	 * @var array
+	 */
+	public $features;
+
+	/**
 	 * Id.
 	 *
 	 * @since xxx
@@ -69,6 +79,12 @@ class Card {
 	 * @return mixed.
 	 */
 	public function print( $echo = true ) {
+		// Before printing, initialize all of the features.
+		foreach ( $this->features as $feature ) {
+			$feature->init();
+			$this->footer .= $feature->print( false );
+		}
+
 		// Create the opening tag.
 		$markup = '<div class="bglib-card" ';
 		if ( ! empty( $this->id ) ) {
