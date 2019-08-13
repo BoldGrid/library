@@ -27,14 +27,23 @@ class Dashboard {
 	public $cards = [];
 
 	/**
+	 * Enqueue scripts.
+	 *
+	 * @since xxx
+	 */
+	public static function enqueueScripts() {
+		wp_enqueue_style( 'bglib-dashboard',
+			Configs::get( 'libraryUrl' ) . 'src/assets/css/dashboard.css'
+		);
+	}
+
+	/**
 	 * Print Cards.
 	 *
 	 * @since xxx
 	 */
 	public function printCards() {
-		wp_enqueue_style( 'bglib-dashboard',
-			Configs::get( 'libraryUrl' ) . 'src/assets/css/dashboard.css'
-		);
+		$this->enqueueScripts();
 
 		echo '<div class="bglib-card-container">';
 

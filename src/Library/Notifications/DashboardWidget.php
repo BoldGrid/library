@@ -12,20 +12,25 @@
 namespace Boldgrid\Library\Library\Notifications;
 
 use Boldgrid\Library\Library\Configs;
+use Boldgrid\Library\Library\Plugin\Plugins;
 use Boldgrid\Library\Library\Filter;
 use Boldgrid\Library\Library\License;
 use Boldgrid\Library\Library\Plugin\Updater;
+use Boldgrid\Library\Library\Ui\Dashboard;
 
 /**
  * BoldGrid Library Notifications Dashboard Widget Class.
  *
- * @since 2.9.0
+ * This class is responsible for rendering the "BoldGrid Notifications" widget on the WordPress
+ * dashboard.
+ *
+ * @since xxx
  */
 class DashboardWidget {
 	/**
 	 * Initialize class and set class properties.
 	 *
-	 * @since 2.9.0
+	 * @since xxx
 	 */
 	public function __construct() {
 		Filter::add( $this );
@@ -34,7 +39,7 @@ class DashboardWidget {
 	/**
 	 * Enqueue scripts.
 	 *
-	 * @since 2.9.0
+	 * @since xxx
 	 *
 	 * @param string $hook
 	 */
@@ -52,135 +57,36 @@ class DashboardWidget {
 	}
 
 	/**
-	 * Display our Dashboard widget.
+	 * Print the "BoldGrid Notifications" WordPress Dashboard widget.
 	 *
-	 * The following visual should help show how things are setup:
-	 * ----
-	 * BoldGrid Notifications
-	 * # Item
-	 * ## icon | title | version
-	 * ## sub items
-	 *
-	 * @since 2.9.0
+	 * @since xxx
 	 */
-	public function displayWidget() {
-		$items = $this->getItems();
+	public function printWidget() {
+		Dashboard::enqueueScripts();
 
-		foreach( $items as $item ) {
-			/**
-			 * Allow items to be filtered.
-			 *
-			 * @since 2.9.0
-			 *
-			 * @param array $item The item to be filtered.
-			 */
-			$item = apply_filters( 'Boldgrid\Library\Notifications\DashboardWidget\displayWidget\\' . $item['type'] . '-' . $item['slug'], $item );
+		$card = new \Boldgrid\Library\Library\Ui\Card();
 
-			if ( empty( $item['wrapper']['attributes']['class'] ) ) {
-				$item['wrapper']['attributes']['class'] = 'bglib-item';
-			} else {
-				$item['wrapper']['attributes']['class'] .= ' bglib-item';
-			}
-
-			// Generate the attributes of our div container.
-			$attributes = '';
-			foreach( $item['wrapper']['attributes'] as $attribute => $value ) {
-				$attributes .= $attribute . '="' . esc_attr( $value ) . '" ';
-			}
-
-			echo '
-			<div ' . $attributes . '>
-				<div class="bglib-icon-container">' .
-					$item['icon'] . '
-				</div>
-				<div class="bglib-title-container">
-					<p class="bglib-title">' . esc_html( $item['title'] ) . '</p>
-				</div>
-				<div class="bglib-version-container">
-					<p class="bglib-version ' . esc_attr( $item['version']['class'] ) . '"> ' . $item['version']['markup'] . '</p>
-				</div>
-				<div style="clear:both;"></div>
-				<div class="bglib-subitems">'
-					. implode( '', $item['subItems'] ) . '
-				</div>
-			</div>';
-		}
-	}
-
-	/**
-	 * Get all items.
-	 *
-	 * @since 2.9.0
-	 *
-	 * @return array
-	 */
-	public function getItems() {
-		// Add plugins.
-		$items = $this->getItemsPlugins();
-
-		// Add Connect Key.
-		array_push( $items, $this->getItemKey() );
-
-		return $items;
-	}
-
-	/**
-	 * Get BoldGrid Plugin items.
-	 *
-	 * Each active BoldGrid plugin will be an item within the widget. This method loops through all
-	 * active BoldGrid plugins and gets their item.
-	 *
-	 * @since 2.9.0
-	 *
-	 * @return array.
-	 */
-	public function getItemsPlugins() {
-		$items = array();
-
-		$activePlugins = $this->getActivePlugins();
+		// Add all of our active plugins.
+		$activePlugins = Plugins::getActive();
 		foreach( $activePlugins as $plugin ) {
-			$items[] = $this->getItemPlugin( $plugin );
+			$card->features[] = $this->getFeaturePlugin( $plugin );
 		}
 
-		return $items;
+		// Add a "feature" for free / premium.
+		$card->features[] = $this->getFeatureKey();
+
+		$card->print();
 	}
 
 	/**
-	 * Get our active plugins.
+	 * Get the "feature" for our BoldGrid Connect Key.
 	 *
-	 * Active plugins will be displayed in the dashboard widget.
+	 * @since xxx
 	 *
-	 * @since 2.9.0
-	 *
-	 * @return array
+	 * @return \Boldgrid\Library\Library\Ui\Feature
 	 */
-	public function getActivePlugins() {
-		// Get an array of plugins that should be within the widget.
-		$plugins = Configs::getPlugins( array(
-			'inNotificationsWidget' => true,
-		) );
-
-		// Then filter that array of plugins to get our active plugins.
-		$activePlugins = array();
-		foreach( $plugins as $plugin ) {
-			if ( $plugin->isActive() ) {
-				$activePlugins[] = $plugin;
-			}
-		}
-		unset( $plugins );
-
-		return $activePlugins;
-	}
-
-	/**
-	 * Get our "BoldGrid Connect Key" item for the dashboard widget.
-	 *
-	 * @since 2.9.0
-	 *
-	 * @return array
-	 */
-	public function getItemKey( ) {
-		$subItems = array();
+	public function getFeatureKey( ) {
+		$feature = new \Boldgrid\Library\Library\Ui\Feature();
 
 		/*
 		 * Get our license string: "None", "Free", "Premium".
@@ -202,109 +108,84 @@ class DashboardWidget {
 			$licenseString = $license->getLicenseString();
 		}
 
+		$feature->title = esc_html__( 'BoldGrid Connect Key', 'boldgrid-backup' );
+
 		switch( $licenseString ) {
 			case 'None':
-				$icon          = '<span class="dashicons dashicons-admin-network"></span>';
-				$versionClass  = 'dashicons-before dashicons-warning';
-				$versionMarkup = '
-					<a href="' . admin_url( 'options-general.php?page=boldgrid-connect.php' ) . '">' .
-						esc_html( 'Please install your Connect Key', 'boldgrid-library' ) . '
-					</a>';
-				$subItems[]    = '
-					<p>
-						<a href="' . esc_url( Configs::get( 'getNewKey' ) ) . '">' . esc_html__( 'Click here to access BoldGrid Central and obtain a key', 'boldgrid-library' ) . '</a>
-					</p>';
+				$feature->icon    = '<span class="dashicons dashicons-admin-network"></span>';
+				$feature->content = '<div class="notice notice-warning inline"><p><a href="' . admin_url( 'options-general.php?page=boldgrid-connect.php' ) . '">' . esc_html__( 'Please install your Connect Key', 'boldgrid-library' ) . '</a></p></div>';
 				break;
 			case 'Free':
-				$icon          = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
-				$versionClass  = 'dashicons-before dashicons-yes';
-				$versionMarkup = __( 'Free Connect Key Installed', 'boldgrid-library' );
-				$subItems[]    = '
-					<p>
-						<a href="' . esc_url( Configs::get( 'learnMore' ) ) . '">' .
-							esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) . '
-						</a>
-					</p>';
+				$feature->icon    = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
+				$feature->content = '<div class="notice notice-warning inline"><p><a href="' . esc_url( Configs::get( 'learnMore' ) ) . '">' .	esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) . '</a></p></div>';
 				break;
 			case 'Premium':
-				$icon          = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
-				$versionClass  = 'dashicons-before dashicons-yes';
-				$versionMarkup = __( 'Premium Connect Key Installed', 'boldgrid-library' );
+				$feature->icon    = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
+				$feature->content = esc_html__( 'Premium Connect Key Installed!', 'boldgrid-library' );
 				break;
 		}
 
-		$item = array(
-			'type'     => 'key',
-			'slug'     => 'bck',
-			'icon'     => $icon,
-			'version'  => array(
-				'markup' => $versionMarkup,
-				'class'  => $versionClass,
-			),
-			'subItems' => $subItems,
-			'title'    => 'BoldGrid Connect Key',
-		);
-
-		return $item;
+		return $feature;
 	}
 
 	/**
-	 * Get the item for a single plugin.
+	 * Get the "feature" for a plugin.
 	 *
-	 * @since 2.9.0
+	 * @since xxx
 	 *
-	 * @param Boldgrid\Library\Library\Plugin\Plugin $plugin
-	 * @return array
+	 * @param  \Boldgrid\Library\Library\Plugin\Plugin A plugin object.
+	 * @return \Boldgrid\Library\Library\Ui\Feature    A feature object.
 	 */
-	public function getItemPlugin( $plugin ) {
-		$subItems = array();
-
+	public function getFeaturePlugin( $plugin ) {
+		// Get the markup for the plugin's icon.
 		$icons = $plugin->getIcons();
-		$icon  = empty( $icons ) ? '<span class="dashicons dashicons-admin-plugins"></span>' : '<img src="' . array_values( $icons )[0] . '" />';
-
-		// Adding the plugin's version info.
-		$versionMarkup = '<span class="bglib-version-status">';
-		switch( $plugin->hasUpdate() ) {
-			case true:
-				$versionMarkup .= __( 'Update Available', 'boldgrid-library' );
-				$versionClass   = 'dashicons-before dashicons-warning';
-
-				// Add the markup to upgdate the plugin.
-				$updater    = new Updater( $plugin->getSlug() );
-				$subItems[] = $updater->getMarkup();
-				break;
-			case false:
-				$versionMarkup .= __( 'Up to Date', 'boldgrid-library' );
-				$versionClass   = 'dashicons-before dashicons-yes';
-				break;
+		if ( empty( $icons ) ) {
+			$icon = '<span class="dashicons dashicons-admin-plugins"></span>';
+		} else {
+			$iconUrl = ! empty( $icons['1x'] ) ? $icons['1x'] : reset( $icons );
+			$icon = '<img src="' . esc_url( $iconUrl ) . '" />';
 		}
-		$versionMarkup .= '</span>';
 
-		$item = array(
-			'type'     => 'plugin',
-			'slug'     => $plugin->getSlug(),
-			'title'    => $plugin->getData( 'Name' ),
-			'version'  => array(
-				'markup' => $versionMarkup,
-				'class'  => $versionClass,
-			),
-			'subItems' => $subItems,
-			'wrapper'  => array(
-				'attributes' => array(
-					'class'       => 'bglib-plugin-notifications',
-					'data-plugin' => $plugin->getFile(),
+		$feature = new \Boldgrid\Library\Library\Ui\Feature();
+
+		$feature->title = $plugin->getData( 'Name' );
+
+		$feature->icon = $icon;
+
+		if ( $plugin->hasUpdate() ) {
+			$feature->content = '<div class="notice notice-warning inline"><p>' . wp_kses(
+				sprintf(
+					__( '%1$s is out of date. %2$sFix this%3$s.', 'boldgrid-backup' ),
+					$plugin->getData( 'Name' ),
+					'<a href="' . esc_url( admin_url( 'update-core.php' ) ) . '">',
+					'</a>'
 				),
-			),
-			'icon'    => $icon,
-		);
+				[ 'a' => [ 'href' => [] ] ]
+			) . '</p></div>';
+		}
 
-		return $item;
+		/**
+		 * Allow items to be filtered.
+		 *
+		 * @since xxx
+		 *
+		 * @param \Boldgrid\Library\Library\Ui\Feature    The feature object.
+		 * @param \Boldgrid\Library\Library\Plugin\Plugin The plugin object.
+		 */
+		$feature = apply_filters( 'Boldgrid\Library\Notifications\DashboardWidget\getFeaturePlugin\\' . $plugin->getSlug(), $feature, $plugin );
+
+		if ( empty( $feature->content ) ) {
+			$feature->content = __( 'No issues to report!', 'boldgrid-library' );
+		}
+
+		return $feature;
 	}
+
 
 	/**
 	 * Setup our dashboard widget.
 	 *
-	 * @since 2.9.0
+	 * @since xxx
 	 *
 	 * @link https://codex.wordpress.org/Dashboard_Widgets_API
 	 */
@@ -312,7 +193,7 @@ class DashboardWidget {
 		wp_add_dashboard_widget(
 			'boldgrid-notifications',
 			__( 'BoldGrid Notifications', 'boldgrid-library' ),
-			array( $this, 'displayWidget' )
+			array( $this, 'printWidget' )
 		);
 	}
 }

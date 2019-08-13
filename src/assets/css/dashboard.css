@@ -91,6 +91,10 @@
 	color: #aaa;
 }
 
+.bglib-card .bglib-feature img {
+	width: 35px;
+}
+
 .bglib-card .bglib-feature .bglib-feature-title {
 	font-size: 1.1em;
 	font-weight: 600;

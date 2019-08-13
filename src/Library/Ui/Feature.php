@@ -43,6 +43,16 @@ class Feature {
 	public $content;
 
 	/**
+	 * Init.
+	 *
+	 * Classes extended this class are expected to write their own init.
+	 *
+	 * @since xxx
+	 */
+	public function init() {
+	}
+
+	/**
 	 * Print this feature.
 	 *
 	 * @since xxx
