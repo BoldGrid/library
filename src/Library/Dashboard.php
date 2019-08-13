@@ -14,6 +14,8 @@ namespace Boldgrid\Library\Library;
 /**
  * BoldGrid Library Dashboard Class.
  *
+ * This is a generic class used for managing the WordPress Dashboard.
+ *
  * @since 2.9.0
  */
 class Dashboard {
@@ -23,7 +25,13 @@ class Dashboard {
 	 * @since 2.9.0
 	 */
 	public function init() {
-		// sortWidgets class runs Filter::add($this) in __construct.
+		/*
+		 * Move BoldGrid Widgets to the top of the WordPress dashboard.
+		 *
+		 * This is not permanent. The user can move BoldGrid widgets elsewhere after the first load.
+		 *
+		 * sortWidgets class runs Filter::add($this) in __construct.
+		 */
 		$sortWidgets = new \Boldgrid\Library\Library\Dashboard\SortWidgets();
 	}
 }

@@ -32,6 +32,9 @@ class SortWidgets {
 	/**
 	 * Get configs.
 	 *
+	 * Configs are stored in library.global.php. They're an array of widgets, along with which
+	 * container and priorty they should go.
+	 *
 	 * @since 2.9.0
 	 *
 	 * @return array
@@ -50,18 +53,23 @@ class SortWidgets {
 	 *
 	 * @since 2.9.0
 	 *
+	 * @global array $wp_meta_boxes
+	 *
 	 * @param  string $id The id of the widget to find.
 	 * @return array
 	 */
 	public function getWidget( $id ) {
 		$widget = array();
 
+		// Example structure of $wp_meta_boxes - https://pastebin.com/uYqDEZgm
 		global $wp_meta_boxes;
 
+		// We're only interested in dashboard widgets.
 		if ( empty( $wp_meta_boxes['dashboard'] ) ) {
 			return $widget;
 		}
 
+		// Complicated looping below because of $wp_meta_boxes structure. See example above.
 		foreach ( $wp_meta_boxes['dashboard'] as $container => $priorities ) {
 			foreach ( $priorities as $priority => $widgets ) {
 				foreach ( $widgets as $widget ) {
@@ -83,6 +91,8 @@ class SortWidgets {
 
 	/**
 	 * Sort the widgets as contained in the user's "meta-box-order_dashboard" meta.
+	 *
+	 * We are deleting our widgets, and then adding them back in.
 	 *
 	 * @since 2.9.0
 	 */

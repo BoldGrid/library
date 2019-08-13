@@ -15,7 +15,6 @@ use Boldgrid\Library\Library\Configs;
 use Boldgrid\Library\Library\Plugin\Plugins;
 use Boldgrid\Library\Library\Filter;
 use Boldgrid\Library\Library\License;
-use Boldgrid\Library\Library\Plugin\Updater;
 use Boldgrid\Library\Library\Ui\Dashboard;
 
 /**
