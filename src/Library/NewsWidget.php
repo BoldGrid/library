@@ -14,9 +14,19 @@ namespace Boldgrid\Library\Library;
 /**
  * BoldGrid Library News Widget Class.
  *
+ * This class is responsible for rendering the "BoldGrid News" widget on the WordPress dashboard.
+ *
  * @since 2.9.0
  */
 class NewsWidget {
+	/**
+	 * An array of errors.
+	 *
+	 * @since xxx
+	 * @var array
+	 */
+	public $errors = [];
+
 	/**
 	 * Constructor.
 	 *
@@ -52,45 +62,30 @@ class NewsWidget {
 	 * @since 2.9.0
 	 */
 	public function display() {
-		$postsToShow = 2;
-		$postsShown  = 0;
+		// Get 2 posts.
+		$posts = $this->getPosts( 2 );
 
-		// Get the id of the "dashboard" tag.
-		$dashboardId = $this->getDashboardId();
-
-		// Get all posts tagged, "dashboard".
-		$request = wp_remote_get( 'https://www.boldgrid.com/wp-json/wp/v2/posts/?tags=' . $dashboardId );
-
-		// If we have an error, abort.
-		if( is_wp_error( $request ) ) {
-			if ( is_admin() || current_user_can( 'manage_options' ) ) {
-				echo '<p>' . sprintf(
-					// translators: An RSS error message.
-					__( '<strong>RSS Error</strong>: %s', 'boldgrid-inspirations' ),
-					esc_html( $request->get_error_message() )
-				) . '</p>';
-			}
-
+		// If there are errors, abort.
+		if ( ! empty( $this->errors ) ) {
+			echo '<p>' . implode( $this->errors, '</p></p>' ) . '</p>';
 			return;
 		}
-
-		// Get our "dashboard" posts.
-		$body  = wp_remote_retrieve_body( $request );
-		$posts = json_decode( $body );
 
 		// If we have no news posts, abort.
 		if( empty( $posts ) ) {
 			echo '<p>' . esc_html__( 'There are no updates to show right now.', 'boldgrid-library' ) . '</p>';
-
 			return;
 		}
 
+		// Finally, display the posts.
 		echo '<ul>';
 		foreach ( $posts as $post ) {
+			// Get the url to the featured image.
 			$featuredImage = '';
-			if ( ! empty( $post->_links->{'wp:featuredmedia'}[0]->href ) ) {
-				$featuredImage = $this->getMediaUrl( $post->_links->{'wp:featuredmedia'}[0]->href );
+			if ( ! empty( $post->_embedded->{'wp:featuredmedia'}[0]->media_details->sizes->medium->source_url ) ) {
+				$featuredImage = $post->_embedded->{'wp:featuredmedia'}[0]->media_details->sizes->medium->source_url;
 			}
+
 ?>			<li title="<?php echo esc_attr( $post->excerpt->rendered ); ?>">
 				<?php if ( ! empty( $featuredImage ) ) {
 					echo '<img class="bglib-featured" src="' . esc_url( $featuredImage ) . '" />';
@@ -102,25 +97,22 @@ class NewsWidget {
 					<a href='<?php echo $post->link ?>' target='_blank'><?php echo $post->title->rendered; ?></a>
 				</p>
 			</li>
-<?php		$postsShown++;
-			if ( $postsShown >= $postsToShow ) {
-				break;
-			}
+<?php
  		}
 		echo '</ul><div style="clear:both;"></div>';
 	}
 
 	/**
-	 * Get the id of the "dashboard" tag.
+	 * Get the id of a tag.
 	 *
 	 * @since 2.9.0
 	 *
 	 * @return int
 	 */
-	public function getDashboardId() {
+	public function getTagId( $tag ) {
 		$id = 0;
 
-		$request = wp_remote_get( 'https://www.boldgrid.com/wp-json/wp/v2/tags/?slug=dashboard' );
+		$request = wp_remote_get( 'https://www.boldgrid.com/wp-json/wp/v2/tags/?slug=' . $tag );
 
 		if( is_wp_error( $request ) ) {
 			return $id;
@@ -135,31 +127,76 @@ class NewsWidget {
 	}
 
 	/**
-	 * Get the url to an image.
+	 * Get rss posts.
 	 *
-	 * This method assumes you have a media post, as retrieved via a wp-json call.
-	 *
-	 * @since 2.9.0
-	 *
-	 * @param  string $url  The url to a media page, such as http://domain.com/wp-json/wp/v2/media/1234
-	 * @param  string $size The image size to get.
-	 * @return string
+	 * @since xxx
 	 */
-	public function getMediaUrl( $url, $size = 'medium' ) {
-		$mediaUrl = '';
+	public function getPosts( $limit ) {
+		// Get all posts tagged, "dashboard".
+		$request = wp_remote_get( $this->getRssUrl() );
 
-		$request = wp_remote_get( $url );
-
+		// If we have an error, abort.
 		if( is_wp_error( $request ) ) {
-			return $mediaUrl;
+			if ( is_admin() || current_user_can( 'manage_options' ) ) {
+				$this->errors[] = sprintf(
+					// translators: An RSS error message.
+					__( '<strong>RSS Error</strong>: %s', 'boldgrid-inspirations' ),
+					esc_html__( $request->get_error_message() )
+				);
+			}
+
+			return;
 		}
 
-		$body = wp_remote_retrieve_body( $request );
-		$body = json_decode( $body );
+		// Get our "dashboard" posts.
+		$body  = wp_remote_retrieve_body( $request );
+		$posts = json_decode( $body );
 
-		$mediaUrl = ! empty( $body->media_details->sizes->$size->source_url ) ? $body->media_details->sizes->$size->source_url : $mediaUrl;
+		if ( $limit ) {
+			$posts = array_slice( $posts, 0, $limit );
+		}
 
-		return $mediaUrl;
+		return $posts;
+	}
+
+	/**
+	 * Get the URL for our rss feed.
+	 *
+	 * @since xxx
+	 *
+	 * @return string
+	 */
+	public function getRssUrl() {
+		// Adding _embed includes the featured image urls, without the need to make another call.
+		$url = 'https://www.boldgrid.com/wp-json/wp/v2/posts/?_embed&tags=' . $this->getTagId( 'dashboard' );
+
+		$url .= '&key=' . Configs::get('key');
+
+		$plugins   = [];
+		$bgPlugins = array_merge(
+			array_keys( Configs::get('pluginInstaller')['plugins'] ),
+			array_keys( Configs::get('pluginInstaller')['wporgPlugins'] )
+		);
+
+		// Get data for only BoldGrid plugins.
+		foreach ( get_plugins() as $slug => $info ) {
+			if ( preg_grep('~' . strtok($slug, '/') . '~', $bgPlugins) ) {
+				$plugins[] = [
+					'slug'    => $slug,
+					'version' => $info['Version'],
+					'active'  => is_plugin_active( $slug ),
+				];
+			}
+		}
+
+		$url .= '&data=' . rawurlencode( gzdeflate( wp_json_encode(
+			[
+				'locale'  => get_locale(),
+				'plugins' => $plugins,
+			]
+		) ) );
+
+		return $url;
 	}
 
 	/**
@@ -176,10 +213,10 @@ class NewsWidget {
 		wp_add_dashboard_widget(
 			'boldgrid_news_widget',
 			esc_html__( 'BoldGrid News', 'boldgrid-library' ),
-			array(
+			[
 				$this,
 				'display',
-			)
+			]
 		);
 	}
 }

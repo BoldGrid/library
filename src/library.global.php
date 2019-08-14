@@ -133,6 +133,4 @@ return array(
 			'priority'  => 'core',
 		),
 	),
-
-	'rssUrl' => 'https://www.boldgrid.com/tag/dashboard/feed/',
 );
