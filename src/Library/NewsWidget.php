@@ -130,6 +130,8 @@ class NewsWidget {
 	 * Get rss posts.
 	 *
 	 * @since xxx
+	 *
+	 * @param string $limit the number of posts to return.
 	 */
 	public function getPosts( $limit ) {
 		// Get all posts tagged, "dashboard".
