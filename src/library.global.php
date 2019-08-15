@@ -107,6 +107,9 @@ return array(
 		array(
 			'file'                  => 'boldgrid-backup/boldgrid-backup.php',
 			'inNotificationsWidget' => true,
+			'childPlugins'          => [
+				'boldgrid-backup-premium/boldgrid-backup-premium.php',
+			],
 		),
 		array(
 			'file'                  => 'boldgrid-easy-seo/boldgrid-easy-seo.php',
@@ -115,6 +118,9 @@ return array(
 		array(
 			'file'                  => 'post-and-page-builder/post-and-page-builder.php',
 			'inNotificationsWidget' => true,
+			'childPlugins'          => [
+				'post-and-page-builder-premium/post-and-page-builder-premium.php',
+			]
 		),
 	),
 

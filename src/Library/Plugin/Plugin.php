@@ -21,6 +21,17 @@ use Boldgrid\Library\Library\Configs;
  */
 class Plugin {
 	/**
+	 * An array of children plugins.
+	 *
+	 * Elements of this array are of this class, Plugin (recursion).
+	 *
+	 * @since xxx
+	 * @var array
+	 * @access protected
+	 */
+	protected $childPlugins = [];
+
+	/**
 	 * Plugin file.
 	 *
 	 * For example: plugin/plugin.php
@@ -71,6 +82,8 @@ class Plugin {
 		$this->slug = $slug;
 
 		$this->setFile();
+
+		$this->setChildPlugins();
 	}
 
 	/**
@@ -88,6 +101,41 @@ class Plugin {
 		$icons = ! empty( $updates->no_update[ $this->file ]->icons ) ? $updates->no_update[ $this->file ]->icons : $icons;
 
 		return $icons;
+	}
+
+	/**
+	 * Get the child plugins array.
+	 *
+	 * @since xxx
+	 *
+	 * @return array
+	 */
+	public function getChildPlugins() {
+		return $this->childPlugins;
+	}
+
+	/**
+	 * Get config for this particular plugin.
+	 *
+	 * Within library.global.php, there is a config option called "plugins". This method loops through
+	 * those plugins and returns the configs for this particular plugin.
+	 *
+	 * @since xxx
+	 *
+	 * @return array
+	 */
+	public function getConfig() {
+		$config = [];
+
+		$plugins = Configs::get( 'plugins' );
+
+		foreach ( $plugins as $plugin ) {
+			if ( $plugin['file'] === $this->file ) {
+				$config = $plugin;
+			}
+		}
+
+		return $config;
 	}
 
 	/**
@@ -151,6 +199,24 @@ class Plugin {
 	}
 
 	/**
+	 * Get a plugin's slug from its file.
+	 *
+	 * For example, if the plugin's file is:
+	 * boldgrid-backup-premium/boldgrid-backup-premium.php
+	 * The plugin's slug is:
+	 * boldgrid-backup-premium
+	 *
+	 * @since xxx
+	 *
+	 * @return string
+	 */
+	public static function getFileSlug( $file ) {
+		$slug = explode( '/', $file );
+
+		return $slug[0];
+	}
+
+	/**
 	 * If a new version of a plugin is available, return the new version.
 	 *
 	 * @since 2.9.0
@@ -187,6 +253,25 @@ class Plugin {
 	 */
 	public function getSlug() {
 		return $this->slug;
+	}
+
+	/**
+	 * Set our child plugins.
+	 *
+	 * @since xxx
+	 */
+	public function setChildPlugins() {
+		$config = $this->getConfig();
+
+		if ( empty( $config['childPlugins'] ) ) {
+			return;
+		}
+
+		foreach ( $config['childPlugins'] as $file ) {
+			$slug = $this->getFileSlug( $file );
+
+			$this->childPlugins[] = new Plugin( $slug );
+		}
 	}
 
 	/**

@@ -134,8 +134,7 @@ class Configs {
 		$plugins = array();
 
 		foreach( self::get( 'plugins' ) as $plugin ) {
-			$slug = explode( '/', $plugin['file'] );
-			$slug = $slug[0];
+			$slug = Plugin::getFileSlug( $plugin['file'] );
 
 			// If no filters, add the plugin. Else, only add the plugin if all filters match.
 			if ( empty( $filters ) ) {

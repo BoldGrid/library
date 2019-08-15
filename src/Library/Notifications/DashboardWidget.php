@@ -13,6 +13,7 @@ namespace Boldgrid\Library\Library\Notifications;
 
 use Boldgrid\Library\Library\Configs;
 use Boldgrid\Library\Library\Plugin\Plugins;
+use Boldgrid\Library\Library\Plugin\Plugin;
 use Boldgrid\Library\Library\Filter;
 use Boldgrid\Library\Library\License;
 use Boldgrid\Library\Library\Ui\Dashboard;
@@ -133,9 +134,12 @@ class DashboardWidget {
 	 * @since xxx
 	 *
 	 * @param  \Boldgrid\Library\Library\Plugin\Plugin A plugin object.
+	 * @param  \Boldgrid\Library\Library\Plugin\Plugin The plugin's parent plugin (optional).
 	 * @return \Boldgrid\Library\Library\Ui\Feature    A feature object.
 	 */
-	public function getFeaturePlugin( $plugin ) {
+	public function getFeaturePlugin( Plugin $plugin, $parentPlugin = null ) {
+		$isParentPlugin = is_null( $parentPlugin );
+
 		// Get the markup for the plugin's icon.
 		$icons = $plugin->getIcons();
 		if ( empty( $icons ) ) {
@@ -173,8 +177,19 @@ class DashboardWidget {
 		 */
 		$feature = apply_filters( 'Boldgrid\Library\Notifications\DashboardWidget\getFeaturePlugin\\' . $plugin->getSlug(), $feature, $plugin );
 
-		if ( empty( $feature->content ) ) {
-			$feature->content = __( 'No issues to report!', 'boldgrid-library' );
+		/*
+		 * If this plugin has child plugins (IE a premium plugin), then allow those children to add
+		 * notices to the parent.
+		 */
+		$childPlugins = $plugin->getChildPlugins();
+		foreach ( $childPlugins as $childPlugin ) {
+			$childFeature      = $this->getFeaturePlugin( $childPlugin, $plugin );
+			$feature->content .= $childFeature->content;
+		}
+
+		// The parent plugin makes the final call, as in whether or not there are issues to report.
+		if ( $isParentPlugin && empty( $feature->content ) ) {
+			$feature->content = '<p>' . __( 'No issues to report!', 'boldgrid-library' ) . '</p>';
 		}
 
 		return $feature;
