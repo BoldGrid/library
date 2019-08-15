@@ -37,26 +37,6 @@ class DashboardWidget {
 	}
 
 	/**
-	 * Enqueue scripts.
-	 *
-	 * @since xxx
-	 *
-	 * @param string $hook
-	 */
-	public function admin_enqueue_scripts( $hook ) {
-		wp_register_style(
-			'bglib-dashboard-widget-css',
-			Configs::get( 'libraryUrl' ) . 'src/assets/css/dashboard-widget.css'
-		);
-
-		switch( $hook ) {
-			case 'index.php':
-				wp_enqueue_style( 'bglib-dashboard-widget-css' );
-				break;
-		}
-	}
-
-	/**
 	 * Print the "BoldGrid Notifications" WordPress Dashboard widget.
 	 *
 	 * @since xxx
