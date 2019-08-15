@@ -32,6 +32,6 @@ class Dashboard {
 		 *
 		 * sortWidgets class runs Filter::add($this) in __construct.
 		 */
-		$sortWidgets = new \Boldgrid\Library\Library\Dashboard\SortWidgets();
+		$sortWidgets = new Dashboard\SortWidgets();
 	}
 }
