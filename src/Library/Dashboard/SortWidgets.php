@@ -11,8 +11,7 @@
 
 namespace Boldgrid\Library\Library\Dashboard;
 
-use BoldGrid\Library\Library\Configs;
-use BoldGrid\Library\Library\Filter;
+use BoldGrid\Library\Library;
 
 /**
  * BoldGrid Library Dashboard Sort Widgets Class.
@@ -26,7 +25,7 @@ class SortWidgets {
 	 * @since 2.9.0
 	 */
 	public function __construct() {
-		Filter::add( $this );
+		Library\Filter::add( $this );
 	}
 
 	/**
@@ -40,7 +39,7 @@ class SortWidgets {
 	 * @return array
 	 */
 	public function getConfigs() {
-		return Configs::get( 'dashboardWidgetOrder' );
+		return Library\Configs::get( 'dashboardWidgetOrder' );
 	}
 
 	/**
