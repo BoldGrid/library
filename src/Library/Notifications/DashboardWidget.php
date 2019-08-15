@@ -11,12 +11,7 @@
 
 namespace Boldgrid\Library\Library\Notifications;
 
-use Boldgrid\Library\Library\Configs;
-use Boldgrid\Library\Library\Plugin\Plugins;
-use Boldgrid\Library\Library\Plugin\Plugin;
-use Boldgrid\Library\Library\Filter;
-use Boldgrid\Library\Library\License;
-use Boldgrid\Library\Library\Ui\Dashboard;
+use Boldgrid\Library\Library;
 
 /**
  * BoldGrid Library Notifications Dashboard Widget Class.
@@ -33,7 +28,7 @@ class DashboardWidget {
 	 * @since xxx
 	 */
 	public function __construct() {
-		Filter::add( $this );
+		Library\Filter::add( $this );
 	}
 
 	/**
@@ -42,12 +37,12 @@ class DashboardWidget {
 	 * @since xxx
 	 */
 	public function printWidget() {
-		Dashboard::enqueueScripts();
+		Library\Ui\Dashboard::enqueueScripts();
 
 		$card = new \Boldgrid\Library\Library\Ui\Card();
 
 		// Add all of our active plugins.
-		$activePlugins = Plugins::getActive();
+		$activePlugins = Library\Plugin\Plugins::getActive();
 		foreach( $activePlugins as $plugin ) {
 			$card->features[] = $this->getFeaturePlugin( $plugin );
 		}
@@ -66,7 +61,7 @@ class DashboardWidget {
 	 * @return \Boldgrid\Library\Library\Ui\Feature
 	 */
 	public function getFeatureKey( ) {
-		$feature = new \Boldgrid\Library\Library\Ui\Feature();
+		$feature = new Library\Ui\Feature();
 
 		/*
 		 * Get our license string: "None", "Free", "Premium".
@@ -77,12 +72,12 @@ class DashboardWidget {
 		 * To get the license, we need to check if a particular product is premium. To do that, we
 		 * will set our product to be the plugin that is loading the library.
 		 */
-		$license = new License();
+		$license = new Library\License();
 		$key     = $license->getApiKey();
 		if ( empty( $key ) ) {
 			$licenseString = 'None';
 		} else {
-			$product = Configs::getFileSlug();
+			$product = Library\Configs::getFileSlug();
 			// Call isPermium(), which sets the license string.
 			$license->isPremium( $product );
 			$licenseString = $license->getLicenseString();
@@ -97,7 +92,7 @@ class DashboardWidget {
 				break;
 			case 'Free':
 				$feature->icon    = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
-				$feature->content = '<div class="notice notice-warning inline"><p><a href="' . esc_url( Configs::get( 'learnMore' ) ) . '">' .	esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) . '</a></p></div>';
+				$feature->content = '<div class="notice notice-warning inline"><p><a href="' . esc_url( Library\Configs::get( 'learnMore' ) ) . '">' .	esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) . '</a></p></div>';
 				break;
 			case 'Premium':
 				$feature->icon    = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
@@ -117,7 +112,7 @@ class DashboardWidget {
 	 * @param  \Boldgrid\Library\Library\Plugin\Plugin The plugin's parent plugin (optional).
 	 * @return \Boldgrid\Library\Library\Ui\Feature    A feature object.
 	 */
-	public function getFeaturePlugin( Plugin $plugin, $parentPlugin = null ) {
+	public function getFeaturePlugin( Library\Plugin\Plugin $plugin, $parentPlugin = null ) {
 		$isParentPlugin = is_null( $parentPlugin );
 
 		// Get the markup for the plugin's icon.
@@ -129,7 +124,7 @@ class DashboardWidget {
 			$icon = '<img src="' . esc_url( $iconUrl ) . '" />';
 		}
 
-		$feature = new \Boldgrid\Library\Library\Ui\Feature();
+		$feature = new Library\Ui\Feature();
 
 		$feature->title = $plugin->getData( 'Name' );
 
