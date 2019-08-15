@@ -60,7 +60,7 @@ class DashboardWidget {
 	 *
 	 * @return \Boldgrid\Library\Library\Ui\Feature
 	 */
-	public function getFeatureKey( ) {
+	public function getFeatureKey() {
 		$feature = new Library\Ui\Feature();
 
 		/*
