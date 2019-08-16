@@ -110,7 +110,8 @@ class Card {
 
 
 		if ( ! empty( $this->footer ) ) {
-			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';		}
+			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';
+		}
 
 		$markup .= '</div>';
 

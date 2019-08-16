@@ -88,11 +88,23 @@ class DashboardWidget {
 		switch( $licenseString ) {
 			case 'None':
 				$feature->icon    = '<span class="dashicons dashicons-admin-network"></span>';
-				$feature->content = '<div class="notice notice-warning inline"><p><a href="' . admin_url( 'options-general.php?page=boldgrid-connect.php' ) . '">' . esc_html__( 'Please install your Connect Key', 'boldgrid-library' ) . '</a></p></div>';
+				$feature->content = '<div class="notice notice-warning inline">
+					<p>
+						<a href="' . admin_url( 'options-general.php?page=boldgrid-connect.php' ) . '">' .
+							esc_html__( 'Please install your Connect Key', 'boldgrid-library' ) .
+						'</a>
+					</p>
+				</div>';
 				break;
 			case 'Free':
 				$feature->icon    = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';
-				$feature->content = '<div class="notice notice-warning inline"><p><a href="' . esc_url( Library\Configs::get( 'learnMore' ) ) . '">' .	esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) . '</a></p></div>';
+				$feature->content = '<div class="notice notice-warning inline">
+					<p>
+						<a href="' . esc_url( Library\Configs::get( 'learnMore' ) ) . '">' .
+							esc_html__( 'Learn about the advanced features of a Premium Key.', 'boldgrid-library' ) .
+						'</a>
+					</p>
+				</div>';
 				break;
 			case 'Premium':
 				$feature->icon    = '<span class="dashicons dashicons-admin-network boldgrid-orange"></span>';

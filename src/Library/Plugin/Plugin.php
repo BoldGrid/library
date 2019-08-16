@@ -155,22 +155,6 @@ class Plugin {
 	}
 
 	/**
-	 * Get the details url for this plugin.
-	 *
-	 * For example, if you want to update this plugin and you need to see what's new in the latest
-	 * version, this method will give you that url.
-	 *
-	 * @since 2.9.0
-	 *
-	 * @link https://github.com/WordPress/WordPress/blob/5.1.1/wp-admin/includes/update.php#L391
-	 *
-	 * @return string
-	 */
-	public function getDetailsUrl() {
-		return self_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $this->slug . '&section=changelog&TB_iframe=true&width=600&height=800' );
-	}
-
-	/**
 	 * Return the download url for a plugin.
 	 *
 	 * @since 2.7.7

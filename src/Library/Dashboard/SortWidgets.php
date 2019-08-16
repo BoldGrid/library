@@ -149,7 +149,9 @@ class SortWidgets {
 			unset( $wp_meta_boxes['dashboard'][$widget['container']][$widget['priority']][$id] );
 
 			// Then, add it to the correct location.
-			$wp_meta_boxes['dashboard'][ $configs['container'] ][ $configs['priority'] ] = array( $id => $widget['widget'] ) + $wp_meta_boxes['dashboard'][ $configs['container'] ][ $configs['priority'] ];
+			$wp_meta_boxes['dashboard'][ $configs['container'] ][ $configs['priority'] ] =
+				array( $id => $widget['widget'] ) +
+				$wp_meta_boxes['dashboard'][ $configs['container'] ][ $configs['priority'] ];
 		}
 	}
 
