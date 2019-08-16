@@ -208,6 +208,7 @@ class Plugin {
 	 *
 	 * @since xxx
 	 *
+	 * @param  string $file The plugin's file, as in plugin/plugin.php
 	 * @return string
 	 */
 	public static function getFileSlug( $file ) {
@@ -278,6 +279,8 @@ class Plugin {
 	 * Set file.
 	 *
 	 * @since 2.9.0
+	 *
+	 * @param string $file A plugin's file.
 	 */
 	public function setFile( $file = null ) {
 		$this->file = ! empty( $file ) ? $file : $this->slug . '/' . $this->slug . '.php';

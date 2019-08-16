@@ -107,6 +107,7 @@ class NewsWidget {
 	 *
 	 * @since 2.9.0
 	 *
+	 * @param  string $tag The tag name.
 	 * @return int
 	 */
 	public function getTagId( $tag ) {
@@ -131,7 +132,8 @@ class NewsWidget {
 	 *
 	 * @since xxx
 	 *
-	 * @param string $limit the number of posts to return.
+	 * @param  string $limit The number of posts to return.
+	 * @return array         An array of posts.
 	 */
 	public function getPosts( $limit ) {
 		// Get all posts tagged, "dashboard".
