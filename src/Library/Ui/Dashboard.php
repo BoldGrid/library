@@ -21,7 +21,7 @@ class Dashboard {
 	/**
 	 * Cards.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var array
 	 */
 	public $cards = [];
@@ -29,7 +29,7 @@ class Dashboard {
 	/**
 	 * Enqueue scripts.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 */
 	public static function enqueueScripts() {
 		wp_enqueue_style( 'bglib-dashboard',
@@ -40,7 +40,7 @@ class Dashboard {
 	/**
 	 * Print Cards.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 */
 	public function printCards() {
 		$this->enqueueScripts();

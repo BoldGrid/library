@@ -25,7 +25,7 @@ class Plugin {
 	 *
 	 * Elements of this array are of this class, Plugin (recursion).
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var array
 	 * @access protected
 	 */
@@ -106,7 +106,7 @@ class Plugin {
 	/**
 	 * Get the child plugins array.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @return array
 	 */
@@ -120,7 +120,7 @@ class Plugin {
 	 * Within library.global.php, there is a config option called "plugins". This method loops through
 	 * those plugins and returns the configs for this particular plugin.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @return array
 	 */
@@ -190,7 +190,7 @@ class Plugin {
 	 * The plugin's slug is:
 	 * boldgrid-backup-premium
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @param  string $file The plugin's file, as in plugin/plugin.php
 	 * @return string
@@ -243,7 +243,7 @@ class Plugin {
 	/**
 	 * Set our child plugins.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 */
 	public function setChildPlugins() {
 		$config = $this->getConfig();

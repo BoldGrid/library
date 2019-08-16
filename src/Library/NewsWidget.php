@@ -22,7 +22,7 @@ class NewsWidget {
 	/**
 	 * An array of errors.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var array
 	 */
 	public $errors = [];
@@ -130,7 +130,7 @@ class NewsWidget {
 	/**
 	 * Get rss posts.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @param  string $limit The number of posts to return.
 	 * @return array         An array of posts.
@@ -166,7 +166,7 @@ class NewsWidget {
 	/**
 	 * Get the URL for our rss feed.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @return string
 	 */

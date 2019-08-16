@@ -21,7 +21,7 @@ class Feature {
 	 *
 	 * Generally, markup for a span, such as a dashicon.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var string
 	 */
 	public $icon;
@@ -29,7 +29,7 @@ class Feature {
 	/**
 	 * Feature title.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var string
 	 */
 	public $title;
@@ -37,7 +37,7 @@ class Feature {
 	/**
 	 * Feature content.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var string
 	 */
 	public $content;
@@ -47,7 +47,7 @@ class Feature {
 	 *
 	 * Classes extended this class are expected to write their own init.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 */
 	public function init() {
 	}
@@ -55,7 +55,7 @@ class Feature {
 	/**
 	 * Print this feature.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @param  bool  $echo Whether to echo the feature now, or return the markup.
 	 * @retrun mixed

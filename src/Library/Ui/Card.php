@@ -21,7 +21,7 @@ class Card {
 	 *
 	 * Generally where the content is going.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var string
 	 */
 	public $footer;
@@ -31,7 +31,7 @@ class Card {
 	 *
 	 * Generally markup for a span, a dashicon.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var string
 	 */
 	public $icon;
@@ -41,7 +41,7 @@ class Card {
 	 *
 	 * An array of features.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var array
 	 */
 	public $features;
@@ -49,7 +49,7 @@ class Card {
 	/**
 	 * Id.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var string
 	 */
 	public $id;
@@ -57,7 +57,7 @@ class Card {
 	/**
 	 * Sub title.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var string
 	 */
 	public $subTitle;
@@ -65,7 +65,7 @@ class Card {
 	/**
 	 * Title.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 * @var string
 	 */
 	public $title;
@@ -73,7 +73,7 @@ class Card {
 	/**
 	 * Print the card.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @param  bool  $echo True to print the card, false to return the markup.
 	 * @return mixed.

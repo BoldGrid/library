@@ -89,7 +89,7 @@ return array(
 	/*
 	 * A list of BoldGrid (and related) plugins.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @todo Above, there are 2 additional arrays of plugins. They should all be combined into 1 and
 	 *       use attributes to indicated which group they belong to, such as:

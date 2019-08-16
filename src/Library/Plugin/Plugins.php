@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Plugin
  *
- * @since xxx
+ * @since 2.10.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -17,13 +17,13 @@ use Boldgrid\Library\Library\Configs;
  *
  * Unlike the Plugin class, Plugins is a generic class for "plugins" related methods.
  *
- * @since xxx
+ * @since 2.10.0
  */
 class Plugins {
 	/**
 	 * Get our active plugins.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @return array
 	 */

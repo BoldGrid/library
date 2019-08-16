@@ -19,13 +19,13 @@ use Boldgrid\Library\Library;
  * This class is responsible for rendering the "BoldGrid Notifications" widget on the WordPress
  * dashboard.
  *
- * @since xxx
+ * @since 2.10.0
  */
 class DashboardWidget {
 	/**
 	 * Initialize class and set class properties.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 */
 	public function __construct() {
 		Library\Filter::add( $this );
@@ -34,7 +34,7 @@ class DashboardWidget {
 	/**
 	 * Print the "BoldGrid Notifications" WordPress Dashboard widget.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 */
 	public function printWidget() {
 		Library\Ui\Dashboard::enqueueScripts();
@@ -56,7 +56,7 @@ class DashboardWidget {
 	/**
 	 * Get the "feature" for our BoldGrid Connect Key.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @return \Boldgrid\Library\Library\Ui\Feature
 	 */
@@ -118,7 +118,7 @@ class DashboardWidget {
 	/**
 	 * Get the "feature" for a plugin.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @param  \Boldgrid\Library\Library\Plugin\Plugin A plugin object.
 	 * @param  \Boldgrid\Library\Library\Plugin\Plugin The plugin's parent plugin (optional).
@@ -157,7 +157,7 @@ class DashboardWidget {
 		/**
 		 * Allow items to be filtered.
 		 *
-		 * @since xxx
+		 * @since 2.10.0
 		 *
 		 * @param \Boldgrid\Library\Library\Ui\Feature    The feature object.
 		 * @param \Boldgrid\Library\Library\Plugin\Plugin The plugin object.
@@ -186,7 +186,7 @@ class DashboardWidget {
 	/**
 	 * Setup our dashboard widget.
 	 *
-	 * @since xxx
+	 * @since 2.10.0
 	 *
 	 * @link https://codex.wordpress.org/Dashboard_Widgets_API
 	 */
