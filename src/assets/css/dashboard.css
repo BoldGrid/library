@@ -66,6 +66,21 @@
 
 
 /**
+ * 2.1 Cards within postbox.
+ *
+ * When cards are within a postbox, such as within a widget on the WordPress dashboard, adjust the style.
+ */
+
+.postbox-container .bglib-card {
+	border: 0;
+}
+
+.postbox-container .bglib-card-footer {
+	padding: 0;
+}
+
+
+/**
  * 3 Features
  */
 .bglib-card .bglib-feature {
