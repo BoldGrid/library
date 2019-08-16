@@ -181,14 +181,7 @@ class SortWidgets {
 		$hasChangedLibrary = get_user_meta( $userId, 'bglibDashboardOrder', true );
 		$hasChangedLibrary = ! empty( $hasChangedLibrary );
 
-		switch( $userChangedOrder && ! $hasChangedLibrary ) {
-			case true:
-				$this->sortCustomOrder();
-				break;
-			case false:
-				$this->sortGlobal();
-				break;
-		}
+		$userChangedOrder && ! $hasChangedLibrary ? $this->sortCustomOrder() : $this->sortGlobal();
 
 		// Flag that we have updated the user's dashboard widget sort order.
 		update_user_meta( $userId, 'bglibDashboardOrder', 1 );
