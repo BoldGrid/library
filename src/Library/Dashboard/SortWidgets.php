@@ -141,7 +141,7 @@ class SortWidgets {
 			$widget = $this->getWidget( $id );
 
 			$invalidData = empty( $widget['container'] ) || empty( $widget['priority'] );
-			if ( $invalidData  ) {
+			if ( $invalidData ) {
 				continue;
 			}
 
