@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version x.x.x
+ * @version 2.10.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -15,7 +15,7 @@ use Boldgrid\Library\Library\Configs;
 /**
  * BoldGrid Library Dashboard Class.
  *
- * @since x.x.x
+ * @since 2.10.0
  */
 class Dashboard {
 	/**

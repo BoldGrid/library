@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version x.x.x
+ * @version 2.10.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -13,7 +13,7 @@ namespace Boldgrid\Library\Library\Ui;
 /**
  * BoldGrid Library Util Feature Class.
  *
- * @since x.x.x
+ * @since 2.10.0
  */
 class Feature {
 	/**
