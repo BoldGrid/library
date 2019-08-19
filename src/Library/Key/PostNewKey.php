@@ -80,21 +80,29 @@ class PostNewKey {
 	 *
 	 * @return string
 	 */
-	public static function getCentralUrl() {
-		/**
-		 * Allow the return url to be filtered.
+	public static function getCentralUrl( $returnUrl = '' ) {
+		/*
+		 * Configure our return url.
 		 *
 		 * The return url is the url that BoldGrid Central will link the user to after they received
 		 * their new BoldGrid Connect Key.
 		 *
-		 * By default, we will link them to Dashboard > Settings > BoldGrid Connect. However,
-		 * with this filter plugins can change this url.
+		 * In the initial version of this method, the return url linked to
+		 * Dashboard > Settings > BoldGrid Connect
+		 * and we allowed the filter below to be used to change the url. As plugins began to use
+		 * this method more, it's became easier to simply allow a return url to be passed in, rather
+		 * than require the filter to be used.
+		 */
+		$returnUrl = ! empty( $returnUrl ) ? $returnUrl : admin_url( 'options-general.php?page=boldgrid-connect.php' );
+
+		/**
+		 * Allow the return url to be filtered.
 		 *
 		 * @since 2.8.0
 		 *
 		 * @param string URL to the BoldGrid Connect settings page.
 		 */
-		$returnUrl = apply_filters( 'Boldgrid\Library\Key\returnUrl', admin_url( 'options-general.php?page=boldgrid-connect.php' ) );
+		$returnUrl = apply_filters( 'Boldgrid\Library\Key\returnUrl', $returnUrl );
 
 		$returnUrl = add_query_arg( 'nonce', wp_create_nonce( 'bglib-key-prompt' ), $returnUrl );
 

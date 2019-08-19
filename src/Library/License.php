@@ -390,6 +390,7 @@ class License {
 	 *
 	 * @hook Boldgrid\Library\License\isPremium
 	 *
+	 * @param string $product Such as "boldgrid-backup" or "post-and-page-builder".
 	 * @return bool
 	 */
 	public function isPremium( $product ) {

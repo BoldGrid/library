@@ -11,6 +11,11 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### In progress ###
+
+* New feature: Show BoldGrid News widget in the dashboard.
+* New feature: Show BoldGrid Notifications widget in the dashboard.
+
 ### 2.9.2 ###
 
 Release date: August 1st, 2019

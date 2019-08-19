@@ -11,6 +11,8 @@
 
 namespace Boldgrid\Library\Library;
 
+use Boldgrid\Library\Library\Plugin\Plugin;
+
 /**
  * BoldGrid Library Configs Class.
  *
@@ -101,6 +103,58 @@ class Configs {
 		}
 
 		return $configs;
+	}
+
+	/**
+	 * Get the slug of the product that is loading the library.
+	 *
+	 * The configs include a "file" setting, which indicate which product is actually loading the
+	 * library. If the file is "boldgrid-backup/boldgrid-backup.php" for example, this method will
+	 * return "boldgrid-backup".
+	 *
+	 * @since 2.9.0
+	 *
+	 * @return string
+	 */
+	public static function getFileSlug() {
+		$file = explode( '/', self::get('file') );
+
+		return $file[0];
+	}
+
+	/**
+	 * Get plugins from our configs.
+	 *
+	 * @since 2.9.0
+	 *
+	 * @param array $filters An optional array of filters to help get a specific type of plugin.
+	 * @return array
+	 */
+	public static function getPlugins( $filters = array() ) {
+		$plugins = array();
+
+		foreach( self::get( 'plugins' ) as $plugin ) {
+			$slug = Plugin::getFileSlug( $plugin['file'] );
+
+			// If no filters, add the plugin. Else, only add the plugin if all filters match.
+			if ( empty( $filters ) ) {
+				$plugins[] = new Plugin( $slug );
+			} else {
+				$addPlugin = true;
+
+				foreach( $filters as $key => $value ) {
+					if ( ! isset( $plugin[ $key ] ) || $value !== $plugin[ $key ] ) {
+						$addPlugin = false;
+					}
+				}
+
+				if ( $addPlugin ) {
+					$plugins[] = new Plugin( $slug );
+				}
+			}
+		}
+
+		return $plugins;
 	}
 
 	/**

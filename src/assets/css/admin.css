@@ -158,6 +158,16 @@ div .dashicons {
 
 
 /*
+ * #.# Misc.
+ */
+
+.boldgrid-font {
+	font-family: 'Josefin Sans';
+	letter-spacing: 0.1em;
+}
+
+
+/*
  * #.# BoldGrid Orange
  *
  * Style various elements with BoldGrid's orange color.

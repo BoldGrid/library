@@ -121,6 +121,16 @@ class Start {
 		// PostNewKey class runs Filter::add($this) in __construct.
 		$postNewKey = new \Boldgrid\Library\Library\Key\PostNewKey();
 
+		// Dashboard's init method instantiates classes, which run Filter::add($this) in __construct.
+		$dashboard = new \Boldgrid\Library\Library\Dashboard();
+		$dashboard->init();
+
+		// WidgetNotifications class runs Filter::add($this) in __construct.
+		$dashboardWidget = new \Boldgrid\Library\Library\Notifications\DashboardWidget();
+
+		// NewsWidget class runs Filter::add($this) in __construct.
+		$newsWidget = new \Boldgrid\Library\Library\NewsWidget();
+
 		$pluginChecker = new \Boldgrid\Library\Library\Plugin\Checker();
 		$pluginChecker->run();
 
@@ -129,9 +139,6 @@ class Start {
 		Configs::setItem( 'page-connect', new Page\Connect() );
 		Configs::setItem( 'assets', new Asset() );
 		new Editor();
-
-		// Instantiate the BoldGrid RSS feed widget for the WordPress Dashboard.
-		new Rss();
 	}
 
 	/**

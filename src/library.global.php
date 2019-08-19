@@ -15,6 +15,9 @@ return array(
 	// When the user needs a Connect Key, the "Get it now" button links here (filters get applied).
 	'getNewKey' => 'https://www.boldgrid.com/central/account/new-key',
 
+	// Click here for the benefits of a Premium Key.
+	'learnMore' => 'https://www.boldgrid.com/connect-keys?source=library-prompt',
+
 	// Enable key validation in library.
 	'keyValidate' => true,
 
@@ -82,5 +85,58 @@ return array(
 		'get_theme_data' => '/api/open/get-theme-data',
 		'get_asset'      => '/api/open/get-asset',
 	),
-	'rssUrl' => 'https://www.boldgrid.com/tag/dashboard/feed/',
+
+	/*
+	 * A list of BoldGrid (and related) plugins.
+	 *
+	 * @since 2.10.0
+	 *
+	 * @todo Above, there are 2 additional arrays of plugins. They should all be combined into 1 and
+	 *       use attributes to indicated which group they belong to, such as:
+	 *       # inNotificationsWidget
+	 *       # isInstallable
+	 *       # isWpOrg
+	 *       We can then use Boldgrid\Library\Library\Configs( $filters ) to get our plugins, such as:
+	 *       Configs::getPlugins( array( 'inNotificationsWidget' => true ) )
+	 */
+	'plugins' => array(
+		array(
+			'file'                  => 'boldgrid-inspirations/boldgrid-inspirations.php',
+			'inNotificationsWidget' => true,
+		),
+		array(
+			'file'                  => 'boldgrid-backup/boldgrid-backup.php',
+			'inNotificationsWidget' => true,
+			'childPlugins'          => [
+				'boldgrid-backup-premium/boldgrid-backup-premium.php',
+			],
+		),
+		array(
+			'file'                  => 'boldgrid-easy-seo/boldgrid-easy-seo.php',
+			'inNotificationsWidget' => true,
+		),
+		array(
+			'file'                  => 'post-and-page-builder/post-and-page-builder.php',
+			'inNotificationsWidget' => true,
+			'childPlugins'          => [
+				'post-and-page-builder-premium/post-and-page-builder-premium.php',
+			]
+		),
+	),
+
+	// An array of dashboard widgets that are placed at the top of the dashboard.
+	'dashboardWidgetOrder' => array(
+		'boldgrid-notifications'   => array(
+			'container' => 'normal',
+			'priority'  => 'core',
+		),
+		'boldgrid_feedback_widget' => array(
+			'container' => 'side',
+			'priority'  => 'core',
+		),
+		'boldgrid_news_widget'     => array(
+			'container' => 'side',
+			'priority'  => 'core',
+		),
+	),
 );
