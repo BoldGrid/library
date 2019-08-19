@@ -94,7 +94,7 @@ class NewsWidget {
 					<?php echo date( 'M jS, Y', strtotime( $post->date ) ); ?>
 				</p>
 				<p class="bglib-title">
-					<a href='<?php echo $post->link ?>' target='_blank'><?php echo $post->title->rendered; ?></a>
+					<a href='<?php echo $post->link; ?>' target='_blank'><?php echo $post->title->rendered; ?></a>
 				</p>
 			</li>
 <?php
