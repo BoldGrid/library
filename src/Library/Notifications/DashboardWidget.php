@@ -32,13 +32,22 @@ class DashboardWidget {
 	}
 
 	/**
+	 * Load scripts on the admin_enqueue_scripts hook.
+	 *
+	 * @since 2.10.0
+	 */
+	public function admin_enqueue_scripts() {
+		if ( 'dashboard' === get_current_screen()->id ) {
+			Library\Ui\Dashboard::enqueueScripts();
+		}
+	}
+
+	/**
 	 * Print the "BoldGrid Notifications" WordPress Dashboard widget.
 	 *
 	 * @since 2.10.0
 	 */
 	public function printWidget() {
-		Library\Ui\Dashboard::enqueueScripts();
-
 		$card = new \Boldgrid\Library\Library\Ui\Card();
 
 		// Add all of our active plugins.
