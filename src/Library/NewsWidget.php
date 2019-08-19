@@ -41,7 +41,7 @@ class NewsWidget {
 	 *
 	 * @since 2.9.0
 	 *
-	 * @param string $hook
+	 * @param string $hook Hook.
 	 */
 	public function admin_enqueue_scripts( $hook ) {
 		wp_register_style(
