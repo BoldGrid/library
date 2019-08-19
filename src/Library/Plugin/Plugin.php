@@ -67,7 +67,7 @@ class Plugin {
 	 *
 	 * @var string
 	 * @since 2.7.7
-	 * @access private
+	 * @access protected
 	 */
 	protected $slug;
 
