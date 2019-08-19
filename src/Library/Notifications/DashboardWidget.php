@@ -37,9 +37,7 @@ class DashboardWidget {
 	 * @since 2.10.0
 	 */
 	public function admin_enqueue_scripts() {
-		if ( 'dashboard' === get_current_screen()->id ) {
-			Library\Ui\Dashboard::enqueueScripts();
-		}
+		Library\Ui\Dashboard::enqueueScripts();
 	}
 
 	/**

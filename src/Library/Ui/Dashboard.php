@@ -43,8 +43,6 @@ class Dashboard {
 	 * @since 2.10.0
 	 */
 	public function printCards() {
-		self::enqueueScripts();
-
 		echo '<div class="bglib-card-container">';
 
 		foreach ( $this->cards as $card ) {
