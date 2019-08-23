@@ -43,6 +43,15 @@ class Plugin {
 	protected $file;
 
 	/**
+	 * Whether or not this plugin is installed.
+	 *
+	 * @since 2.10.0
+	 * @var bool
+	 * @access protected
+	 */
+	protected $isInstalled;
+
+	/**
 	 * Path to the plugin.
 	 *
 	 * For example, ABSPATH/wp-content/plugins/plugin/plugin.php.
@@ -93,6 +102,8 @@ class Plugin {
 		$this->setFile();
 
 		$this->setPath();
+
+		$this->setIsInstalled();
 
 		$this->setChildPlugins();
 	}
@@ -183,6 +194,17 @@ class Plugin {
 	}
 
 	/**
+	 * Get isInstalled.
+	 *
+	 * @since 2.10.0
+	 *
+	 * @return bool
+	 */
+	public function getIsInstalled() {
+		return $this->isInstalled;
+	}
+
+	/**
 	 * Get file.
 	 *
 	 * @since 2.9.0
@@ -230,15 +252,11 @@ class Plugin {
 	 *
 	 * @since 2.9.0
 	 *
-	 * @global WP_Filesystem $wp_filesystem
-	 *
 	 * @return array
 	 */
 	public function getPluginData() {
-		global $wp_filesystem;
-
-		if ( empty( $this->pluginData ) && $wp_filesystem->exists( $this->path ) ) {
-			$this->pluginData = get_plugin_data( ABSPATH . 'wp-content/plugins/' . $this->file );
+		if ( empty( $this->pluginData ) && $this->isInstalled ) {
+			$this->pluginData = get_plugin_data( $this->path );
 		}
 
 		return $this->pluginData;
@@ -283,6 +301,19 @@ class Plugin {
 	 */
 	public function setFile( $file = null ) {
 		$this->file = ! empty( $file ) ? $file : $this->slug . '/' . $this->slug . '.php';
+	}
+
+	/**
+	 * Set whether or not the plugin is installed (different from activated).
+	 *
+	 * @since 2.10.0
+	 *
+	 * @global WP_Filesystem $wp_filesystem
+	 */
+	public function setIsInstalled() {
+		global $wp_filesystem;
+
+		$this->isInstalled = $wp_filesystem->exists( $this->path );
 	}
 
 	/**

@@ -47,7 +47,7 @@ class Dashboard {
 
 		foreach ( $this->cards as $card ) {
 			$card->init();
-			$card->print();
+			$card->printCard();
 		}
 
 		echo '</div>';

@@ -78,11 +78,11 @@ class Card {
 	 * @param  bool  $echo True to print the card, false to return the markup.
 	 * @return mixed.
 	 */
-	public function print( $echo = true ) {
+	public function printCard( $echo = true ) {
 		// Before printing, initialize all of the features.
 		foreach ( $this->features as $feature ) {
 			$feature->init();
-			$this->footer .= $feature->print( false );
+			$this->footer .= $feature->printFeature( false );
 		}
 
 		// Create the opening tag.

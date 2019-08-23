@@ -57,7 +57,7 @@ class DashboardWidget {
 		// Add a "feature" for free / premium.
 		$card->features[] = $this->getFeatureKey();
 
-		$card->print();
+		$card->printCard();
 	}
 
 	/**
@@ -177,6 +177,10 @@ class DashboardWidget {
 		 */
 		$childPlugins = $plugin->getChildPlugins();
 		foreach ( $childPlugins as $childPlugin ) {
+			if ( ! $childPlugin->getIsInstalled() ) {
+				continue;
+			}
+
 			$childFeature      = $this->getFeaturePlugin( $childPlugin, $plugin );
 			$feature->content .= $childFeature->content;
 		}

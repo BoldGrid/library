@@ -60,7 +60,7 @@ class Feature {
 	 * @param  bool  $echo Whether to echo the feature now, or return the markup.
 	 * @retrun mixed
 	 */
-	public function print( $echo = true ) {
+	public function printFeature( $echo = true ) {
 		$markup = '<div class="bglib-feature">
 			<div class="bglib-feature-icon">
 				' . $this->icon . '
