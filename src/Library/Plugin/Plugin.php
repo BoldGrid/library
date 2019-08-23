@@ -43,6 +43,15 @@ class Plugin {
 	protected $file;
 
 	/**
+	 * Path to the plugin.
+	 *
+	 * For example, ABSPATH/wp-content/plugins/plugin/plugin.php.
+	 *
+	 * @since 2.10.0
+	 */
+	protected $path;
+
+	/**
 	 * Plugin data, as retrieved from get_plugin_data().
 	 *
 	 * @since 2.9.0
@@ -82,6 +91,8 @@ class Plugin {
 		$this->slug = $slug;
 
 		$this->setFile();
+
+		$this->setPath();
 
 		$this->setChildPlugins();
 	}
@@ -219,10 +230,14 @@ class Plugin {
 	 *
 	 * @since 2.9.0
 	 *
+	 * @global WP_Filesystem $wp_filesystem
+	 *
 	 * @return array
 	 */
 	public function getPluginData() {
-		if ( empty( $this->pluginData ) ) {
+		global $wp_filesystem;
+
+		if ( empty( $this->pluginData ) && $wp_filesystem->exists( $this->path ) ) {
 			$this->pluginData = get_plugin_data( ABSPATH . 'wp-content/plugins/' . $this->file );
 		}
 
@@ -268,6 +283,15 @@ class Plugin {
 	 */
 	public function setFile( $file = null ) {
 		$this->file = ! empty( $file ) ? $file : $this->slug . '/' . $this->slug . '.php';
+	}
+
+	/**
+	 * Set the plugin's path.
+	 *
+	 * @since 2.10.0
+	 */
+	public function setPath() {
+		$this->path = ABSPATH . 'wp-content/plugins/' . $this->file;
 	}
 
 	/**
