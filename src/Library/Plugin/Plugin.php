@@ -307,11 +307,9 @@ class Plugin {
 	 * Set whether or not the plugin is installed (different from activated).
 	 *
 	 * @since 2.10.0
-	 *
-	 * @global WP_Filesystem $wp_filesystem
 	 */
 	public function setIsInstalled() {
-		global $wp_filesystem;
+		$wp_filesystem = \Boldgrid\Library\Util\Version::getWpFilesystem();
 
 		$this->isInstalled = $wp_filesystem->exists( $this->path );
 	}
