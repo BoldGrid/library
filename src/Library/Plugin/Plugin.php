@@ -58,7 +58,7 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	protected $pluginData;
+	protected $pluginData = [];
 
 	/**
 	 * Update plugin data, as retrieved from 'update_plugins' site transient.
