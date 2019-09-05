@@ -79,6 +79,11 @@ return array(
 				'link' => '//wpforms.com/lite-upgrade/',
 				'priority' => 80,
 			),
+			'w3-total-cache' => array(
+				'slug' => 'w3-total-cache',
+				'link' => '//wordpress.org/plugins/w3-total-cache/',
+				'priority' => 80,
+			),
 		),
 	),
 	'api_calls' => array(

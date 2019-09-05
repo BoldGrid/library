@@ -19,6 +19,12 @@ Release date: August 29th, 2019
 * New feature: Show BoldGrid Notifications widget in the dashboard.
 * New feature: New dashboard pages, can be utilized by plugins.
 
+### 2.9.3 ###
+
+Release date:
+
+* Update: Recommend W3 Total Cache on Plugins > Add New.
+
 ### 2.9.2 ###
 
 Release date: August 1st, 2019
