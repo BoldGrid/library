@@ -11,6 +11,13 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.10.1 ###
+
+Release date: September 5th, 2019
+
+* Update: Recommend W3 Total Cache in Plugins > Add New
+* Update: Removing BoldGrid Staging from Plugins > Add New
+
 ### 2.10.0 ###
 
 Release date: August 29th, 2019
