@@ -40,11 +40,6 @@ return array(
 				'file' => 'boldgrid-inspirations/boldgrid-inspirations.php',
 				'priority' => 20,
 			),
-			'boldgrid-staging' => array(
-				'key' => 'staging',
-				'file' => 'boldgrid-staging/boldgrid-staging.php',
-				'priority' => 60,
-			),
 			'boldgrid-gallery' => array(
 				'key' => 'gallery-wc-canvas',
 				'file' => 'boldgrid-gallery/wc-gallery.php',
