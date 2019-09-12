@@ -11,6 +11,10 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.10.2 In progress ###
+
+* Update: Added methods to easily get a plugin's install and activate urls.
+
 ### 2.10.1 ###
 
 Release date: September 5th, 2019

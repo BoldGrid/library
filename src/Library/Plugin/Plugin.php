@@ -109,6 +109,20 @@ class Plugin {
 	}
 
 	/**
+	 * Get the url to activate this plugin.
+	 *
+	 * @since 2.10.2
+	 *
+	 * @return string
+	 */
+	public function getActivateUrl() {
+		return wp_nonce_url(
+			self_admin_url( 'plugins.php?action=activate&plugin=' . $this->file ),
+			'activate-plugin_' . $this->file
+		);
+	}
+
+	/**
 	 * Get an array of the plugin's icons.
 	 *
 	 * @since 2.9.0
@@ -191,6 +205,20 @@ class Plugin {
 		$url = add_query_arg( 'key', Configs::get( 'key' ), $url );
 
 		return $url;
+	}
+
+	/**
+	 * Get the url to install this plugin.
+	 *
+	 * @since 2.10.2
+	 *
+	 * @return string
+	 */
+	public function getInstallUrl() {
+		return wp_nonce_url(
+			self_admin_url( 'update.php?action=install-plugin&plugin=' . $this->slug ),
+			'install-plugin_' . $this->slug
+		);
 	}
 
 	/**
