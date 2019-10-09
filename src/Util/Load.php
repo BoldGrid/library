@@ -136,10 +136,52 @@ class Load {
 	 *
 	 * ftpext
 	 * Fatal error: Call to undefined function wp_generate_password() in wp-admin/includes/file.php
+	 *
+	 * Including the pluggable.php file caused issues with some other plugins that override functions.
+	 * Instead, we defined the wp_generate_password here.
+	 *
+	 * @todo Remove this method after an appropriate amount of time.  The requirement was removed on 10/9/2019.
 	 */
 	public function filesystemFixes() {
 		if ( ! function_exists( 'wp_generate_password' ) ) {
-			require( ABSPATH . WPINC . '/pluggable.php' );
+			/**
+			 * Generates a random password drawn from the defined set of characters.
+			 *
+			 * Uses wp_rand() is used to create passwords with far less predictability
+			 * than similar native PHP functions like `rand()` or `mt_rand()`.
+			 *
+			 * @since 2.5.0
+			 *
+			 * @param int  $length              Optional. The length of password to generate. Default 12.
+			 * @param bool $special_chars       Optional. Whether to include standard special characters.
+			 *                                  Default true.
+			 * @param bool $extra_special_chars Optional. Whether to include other special characters.
+			 *                                  Used when generating secret keys and salts. Default false.
+			 * @return string The random password.
+			 */
+			function wp_generate_password( $length = 12, $special_chars = true, $extra_special_chars = false ) {
+				$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+				if ( $special_chars ) {
+					$chars .= '!@#$%^&*()';
+				}
+				if ( $extra_special_chars ) {
+					$chars .= '-_ []{}<>~`+=,.;:/?|';
+				}
+
+				$password = '';
+				for ( $i = 0; $i < $length; $i++ ) {
+					$password .= substr( $chars, wp_rand( 0, strlen( $chars ) - 1 ), 1 );
+				}
+
+				/**
+				 * Filters the randomly-generated password.
+				 *
+				 * @since 3.0.0
+				 *
+				 * @param string $password The generated password.
+				 */
+				return apply_filters( 'random_password', $password );
+			}
 		}
 	}
 
