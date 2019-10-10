@@ -11,9 +11,9 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.10.3 In-progress ###
+### 2.10.3 ###
 
-Release date: ?
+Release date: October 10th, 2019
 
 * Bug fix: Stop using pluggable.php file.
 
