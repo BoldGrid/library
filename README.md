@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.10.4 ###
+
+Release date: October 11th, 2019
+
+* Bug fix: Moved temporary pluggable function code to a new file to fix scope.
+
 ### 2.10.3 ###
 
 Release date: October 10th, 2019

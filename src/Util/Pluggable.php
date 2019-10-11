@@ -2,11 +2,13 @@
 /**
  * File: Pluggable.php
  *
- * @package Boldgrid\Library
- * @subpackage \Util
- * @author BoldGrid <development@boldgrid.com>
+ * @link       https://www.boldgrid.com
+ * @since      2.10.4
  *
- * @since 2.10.3
+ * @package    Boldgrid\Library
+ * @subpackage \Util
+ * @copyright  BoldGrid
+ * @author     BoldGrid <support@boldgrid.com>
  */
 
 /**
@@ -23,7 +25,7 @@
  *
  * The code below was copied from "wp-includes/pluggable.php" in WordPress code 5.2.3.
  *
- * @since 2.9.3
+ * @since 2.10.4
  *
  * @todo Remove this method after an appropriate amount of time.  The requirement was removed in BGB on 10/10/2019.
  */
