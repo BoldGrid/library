@@ -6,7 +6,7 @@
  * @subpackage \Util
  * @author BoldGrid <development@boldgrid.com>
  *
- * @since 2.9.3
+ * @since 2.10.3
  */
 
 /**
