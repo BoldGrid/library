@@ -6,9 +6,9 @@
   },
   "devDependencies": {
     "cpx": "^1.5.0",
-    "eslint": "^4.19.1",
+    "eslint": "^6.2.0",
     "eslint-config-wordpress": "^2.0.0",
-    "eslint-plugin-html": "^4.0.2",
+    "eslint-plugin-html": "^6.0.0",
     "jquery-toggles": "^4.0.0",
     "prettier-eslint": "^9.0.0",
     "prettier-eslint-cli": "^5.0.0",
