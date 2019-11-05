@@ -33,7 +33,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "yarn install && gulp && rm -rf node_modules"
+            "yarn && yarn run cpx 'node_modules/jquery-toggles/toggles.min.js' 'build/' && yarn run cpx 'node_modules/jquery-toggles/css/toggles-full.css' 'build/' && yarn run rimraf node_modules"
         ]
     }
 }
