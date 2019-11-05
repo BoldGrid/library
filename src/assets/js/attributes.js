@@ -33,7 +33,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		getDefaultOption: function( $section ) {
 			var $defaultOption = $section.find( '[data-default-option="1"]' );
 
-			if( 0 === $defaultOption.length ) {
+			if ( 0 === $defaultOption.length ) {
 				$defaultOption = self.getSectionChecked( $section );
 				$defaultOption.attr( 'data-default-option', '1' );
 			}
@@ -56,15 +56,16 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				inputType,
 				$parent;
 
-			if( displayValue === undefined ) {
+			if ( displayValue === undefined ) {
 				$parent = $element.closest( '.bglib-misc-pub-section' );
 				inputType = self.getSectionInput( $parent );
 
-				switch( inputType ) {
+				switch ( inputType ) {
 					case 'select':
 						displayValue = $element.text();
 						break;
 					case 'radio':
+
 						// This is a guess.
 						displayValue = $element.parent().text();
 						break;
@@ -89,7 +90,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			var inputType = self.getSectionInput( $section ),
 				$checked;
 
-			switch( inputType ) {
+			switch ( inputType ) {
 				case 'select':
 					$checked = $section.find( ':selected' );
 					break;
@@ -115,13 +116,13 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		getSectionInput: function( $section ) {
 			var types = {
 					select: 'select',
-					radio : 'input[type="radio"]'
+					radio: 'input[type="radio"]'
 				},
 				inputType = false,
 				key;
 
-			for( key in types ) {
-				if( 0 < $section.find( types[key] ).length ) {
+			for ( key in types ) {
+				if ( 0 < $section.find( types[key] ).length ) {
 					inputType = key;
 					break;
 				}
@@ -161,7 +162,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			 * Usually the $defaultOption is already selected. In the event of the user clicking
 			 * cancel, we'll have to reset the selected value.
 			 */
-			switch( inputType ) {
+			switch ( inputType ) {
 				case 'select':
 					$defaultOption.prop( 'selected', true );
 					break;
@@ -179,7 +180,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		initValuesDisplayed: function() {
 			$( '.bglib-misc-pub-section' ).each( function() {
 				self.initValueDisplayed( $( this ) );
-			});
+			} );
 		},
 
 		/**
@@ -214,8 +215,11 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				$section = $cancel.closest( '.bglib-misc-pub-section' );
 
 			$section
-				.find( '.options' ).slideToggle( 'fast' ).end()
-				.find( '.edit' ).toggle();
+				.find( '.options' )
+				.slideToggle( 'fast' )
+				.end()
+				.find( '.edit' )
+				.toggle();
 
 			self.initValueDisplayed( $section );
 
@@ -235,9 +239,14 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				displayValue = self.getDisplayValue( $selected );
 
 			$section
-				.find( '.options' ).slideToggle( 'fast' ).end()
-				.find( '.edit' ).toggle().end()
-				.find( '.value-displayed' ).html( displayValue );
+				.find( '.options' )
+				.slideToggle( 'fast' )
+				.end()
+				.find( '.edit' )
+				.toggle()
+				.end()
+				.find( '.value-displayed' )
+				.html( displayValue );
 
 			// This is a button / anchor click. Return false.
 			return false;
@@ -247,9 +256,21 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	self = BOLDGRID.LIBRARY.Attributes;
 
 	$( function() {
-		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.edit', BOLDGRID.LIBRARY.Attributes.onClickEdit );
-		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.button-cancel', BOLDGRID.LIBRARY.Attributes.onClickCancel );
-		$( 'body' ).on( 'click', '.bglib-misc-pub-section a.button', BOLDGRID.LIBRARY.Attributes.onClickOk );
+		$( 'body' ).on(
+			'click',
+			'.bglib-misc-pub-section a.edit',
+			BOLDGRID.LIBRARY.Attributes.onClickEdit
+		);
+		$( 'body' ).on(
+			'click',
+			'.bglib-misc-pub-section a.button-cancel',
+			BOLDGRID.LIBRARY.Attributes.onClickCancel
+		);
+		$( 'body' ).on(
+			'click',
+			'.bglib-misc-pub-section a.button',
+			BOLDGRID.LIBRARY.Attributes.onClickOk
+		);
 		self.initValuesDisplayed();
 	} );
-})( jQuery );
+} )( jQuery );

@@ -142,7 +142,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			$( '.help[data-id="' + id + '"]' ).slideToggle();
 
 			return false;
-		},
+		}
 	};
 
 	var self = BOLDGRID.LIBRARY.Connect;

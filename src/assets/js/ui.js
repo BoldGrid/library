@@ -59,7 +59,7 @@ BOLDGRID.LIBRARY.Ui = function( $ ) {
 			sectionInput = $( '<input type="hidden" name="section" />' );
 
 		// If the form does not already have a section, add it.
-		if( ! $form.find( '[name="section"]' ).length ) {
+		if ( ! $form.find( '[name="section"]' ).length ) {
 			activeSection = $( '.bg-left-nav .active' ).attr( 'data-section-id' );
 			sectionInput.val( activeSection );
 			$form.append( sectionInput );
@@ -80,7 +80,7 @@ BOLDGRID.LIBRARY.Ui = function( $ ) {
 		self.setSticky();
 
 		$( window ).resize( self.setSticky );
-		
+
 		$( 'form' ).on( 'submit', self.onFormSubmit );
 	} );
 };

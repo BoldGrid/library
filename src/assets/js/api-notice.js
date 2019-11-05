@@ -116,7 +116,8 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 					.toggleClass( 'updated' )
 					.addClass( 'success-add-key' );
 
-				message += ' <a class="notice-dismiss" onClick="window.location.reload(true)" style="cursor:pointer;"></a>';
+				message +=
+					' <a class="notice-dismiss" onClick="window.location.reload(true)" style="cursor:pointer;"></a>';
 				$( '.tos-box', self.$notice ).fadeOut();
 			}
 
@@ -130,15 +131,19 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			// Hide the prompt and show the success message.
 			self.$notice
 				.hide()
-				.before( '<div class="notice notice-success is-dismissible bg-key-saved" style="display:block;"><p>' + message + '</p></div>' );
+				.before(
+					'<div class="notice notice-success is-dismissible bg-key-saved" style="display:block;"><p>' +
+						message +
+						'</p></div>'
+				);
 
 			// Trigger an event, for others to do things.
 			$( 'body' )
 				.addClass( 'boldgrid-key-saved' )
 				.trigger( 'boldgrid-key-saved', response.data );
 
-			if ( typeof IMHWPB !== 'undefined' && typeof IMHWPB.configs !== 'undefined' ) {
-				IMHWPB.configs.api_key   = response.data.api_key;
+			if ( 'undefined' !== typeof IMHWPB && 'undefined' !== typeof IMHWPB.configs ) {
+				IMHWPB.configs.api_key = response.data.api_key;
 				IMHWPB.configs.site_hash = response.data.site_hash;
 			}
 
@@ -152,7 +157,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 					window.location.reload();
 				}, 2000 );
 			}
-		}
+		};
 
 		$.post( ajaxurl, data, function( response ) {
 			if ( response.success ) {
@@ -195,8 +200,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 			e.preventDefault();
 			self.$notice.attr( 'data-notice-state', 'no-key-added' );
 		} );
-
-	}
+	};
 
 	/**
 	 * Handle the "Submit" button click (when a user is saving their connect key).
@@ -239,7 +243,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 		// Disable the submit button and show the spinner.
 		$submitButton.attr( 'disabled', true );
 		$spinner.addClass( 'inline' );
-	}
+	};
 
 	/**
 	 * Show the form for the user to enter their key.
@@ -249,7 +253,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	this.showKeyForm = function() {
 		$( '.new-api-key', self.$notice ).hide();
 		$( '.api-notice', self.$notice ).fadeIn( 'slow' );
-	}
+	};
 
 	/**
 	 * Show the form for the user to get a new key.
@@ -259,7 +263,7 @@ BOLDGRID.LIBRARY.Api = function( $ ) {
 	this.showNewForm = function() {
 		$( '.api-notice', self.$notice ).hide();
 		$( '.new-api-key', self.$notice ).fadeIn( 'slow' );
-	}
+	};
 };
 
 new BOLDGRID.LIBRARY.Api( jQuery );

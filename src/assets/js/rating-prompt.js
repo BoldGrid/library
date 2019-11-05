@@ -15,6 +15,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	var self;
 
 	BOLDGRID.LIBRARY.RatingPrompt = {
+
 		/**
 		 * @summary Dismiss (or snooze) a rating prompt.
 		 *
@@ -26,12 +27,12 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		dismiss: function( name, type, length ) {
 			var data = {
-					'action': 'blib_rating_prompt_dismiss',
-					'type': type,
-					'length': length,
-					'name': name,
-					'security': $( '.bglib-rating-prompt #_wpnonce' ).val()
-				};
+				action: 'blib_rating_prompt_dismiss',
+				type: type,
+				length: length,
+				name: name,
+				security: $( '.bglib-rating-prompt #_wpnonce' ).val()
+			};
 
 			$.ajax( {
 				url: ajaxurl,
@@ -69,12 +70,16 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			if ( 0 === $decision.attr( 'href' ).length ) {
 				return false;
 			}
-		},
+		}
 	};
 
 	self = BOLDGRID.LIBRARY.RatingPrompt;
 
 	$( function() {
-		$( 'body' ).on( 'click', '.notice.bglib-rating-prompt li a', BOLDGRID.LIBRARY.RatingPrompt.onClickDecision );
+		$( 'body' ).on(
+			'click',
+			'.notice.bglib-rating-prompt li a',
+			BOLDGRID.LIBRARY.RatingPrompt.onClickDecision
+		);
 	} );
-})( jQuery );
+} )( jQuery );
