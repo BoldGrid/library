@@ -2,7 +2,8 @@
 .settings_page_boldgrid-connect #container_boldgrid_api_key_notice {
 	background: transparent;
 	box-shadow: none;
-	border-left: 0;
+	/* WordPress 5.3 adds notices to borders. */
+	border: 0;
 	width: auto;
 }
 

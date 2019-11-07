@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.10.5 ###
+
+Release date: November ??, 2019
+
+* Bug fix: Misc style fixes for WordPress 5.3.
+
 ### 2.10.4 ###
 
 Release date: October 11th, 2019
