@@ -167,6 +167,11 @@ div .dashicons {
 	letter-spacing: 0.1em;
 }
 
+/* Hide notices on about page. This is temporary, WordPress 5.3 should be adding this. */
+.about__container .notice {
+	display: none;
+}
+
 
 /*
  * #.# BoldGrid Orange
