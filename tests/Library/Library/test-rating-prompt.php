@@ -62,7 +62,7 @@ class Test_Rating_Prompt extends WP_UnitTestCase {
 		];
 
 		$lang = [
-			'feel_good_value' => sprinf(
+			'feel_good_value' => sprintf(
 				// translators: 1: Plugin title.
 				__(
 					'If you feel you\'re getting really good value from the %1$s plugin, could you do us a favor and rate us 5 stars on WordPress?',
