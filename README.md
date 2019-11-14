@@ -11,6 +11,10 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.10.6 In progress ###
+
+* Update: Renamed plugin from "BoldGrid Backup" to "Total Upkeep".
+
 ### 2.10.5 ###
 
 Release date: November 11, 2019
