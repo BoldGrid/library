@@ -5,10 +5,6 @@ if ( ! $_tests_dir ) {
 	$_tests_dir = '/tmp/wordpress-tests-lib';
 }
 
-if ( ! defined( 'BOLDGRID_BACKUP_TITLE' ) ) {
-	define( 'BOLDGRID_BACKUP_TITLE', 'Total Upkeep' );
-}
-
 require_once $_tests_dir . '/includes/functions.php';
 
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/License.php';
