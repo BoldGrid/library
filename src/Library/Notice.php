@@ -148,13 +148,15 @@ class Notice {
 	 *
 	 * @since 2.1.0
 	 *
+	 * @static
+	 *
 	 * @see \Boldgrid\Library\Library\Notice::isDismissed()
 	 *
 	 * @uses $_POST['notice'] Notice id.
 	 *
 	 * @hook: wp_ajax_dismissBoldgridNotice
 	 */
-	public function dismiss() {
+	public static function dismiss() {
 		// Validate nonce.
 		if ( isset( $_POST['set_key_auth'] ) && check_ajax_referer( 'boldgrid_set_key', 'set_key_auth', false ) ) {
 			$id = sanitize_key( $_POST['notice'] );
