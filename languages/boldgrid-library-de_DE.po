@@ -1,6 +1,6 @@
 # Translators:
 # Brad Markle <bradm@boldgrid.com>, 2019
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -232,10 +232,10 @@ msgstr "Übergeordnet"
 #. open tag, 4: HTML em close tag..
 #: Library/Views/Connect/AutoUpdates.php:62
 msgid ""
-"You have %3$sAuto-Backup%4$s disabled in the %1$sBoldGrid Backup "
+"You have %3$sAuto-Backup%4$s disabled in the %1$sTotal Upkeep "
 "Settings%2$s.  Please consider enabling the setting."
 msgstr ""
-"Sie haben das %3$sAuto-Backup%4$s in den %1$sBoldGrid Backup "
+"Sie haben das %3$sAuto-Backup%4$s in den %1$sTotal Upkeep "
 "Einstellungen%2$s deaktiviert.  Bitte beachten Sie, dass Sie die Einstellung"
 " aktivieren sollten."
 

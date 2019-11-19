@@ -8,10 +8,18 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-04-10T08:17:55-04:00\n"
-"PO-Revision-Date: 2019-04-10T08:17:55-04:00\n"
+"POT-Creation-Date: 2019-11-14T14:38:41-05:00\n"
+"PO-Revision-Date: 2019-11-14T14:38:41-05:00\n"
 "X-Generator: WP-CLI 2.0.1\n"
 "X-Domain: boldgrid-library\n"
+
+#: Library/NewsWidget.php:76
+msgid "There are no updates to show right now."
+msgstr ""
+
+#: Library/NewsWidget.php:219
+msgid "BoldGrid News"
+msgstr ""
 
 #: Library/Page/Connect.php:121
 msgid "Settings saved."
@@ -51,6 +59,26 @@ msgstr ""
 
 #: Library/RatingPrompt.php:166
 msgid "Unknown action."
+msgstr ""
+
+#: Library/Notifications/DashboardWidget.php:101
+msgid "Please install your Connect Key"
+msgstr ""
+
+#: Library/Notifications/DashboardWidget.php:111
+msgid "Learn about the advanced features of a Premium Key."
+msgstr ""
+
+#: Library/Notifications/DashboardWidget.php:118
+msgid "Premium Connect Key Installed!"
+msgstr ""
+
+#: Library/Notifications/DashboardWidget.php:190
+msgid "No issues to report!"
+msgstr ""
+
+#: Library/Notifications/DashboardWidget.php:207
+msgid "BoldGrid Notifications"
 msgstr ""
 
 #: Library/Views/KeyPromptMini.php:44
@@ -175,58 +203,58 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#. translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag..
+#. translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag, 5: Plugin Title.
 #: Library/Views/Connect/AutoUpdates.php:62
-msgid "You have %3$sAuto-Backup%4$s disabled in the %1$sBoldGrid Backup Settings%2$s.  Please consider enabling the setting."
+msgid "You have %3$sAuto Backup Before Update%4$s disabled in the %1$s%5$s Backup and Restore Settings%2$s.  Please consider enabling the setting."
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:77
+#: Library/Views/Connect/AutoUpdates.php:78
 msgid "WordPress Core"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:90
+#: Library/Views/Connect/AutoUpdates.php:91
 msgid "All Update Types"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:101
+#: Library/Views/Connect/AutoUpdates.php:102
 msgid "Major Updates"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:111
+#: Library/Views/Connect/AutoUpdates.php:112
 msgid "Minor Updates"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:121
+#: Library/Views/Connect/AutoUpdates.php:122
 msgid "Development Updates"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:131
+#: Library/Views/Connect/AutoUpdates.php:132
 msgid "Translation Updates"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:150
+#: Library/Views/Connect/AutoUpdates.php:151
 #: Library/Views/Connect/UpdateChannels.php:46
 msgid "Plugins"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:164
+#: Library/Views/Connect/AutoUpdates.php:165
 msgid "Default for New Plugins"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:176
+#: Library/Views/Connect/AutoUpdates.php:177
 msgid "All Plugins"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:250
+#: Library/Views/Connect/AutoUpdates.php:251
 #: Library/Views/Connect/UpdateChannels.php:106
 msgid "Themes"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:264
+#: Library/Views/Connect/AutoUpdates.php:265
 msgid "Default for New Themes"
 msgstr ""
 
-#: Library/Views/Connect/AutoUpdates.php:276
+#: Library/Views/Connect/AutoUpdates.php:277
 msgid "All Themes"
 msgstr ""
 
@@ -278,7 +306,7 @@ msgstr ""
 msgid "Unknown error"
 msgstr ""
 
-#: Library/License.php:399
+#: Library/License.php:400
 msgid "Free"
 msgstr ""
 

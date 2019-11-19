@@ -14,7 +14,7 @@ $autoupdateSettings = \Boldgrid\Library\Util\Option::get( 'autoupdate' );
 $pluginsDefault     = ! empty( $autoupdateSettings['plugins']['default'] );
 $themesDefault      = ! empty( $autoupdateSettings['themes']['default'] );
 
-// Get BoldGrid Backup settings.
+// Get backup settings.
 $boldgridBackupSettings = get_site_option( 'boldgrid_backup_settings', array() );
 
 // Get deprecated settings.
@@ -58,15 +58,16 @@ if ( empty( $boldgridBackupSettings['auto_backup'] ) ) {
 	$return .= '
 		<div><p>' .
 		sprintf(
-			// translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag..
+			// translators: 1: HTML anchor open tag, 2: HTML anchor close tag, 3: HTML em open tag, 4: HTML em close tag, 5: Plugin Title.
 			esc_html__(
-				'You have %3$sAuto-Backup%4$s disabled in the %1$sBoldGrid Backup Settings%2$s.  Please consider enabling the setting.',
+				'You have %3$sAuto Backup Before Update%4$s disabled in the %1$s%5$s Backup and Restore Settings%2$s.  Please consider enabling the setting.',
 				'boldgrid-library'
 			),
 			$bbsLinkOpen,
 			$bbsLinkClose,
 			'<em>',
-			'</em>'
+			'</em>',
+			'Total Upkeep'
 		) .
 		'</p></div>' . PHP_EOL;
 }
