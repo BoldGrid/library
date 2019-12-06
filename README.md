@@ -11,7 +11,7 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.10.7 In progress ##
+### 2.10.7 ##
 
 * Update: Changed the recommended form plugin from WPForms to weForms.
 
