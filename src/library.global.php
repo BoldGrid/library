@@ -45,11 +45,6 @@ return array(
 				'file' => 'boldgrid-gallery/wc-gallery.php',
 				'priority' => 70,
 			),
-			'boldgrid-ninja-forms' => array(
-				'key' => 'ninja-forms',
-				'file' => 'boldgrid-ninja-forms/ninja-forms.php',
-				'priority' => 80,
-			),
 		),
 
 		// WordPress.org recommended plugins.
