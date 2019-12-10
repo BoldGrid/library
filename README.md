@@ -11,7 +11,13 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.10.7 ##
+
+* Update: Changed the recommended form plugin from WPForms to weForms.
+
 ### 2.10.6 ###
+
+Release date: November 19, 2019
 
 * Update: Renamed plugin from "BoldGrid Backup" to "Total Upkeep".
 

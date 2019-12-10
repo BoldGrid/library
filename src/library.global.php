@@ -45,11 +45,6 @@ return array(
 				'file' => 'boldgrid-gallery/wc-gallery.php',
 				'priority' => 70,
 			),
-			'boldgrid-ninja-forms' => array(
-				'key' => 'ninja-forms',
-				'file' => 'boldgrid-ninja-forms/ninja-forms.php',
-				'priority' => 80,
-			),
 		),
 
 		// WordPress.org recommended plugins.
@@ -69,15 +64,17 @@ return array(
 				'link' => '//wordpress.org/plugins/boldgrid-backup/',
 				'priority' => 40,
 			),
-			'wpforms-lite' => array(
-				'slug' => 'wpforms-lite',
-				'link' => '//wpforms.com/lite-upgrade/',
+			'weforms' => array(
+				'slug' => 'weforms',
+				'link' => '//wordpress.org/plugins/weforms',
 				'priority' => 80,
+				'hide_premium' => true,
 			),
 			'w3-total-cache' => array(
 				'slug' => 'w3-total-cache',
 				'link' => '//wordpress.org/plugins/w3-total-cache/',
 				'priority' => 80,
+				'hide_premium' => true,
 			),
 		),
 	),
