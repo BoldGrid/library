@@ -23,6 +23,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	 * @since SINCEVERSION
 	 */
 	BOLDGRID.LIBRARY.UsageNotice = {
+
 		/**
 		 * i18n.
 		 *
@@ -53,26 +54,24 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				$notice = $( '#bglib_usage_notice' );
 
 			data = {
-				'action': 'bglib_usage_signup',
-				'choice': choice,
-				'nonce': self.i18n.nonce
+				action: 'bglib_usage_signup',
+				choice: choice,
+				nonce: self.i18n.nonce
 			};
 
 			$.post(
 				ajaxurl,
 				data,
 				function( response ) {
-					var fail = response.success === undefined || response.success === false;
+					var fail = response.success === undefined || false === response.success;
 
 					// @todo On success, we can do more than simply slide up the notice.
 					fail ? self.onDismissError() : $notice.slideUp();
 				},
 				'json'
-			).fail(
-				function( jqXHR ) {
-					self.onDismissError();
-				}
-			);
+			).fail( function( jqXHR ) {
+				self.onDismissError();
+			} );
 
 			return false;
 		},
@@ -86,9 +85,11 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		onDismissError: function() {
 			$( '#bglib_usage_notice' )
+
 				// Change the notice from info to alert.
 				.removeClass( 'notice-info' )
 				.addClass( 'notice-error' )
+
 				// Empty the notice and add our generic error message.
 				.empty()
 				.html( '<p>' + self.i18n.error + '</p>' );
@@ -103,7 +104,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			$( function() {
 				$( '#bglib_usage_notice a' ).on( 'click', self.onClick );
 			} );
-		},
+		}
 	};
 
 	self = BOLDGRID.LIBRARY.UsageNotice;

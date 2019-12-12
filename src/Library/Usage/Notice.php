@@ -129,7 +129,6 @@ class Notice {
 			'no'  => __( 'Sorry, not now', 'boldgrid-library' ),
 		];
 
-
 		/**
 		 * Filter the params for the notice.
 		 *

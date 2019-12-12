@@ -12,7 +12,7 @@ var BOLDGRID = BOLDGRID || {};
 
 BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
-( function( $ ) {
+(function($) {
 	'use strict';
 
 	var self;
@@ -28,9 +28,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *
 		 * @since SINCEVERSION
 		 */
-		addClientId: function() {
-
-		},
+		addClientId: function() {},
 
 		/**
 		 * Prepend all boldgrid.com links with our user's GA client id.
@@ -45,32 +43,29 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				part;
 
 			// Abort if we can't get a client id.
-			if ( '' === clientId ) {
+			if ('' === clientId) {
 				return;
 			}
 
 			part = '_ga=' + clientId;
 
-			$( 'a[href*="www.boldgrid.com"]' ).each( function(){
-				var $anchor = $( this ),
-					url = $anchor.attr( 'href' );
+			$('a[href*="www.boldgrid.com"]').each(function() {
+				var $anchor = $(this),
+					url = $anchor.attr('href');
 
 				/*
 				 * Add our client id to the url.
 				 *
 				 * @link https://stackoverflow.com/questions/486896/adding-a-parameter-to-the-url-with-javascript
 				 */
-				url = (
-					url.indexOf( '?' ) != -1 ?
-						url.split( '?' )[0] + '?' + part + '&' + url.split( '?' )[1] :
-						(
-							url.indexOf( '#' ) != -1 ?
-								url.split( '#' )[0] + '?' + part + '#' + url.split( '#' )[1] :
-								url + '?' + part
-						)
-				);
+				url =
+					url.indexOf('?') != -1
+						? url.split('?')[0] + '?' + part + '&' + url.split('?')[1]
+						: url.indexOf('#') != -1
+						? url.split('#')[0] + '?' + part + '#' + url.split('#')[1]
+						: url + '?' + part;
 
-				$anchor.attr( 'href', url );
+				$anchor.attr('href', url);
 			});
 		},
 
@@ -82,9 +77,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		getClientId: function() {
 			var clientId = '';
 
-			ga.getAll().forEach( ( tracker ) => {
-				if ( tracker.get( 'trackingId' ) === self.i18n.ga_id ) {
-					clientId = tracker.get( 'clientId' );
+			ga.getAll().forEach(tracker => {
+				if (tracker.get('trackingId') === self.i18n.ga_id) {
+					clientId = tracker.get('clientId');
 				}
 			});
 
@@ -127,10 +122,10 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		onNavClick: function() {
 			var pageviewParams = {
-				'page_path' : self.getPagePath() + '&section=' + $( this ).attr( 'data-section-id' )
+				page_path: self.getPagePath() + '&section=' + $(this).attr('data-section-id')
 			};
 
-			self.triggerPageview( pageviewParams );
+			self.triggerPageview(pageviewParams);
 		},
 
 		/**
@@ -142,20 +137,20 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *
 		 * @param object params An object containing params for the gtag call.
 		 */
-		triggerPageview: function( params ) {
-			if ( params === undefined ) {
+		triggerPageview: function(params) {
+			if (params === undefined) {
 				params = {
-					'page_path' : self.getPagePath()
+					page_path: self.getPagePath()
 				};
 			}
 
 			params.custom_map = {
-				'dimension7': 'license'
+				dimension7: 'license'
 			};
 
-			gtag( 'config', self.i18n.ga_id, params );
+			gtag('config', self.i18n.ga_id, params);
 
-			gtag( 'event', 'license_demension', { 'license': self.i18n.license } );
+			gtag('event', 'license_demension', { license: self.i18n.license });
 		},
 
 		/**
@@ -164,19 +159,19 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 1.7.0
 		 */
 		_onReady: function() {
-			$( function() {
+			$(function() {
 				// Log the pageview.
 				self.triggerPageview();
 
 				self.prependClientId();
 
 				// Listen to clicks on the bglib UI's nav.
-				$( '.bg-left-nav li' ).on( 'click', self.onNavClick );
-			} );
-		},
+				$('.bg-left-nav li').on('click', self.onNavClick);
+			});
+		}
 	};
 
 	self = BOLDGRID.LIBRARY.Usage;
-} )( jQuery );
+})(jQuery);
 
 BOLDGRID.LIBRARY.Usage.init();
