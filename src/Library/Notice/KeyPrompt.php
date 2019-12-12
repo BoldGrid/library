@@ -215,6 +215,31 @@ class KeyPrompt {
 	}
 
 	/**
+	 * Whether or not we are prompting the user for a key.
+	 *
+	 * This class has an $isDisplayed attribute which is set to true the moment we show the connect
+	 * key input notice. The problem with checking for this value is that depending on when you check
+	 * it's value, it may not be accurate. This method should be able to be called whenever, and should
+	 * tell us if the prompt will be shown - which is when the user hasn't dismissed it and they don't
+	 * have a key.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @hook Boldgrid\Library\Notice\KeyPrompt\maybePromptKey
+	 *
+	 * @return bool
+	 */
+	public function maybePromptKey() {
+		// Whether or not the user has dismissed the notice to enter their connect key.
+		$isKeyDismissed = $this->getIsDismissed();
+
+		// Whether or not the user has entered a connect key.
+		$hasKey = apply_filters( 'Boldgrid\Library\Key\hasKey', false );
+
+		return ! $isKeyDismissed && ! $hasKey;
+	}
+
+	/**
 	 * Key input handling.
 	 *
 	 * @since 1.0.0

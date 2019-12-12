@@ -343,7 +343,7 @@ class License {
 	 *
 	 * @since  1.0.0
 	 *
-	 * @nohook
+	 * @hook Boldgrid\Library\License\getData
 	 *
 	 * @return $data The data class property.
 	 */
