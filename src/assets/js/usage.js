@@ -6,7 +6,7 @@
  * @since SINCEVERSION
  */
 
-/* global jQuery,ga,gtag */
+/* global jQuery,gtag */
 
 var BOLDGRID = BOLDGRID || {};
 
@@ -23,69 +23,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	 * @since SINCEVERSION
 	 */
 	BOLDGRID.LIBRARY.Usage = {
-		/**
-		 * Add our client id to all boldgrid.com links.
-		 *
-		 * @since SINCEVERSION
-		 */
-		addClientId: function() {},
-
-		/**
-		 * Prepend all boldgrid.com links with our user's GA client id.
-		 *
-		 * @since SINCEVERSION
-		 *
-		 * @link https://www.analyticsmania.com/post/google-analytics-cross-domain-tracking-with-google-tag-manager/
-		 * @link https://developers.google.com/analytics/devguides/collection/gtagjs/cross-domain
-		 */
-		prependClientId: function() {
-			var clientId = self.getClientId(),
-				part;
-
-			// Abort if we can't get a client id.
-			if ('' === clientId) {
-				return;
-			}
-
-			part = '_ga=' + clientId;
-
-			$('a[href*="www.boldgrid.com"]').each(function() {
-				var $anchor = $(this),
-					url = $anchor.attr('href');
-
-				/*
-				 * Add our client id to the url.
-				 *
-				 * @link https://stackoverflow.com/questions/486896/adding-a-parameter-to-the-url-with-javascript
-				 */
-				url =
-					url.indexOf('?') != -1
-						? url.split('?')[0] + '?' + part + '&' + url.split('?')[1]
-						: url.indexOf('#') != -1
-						? url.split('#')[0] + '?' + part + '#' + url.split('#')[1]
-						: url + '?' + part;
-
-				$anchor.attr('href', url);
-			});
-		},
-
-		/**
-		 * Get the user's client id.
-		 *
-		 * @since SINCEVERSION
-		 */
-		getClientId: function() {
-			var clientId = '';
-
-			ga.getAll().forEach(tracker => {
-				if (tracker.get('trackingId') === self.i18n.ga_id) {
-					clientId = tracker.get('clientId');
-				}
-			});
-
-			return clientId;
-		},
-
 		/**
 		 * Get the page path we will use to track the pageview.
 		 *
@@ -125,7 +62,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				page_path: self.getPagePath() + '&section=' + $(this).attr('data-section-id')
 			};
 
-			self.triggerPageview(pageviewParams);
+			self.triggerPageview( pageviewParams );
 		},
 
 		/**
@@ -133,24 +70,29 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *
 		 * @since SINCEVERSION
 		 *
-		 * @link https://www.simoahava.com/analytics/add-clientid-to-custom-dimension-gtag-js/
-		 *
 		 * @param object params An object containing params for the gtag call.
 		 */
 		triggerPageview: function(params) {
+			/*
+			 * Allow this method to be called without passing in params. If no params are passed in,
+			 * by default we'll only add the page path.
+			 */
 			if (params === undefined) {
 				params = {
 					page_path: self.getPagePath()
 				};
 			}
 
+			// Configure license.
+			params.license = self.i18n.license;
 			params.custom_map = {
 				dimension7: 'license'
 			};
 
-			gtag('config', self.i18n.ga_id, params);
+			// Configure linker. This will add client id, on click, to all boldgrid.com links.
+			params.linker = { 'domains': [ 'boldgrid.com' ] };
 
-			gtag('event', 'license_demension', { license: self.i18n.license });
+			gtag('config', self.i18n.ga_id, params );
 		},
 
 		/**
@@ -162,8 +104,6 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			$(function() {
 				// Log the pageview.
 				self.triggerPageview();
-
-				self.prependClientId();
 
 				// Listen to clicks on the bglib UI's nav.
 				$('.bg-left-nav li').on('click', self.onNavClick);
