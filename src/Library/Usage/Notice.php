@@ -121,7 +121,7 @@ class Notice {
 
 		$params = [
 			'message' => '<p>' .
-				esc_html__(
+				__(
 					'Thank you for using BoldGrid! Would you be ok with helping us improve our products by sending anonymous usage data? Information collected will not be personal and is not used to identify or contact you.',
 					'boldgrid-library'
 				) . '</p>',
@@ -168,7 +168,7 @@ class Notice {
 	 */
 	public static function wp_ajax_bglib_usage_signup() {
 		if( ! check_ajax_referer( 'bglib_usage_signup', 'nonce', false ) ) {
-			wp_send_json_error( __( 'Invalid nonce.', 'boldgrid-library' ) );
+			wp_send_json_error( esc_html__( 'Invalid nonce.', 'boldgrid-library' ) );
 		}
 
 		$share_data = ! empty( $_POST['choice'] );
