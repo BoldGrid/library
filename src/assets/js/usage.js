@@ -12,7 +12,7 @@ var BOLDGRID = BOLDGRID || {};
 
 BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
-(function($) {
+( function( $ ) {
 	'use strict';
 
 	var self;
@@ -23,6 +23,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	 * @since SINCEVERSION
 	 */
 	BOLDGRID.LIBRARY.Usage = {
+
 		/**
 		 * Get the page path we will use to track the pageview.
 		 *
@@ -59,7 +60,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 */
 		onNavClick: function() {
 			var pageviewParams = {
-				page_path: self.getPagePath() + '&section=' + $(this).attr('data-section-id')
+				page_path: self.getPagePath() + '&section=' + $( this ).attr( 'data-section-id' )
 			};
 
 			self.triggerPageview( pageviewParams );
@@ -72,12 +73,13 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *
 		 * @param object params An object containing params for the gtag call.
 		 */
-		triggerPageview: function(params) {
+		triggerPageview: function( params ) {
+
 			/*
 			 * Allow this method to be called without passing in params. If no params are passed in,
 			 * by default we'll only add the page path.
 			 */
-			if (params === undefined) {
+			if ( params === undefined ) {
 				params = {
 					page_path: self.getPagePath()
 				};
@@ -90,9 +92,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			};
 
 			// Configure linker. This will add client id, on click, to all boldgrid.com links.
-			params.linker = { 'domains': [ 'boldgrid.com' ] };
+			params.linker = { domains: [ 'boldgrid.com' ] };
 
-			gtag('config', self.i18n.ga_id, params );
+			gtag( 'config', self.i18n.ga_id, params );
 		},
 
 		/**
@@ -101,17 +103,18 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 * @since 1.7.0
 		 */
 		_onReady: function() {
-			$(function() {
+			$( function() {
+
 				// Log the pageview.
 				self.triggerPageview();
 
 				// Listen to clicks on the bglib UI's nav.
-				$('.bg-left-nav li').on('click', self.onNavClick);
-			});
+				$( '.bg-left-nav li' ).on( 'click', self.onNavClick );
+			} );
 		}
 	};
 
 	self = BOLDGRID.LIBRARY.Usage;
-})(jQuery);
+} )( jQuery );
 
 BOLDGRID.LIBRARY.Usage.init();
