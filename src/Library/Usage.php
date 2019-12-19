@@ -36,7 +36,7 @@ class Usage {
 	 * @access private
 	 * @var string
 	 */
-	private $gaId = 'UA-1501988-42';
+	private $gaId;
 
 	/**
 	 * An array of page prefixes to load usage tracking on.
@@ -60,6 +60,8 @@ class Usage {
 			Filter::add( $this );
 			self::$filtersAdded = true;
 		}
+
+		$this->gaId = Configs::get( 'gaId' );
 	}
 
 	/**
