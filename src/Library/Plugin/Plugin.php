@@ -433,7 +433,18 @@ class Plugin {
 		$pluginsChecked = $this->getPluginsChecked();
 
 		if ( ! empty( $pluginsChecked ) ) {
-			$firstVersion = array_key_first( $pluginsChecked );
+			/*
+			 * Get the first version of the plugin, which is the first key from plugins_checked.
+			 *
+			 * Ideal method is to use array_key_first, but that requires php 7+. Alternative is to use
+			 * this polyfill.
+			 *
+			 * @link https://www.php.net/manual/en/function.array-key-first.php
+			 */
+			foreach ( $pluginsChecked as $key => $unused ) {
+				$firstVersion = $key;
+				break;
+			}
 		} else {
 			// If the data is missing for some reason, return the plugin's current version.
 			$firstVersion = $this->getData( 'Version' );
