@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version SINCEVERSION
+ * @version 2.11.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -15,7 +15,7 @@ use Boldgrid\Library\Library\Usage\Helper;
 /**
  * BoldGrid Library Usage Class.
  *
- * @since SINCEVERSION
+ * @since 2.11.0
  */
 class Usage {
 	/**
@@ -23,7 +23,7 @@ class Usage {
 	 *
 	 * Filters only need to be added once.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 * @access private
 	 * @var bool
 	 */
@@ -32,7 +32,7 @@ class Usage {
 	/**
 	 * GA ID.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 * @access private
 	 * @var string
 	 */
@@ -41,7 +41,7 @@ class Usage {
 	/**
 	 * An array of page prefixes to load usage tracking on.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 * @access private
 	 * @var array
 	 */
@@ -52,7 +52,7 @@ class Usage {
 	 *
 	 * Do not instantiate this class unless you're sure you want to collect usage data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	public function __construct() {
 		// Only add the filters once.
@@ -67,7 +67,7 @@ class Usage {
 	/**
 	 * Add tag.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	public function addTag() {
 		?>
@@ -84,7 +84,7 @@ class Usage {
 	/**
 	 * Admin enqueue scripts.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	public function admin_enqueue_scripts() {
 		if ( $this->maybeLoad() ) {
@@ -119,7 +119,7 @@ class Usage {
 	/**
 	 * Admin head.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	public function admin_head() {
 		if ( $this->maybeLoad() ) {
@@ -130,7 +130,7 @@ class Usage {
 	/**
 	 * Get license data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @return array
 	 */
@@ -148,7 +148,7 @@ class Usage {
 	/**
 	 * Determine whether or not we should load and track usage.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @return bool
 	 */

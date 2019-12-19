@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version SINCEVERSION
+ * @version 2.11.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -13,20 +13,20 @@ namespace Boldgrid\Library\Library\Usage;
 /**
  * BoldGrid Library Usage Settings Class.
  *
- * @since SINCEVERSION
+ * @since 2.11.0
  */
 class Settings {
 	/**
 	 * The boldgrid_setting's option key that holds this information.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	private static $agreeKey = 'usage_agree';
 
 	/**
 	 * Whether or not the user has agreed.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @return bool
 	 */
@@ -39,7 +39,7 @@ class Settings {
 	/**
 	 * Whether or not the user has made a yes / no desicion.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @return bool
 	 */
@@ -50,7 +50,7 @@ class Settings {
 	/**
 	 * Set the user's decision.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @return bool True on success.
 	 */

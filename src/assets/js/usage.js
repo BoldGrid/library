@@ -3,7 +3,7 @@
  *
  * @summary This file handles usage statistics.
  *
- * @since SINCEVERSION
+ * @since 2.11.0
  */
 
 /* global jQuery,gtag */
@@ -20,14 +20,14 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	/**
 	 * Total Upkeep Usage.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	BOLDGRID.LIBRARY.Usage = {
 
 		/**
 		 * Get the page path we will use to track the pageview.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 *
 		 * @return string
 		 */
@@ -38,7 +38,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * i18n.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 *
 		 * @type object
 		 */
@@ -47,7 +47,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Init.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 */
 		init: function() {
 			self._onReady();
@@ -56,7 +56,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Actions to take when a user clicks a nav item of the bglib UI class.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 */
 		onNavClick: function() {
 			var pageviewParams = {
@@ -69,7 +69,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Trigger a pageview.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 *
 		 * @param object params An object containing params for the gtag call.
 		 */

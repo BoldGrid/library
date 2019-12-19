@@ -3,7 +3,7 @@
  *
  * @summary This file handles the notice to accept usage statistics.
  *
- * @since SINCEVERSION
+ * @since 2.11.0
  */
 
 /* global jQuery,ajaxurl */
@@ -20,14 +20,14 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	/**
 	 * Usage Notice.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	BOLDGRID.LIBRARY.UsageNotice = {
 
 		/**
 		 * i18n.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 *
 		 * @type object
 		 */
@@ -36,7 +36,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Init.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 */
 		init: function() {
 			self._onReady();
@@ -45,7 +45,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Handle the click of a yes / no choice.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 */
 		onClick: function() {
 			var $anchor = $( this ),
@@ -81,7 +81,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		 *
 		 * This should never really be the case, but, just in case.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 */
 		onDismissError: function() {
 			$( '#bglib_usage_notice' )
@@ -98,7 +98,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * On ready.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 */
 		_onReady: function() {
 			$( function() {

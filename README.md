@@ -11,7 +11,13 @@ composer require boldgrid/library
 
 ## Changelog ##
 
-### 2.10.7 ##
+### 2.11.0 ###
+
+Release date: December 19th, 2019
+
+* Update: Added Usage class.
+
+### 2.10.7 ###
 
 Release date: December 10th, 2019
 

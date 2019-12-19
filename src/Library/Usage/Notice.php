@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version SINCEVERSION
+ * @version 2.11.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -16,7 +16,7 @@ use Boldgrid\Library\Library\Filter;
 /**
  * BoldGrid Library Usage Notice Class.
  *
- * @since SINCEVERSION
+ * @since 2.11.0
  */
 class Notice {
 	/**
@@ -24,7 +24,7 @@ class Notice {
 	 *
 	 * Filters only need to be added once.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 * @access private
 	 * @var bool
 	 */
@@ -35,7 +35,7 @@ class Notice {
 	 *
 	 * Do not instantiate this class unless you're sure you want to collect usage data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	public function __construct() {
 		// Only add the filters once.
@@ -48,7 +48,7 @@ class Notice {
 	/**
 	 * Admin enqueue scripts.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	public static function admin_enqueue_scripts() {
 		$handle = 'bglib-usage-notice';
@@ -73,7 +73,7 @@ class Notice {
 	/**
 	 * Determine whether or not to show the usage notice.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * return bool
 	 */
@@ -99,7 +99,7 @@ class Notice {
 		 * their first backup yet, they're going to see notices teaching them how, and now is not a
 		 * good time to ask to track anonymous usage data.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 *
 		 * @param bool $maybeShow Whether or not we should show the notice.
 		 */
@@ -111,7 +111,7 @@ class Notice {
 	/**
 	 * Show the notice.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	public function admin_notices() {
 		// Abort if we shouldn't be showing the notice.
@@ -132,7 +132,7 @@ class Notice {
 		/**
 		 * Filter the params for the notice.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.11.0
 		 *
 		 * @param array $params {
 		 * 		An array of params for the notice.
@@ -164,7 +164,7 @@ class Notice {
 	/**
 	 * Handle the ajax call to accept / decline the notice.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 */
 	public static function wp_ajax_bglib_usage_signup() {
 		if( ! check_ajax_referer( 'bglib_usage_signup', 'nonce', false ) ) {

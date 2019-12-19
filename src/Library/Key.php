@@ -25,7 +25,7 @@ class Key {
 	 *
 	 * This is the option that stores the key hash.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 * @access protected
 	 * @var string
 	 */
@@ -97,7 +97,7 @@ class Key {
 	/**
 	 * Get our key.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @return mixed String if a key exists, false if it doesn't.
 	 */
@@ -130,7 +130,7 @@ class Key {
 	/**
 	 * Whether or not the user has entered a key.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @hook Boldgrid\Library\Key\hasKey
 	 *

@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version SINCEVERSION
+ * @version 2.11.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -13,13 +13,13 @@ namespace Boldgrid\Library\Library;
 /**
  * BoldGrid Library Settings Class.
  *
- * @since SINCEVERSION
+ * @since 2.11.0
  */
 class Settings {
 	/**
 	 * The option name where boldgrid settings are stored.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 * @access private
 	 * @var string
 	 */
@@ -28,7 +28,7 @@ class Settings {
 	/**
 	 * Get the option.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @return array
 	 */
@@ -39,7 +39,7 @@ class Settings {
 	/**
 	 * Get a key from the option.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @param string $key     The key of the array to return.
 	 * @param mixed  $default The default value to return.
@@ -55,7 +55,7 @@ class Settings {
 	/**
 	 * Whether or not a key exists in the option.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @param  string $key The key to look for.
 	 * @return bool
@@ -69,7 +69,7 @@ class Settings {
 	/**
 	 * Set the value of the option.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @param  array $values The values to set.
 	 * @return bool          True if saved.
@@ -81,7 +81,7 @@ class Settings {
 	/**
 	 * Set the value of a specific key.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @param  string $key   The key to set.
 	 * @param  string $value The value to set.

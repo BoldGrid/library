@@ -223,7 +223,7 @@ class KeyPrompt {
 	 * tell us if the prompt will be shown - which is when the user hasn't dismissed it and they don't
 	 * have a key.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.11.0
 	 *
 	 * @hook Boldgrid\Library\Notice\KeyPrompt\maybePromptKey
 	 *

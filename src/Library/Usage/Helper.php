@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version SINCEVERSION
+ * @version 2.11.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -13,7 +13,7 @@ namespace Boldgrid\Library\Library\Usage;
 /**
  * BoldGrid Library Usage Helper Class.
  *
- * @since SINCEVERSION
+ * @since 2.11.0
  */
 class Helper {
 	/**
