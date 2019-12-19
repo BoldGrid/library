@@ -20,6 +20,16 @@ namespace Boldgrid\Library\Library;
  * @since 1.0.0
  */
 class Key {
+	/**
+	 * Api key option.
+	 *
+	 * This is the option that stores the key hash.
+	 *
+	 * @since 2.11.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $apiKeyOption = 'boldgrid_api_key';
 
 	/**
 	 * @access protected
@@ -85,6 +95,17 @@ class Key {
 	}
 
 	/**
+	 * Get our key.
+	 *
+	 * @since 2.11.0
+	 *
+	 * @return mixed String if a key exists, false if it doesn't.
+	 */
+	private function getKey() {
+		return get_site_option( $this->apiKeyOption );
+	}
+
+	/**
 	 * Get the license class property.
 	 *
 	 * @since  2.1.0
@@ -104,6 +125,21 @@ class Key {
 	 */
 	public function getNotice() {
 		return $this->notice;
+	}
+
+	/**
+	 * Whether or not the user has entered a key.
+	 *
+	 * @since 2.11.0
+	 *
+	 * @hook Boldgrid\Library\Key\hasKey
+	 *
+	 * @return bool
+	 */
+	public function hasKey() {
+		$key = $this->getKey();
+
+		return ! empty( $key );
 	}
 
 	/**
@@ -293,7 +329,7 @@ class Key {
 		set_site_transient( 'boldgrid_api_data', $data, 8 * HOUR_IN_SECONDS );
 
 		// Update the key option in case key is being overridden by something else so we have the new one next time.
-		update_site_option( 'boldgrid_api_key', $key );
+		update_site_option( $this->apiKeyOption, $key );
 
 		// Updates the site hash identifier being stored.
 		update_site_option( 'boldgrid_site_hash', $data->result->data->site_hash );

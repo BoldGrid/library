@@ -136,4 +136,8 @@ return array(
 			'priority'  => 'core',
 		),
 	),
+
+
+	// Google Analytics ID, used by the Usage class.
+	'gaId' => 'UA-1501988-42',
 );
