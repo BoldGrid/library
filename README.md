@@ -16,6 +16,7 @@ composer require boldgrid/library
 Release date: December 19th, 2019
 
 * Update: Added Usage class.
+* Update: Added methods to Plugin class for getting / testing version data via plugins_checked.
 
 ### 2.10.7 ###
 

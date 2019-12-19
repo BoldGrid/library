@@ -8,6 +8,7 @@ if ( ! $_tests_dir ) {
 require_once $_tests_dir . '/includes/functions.php';
 
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/License.php';
+require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Settings.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Api/Call.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Api/Availability.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Configs.php';

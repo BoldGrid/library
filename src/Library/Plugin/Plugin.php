@@ -11,6 +11,7 @@
 namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library\Configs;
+use Boldgrid\Library\Library\Settings;
 
 /**
  * Generic plugin class.
@@ -106,6 +107,22 @@ class Plugin {
 		$this->setIsInstalled();
 
 		$this->setChildPlugins();
+	}
+
+	/**
+	 * Version compare for the first version of this plugin.
+	 *
+	 * @since 2.11.0
+	 *
+	 * @param  string $version2 The second version number.
+	 * @param  string $operator The relationship to test for.
+	 * @return bool
+	 */
+	public function firstVersionCompare( $version2, $operator ) {
+		// The first version of this plugin.
+		$firstVersion = $this->getFirstVersion();
+
+		return version_compare( $firstVersion, $version2, $operator );
 	}
 
 	/**
@@ -291,6 +308,21 @@ class Plugin {
 	}
 
 	/**
+	 * Get the plugins_checked data for this plugin.
+	 *
+	 * @since 2.11.0
+	 *
+	 * @return array
+	 */
+	public function getPluginsChecked() {
+		$pluginsChecked = Settings::getKey( 'plugins_checked', [] );
+
+		$pluginsChecked = ! empty( $pluginsChecked[ $this->file ] ) ? $pluginsChecked[ $this->file ] : [];
+
+		return $pluginsChecked;
+	}
+
+	/**
 	 * Get slug.
 	 *
 	 * @since 2.9.0
@@ -388,5 +420,25 @@ class Plugin {
 	 */
 	public function isActive() {
 		return is_plugin_active( $this->file );
+	}
+
+	/**
+	 * Get the first version of this plugin installed.
+	 *
+	 * @since 2.11.0
+	 *
+	 * @return string
+	 */
+	public function getFirstVersion() {
+		$pluginsChecked = $this->getPluginsChecked();
+
+		if ( ! empty( $pluginsChecked ) ) {
+			$firstVersion = array_key_first( $pluginsChecked );
+		} else {
+			// If the data is missing for some reason, return the plugin's current version.
+			$firstVersion = $this->getData( 'Version' );
+		}
+
+		return $firstVersion;
 	}
 }
