@@ -17,21 +17,22 @@ namespace Boldgrid\Library\Library\Usage;
  */
 class Helper {
 	/**
-	 * Whether or not page in the admin.php?page= begins with a prefix.
+	 * Whether or not the current screen id begins with a prefix.
 	 *
-	 * @return bool True if the page begins with one of the prefixes.
+	 * @return bool True if the screen id begins with one of the prefixes.
 	 */
-	public static function hasPagePrefix() {
-		$prefixes      = apply_filters( 'Boldgrid\Library\Usage\getPrefixes', [] );
-		$hasPagePrefix = false;
-		$page          = ! empty( $_GET['page'] ) ? $_GET['page'] : null;
+	public static function hasScreenPrefix() {
+		$prefixes        = apply_filters( 'Boldgrid\Library\Usage\getPrefixes', [] );
+		$hasScreenPrefix = false;
+		$screen          = get_current_screen();
+		$screenId        = $screen->id;
 
 		foreach ( $prefixes as $prefix ) {
-			if ( substr( $page, 0, strlen( $prefix ) ) === $prefix ) {
-				$hasPagePrefix = true;
+			if ( substr( $screenId, 0, strlen( $prefix ) ) === $prefix ) {
+				$hasScreenPrefix = true;
 			}
 		}
 
-		return $hasPagePrefix;
+		return $hasScreenPrefix;
 	}
 }

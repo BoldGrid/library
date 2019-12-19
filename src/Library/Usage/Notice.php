@@ -84,7 +84,7 @@ class Notice {
 		} elseif ( apply_filters( 'Boldgrid\Library\Key\hasKey', false ) ) {
 			// If the user has a key entered, no need to show the notice.
 			$maybeShow = false;
-		} elseif( ! Settings::hasAgreeDecision() && Helper::hasPagePrefix() ) {
+		} elseif( ! Settings::hasAgreeDecision() && Helper::hasScreenPrefix() ) {
 			// If the user has not made a decision and their on an applicable page, show the notice.
 			$maybeShow = true;
 		} else {

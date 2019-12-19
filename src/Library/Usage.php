@@ -161,6 +161,6 @@ class Usage {
 		 * based on whether the page begins with boldgrid-backup. In the future, this logic may need
 		 * to be expanded upon.
 		 */
-		return ( $hasKey || $userAgreed ) && Helper::hasPagePrefix();
+		return ( $hasKey || $userAgreed ) && Helper::hasScreenPrefix();
 	}
 }
