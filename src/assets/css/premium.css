@@ -1,0 +1,148 @@
+/**
+ * 1 Premium Card Container.
+ */
+
+ .bglib-premium-card-container {
+	display: grid;
+	grid-gap: 2em;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	margin: 2em 0;
+}
+
+.bglib-premiums-card > div > img {
+	height: 60px;
+}
+
+.bglib-premiums-card {
+	border: 1px solid #ddd;
+	background: #fff;
+	height: fit-content;
+}
+
+
+/**
+ * 1.1 Card Container media queries.
+ */
+
+/* Left nav hides, admin bar gets big. */
+@media screen and (max-width: 782px) {
+	.bglib-premium-card-container {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media screen and (min-width: 700px) and (max-width: 1199px) {
+	.bglib-premium-card-container {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+
+/**
+ * 2 Cards.
+ */
+.bglib-premium-card {
+	border: 1px solid #ddd;
+	background: #fff;
+	height: fit-content;
+}
+
+.bglib-card-title,
+.bglib-card-footer {
+	padding: 10px 10px 15px 10px;
+}
+
+.bglib-card-title > p:first-child {
+	font-size: 1.3em;
+	margin: 0;
+}
+
+.bglib-card-subtitle {
+	font-size: .95em;
+}
+
+.bglib-card-icon {
+	padding: 20px 0;
+	text-align: center;
+	border-top: 3px solid #000;
+	border-bottom: 1px solid #ddd;
+}
+
+.bglib-card-icon .dashicons {
+	font-size: 60px;
+	width: 60px;
+	height: 60px;
+}
+
+
+/**
+ * 2.1 Cards within postbox.
+ *
+ * When cards are within a postbox, such as within a widget on the WordPress dashboard, adjust the style.
+ */
+
+.postbox-container .bglib-card {
+	border: 0;
+}
+
+.postbox-container .bglib-card-footer {
+	padding: 0;
+}
+
+
+/**
+ * 3 Features
+ */
+ .bglib-premium-card .bglib-feature {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: 40px 1fr;
+}
+
+.bglib-card-footer > .bglib-feature:not(:first-of-type) > div {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px solid #ddd;
+}
+.bglib-card-footer > .bglib-feature:not(:first-of-type) .bglib-feature-icon {
+	border-top-color: #fff;
+}
+
+.bglib-premium-card .bglib-feature .dashicons,
+.bglib-premium-card .bglib-feature .boldgrid-icon:before {
+	font-size: 35px;
+	width: 35px;
+	height: 35px;
+	color: #aaa;
+}
+
+.bglib-premium-card .bglib-feature img {
+	width: 35px;
+}
+
+.bglib-premium-card .bglib-feature .bglib-feature-title {
+	font-size: 1.1em;
+	font-weight: 600;
+}
+
+.bglib-feature-content > p:first-of-type {
+	margin-top: .1em;
+}
+
+.bglib-feature-content > *:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.bglib-feature-content .notice {
+	background-color: #f8f8ff;
+}
+
+.bglib-feature-content .notice p {
+	margin: 0;
+}
+
+.bglib-feature-value {
+	padding-left: 15px;
+    color: #aaa;
+}
