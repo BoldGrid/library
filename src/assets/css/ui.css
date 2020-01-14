@@ -50,6 +50,12 @@
 	border: 1px solid #e1e1e1;
 }
 
+/* Nav menu items cannot be clicked until the page has loaded and event listeners added. Change the
+   cursor to a wait, and remove the before-ready class when the page is loaded. */
+.bg-left-nav.before-ready li {
+	cursor: wait;
+}
+
 .bg-left-nav li {
 	padding: 5px 0px 5px 10px;
 	margin: 0px;

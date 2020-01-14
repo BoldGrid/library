@@ -140,7 +140,7 @@ class Ui {
 			sanitize_key( $_REQUEST['section'] ) : null;
 
 		$content = '';
-		$navigation = '<ul class="bg-left-nav">';
+		$navigation = '<ul class="bg-left-nav before-ready">';
 		foreach ( $sections['sections'] as $section ) {
 			$section_count++;
 
