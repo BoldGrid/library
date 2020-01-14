@@ -72,7 +72,7 @@ BOLDGRID.LIBRARY.Ui = function( $ ) {
 	 * @since 1.1.7
 	 */
 	$( function() {
-		$( '.bg-left-nav' ).removeClass( 'before-ready' );
+		$( '.bg-left-nav' ).removeClass( 'bg-before-ready' );
 
 		$sections = $( '.col-right-section' );
 		$sectionLinks = $( '[data-section-id]' );
