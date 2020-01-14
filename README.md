@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.11.1 ###
+
+Release date: January 14th, 2019
+
+* Update: Added spinner for the UI menu while the page loads.
+
 ### 2.11.0 ###
 
 Release date: December 19th, 2019
