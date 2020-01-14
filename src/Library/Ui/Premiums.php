@@ -1,6 +1,6 @@
 <?php
 /**
- * Premium Cards class.
+ * Premiums class.
  *
  * @link       https://www.boldgrid.com
  * @since      1.11.0
