@@ -32,6 +32,16 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 	 */
 	public $link;
 
+	/**
+	 * Video.
+	 *
+	 * Markup for a Premium card's Learn More Video button.
+	 *
+	 * @since 2.10.0
+	 * @var string
+	 */
+	public $learn_more;
+
 	public function printCard( $echo = true ) {
         // Before printing, initialize all of the features.
         if ( ! empty( $this->features ) ) {
@@ -69,8 +79,19 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';
 		}
 		
-		if ( ! empty( $this->link ) ) {
-			$markup .= '<div class="bglib-card-link"><a href="' . $this->link["url"] . '">' . $this->link["text"] . '</a></div>';
+		if ( ! empty($this->link) || ! empty($this->learn_more)) {
+
+			$markup .= '<div class="bglib-card-after-footer">';
+
+			if ( ! empty( $this->learn_more ) ) {
+				$markup .= '<a href =" ' . $learn_more .'" class ="button button-primary boldgrid-orange bglib-card-button"> ' . 
+						'<span class="dashicons dashicons-video-alt3"></span>Learn More</a>';
+			}
+
+			if ( ! empty( $this->link ) ) {
+				$markup .= '<a href="' . $this->link["url"] . '" class="bglib-card-link">' . $this->link["text"] . '</a>';
+			}
+			$markup .= '</div>';
 		}
 
 		$markup .= '</div>';

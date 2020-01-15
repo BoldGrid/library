@@ -3,10 +3,9 @@
  */
 
  .bglib-premium-card-container {
-	display: grid;
-	grid-gap: 2em;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	margin: 2em 0;
+	display: flex;
+    margin: 2em 0;
+    flex-wrap: wrap;
 }
 
 .bglib-premiums-card > div > img {
@@ -16,7 +15,9 @@
 .bglib-premiums-card {
 	border: 1px solid #ddd;
 	background: #fff;
-	height: fit-content;
+	width:20em;
+	height:20em;
+	margin:1em;
 }
 
 
@@ -50,6 +51,7 @@
 .bglib-card-title,
 .bglib-card-footer {
 	padding: 10px 10px 15px 10px;
+	height: 2em;
 }
 
 .bglib-card-title > p:first-child {
@@ -72,6 +74,18 @@
 	font-size: 60px;
 	width: 60px;
 	height: 60px;
+}
+
+.bglib-card-after-footer {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding-top: 0.5em;
+}
+
+.bglib-card-button .dashicons {
+	vertical-align: text-top;
+    padding-right: 0.25em;
 }
 
 
@@ -145,4 +159,10 @@
 .bglib-feature-value {
 	padding-left: 15px;
     color: #aaa;
+}
+
+.premiums-count {
+	background-color: lightblue;
+    padding: .2em 0.6em;
+    border-radius: 1em;
 }
