@@ -96,12 +96,12 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 			$markup .= '<div class="bglib-card-after-footer">';
 
 			if ( ! empty( $this->learn_more ) ) {
-				$markup .= '<a href =" ' . $learn_more . '" class="button button-primary boldgrid-orange bglib-card-button"> ' .
+				$markup .= '<a href =" ' . $learn_more . '" target="_blank" class="button button-primary boldgrid-orange bglib-card-button"> ' .
 						'<span class="dashicons dashicons-video-alt3"></span>Learn More</a>';
 			}
 
 			if ( ! empty( $this->link ) ) {
-				$markup .= '<a href="' . $this->link['url'] . '" class="bglib-card-link">' . $this->link['text'] . '</a>';
+				$markup .= '<a href="' . $this->link['url'] . '" target="_blank" class="bglib-card-link">' . $this->link['text'] . '</a>';
 			}
 			$markup .= '</div>';
 		}
