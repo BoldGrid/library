@@ -139,9 +139,8 @@ class NoticeCounts {
 				/**
 				* If the option is not set in the database,
 				* but is set in the config file, create a new option,
-				* and update with config values
 				*/
-				update_option( $this->option_name, $config_notices );
+				$option = $config_notices;
 			} else {
 				/**
 				* Otherwise, if the option already exists in the database,
