@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName
 /**
  * BoldGrid Library Ui Premium Listing.
  *
@@ -31,7 +31,7 @@ class Premium {
 	 *
 	 * @since 2.11.0
 	 */
-	public static function enqueueScripts() {
+	public static function enqueueScripts() { //phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 		wp_enqueue_style( 'bglib-premium',
 			Configs::get( 'libraryUrl' ) . 'src/assets/css/premium.css'
 		);
@@ -42,12 +42,12 @@ class Premium {
 	 *
 	 * @since 2.11.0
 	 */
-	public function printCards() {
+	public function printCards() { //phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 		echo '<div class="bglib-premium-card-container">';
 
 		foreach ( $this->cards as $card ) {
 			$card->init();
-            $card->printCard();
+			$card->printCard();
 		}
 
 		echo '</div>';

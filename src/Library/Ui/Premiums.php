@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName
 /**
  * Premiums class.
  *
@@ -22,7 +22,7 @@ namespace Boldgrid\Library\Library\Ui;
  */
 class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 
-    /**
+	/**
 	 * Link.
 	 *
 	 * Markup for a Premium card's "Setup Guide" link.
@@ -42,14 +42,23 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 	 */
 	public $learn_more;
 
+	/**
+	 * Prints Cards.
+	 *
+	 * Markup for a Printing a Premium card.
+	 *
+	 * @param bool $echo whether or not to actually print.
+	 * @since 2.10.0
+	 * @var string
+	 */
 	public function printCard( $echo = true ) {
-        // Before printing, initialize all of the features.
-        if ( ! empty( $this->features ) ) {
-            foreach ( $this->features as $feature ) {
-                $feature->init();
-                $this->footer .= $feature->printFeature( false );
-            }
-        }
+		// Before printing, initialize all of the features.
+		if ( ! empty( $this->features ) ) {
+			foreach ( $this->features as $feature ) {
+				$feature->init();
+				$this->footer .= $feature->printFeature( false );
+			}
+		}
 
 		// Create the opening tag.
 		$markup = '<div class="bglib-premiums-card" ';
@@ -58,13 +67,17 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 		}
 		$markup .= '>';
 
+		if ( \Boldgrid\Library\Library\NoticeCounts::is_unread( 'boldgrid-backup-premium-features', $this->id ) ) {
+			$markup .= '<div class="card-ribbon"><span>NEW</span></div>';
+		}
+
 		if ( ! empty( $this->title ) ) {
 			$markup .= '<div class="bglib-card-title">';
 
 			$markup .= '<p>' . $this->title . '</p>';
 
-			if ( ! empty( $this->subTitle ) ) {
-				$markup .= '<div class="bglib-card-subtitle">' . esc_html( $this->subTitle ) . '</div>';
+			if ( ! empty( $this->sub_title ) ) {
+				$markup .= '<div class="bglib-card-subtitle">' . esc_html( $this->sub_title ) . '</div>';
 			}
 
 			$markup .= '</div>';
@@ -74,22 +87,21 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 			$markup .= '<div class="bglib-card-icon">' . $this->icon . '</div>';
 		}
 
-
 		if ( ! empty( $this->footer ) ) {
 			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';
 		}
-		
-		if ( ! empty($this->link) || ! empty($this->learn_more)) {
+
+		if ( ! empty( $this->link ) || ! empty( $this->learn_more ) ) {
 
 			$markup .= '<div class="bglib-card-after-footer">';
 
 			if ( ! empty( $this->learn_more ) ) {
-				$markup .= '<a href =" ' . $learn_more .'" class ="button button-primary boldgrid-orange bglib-card-button"> ' . 
+				$markup .= '<a href =" ' . $learn_more . '" class="button button-primary boldgrid-orange bglib-card-button"> ' .
 						'<span class="dashicons dashicons-video-alt3"></span>Learn More</a>';
 			}
 
 			if ( ! empty( $this->link ) ) {
-				$markup .= '<a href="' . $this->link["url"] . '" class="bglib-card-link">' . $this->link["text"] . '</a>';
+				$markup .= '<a href="' . $this->link['url'] . '" class="bglib-card-link">' . $this->link['text'] . '</a>';
 			}
 			$markup .= '</div>';
 		}
@@ -97,7 +109,7 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 		$markup .= '</div>';
 
 		if ( $echo ) {
-			echo $markup;
+			echo $markup; //phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 		} else {
 			return $markup;
 		}

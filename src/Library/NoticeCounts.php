@@ -102,6 +102,27 @@ class NoticeCounts {
 			return '<span class="unread-notice-count hidden"></span>';
 		}
 	}
+
+	/**
+	 * Is a specific notice-id unread?
+	 * returns true if a provided notice-id is unread
+	 *
+	 * @param string $id of the notice count type to return.
+	 * @param string $notice_id - $id of individual notice.
+	 * @return bool true if notice-id is unread
+	 * @since 1.0
+	 */
+	public function is_unread( $id, $notice_id ) {
+		$option = get_option( 'boldgrid-plugin-notice-counts' );
+		if ( $option && isset( $option[ $id ] ) ) {
+			if ( isset( $option[ $id ][ $notice_id ] ) && true === $option[ $id ][ $notice_id ] ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
 	/**
 	 * Set Notice to Read.
 	 * if $notice is not set, all notices are set to read
