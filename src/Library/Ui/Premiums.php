@@ -3,7 +3,7 @@
  * Premiums class.
  *
  * @link       https://www.boldgrid.com
- * @since      1.11.0
+ * @since      SINCEVERSION
  *
  * @package    Boldgrid\Backup
  * @subpackage Boldgrid\Backup\Card
@@ -18,7 +18,7 @@ namespace Boldgrid\Library\Library\Ui;
  *
  * This class is responsible for rendering the Premium features cards on this plugin's dashboard.
  *
- * @since 1.11.0
+ * @since SINCEVERSION
  */
 class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 
@@ -27,7 +27,7 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 	 *
 	 * Markup for a Premium card's "Setup Guide" link.
 	 *
-	 * @since 2.10.0
+	 * @since SINCEVERSION
 	 * @var array
 	 */
 	public $link;
@@ -37,7 +37,7 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 	 *
 	 * Markup for a Premium card's Learn More Video button.
 	 *
-	 * @since 2.10.0
+	 * @since SINCEVERSION
 	 * @var string
 	 */
 	public $learn_more;
@@ -48,7 +48,7 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 	 * Markup for a Printing a Premium card.
 	 *
 	 * @param bool $echo whether or not to actually print.
-	 * @since 2.10.0
+	 * @since SINCEVERSION
 	 * @var string
 	 */
 	public function printCard( $echo = true ) {
@@ -67,7 +67,7 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 		}
 		$markup .= '>';
 
-		if ( \Boldgrid\Library\Library\NoticeCounts::is_unread( 'boldgrid-backup-premium-features', $this->id ) ) {
+		if ( \Boldgrid\Library\Library\NoticeCounts::isUnread( 'boldgrid-backup-premium-features', $this->id ) ) {
 			$markup .= '<div class="card-ribbon"><span>NEW</span></div>';
 		}
 

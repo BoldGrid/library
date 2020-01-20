@@ -79,7 +79,7 @@
 
 .bglib-card-after-footer {
 	display: flex;
-	justify-content: space-around;
+	justify-content: right;
 	align-items: center;
 	padding-top: 0.5em;
 }

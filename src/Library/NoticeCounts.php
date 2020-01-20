@@ -5,7 +5,7 @@
  * @package Boldgrid\Library
  * @subpackage \Library
  *
- * @version 1.0.0
+ * @version SINCEVERSION
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -17,37 +17,35 @@ namespace Boldgrid\Library\Library;
  * This class is responsible for adding any unread notice count numbers
  * that are displayed in the WordPress dashboard.
  *
- * @since 1.0.0
+ * @since SINCEVERSION
  */
 class NoticeCounts {
 	/**
-	 * Option Name
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var string
-	 */
-
-	public $option_name = 'boldgrid-plugin-notice-counts';
-
-	/**
 	 * Get Core Configs
-	 * gets configs array from admin core
+	 *
+	 * Gets configs array from admin core
 	 * exists;
 	 *
-	 * @since 1.0
+	 * @since SINCEVERSION
 	 * @var array
+	 * @access private
 	 */
-	private $configs;
+	private static function getConfigNotices( $configName ) {
+		$configPath = BOLDGRID_BACKUP_PATH . '/includes/config/config.plugin.php';
+		$config = require $configPath;
+		if ( isset( $config[ $configName ] ) ) {
+			return $config[ $configName ];
+		}
+	}
 
 	/**
 	 * Get Unread Count.
 	 *
 	 * @param string $id of the notice count type to return.
-	 * @since 1.0
+	 * @since SINCEVERSION
 	 * @return string.
 	 */
-	public static function get_unread_count( $id ) {
+	public static function getUnreadCount( $id ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
 		if ( $option && isset( $option[ $id ] ) ) {
 			$unread_count = 0;
@@ -57,7 +55,7 @@ class NoticeCounts {
 					$unread_count++;
 				}
 			}
-			return self::count_markup( $unread_count );
+			return self::countMarkup( $unread_count );
 		}
 	}
 
@@ -66,25 +64,25 @@ class NoticeCounts {
 	 *
 	 * Determines the total number of unread notices
 	 *
-	 * @since 1.0
+	 * @since SINCEVERSION
 	 * @return string.
 	 */
-	public function get_total_unread() {
-		$option       = get_option( 'boldgrid-plugin-notice-counts' );
-		$total_unread = 0;
+	public static function getTotalUnread() {
+		$option = get_option( 'boldgrid-plugin-notice-counts' );
+		$totalUnread = 0;
 		if ( $option ) {
-			$config_notices = $this->configs[ $this->option_name ];
-			foreach ( array_keys( $config_notices ) as $notice_type ) {
-				if ( isset( $option[ $notice_type ] ) ) {
-					foreach ( $option[ $notice_type ] as $is_unread ) {
+			$configNotices = self::getConfigNotices( 'boldgrid-plugin-notice-counts' );
+			foreach ( array_keys( $configNotices ) as $noticeType ) {
+				if ( isset( $option[ $noticeType ] ) ) {
+					foreach ( $option[ $noticeType ] as $is_unread ) {
 						if ( $is_unread ) {
-							$total_unread++;
+							$totalUnread++;
 						}
 					}
 				}
 			}
 		}
-		return $this->count_markup( $total_unread );
+		return self::countMarkup( $totalUnread );
 	}
 
 	/**
@@ -93,9 +91,9 @@ class NoticeCounts {
 	 *
 	 * @param int $count number to use for markup.
 	 * @return string the marked up unread count string.
-	 * @since 1.0
+	 * @since SINCEVERSION
 	 */
-	public static function count_markup( $count ) {
+	public static function countMarkup( $count ) {
 		if ( $count > 0 ) {
 			return '<span class="unread-notice-count">' . $count . '</span>';
 		} else {
@@ -108,14 +106,14 @@ class NoticeCounts {
 	 * returns true if a provided notice-id is unread
 	 *
 	 * @param string $id of the notice count type to return.
-	 * @param string $notice_id - $id of individual notice.
+	 * @param string $noticeId - $id of individual notice.
 	 * @return bool true if notice-id is unread
-	 * @since 1.0
+	 * @since SINCEVERSION
 	 */
-	public static function is_unread( $id, $notice_id ) {
+	public static function isUnread( $id, $noticeId ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
 		if ( $option && isset( $option[ $id ] ) ) {
-			if ( isset( $option[ $id ][ $notice_id ] ) && true === $option[ $id ][ $notice_id ] ) {
+			if ( isset( $option[ $id ][ $noticeId ] ) && true === $option[ $id ][ $noticeId ] ) {
 				return true;
 			} else {
 				return false;
@@ -128,20 +126,65 @@ class NoticeCounts {
 	 * if $notice is not set, all notices are set to read
 	 *
 	 * @param string $id of the notice count type to return.
-	 * @param string $notice_id - $id of individual notice.
-	 * @since 1.0
+	 * @param string $noticeId - $id of individual notice.
+	 * @since SINCEVERSION
 	 */
-	public static function set_read( $id, $notice_id = false ) {
+	public static function setRead( $id, $noticeId = false ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
 		if ( $option && isset( $option[ $id ] ) ) {
 			$notices = $option[ $id ];
-			foreach ( $notices as $notice_id => $notice_is_unread ) {
-				if ( ! $notice_id || isset( $option[ $id ][ $notice_id ] ) ) {
-					$option[ $id ][ $notice_id ] = false;
+			foreach ( $notices as $noticeId => $notice_is_unread ) {
+				if ( ! $noticeId || isset( $option[ $id ][ $noticeId ] ) ) {
+					$option[ $id ][ $noticeId ] = false;
 				}
 			}
 			update_option( 'boldgrid-plugin-notice-counts', $option );
 		}
+	}
+
+	/**
+	 * Set Notice from Config
+	 * Updates database option based on config file data,
+	 * Given Parameter.
+	 *
+	 * @param array $notice Optional param to define a notice to set.
+	 * @since SINCEVERSION
+	 */
+
+	public static function setNoticeConfig() {
+		$option = get_option( 'boldgrid-plugin-notice-counts' );
+		$configNotices = self::getConfigNotices( 'boldgrid-plugin-notice-counts' );
+		if ( false === $option ) {
+			/**
+			* If the option is not set in the database,
+			* but is set in the config file, create a new option,
+			*/
+			$option = $configNotices;
+		} else {
+			/**
+			* Otherwise, if the option already exists in the database,
+			* determine which items (if any) in the config are NOT set yet,
+			* and set them.
+			*/
+			foreach ( $configNotices as $noticeType => $noticeList ) {
+				// If notice type exists, look for new notice ID's.
+				if ( isset( $option[ $noticeType ] ) ) {
+					// Check each notice_id in $config_notices against $option.
+					// If notice ID does not exist, add it to $option[$noticeType].
+					foreach ( $noticeList as $noticeId => $notice_is_unread ) {
+						if ( ! isset( $option[ $noticeType ][ $noticeId ] ) ) {
+							$option[ $noticeType ][ $noticeId ] = $notice_is_unread;
+						}
+					}
+				} else {
+					// If $noticeType does not exist in $option,
+					// add $noticeType look for new notice ID's.
+					$option[ $noticeType ] = $noticeList;
+				}
+			}
+		} 
+		// Push update to database.
+		update_option( 'boldgrid-plugin-notice-counts', $option );
 	}
 
 	/**
@@ -150,59 +193,14 @@ class NoticeCounts {
 	 * Given Parameter.
 	 *
 	 * @param array $notice Optional param to define a notice to set.
-	 * @since 1.0
+	 * @since SINCEVERSION
 	 */
-	public function set_notice_option( $notice = null ) {
-		$option = get_option( $this->option_name );
-		if ( ! $notice ) {
-			$config_notices = $this->configs[ $this->option_name ];
-			if ( false === $option ) {
-				/**
-				* If the option is not set in the database,
-				* but is set in the config file, create a new option,
-				*/
-				$option = $config_notices;
-			} else {
-				/**
-				* Otherwise, if the option already exists in the database,
-				* determine which items (if any) in the config are NOT set yet,
-				* and set them.
-				*/
-				foreach ( $config_notices as $notice_type => $notice_list ) {
-					// If notice type exists, look for new notice ID's.
-					if ( isset( $option[ $notice_type ] ) ) {
-						// Check each notice_id in $config_notices against $option.
-						// If notice ID does not exist, add it to $option[$notice_type].
-						foreach ( $notice_list as $notice_id => $notice_is_unread ) {
-							if ( ! isset( $option[ $notice_type ][ $notice_id ] ) ) {
-								$option[ $notice_type ][ $notice_id ] = $notice_is_unread;
-							}
-						}
-					} else {
-						// If $notice_type does not exist in $option,
-						// add $notice_type look for new notice ID's.
-						$option[ $notice_type ] = $notice_list;
-					}
-				}
-			}
-		} else {
+	public static function setNoticeOption( array $notice ) {
+		$option = get_option( 'boldgrid-plugin-notice-counts' );
 			if ( isset( $option[ $notice[0] ] ) ) {
 				$option[ $notice[0] ][ $notice[1] ] = $notice[2];
 			}
-		}
 		// Push update to database.
-		update_option( $this->option_name, $option );
-	}
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since 1.0
-	 *
-	 * @param array $configs The configs array for this plugin.
-	 */
-	public function __construct( $configs ) {
-		$this->configs = $configs;
-		$this->set_notice_option();
+		update_option( 'boldgrid-plugin-notice-counts', $option );
 	}
 }

@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version 2.11.0
+ * @version SINCEVERSION
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -15,13 +15,13 @@ use Boldgrid\Library\Library\Configs;
 /**
  * BoldGrid Library Dashboard Class.
  *
- * @since 2.11.0
+ * @since SINCEVERSION
  */
 class Premium {
 	/**
 	 * Cards.
 	 *
-	 * @since 2.11.0
+	 * @since SINCEVERSION
 	 * @var array
 	 */
 	public $cards = [];
@@ -29,7 +29,7 @@ class Premium {
 	/**
 	 * Enqueue scripts.
 	 *
-	 * @since 2.11.0
+	 * @since SINCEVERSION
 	 */
 	public static function enqueueScripts() { //phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 		wp_enqueue_style( 'bglib-premium',
@@ -40,7 +40,7 @@ class Premium {
 	/**
 	 * Print Cards.
 	 *
-	 * @since 2.11.0
+	 * @since SINCEVERSION
 	 */
 	public function printCards() { //phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 		echo '<div class="bglib-premium-card-container">';
