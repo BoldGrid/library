@@ -112,7 +112,7 @@ class NoticeCounts {
 	 * @return bool true if notice-id is unread
 	 * @since 1.0
 	 */
-	public function is_unread( $id, $notice_id ) {
+	public static function is_unread( $id, $notice_id ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
 		if ( $option && isset( $option[ $id ] ) ) {
 			if ( isset( $option[ $id ][ $notice_id ] ) && true === $option[ $id ][ $notice_id ] ) {
