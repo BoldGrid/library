@@ -47,7 +47,7 @@ class NoticeCounts {
 	 * @since 1.0
 	 * @return string.
 	 */
-	public function get_unread_count( $id ) {
+	public static function get_unread_count( $id ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
 		if ( $option && isset( $option[ $id ] ) ) {
 			$unread_count = 0;
@@ -95,7 +95,7 @@ class NoticeCounts {
 	 * @return string the marked up unread count string.
 	 * @since 1.0
 	 */
-	private function count_markup( $count ) {
+	public static function count_markup( $count ) {
 		if ( $count > 0 ) {
 			return '<span class="unread-notice-count">' . $count . '</span>';
 		} else {
@@ -131,7 +131,7 @@ class NoticeCounts {
 	 * @param string $notice_id - $id of individual notice.
 	 * @since 1.0
 	 */
-	public function set_read( $id, $notice_id = false ) {
+	public static function set_read( $id, $notice_id = false ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
 		if ( $option && isset( $option[ $id ] ) ) {
 			$notices = $option[ $id ];
