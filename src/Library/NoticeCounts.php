@@ -27,7 +27,8 @@ class NoticeCounts {
 	 * exists;
 	 *
 	 * @since SINCEVERSION
-	 * @var array
+	 * @param string $configName Name of the item in the Configs array to return.
+	 * @return array
 	 * @access private
 	 */
 	private static function getConfigNotices( $configName ) {
@@ -39,50 +40,52 @@ class NoticeCounts {
 	}
 
 	/**
-	 * Get Unread Count.
+	 * Get Notices
 	 *
-	 * @param string $id of the notice count type to return.
+	 * Gets an array of notices by Type, ID, or PluginName from the database.
+	 * @param string $noticeValue Specific value you want to filter notices by.
+	 * @param string $noticeType Either noticeId, noticeType, noticePlugin
+	 * @return array
+	 * @access private
 	 * @since SINCEVERSION
-	 * @return string.
 	 */
-	public static function getUnreadCount( $id ) {
+	private static function getNotices( $noticeValue, $valueType ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
-		if ( $option && isset( $option[ $id ] ) ) {
-			$unread_count = 0;
-			$notices      = $option[ $id ];
-			foreach ( $notices as $notice ) {
-				if ( true === $notice ) {
-					$unread_count++;
+		$notices = [];
+		if ( $option ) {
+			foreach ( $option as $noticeId => $notice) {
+				if ( $valueType == 'NoticeId' && $noticeId == $noticeValue) {
+					$notices[] = $notice;
+				} else if ( isset( $notice[ $valueType ] ) && $notice[ $valueType ] == $noticeValue) {
+					$notices[] = $notice;
 				}
 			}
-			return self::countMarkup( $unread_count );
 		}
+		return $notices;
 	}
 
 	/**
-	 * Get Total Unread.
+	 * Get Unread Count.
 	 *
-	 * Determines the total number of unread notices
-	 *
-	 * @since SINCEVERSION
+	 * @param string $id of the notice count type to return.
 	 * @return string.
+	 * @since SINCEVERSION
 	 */
-	public static function getTotalUnread() {
-		$option = get_option( 'boldgrid-plugin-notice-counts' );
-		$totalUnread = 0;
-		if ( $option ) {
-			$configNotices = self::getConfigNotices( 'boldgrid-plugin-notice-counts' );
-			foreach ( array_keys( $configNotices ) as $noticeType ) {
-				if ( isset( $option[ $noticeType ] ) ) {
-					foreach ( $option[ $noticeType ] as $is_unread ) {
-						if ( $is_unread ) {
-							$totalUnread++;
-						}
-					}
-				}
+	public static function getUnreadCount( $noticeValue, $valueType ) {
+		$notices = [];
+		if ( ! in_array( $valueType, ['noticeType', 'noticeId', 'noticePlugin'] ) ) {
+			trigger_error( 'valueType of NoticeCounts::getUnreadCount must be either noticeType, noticeId, or noticePlugin', E_UESR_NOTICE);
+		}
+
+		$notices = self::GetNotices( $noticeValue, $valueType );
+
+		$unread_count = 0;
+		foreach ( $notices as $notice ) {
+			if ( $notice['isUnread'] ) {
+				$unread_count++;
 			}
 		}
-		return self::countMarkup( $totalUnread );
+		return self::getCountMarkup( $unread_count );
 	}
 
 	/**
@@ -90,10 +93,11 @@ class NoticeCounts {
 	 * generates HTML Markup for unread notice counts
 	 *
 	 * @param int $count number to use for markup.
-	 * @return string the marked up unread count string.
+	 * @return string the markedup unread count string.
+	 * @access private
 	 * @since SINCEVERSION
 	 */
-	public static function countMarkup( $count ) {
+	private static function getCountMarkup( $count ) {
 		if ( $count > 0 ) {
 			return '<span class="unread-notice-count">' . $count . '</span>';
 		} else {
@@ -110,10 +114,10 @@ class NoticeCounts {
 	 * @return bool true if notice-id is unread
 	 * @since SINCEVERSION
 	 */
-	public static function isUnread( $id, $noticeId ) {
+	public static function isUnread( $noticeType, $noticeId ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
-		if ( $option && isset( $option[ $id ] ) ) {
-			if ( isset( $option[ $id ][ $noticeId ] ) && true === $option[ $id ][ $noticeId ] ) {
+		if ( $option && isset( $option[ $noticeId ] ) ) {
+			if ( $option[ $noticeId ]['isUnread'] ){
 				return true;
 			} else {
 				return false;
@@ -129,17 +133,18 @@ class NoticeCounts {
 	 * @param string $noticeId - $id of individual notice.
 	 * @since SINCEVERSION
 	 */
-	public static function setRead( $id, $noticeId = false ) {
+	public static function setRead( $noticeType, $noticeId = false ) {
 		$option = get_option( 'boldgrid-plugin-notice-counts' );
-		if ( $option && isset( $option[ $id ] ) ) {
-			$notices = $option[ $id ];
-			foreach ( $notices as $noticeId => $notice_is_unread ) {
-				if ( ! $noticeId || isset( $option[ $id ][ $noticeId ] ) ) {
-					$option[ $id ][ $noticeId ] = false;
+		if ( $noticeId && $option && isset( $option[ $noticeId ] ) && $option[ $noticeId ]['isUnread'] ) {
+				$option[ $noticeId ]['isUnread'] = false;
+			} elseif ( $option ) {
+				foreach ( $option as $notice => $noticeValues ) {
+					if ( $noticeValues['noticeType'] == $noticeType && $noticeValues['isUnread'] ) {
+						$option[ $notice ]['isUnread'] = false;
+					}
 				}
 			}
-			update_option( 'boldgrid-plugin-notice-counts', $option );
-		}
+		update_option( 'boldgrid-plugin-notice-counts', $option);
 	}
 
 	/**
@@ -147,7 +152,6 @@ class NoticeCounts {
 	 * Updates database option based on config file data,
 	 * Given Parameter.
 	 *
-	 * @param array $notice Optional param to define a notice to set.
 	 * @since SINCEVERSION
 	 */
 
@@ -166,20 +170,12 @@ class NoticeCounts {
 			* determine which items (if any) in the config are NOT set yet,
 			* and set them.
 			*/
-			foreach ( $configNotices as $noticeType => $noticeList ) {
-				// If notice type exists, look for new notice ID's.
-				if ( isset( $option[ $noticeType ] ) ) {
-					// Check each notice_id in $config_notices against $option.
-					// If notice ID does not exist, add it to $option[$noticeType].
-					foreach ( $noticeList as $noticeId => $notice_is_unread ) {
-						if ( ! isset( $option[ $noticeType ][ $noticeId ] ) ) {
-							$option[ $noticeType ][ $noticeId ] = $notice_is_unread;
-						}
-					}
-				} else {
-					// If $noticeType does not exist in $option,
-					// add $noticeType look for new notice ID's.
-					$option[ $noticeType ] = $noticeList;
+			error_log(serialize($option));
+			foreach (  $configNotices as $configNotice => $noticeValues ) {
+				// If notice does not exist in database, add to $option.
+				error_log($configNotice . ' => ' . serialize($noticeValues) );
+				if ( ! isset( $option[ $configNotice ] ) ) {
+					$option[ $configNotice ] = $noticeValues;
 				}
 			}
 		} 

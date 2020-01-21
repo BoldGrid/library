@@ -1,6 +1,6 @@
 <?php //phpcs:ignore WordPress.Files.FileName
 /**
- * BoldGrid Library Ui Premium Listing.
+ * BoldGrid Library Ui Premium Feature Listing.
  *
  * @package Boldgrid\Library
  *
@@ -8,7 +8,7 @@
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
-namespace Boldgrid\Library\Library\Ui;
+namespace Boldgrid\Library\Library\Ui\PremiumFeatures;
 
 use Boldgrid\Library\Library\Configs;
 
@@ -17,7 +17,7 @@ use Boldgrid\Library\Library\Configs;
  *
  * @since SINCEVERSION
  */
-class Premium {
+class Listing {
 	/**
 	 * Cards.
 	 *

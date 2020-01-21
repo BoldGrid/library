@@ -11,7 +11,7 @@
  * @author     BoldGrid <support@boldgrid.com>
  */
 
-namespace Boldgrid\Library\Library\Ui;
+namespace Boldgrid\Library\Library\Ui\PremiumFeatures;
 
 /**
  * Class: Premiums
@@ -20,7 +20,7 @@ namespace Boldgrid\Library\Library\Ui;
  *
  * @since SINCEVERSION
  */
-class Premiums extends \Boldgrid\Library\Library\Ui\Card {
+class Card extends \Boldgrid\Library\Library\Ui\Card {
 
 	/**
 	 * Link.
@@ -52,14 +52,6 @@ class Premiums extends \Boldgrid\Library\Library\Ui\Card {
 	 * @var string
 	 */
 	public function printCard( $echo = true ) {
-		// Before printing, initialize all of the features.
-		if ( ! empty( $this->features ) ) {
-			foreach ( $this->features as $feature ) {
-				$feature->init();
-				$this->footer .= $feature->printFeature( false );
-			}
-		}
-
 		// Create the opening tag.
 		$markup = '<div class="bglib-premiums-card" ';
 		if ( ! empty( $this->id ) ) {
