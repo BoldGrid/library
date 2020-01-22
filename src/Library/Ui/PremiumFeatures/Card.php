@@ -43,6 +43,24 @@ class Card extends \Boldgrid\Library\Library\Ui\Card {
 	public $learn_more;
 
 	/**
+	 * Page.
+	 *
+	 * @var Boldgrid\Library\Library\Plugin\Page
+	 * @since SINCEVERSION
+	 */
+	public $page;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param Boldgrid\Library\Library\Plugin\Page $page
+	 * @since SINCEVERSION
+	 */
+	public function __construct( $page ) {
+		$this->page = $page;
+	}
+
+	/**
 	 * Prints Cards.
 	 *
 	 * Markup for a Printing a Premium card.
@@ -59,7 +77,7 @@ class Card extends \Boldgrid\Library\Library\Ui\Card {
 		}
 		$markup .= '>';
 
-		if ( \Boldgrid\Library\Library\NoticeCounts::isUnread( 'boldgrid-backup-premium-features', $this->id ) ) {
+		if ( $this->page->getNoticeById( $this->id ) && $this->page->getNoticeById( $this->id )->getIsUnread() ) {
 			$markup .= '<div class="card-ribbon"><span>NEW</span></div>';
 		}
 

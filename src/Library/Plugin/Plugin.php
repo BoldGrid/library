@@ -44,6 +44,15 @@ class Plugin {
 	protected $file;
 
 	/**
+	 * Plugin specific config array.
+	 *
+	 * @since SINCEVERSION
+	 * @var array
+	 * @access protected
+	 */
+	protected $pluginConfig;
+
+	/**
 	 * Whether or not this plugin is installed.
 	 *
 	 * @since 2.10.0
@@ -60,6 +69,20 @@ class Plugin {
 	 * @since 2.10.0
 	 */
 	protected $path;
+
+	/**
+	 * Plugin pages.
+	 *
+	 * This is an array of Boldgrid\Library\Library\Plugin\Page
+	 * objects based on the 'pages' list in the plugin Config
+	 * If no plugin config is passed during instantiation,
+	 * this will be an empty array.
+	 *
+	 * @var array
+	 * @since SINCEVERSION
+	 * @access protected
+	 */
+	protected $pages = [];
 
 	/**
 	 * Plugin data, as retrieved from get_plugin_data().
@@ -97,7 +120,7 @@ class Plugin {
 	 *
 	 * @param string $slug For example: "plugin" from plugin/plugin.php
 	 */
-	public function __construct( $slug ) {
+	public function __construct( $slug, $pluginConfig = null ) {
 		$this->slug = $slug;
 
 		$this->setFile();
@@ -107,6 +130,10 @@ class Plugin {
 		$this->setIsInstalled();
 
 		$this->setChildPlugins();
+
+		$this->setPluginConfig( $pluginConfig );
+
+		$this->setPages();
 	}
 
 	/**
@@ -293,6 +320,17 @@ class Plugin {
 	}
 
 	/**
+	 * Get plugin specific config array
+	 *
+	 * @return array
+	 * @since SINCEVERSION
+	 *
+	 */
+	public function getPluginConfig() {
+		return $this->pluginConfig;
+	}
+
+	/**
 	 * Get plugin data.
 	 *
 	 * @since 2.9.0
@@ -333,6 +371,64 @@ class Plugin {
 		return $this->slug;
 	}
 
+	/**
+	 * Create page objects based on $this->config parameter
+	 *
+	 * @since SINCEVERSION
+	 * @access private
+	 */
+	private function setPages() {
+		$pages = [];
+		if ( isset( $this->pluginConfig['pages'] ) ) {
+			foreach ($this->pluginConfig['pages'] as $page ) {
+				$pages[] = new Page( $this, $page );
+			}
+		}
+		$this->pages = $pages;
+	}
+
+	/**
+	 * Get Plugin Pages
+	 *
+	 * @return array
+	 * @access private
+	 * @since SINCEVERSION
+	 */
+	private function getPages() {
+		return $this->pages;
+	}
+
+	/**
+	 * Get Page by Slug
+	 * 
+	 * @param string $slug
+	 * @return Page
+	 * @since SINCEVERSION
+	 */
+	public function getPageBySlug( $slug ) {
+		foreach ( $this->getPages() as $page ) {
+			if ( $page->getSlug() == $slug ) {
+				return $page;
+			}
+		}
+	}
+
+	/**
+	 * Populate $this->pluginConfig from array given in
+	 * constructor
+	 *
+	 * @param array $pluginConfig
+	 * @access private
+	 * @since SINCEVERSION
+	 */
+	private function setPluginConfig( array $pluginConfig ) {
+		if ( $pluginConfig ) {
+			$this->pluginConfig = $pluginConfig;
+		} else {
+			$this->pluginConfig = [];
+		}
+	}
+	
 	/**
 	 * Set our child plugins.
 	 *
@@ -452,4 +548,37 @@ class Plugin {
 
 		return $firstVersion;
 	}
+
+	/**
+	 * Get Unread Count
+	 * 
+	 * Get unread count integer
+	 *
+	 * @return int
+	 * @since SINCEVERSION
+	 */
+    public function getUnreadCount() {
+		$unreadCount = 0;
+		foreach ( $this->getPages() as $page ) {
+			$unreadCount += $page->getUnreadCount();
+		}
+        return $unreadCount;
+	}
+	
+	/**
+	 * Get Unread markup
+	 * 
+	 * Get unread count with html markup
+	 * 
+	 * @return string
+	 * @since SINCEVERSION
+	 */
+	public function getUnreadMarkup() {
+		$count = $this->getUnreadCount();
+		if ( $count > 0 ) {
+			return '<span class="unread-notice-count">' . $count . '</span>';
+		} else {
+			return '<span class="unread-notice-count hidden"></span>';
+		}
+	} 
 }
