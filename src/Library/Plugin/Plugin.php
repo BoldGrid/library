@@ -50,7 +50,7 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	protected $pluginConfig;
+	protected $pluginConfig = [];
 
 	/**
 	 * Whether or not this plugin is installed.
@@ -131,7 +131,9 @@ class Plugin {
 
 		$this->setChildPlugins();
 
-		$this->setPluginConfig( $pluginConfig );
+		if ( $pluginConfig ) {
+			$this->setPluginConfig( $pluginConfig );
+		}
 
 		$this->setPages();
 	}
