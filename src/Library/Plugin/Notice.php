@@ -7,7 +7,6 @@
  * @since SINCEVERSION
  * @author BoldGrid <wpb@boldgrid.com>
  */
-
 namespace Boldgrid\Library\Library\Plugin;
 
 /**
@@ -19,24 +18,25 @@ namespace Boldgrid\Library\Library\Plugin;
  *
  * @since SINCEVERSION
  */
-
 class Notice {
 
     /**
      * Notice ID
      * 
+     * @since SINCEVERSION
+     * 
      * @var string
      * @access protected
-     * @since SINCEVERSION
      */
     protected $id;
 
     /**
      * Notice Page slug
+     *
+     * @since SINCEVERSION
      * 
      * @var string
      * @access protected
-     * @since SINCEVERSION
      */
     protected $pageSlug;
 
@@ -45,9 +45,10 @@ class Notice {
      * 
      * Version of plugin this notice was added on
      * 
+     * @since SINCEVERSION
+     * 
      * @var string
      * @access protected
-     * @since SINCEVERSION
      */
     protected $version;
 
@@ -56,9 +57,10 @@ class Notice {
      * 
      * Plugin Object this belongs to
      * 
+     * @since SINCEVERSION
+     * 
      * @var Plugin
      * @access protected
-     * @since SINCEVERSION
      */
     protected $plugin;
 
@@ -67,61 +69,63 @@ class Notice {
      * 
      * Specifies if the Notice is Unread or not
      * 
+     * @since SINCEVERSION
+     * 
      * @var bool
      * @access protected
-     * @since SINCEVERSION
      */
     protected $isUnread;
 
     /**
      * Constructor 
      * 
-     * @param Plugin $plugin Plugin instance that this Notice belongs to
-     * @param array $notice An array of Notice data from plugin config
+     * 
      * @since SINCEVERSION
      * 
+     * @param Plugin $plugin Plugin instance that this Notice belongs to.
+     * @param array $notice {
+     *     An array of notice values.
+     * 
+     *     @type string $id notice ID.
+     *     @type string $page slug of the page this notice is on.
+     *     @type string $version version of plugin this notice was released on.
+     * }
      */
     public function __construct( Plugin $plugin, array $notice ) {
-        if ( false !== $this->alreadyExists( $notice['id'] ) ) {
-            $originalNotice = $this->getNoticeFromOptions( $notice['id'] );
-            $this->id       = $originalNotice->id;
-            $this->pageSlug = $originalNotice->pageSlug;
-            $this->plugin   = $originalNotice->plugin;
-            if ( version_compare( $originalNotice->version, $notice['version'], '!=' ) ) {
-                $this->version   = $notice['version'];
-                $this->isUnread = true;
-            }
-            else {
-                $this->version = $originalNotice->getVersion();
-                $this->isUnread = $originalNotice->isUnread;
-            }
-            $this->updateNoticeOption( $this );
-        } else {
+        if ( false === $this->alreadyExists( $notice['id'] ) ) {
             $this->id        = $notice['id'];
             $this->pageSlug  = $notice['page']; 
             $this->version   = $notice['version'];
             $this->isUnread  = true;
             $this->plugin    = $plugin;
+        } else {
+            $originalNotice = $this->getNoticeFromOptions( $notice['id'] );
+            $this->id       = $originalNotice->id;
+            $this->pageSlug = $originalNotice->pageSlug;
+            $this->plugin   = $originalNotice->plugin;
+            $this->noticeVersionChanged($originalNotice, $notice);
+            $this->updateNoticeOption( $this );
         }
     }
 
 	/**
 	 * Get notice ID
 	 *
-	 * @return string
 	 * @since SINCEVERSION
+     * 
+	 * @return string
 	 */
     public function getId() {
         return $this->id;
     }
 
 	/**
-	 * Set notice ID
+	 * Set notice ID.
 	 *
+	 * @since SINCEVERSION
+     * 
 	 * @param string $id Notice ID.
      * @access private
-	 * @since SINCEVERSION
-	 *
 	 */
 	private function setId( $id ) {
 		$this->id = $id;
@@ -130,8 +134,9 @@ class Notice {
 	/**
 	 * Get slug of the page this feature is on.
 	 *
-	 * @return string
 	 * @since SINCEVERSION
+     * 
+	 * @return string
 	 */
     public function getPageSlug() {
         return $this->pageSlug;
@@ -140,19 +145,20 @@ class Notice {
 	/**
 	 * Set pageSlug
 	 *
-	 * @param string $pageSlug Notice Page.
 	 * @since SINCEVERSION
-	 *
+     * 
+	 * @param string $pageSlug Notice Page.
 	 */
 	public function setPageSlug( string $pageSlug ) {
 		$this->pageSlug = $pageSlug;
 	}
 
 	/**
-	 * Get version of plugin this notice was added on
+	 * Get version of plugin this notice was added on.
 	 *
-	 * @return string
 	 * @since SINCEVERSION
+     * 
+	 * @return string
 	 */
     public function getVersion() {
         return $this->version;
@@ -161,9 +167,9 @@ class Notice {
 	/**
 	 * Set version of plugin this notice was added on
 	 *
-	 * @param string $version Version of plugin this notice was added on.
 	 * @since SINCEVERSION
-	 *
+     * 
+	 * @param string $version Version of plugin this notice was added on.
 	 */
 	public function setVersion( string $version ) {
 		$this->version = $version;
@@ -172,13 +178,13 @@ class Notice {
     /**
      * Maybe Show
      * 
-     * Returns true if this plugin's version number is
-     * greater than the first installed version, and feature's version number is 
-     * greater than or equal to current version
-     * @return bool
+     * Returns true if this plugin's version number is greater than the first installed version,
+     * and feature's version number is greater than or equal to current version.
+     * 
      * @since SINCEVERSION
+     * 
+     * @return bool
      */
-    
     public function maybeShow() {
         $pluginVersion = $this->plugin->getPluginData()['Version'];
         $versionIsNotFirst = $this->plugin->firstVersionCompare( $pluginVersion, '<' );
@@ -189,8 +195,9 @@ class Notice {
 	/**
 	 * Get isUnread Value.
 	 *
-	 * @return bool
 	 * @since SINCEVERSION
+     * 
+	 * @return bool
 	 */
     public function getIsUnread() {
         if ( $this->maybeShow() ) {
@@ -202,9 +209,9 @@ class Notice {
 	/**
 	 * Set the notice as read or unread
 	 *
-	 * @param bool $isUnread Specifies if the Notice is Unread or not.
 	 * @since SINCEVERSION
-	 *
+     * 
+	 * @param bool $isUnread Specifies if the Notice is Unread or not.
 	 */
 	public function setIsUnread( $isUnread ) {
         $this->isUnread = $isUnread;
@@ -218,8 +225,10 @@ class Notice {
      * of that notice in the $option array. If the notice does not exist
      * this returns false.
      * 
-     * @return mixed 
      * @since SINCEVERSION
+     * 
+     * @return int index of notice in $option array if notice exists.
+     * @return bool false if notice does not already exist.
      */
     public function alreadyExists( $noticeId ) {
         $option = get_option( 'boldgrid_plugin_page_notices');
@@ -236,9 +245,10 @@ class Notice {
     /**
      * Get Notice instance from wp_options row.
      * 
+     * @since SINCEVERSION
+     * 
      * @param string $noticeId
      * @return Notice
-     * @since SINCEVERSION
      */
     private function getNoticeFromOptions( $noticeId ) {
         $option = get_option( 'boldgrid_plugin_page_notices');
@@ -260,11 +270,13 @@ class Notice {
      */
     public function updateNoticeOption() {
         $option = get_option( 'boldgrid_plugin_page_notices');
-        if ( $option && false !== $this->alreadyExists( $this->id ) ) {
-            $option[$this->alreadyExists( $this->id )] = $this;
-        } else {
+
+        if ( ! $option || false === $this->alreadyExists( $this->id ) ) {
             $option[] = $this;
+        } else {
+            $option[$this->alreadyExists( $this->id )] = $this;
         }
+
         update_option( 'boldgrid_plugin_page_notices' , $option);
     }
 
@@ -273,8 +285,9 @@ class Notice {
      * 
 	 * Get plugin instance that this notice belongs to
 	 *
-	 * @return Plugin
 	 * @since SINCEVERSION
+     * 
+	 * @return Plugin
 	 */
     public function getPlugin() {
         return $this->plugin;
@@ -285,11 +298,37 @@ class Notice {
      * 
 	 * Set plugin Instance that this notice belongs to
 	 *
-	 * @param Plugin $plugin Plugin Object this belongs to.
 	 * @since SINCEVERSION
-	 *
+     * 
+	 * @param Plugin $plugin Plugin Object this belongs to.
 	 */
 	public function setPlugin( Plugin $plugin ) {
 		$this->plugin = $plugin;
-	}
+    }
+    
+    /**
+     * Notice Version Changed.
+     * 
+     * Determines if an existing Notice's version number has changed
+     * since it was placed in options table. If it has changed, then it marks
+     * the notice unread again. This will help bring attention to old notices 
+     * that may have been revised.
+     * 
+     * @since SINCEVERSION
+     * 
+     * @param Notice $originalNotice
+     * @param array $newNotice
+     * 
+     */
+
+    private function noticeVersionChanged( Notice $originalNotice, array $newNotice ) {
+        if ( version_compare( $originalNotice->version, $newNotice['version'], '!=' ) ) {
+            $this->version   = $newNotice['version'];
+            $this->isUnread = true;
+        }
+        else {
+            $this->version = $originalNotice->getVersion();
+            $this->isUnread = $originalNotice->isUnread;
+        }
+    }
 }

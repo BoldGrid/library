@@ -5,9 +5,9 @@
  * @package Boldgrid\Plugin
  *
  * @since SINCEVERSION
+ * 
  * @author BoldGrid <wpb@boldgrid.com>
  */
-
 namespace Boldgrid\Library\Library\Plugin;
 
 /**
@@ -18,7 +18,6 @@ namespace Boldgrid\Library\Library\Plugin;
  *
  * @since SINCEVERSION
  */
-
 class Page {
 
     /**
@@ -26,6 +25,8 @@ class Page {
      * 
      * The Boldgrid\Library\Library\Plugin\Plugin Object
      * that this page belongs to.
+     *
+     * @since SINCEVERSION
      * 
      * @var Plugin
      * @access protected
@@ -35,38 +36,42 @@ class Page {
     /**
      * Page Slug
      * 
+     * @since SINCEVERSION
+     * 
      * @var string
      * @access protected
-     * @since SINCEVERSION
      */
     protected $slug;
     
     /**
      * Plugin Config
      * 
-     * The Config array passed to this page
+     * The Config array passed to this page.
+     * 
+     * @since SINCEVERSION
      * 
      * @var array
-     * @since SINCEVERSION
      */
-    protected $pluginConfig;
+    protected $pluginConfig = [];
 
     /**
      * Page Notice
      * 
-     * An array of Notices for this page
+     * An array of Notices for this page.
+     * 
+     * @since SINCEVERSION
      * 
      * @var array
-     * @since SINCEVERSION
      */
     protected $notices;
     
     /**
 	 * Constructor.
 	 *
-	 * @param Plugin $plugin object that this page belongs to.
-	 * @param string $slug For example: "plugin" from plugin/plugin.php
      * @since SINCEVERSION
+     * 
+	 * @param Plugin $plugin object that this page belongs to.
+	 * @param string $slug For example: "plugin" from plugin/plugin.php.
 	 */
 	public function __construct( Plugin $plugin, $slug ) {
 
@@ -80,17 +85,19 @@ class Page {
     }
 
     /**
-     * Get Plugin
-     * 
+     * Get Plugin.
+     *
      * @since SINCEVERSION
+     *
+     * @return Plugin
      */
     public function getPlugin() {
         return $this->plugin;
     }
     
     /**
-     * Set Plugin
-     * 
+     * Set Plugin.
+     *
      * @since SINCEVERSION
      */
     private function setPlugin( $plugin ) {
@@ -98,21 +105,23 @@ class Page {
     }
 
 	/**
-	 * Get plugin Config
+	 * Get plugin Config.
 	 *
+     * @since SINCEVERSION
+     *
 	 * @return array
-	 * @since SINCEVERSION
 	 */
     public function getPluginConfig() {
         return $this->pluginConfig;
     }
 
 	/**
-	 * Set plugin Config
+	 * Set plugin Config.
 	 *
+	 * @since SINCEVERSION
+     *
      * @param array $pluginConfig Plugin Config.
      * @access private
-	 * @since SINCEVERSION
 	 */
 	private function setPluginConfig() {
         $pluginConfig = $this->getPlugin()->getPluginConfig();
@@ -120,21 +129,23 @@ class Page {
 	}
 
 	/**
-	 * Get an array of Notice Counts for this page
-	 *
-	 * @return array
+	 * Get an array of Notice Counts for this page.
+     * 
 	 * @since SINCEVERSION
+     * 
+	 * @return array
 	 */
     public function getNotices() {
         return $this->notices;
     }
 
     /**
-     * Get Notice by ID
+     * Get Notice by ID.
+     * 
+     * @since SINCEVERSION
      * 
      * @param string $id
      * @return NoticeCount
-     * @since SINCEVERSION
      */
     public function getNoticeById( $id ) {
         foreach ( $this->getNotices() as $notice ) {
@@ -145,10 +156,9 @@ class Page {
     }
 
 	/**
-	 * Set an array of Notice Counts for this page
+	 * Set an array of Notice Counts for this page.
 	 *
 	 * @since SINCEVERSION
-	 *
 	 */
 	public function setNotices() {
         $notices = [];
@@ -161,7 +171,7 @@ class Page {
 	}
 
     /**
-     * Set Page Notices to Read
+     * Set Page Notices to Read.
      * 
      * @since SINCEVERSION
      */
@@ -172,10 +182,11 @@ class Page {
     }
 
 	/**
-	 * Get Unread Count
+	 * Get Unread Count.
 	 *
-	 * @return int
 	 * @since SINCEVERSION
+     * 
+	 * @return int
 	 */
     public function getUnreadCount() {
         $unreadCount = 0;
@@ -188,39 +199,40 @@ class Page {
     }
 
     /**
-	 * Get Unread Markup
+	 * Get Unread Markup.
      * 
-     * Returns UnreadCount with html markup
+     * Returns UnreadCount with html markup.
 	 *
-	 * @return string
 	 * @since SINCEVERSION
+     * 
+	 * @return string
 	 */
-
     public function getUnreadMarkup() {
 		$count = $this->getUnreadCount();
 		if ( $count > 0 ) {
-			return '<span class="unread-notice-count">' . $count . '</span>';
+			return '<span class="bglib-unread-notice-count">' . esc_html( $count ) . '</span>';
 		} else {
-			return '<span class="unread-notice-count hidden"></span>';
+			return '<span class="bglib-unread-notice-count hidden"></span>';
 		}
 	}
 
 	/**
-	 * Get page Slug
+	 * Get page Slug.
 	 *
-	 * @return string
 	 * @since SINCEVERSION
+     * 
+	 * @return string
 	 */
     public function getSlug() {
         return $this->slug;
     }
 
 	/**
-	 * Set page Slug
+	 * Set page Slug.
 	 *
-	 * @param string $slug Page Slug.
 	 * @since SINCEVERSION
-	 *
+     * 
+	 * @param string $slug Page Slug.
 	 */
 	public function setSlug( string $slug ) {
 		$this->slug = $slug;

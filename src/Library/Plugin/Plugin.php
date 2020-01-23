@@ -7,7 +7,6 @@
  * @since 2.7.7
  * @author BoldGrid <wpb@boldgrid.com>
  */
-
 namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library\Configs;
@@ -47,6 +46,7 @@ class Plugin {
 	 * Plugin specific config array.
 	 *
 	 * @since SINCEVERSION
+	 * 
 	 * @var array
 	 * @access protected
 	 */
@@ -78,8 +78,9 @@ class Plugin {
 	 * If no plugin config is passed during instantiation,
 	 * this will be an empty array.
 	 *
-	 * @var array
 	 * @since SINCEVERSION
+	 * 
+	 * @var array
 	 * @access protected
 	 */
 	protected $pages = [];
@@ -107,8 +108,9 @@ class Plugin {
 	 *
 	 * Examples: boldgrid-backup, boldgrid-backup-premium, etc.
 	 *
-	 * @var string
 	 * @since 2.7.7
+	 * 
+	 * @var string
 	 * @access protected
 	 */
 	protected $slug;
@@ -326,7 +328,6 @@ class Plugin {
 	 *
 	 * @return array
 	 * @since SINCEVERSION
-	 *
 	 */
 	public function getPluginConfig() {
 		return $this->pluginConfig;
@@ -382,7 +383,7 @@ class Plugin {
 	private function setPages() {
 		$pages = [];
 		if ( isset( $this->pluginConfig['pages'] ) ) {
-			foreach ($this->pluginConfig['pages'] as $page ) {
+			foreach ( $this->pluginConfig['pages'] as $page ) {
 				$pages[] = new Page( $this, $page );
 			}
 		}
@@ -578,9 +579,9 @@ class Plugin {
 	public function getUnreadMarkup() {
 		$count = $this->getUnreadCount();
 		if ( $count > 0 ) {
-			return '<span class="unread-notice-count">' . $count . '</span>';
+			return '<span class="bglib-unread-notice-count">' . esc_html( $count ) . '</span>';
 		} else {
-			return '<span class="unread-notice-count hidden"></span>';
+			return '<span class="bglib-unread-notice-count hidden"></span>';
 		}
 	} 
 }
