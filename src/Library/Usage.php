@@ -108,6 +108,7 @@ class Usage {
 				'page'    => ! empty ( $_GET['page'] ) ? $_GET['page'] : '',
 				'ga_id'   => $this->gaId,
 				'license' => json_encode( $licenseData ),
+                'version' => BOLDGRID_BACKUP_VERSION,
 			];
 
 			wp_localize_script( $handle, 'BglibUsage', $translation );
