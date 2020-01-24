@@ -44,7 +44,7 @@ class Card {
 	 * @since 2.10.0
 	 * @var array
 	 */
-	public $features;
+	public $features = [];
 
 	/**
 	 * Id.
@@ -53,6 +53,14 @@ class Card {
 	 * @var string
 	 */
 	public $id;
+
+	/**
+	 * Page.
+	 *
+	 * @since SINCEVERSION
+	 * @var Boldgrid\Library\Library\Plugin\Page
+	 */
+	public $page;
 
 	/**
 	 * Sub title.
@@ -69,6 +77,30 @@ class Card {
 	 * @var string
 	 */
 	public $title;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Boldgrid\Library\Library\Plugin\Page $page
+	 * @since SINCEVERSION
+	 */
+	public function __construct( $page = null ) {
+		$this->page = $page;
+	}
+
+	/**
+	 * Determine whether or not we need to show the ribbon.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @return bool
+	 */
+	public function maybeShowRibbon() {
+		// Not all cards area assigned to a page.
+		return ! empty( $this->page ) &&
+			$this->page->getNoticeById( $this->id ) &&
+			$this->page->getNoticeById( $this->id )->getIsUnread();
+	}
 
 	/**
 	 * Print the card.
@@ -91,6 +123,11 @@ class Card {
 			$markup .= 'id="' . esc_attr( $this->id ) . '" ';
 		}
 		$markup .= '>';
+
+		// If we need to, add a "new" banner.
+		if ( $this->maybeShowRibbon() ) {
+			$markup .= '<div class="card-ribbon"><span>' . esc_html__( 'NEW!', 'boldgrid-backup' ) . '</span></div>';
+		}
 
 		if ( ! empty( $this->title ) ) {
 			$markup .= '<div class="bglib-card-title">';
