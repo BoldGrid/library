@@ -13,7 +13,7 @@ namespace Boldgrid\Library\Library\Plugin;
  * Notice class for Plugin\Page.
  *
  * This class is a specific Notice
- * used by the Boldgrid\Library\Library\Plugin\Page 
+ * used by the Boldgrid\Library\Library\Plugin\Page
  * and Boldgrid\Library\Library\Plugin\Plugin classes.
  *
  * @since SINCEVERSION
@@ -72,7 +72,7 @@ class Notice {
 	protected $isUnread;
 
 	/**
-	 * Constructor 
+	 * Constructor
 	 *
 	 *
 	 * @since SINCEVERSION
@@ -88,18 +88,18 @@ class Notice {
 	 */
 	public function __construct( Plugin $plugin, array $notice ) {
 		if ( $this->alreadyExists( $notice['id'] ) ) {
-			$originalNotice = $this->getFromOptions( $notice['id'] );
+			$originalNotice = $this->getFromOptions( $notice['id'] )[0];
 			$this->id       = $originalNotice->id;
 			$this->pageSlug = $originalNotice->pageSlug;
 			$this->plugin   = $originalNotice->plugin;
 			$this->noticeVersionChanged( $originalNotice, $notice );
 			$this->updateNoticeOption( $this );
 		} else {
-			$this->id        = $notice['id'];
-			$this->pageSlug  = $notice['page'];
-			$this->version   = $notice['version'];
-			$this->isUnread  = true;
-			$this->plugin    = $plugin;
+			$this->id       = $notice['id'];
+			$this->pageSlug = $notice['page'];
+			$this->version  = $notice['version'];
+			$this->isUnread = true;
+			$this->plugin   = $plugin;
 		}
 	}
 
@@ -183,8 +183,8 @@ class Notice {
 	public function maybeShow() {
 		$pluginVersion     = $this->plugin->getPluginData()['Version'];
 		$versionIsNotFirst = $this->plugin->firstVersionCompare( $pluginVersion, '<' );
-		$featureIsNewer    = version_compare( $this->version, $pluginVersion , '>=' );
-		return ( $featureIsNewer && $versionIsNotFirst);
+		$featureIsNewer    = version_compare( $this->version, $pluginVersion, '>=' );
+		return ( $featureIsNewer && $versionIsNotFirst );
 	}
 
 	/**
@@ -212,7 +212,7 @@ class Notice {
 		$this->isUnread = $isUnread;
 		$this->updateNoticeOption();
 	}
-	
+
 	/**
 	 * Determine if Notice Exists in Options Table.
 	 *
@@ -230,21 +230,25 @@ class Notice {
 	 * @since SINCEVERSION
 	 *
 	 * @param string $noticeId
-	 * @return Notice
+	 * @return array
+	 *     @type Notice Notice Instance.
+	 *     @type int Index of Notice in Options array.
 	 */
 	private function getFromOptions( $noticeId ) {
 		$option = get_option( 'boldgrid_plugin_page_notices', [] );
-		foreach ( $option as $notice ) {
-			if ( $notice->id == $noticeId ) {
-				return $notice;
+		$optionCount = count( $option );
+		for ( $i = 0; $i <= $optionCount; $i++ ) {
+			if ( $option[ $i ]->id === $noticeId ) {
+				return [ $option[ $i ], $i ];
 			}
 		}
+		return [];
 	}
-	
+
 	/**
 	 * Update Notice Option.
 	 *
-	 * Updates option row in wp_options table. If The NoticeId 
+	 * Updates option row in wp_options table. If The NoticeId
 	 * already exists, then it's object is replaced with $this.
 	 * Otherwise, $this is appended to the array.
 	 *
@@ -253,12 +257,11 @@ class Notice {
 	public function updateNoticeOption() {
 		$option = get_option( 'boldgrid_plugin_page_notices', [] );
 		if ( $this->alreadyExists( $this->id ) ) {
-			$originalNotice = getFromOptions( $this->id );
-			$option[ array_search($originalNotice, $option) ] = $this;
+			$option[ $this->getFromOptions( $this->id )[1] ] = $this;
 		} else {
 			$option[] = $this;
 		}
-		update_option( 'boldgrid_plugin_page_notices' , $option);
+		update_option( 'boldgrid_plugin_page_notices', $option );
 	}
 
 	/**
@@ -286,13 +289,13 @@ class Notice {
 	public function setPlugin( Plugin $plugin ) {
 		$this->plugin = $plugin;
 	}
-	
+
 	/**
 	 * Notice Version Changed.
 	 *
 	 * Determines if an existing Notice's version number has changed
 	 * since it was placed in options table. If it has changed, then it marks
-	 * the notice unread again. This will help bring attention to old notices 
+	 * the notice unread again. This will help bring attention to old notices
 	 * that may have been revised.
 	 *
 	 * @since SINCEVERSION
@@ -300,14 +303,12 @@ class Notice {
 	 * @param Notice $originalNotice
 	 * @param array $newNotice
 	 */
-
 	private function noticeVersionChanged( Notice $originalNotice, array $newNotice ) {
 		if ( version_compare( $originalNotice->version, $newNotice['version'], '!=' ) ) {
-			$this->version   = $newNotice['version'];
+			$this->version  = $newNotice['version'];
 			$this->isUnread = true;
-		}
-		else {
-			$this->version = $originalNotice->getVersion();
+		} else {
+			$this->version  = $originalNotice->getVersion();
 			$this->isUnread = $originalNotice->isUnread;
 		}
 	}
