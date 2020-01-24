@@ -79,7 +79,6 @@ class Plugin {
 	 * this will be an empty array.
 	 *
 	 * @since SINCEVERSION
-	 * 
 	 * @var array
 	 * @access protected
 	 */
@@ -125,6 +124,8 @@ class Plugin {
 	public function __construct( $slug, $pluginConfig = null ) {
 		$this->slug = $slug;
 
+		$this->pluginConfig = ! empty( $pluginConfig ) ? $pluginConfig : [];
+
 		$this->setFile();
 
 		$this->setPath();
@@ -132,10 +133,6 @@ class Plugin {
 		$this->setIsInstalled();
 
 		$this->setChildPlugins();
-
-		if ( $pluginConfig ) {
-			$this->setPluginConfig( $pluginConfig );
-		}
 
 		$this->setPages();
 	}
@@ -375,7 +372,7 @@ class Plugin {
 	}
 
 	/**
-	 * Create page objects based on $this->config parameter
+	 * Create page objects based on $this->config parameter.
 	 *
 	 * @since SINCEVERSION
 	 * @access private
@@ -391,44 +388,30 @@ class Plugin {
 	}
 
 	/**
-	 * Get Plugin Pages
+	 * Get Plugin Pages.
 	 *
+	 * @since SINCEVERSION
+	 * 
 	 * @return array
 	 * @access private
-	 * @since SINCEVERSION
 	 */
 	private function getPages() {
 		return $this->pages;
 	}
 
 	/**
-	 * Get Page by Slug
+	 * Get Page by Slug.
+	 * 
+	 * @since SINCEVERSION
 	 * 
 	 * @param string $slug
 	 * @return Page
-	 * @since SINCEVERSION
 	 */
 	public function getPageBySlug( $slug ) {
 		foreach ( $this->getPages() as $page ) {
 			if ( $page->getSlug() == $slug ) {
 				return $page;
 			}
-		}
-	}
-
-	/**
-	 * Populate $this->pluginConfig from array given in
-	 * constructor
-	 *
-	 * @param array $pluginConfig
-	 * @access private
-	 * @since SINCEVERSION
-	 */
-	private function setPluginConfig( array $pluginConfig ) {
-		if ( $pluginConfig ) {
-			$this->pluginConfig = $pluginConfig;
-		} else {
-			$this->pluginConfig = [];
 		}
 	}
 	
@@ -553,12 +536,13 @@ class Plugin {
 	}
 
 	/**
-	 * Get Unread Count
+	 * Get Unread Count.
 	 * 
-	 * Get unread count integer
+	 * Get unread count integer.
 	 *
-	 * @return int
 	 * @since SINCEVERSION
+	 * 
+	 * @return int
 	 */
     public function getUnreadCount() {
 		$unreadCount = 0;
@@ -569,12 +553,13 @@ class Plugin {
 	}
 	
 	/**
-	 * Get Unread markup
+	 * Get Unread markup.
 	 * 
-	 * Get unread count with html markup
+	 * Get unread count with html markup.
+	 * 
+	 * @since SINCEVERSION
 	 * 
 	 * @return string
-	 * @since SINCEVERSION
 	 */
 	public function getUnreadMarkup() {
 		$count = $this->getUnreadCount();
