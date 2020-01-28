@@ -230,7 +230,7 @@ class Page {
 	 *
 	 * @param string $slug Page Slug.
 	 */
-	public function setSlug( string $slug ) {
+	public function setSlug( $slug ) {
 		$this->slug = $slug;
 	}
 }
