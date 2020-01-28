@@ -16,6 +16,8 @@ require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Filter.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Reseller.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Util/Plugin.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Plugin/Plugin.php';
+require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Plugin/Page.php';
+require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Plugin/Notice.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/RatingPrompt.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Activity.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Util/Option.php';

@@ -132,6 +132,12 @@ class Page {
 	 * @return array
 	 */
 	public function getNotices() {
+		$notices = [];
+		foreach( $this->notices as $notice ) {
+			if ( $notice->getPageSlug() === $this->slug ) {
+				$notices[] = $notice;
+			}
+		}
 		return $this->notices;
 	}
 
@@ -171,9 +177,9 @@ class Page {
 	 *
 	 * @since SINCEVERSION
 	 */
-	public function setAllNoticesRead() {
+	public function setAllNoticesRead( $setToUnread = false ) {
 		foreach ( $this->getNotices() as $notice ) {
-			$notice->setIsUnread( false );
+			$notice->setIsUnread( $setToUnread );
 		}
 	}
 
@@ -187,7 +193,7 @@ class Page {
 	public function getUnreadCount() {
 		$unreadCount = 0;
 		foreach ( $this->getNotices() as $notice ) {
-			if ( $notice->getIsUnread() ) {
+			if ( $notice->getIsUnread() && $notice->getPageSlug() === $this->getSlug() ) {
 				$unreadCount++;
 			}
 		}
