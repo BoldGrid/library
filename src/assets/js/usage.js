@@ -87,10 +87,10 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			// Configure license.
 			params.license = self.i18n.license;
-            params.version = self.i18n.version;
+			params.version = self.i18n.version;
 			params.custom_map = {
 				dimension7: 'license',
-                dimension8: 'version'
+				dimension8: 'version'
 			};
 
 			// Configure linker. This will add client id, on click, to all boldgrid.com links.
