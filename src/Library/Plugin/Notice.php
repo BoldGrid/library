@@ -237,10 +237,12 @@ class Notice {
 	private function getFromOptions( $noticeId ) {
 		$option = get_option( 'boldgrid_plugin_page_notices', [] );
 		$optionCount = count( $option );
-		for ( $i = 0; $i <= $optionCount; $i++ ) {
+		$i = 0;
+		foreach( $option as $notice ) {
 			if ( $option[ $i ]->id === $noticeId ) {
 				return [ $option[ $i ], $i ];
 			}
+			$i++;
 		}
 		return [];
 	}

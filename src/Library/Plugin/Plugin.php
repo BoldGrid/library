@@ -48,9 +48,8 @@ class Plugin {
 	 * @since SINCEVERSION
 	 * 
 	 * @var array
-	 * @access protected
 	 */
-	protected $pluginConfig = [];
+	public $pluginConfig = [];
 
 	/**
 	 * Whether or not this plugin is installed.
@@ -91,7 +90,7 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	protected $pluginData = [];
+	public $pluginData = [];
 
 	/**
 	 * Update plugin data, as retrieved from 'update_plugins' site transient.
@@ -209,13 +208,13 @@ class Plugin {
 		$config = [];
 
 		$plugins = Configs::get( 'plugins' );
-
-		foreach ( $plugins as $plugin ) {
-			if ( $plugin['file'] === $this->file ) {
-				$config = $plugin;
+		if ( $plugins ) {
+			foreach ( $plugins as $plugin ) {
+				if ( $plugin['file'] === $this->file ) {
+					$config = $plugin;
+				}
 			}
 		}
-
 		return $config;
 	}
 
@@ -377,7 +376,7 @@ class Plugin {
 	 * @since SINCEVERSION
 	 * @access private
 	 */
-	private function setPages() {
+	public function setPages() {
 		$pages = [];
 		if ( isset( $this->pluginConfig['pages'] ) ) {
 			foreach ( $this->pluginConfig['pages'] as $page ) {
@@ -393,9 +392,9 @@ class Plugin {
 	 * @since SINCEVERSION
 	 * 
 	 * @return array
-	 * @access private
+	 * @access public
 	 */
-	private function getPages() {
+	public function getPages() {
 		return $this->pages;
 	}
 
@@ -531,7 +530,6 @@ class Plugin {
 			// If the data is missing for some reason, return the plugin's current version.
 			$firstVersion = $this->getData( 'Version' );
 		}
-
 		return $firstVersion;
 	}
 
