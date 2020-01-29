@@ -40,7 +40,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	public function setUp() {
 		// Setup our configs.
 		$this->config = $this->getPluginConfig();
-		$this->plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config );
+		$this->plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config, $this->plugin_data );
 		$this->page   = $this->plugin->getPageBySlug( $this->config['pages'][0] );
 		$this->getFirstVersion();
 		$this->getPluginsChecked();
@@ -50,11 +50,22 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 		$config = [
 			'pages'        => [
 				'boldgrid-backup-premium-features',
+				'boldgrid-backup-settings',
 			],
 			'page_notices' => [
 				[
 					'id'      => 'bgbkup_database_encryption',
 					'page'    => 'boldgrid-backup-premium-features',
+					'version' => '1.12.16',
+				],
+				[
+					'id'      => 'bgbkup_google_drive',
+					'page'    => 'boldgrid-backup-premium-features',
+					'version' => '1.12.16',
+				],
+				[
+					'id'      => 'bgbkup_new_settings_feature',
+					'page'    => 'boldgrid-backup-settings',
 					'version' => '1.12.16',
 				],
 			],
@@ -194,6 +205,11 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 		$this->page->setAllNoticesRead();
 		$this->assertEquals( $expected_markup, $this->page->getUnreadMarkup() );
 		$this->page->setAllNoticesRead( true );
+	}
+	//Tests trying to get a Notice that does not exist
+	public function testGetNonExistNotice() {
+		$expected_id = null;
+		$this->assertEquals( $expected_id, $this->page->getNoticeById( 'non_existant_notice' ) );
 	}
 
 }

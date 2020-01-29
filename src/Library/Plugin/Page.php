@@ -138,7 +138,7 @@ class Page {
 				$notices[] = $notice;
 			}
 		}
-		return $this->notices;
+		return $notices;
 	}
 
 	/**

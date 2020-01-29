@@ -120,9 +120,8 @@ class Notice {
 	 * @since SINCEVERSION
 	 *
 	 * @param string $id Notice ID.
-	 * @access private
 	 */
-	private function setId( $id ) {
+	public function setId( $id ) {
 		$this->id = $id;
 	}
 
@@ -144,7 +143,7 @@ class Notice {
 	 *
 	 * @param string $pageSlug Notice Page.
 	 */
-	public function setPageSlug( string $pageSlug ) {
+	public function setPageSlug( $pageSlug ) {
 		$this->pageSlug = $pageSlug;
 	}
 
@@ -166,7 +165,7 @@ class Notice {
 	 *
 	 * @param string $version Version of plugin this notice was added on.
 	 */
-	public function setVersion( string $version ) {
+	public function setVersion( $version ) {
 		$this->version = $version;
 	}
 
@@ -183,7 +182,7 @@ class Notice {
 	public function maybeShow() {
 		$pluginVersion     = $this->plugin->getPluginData()['Version'];
 		$versionIsNotFirst = $this->plugin->firstVersionCompare( $pluginVersion, '<' );
-		$featureIsNewer    = version_compare( $this->version, $pluginVersion, '>=' );
+		$featureIsNewer    = version_compare( $this->version, $pluginVersion, 'ge' );
 		return ( $featureIsNewer && $versionIsNotFirst );
 	}
 
@@ -306,7 +305,7 @@ class Notice {
 	 * @param array $newNotice
 	 */
 	private function noticeVersionChanged( Notice $originalNotice, array $newNotice ) {
-		if ( version_compare( $originalNotice->version, $newNotice['version'], '!=' ) ) {
+		if ( version_compare( $originalNotice->version, $newNotice['version'], 'ne' ) ) {
 			$this->version  = $newNotice['version'];
 			$this->isUnread = true;
 		} else {

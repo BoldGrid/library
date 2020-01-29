@@ -43,8 +43,8 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 		update_site_option( 'boldgrid_api_key', $this->key );
 
 		$this->resetConfigs();
-		$this->config = $this->getPluginConfig();
-		$this->backup         = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config );
+		$this->config         = $this->getPluginConfig();
+		$this->backup         = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config, $this->plugin_data );
 		$this->backup_premium = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup-premium' );
 	}
 
@@ -203,9 +203,16 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 		$this->assertEquals( $this->backup->getUnreadMarkup(), $expected_markup );
 	}
 
+	public function testNoNoticesMarkup() {
+		$expected_markup = '<span class="bglib-unread-notice-count hidden"></span>';
+		$this->backup->setAllNoticesRead();
+		$this->assertEquals( $this->backup->getUnreadMarkup(), $expected_markup );
+		$this->backup->setAllNoticesRead( $setToUnread = true );
+	}
+
 	public function testTwoPagesWithNotices() {
 		$two_page_config = $this->getPluginConfig(
-			$add_pages = ['boldgrid-backup-settings'],
+			$add_pages   = ['boldgrid-backup-settings'],
 			$add_notices = [
 				[
 					'id'      => 'bgbkup_backup_settings_test',
@@ -213,15 +220,15 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 					'version' => '1.12.16',
 				],
 			]);
-		$expected_markup = '<span class="bglib-unread-notice-count">' . count( $two_page_config['page_notices'] ) . '</span>';
-		$plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config );
+		$expected_markup    = '<span class="bglib-unread-notice-count">' . count( $two_page_config['page_notices'] ) . '</span>';
+		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config, $this->plugin_data );
 		$plugin->pluginData = $this->plugin_data;
 		$this->assertEquals( $plugin->getUnreadMarkup(), $expected_markup );
 	}
 
 	public function testGetPageBySlug() {
 		$two_page_config = $this->getPluginConfig(
-			$add_pages = ['boldgrid-backup-settings'],
+			$add_pages   = ['boldgrid-backup-settings'],
 			$add_notices = [
 				[
 					'id'      => 'bgbkup_backup_settings_test',
@@ -229,9 +236,9 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 					'version' => '1.12.16',
 				],
 			]);
-		$plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config );
+		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config, $this->plugin_data );
 		$plugin->pluginData = $this->plugin_data;
-		$success_count = 0;
+		$success_count      = 0;
 		foreach ( $two_page_config['pages'] as $config_page ) {
 			$pageSlug = $plugin->getPageBySlug( $config_page );
 			if ( $pageSlug ) {
@@ -239,5 +246,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 			}
 		}
 		$this->assertEquals( $success_count, count( $two_page_config['pages'] ) );
+
+		$this->assertTrue( empty( $plugin->getPageBySlug( 'not_a_real_page_slug' ) ) );
 	}
 }
