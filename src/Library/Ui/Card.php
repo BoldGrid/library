@@ -79,6 +79,14 @@ class Card {
 	public $title;
 
 	/**
+	 * Links.
+	 *
+	 * @since SINCEVERSION
+	 * @var string
+	 */
+	public $links;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Boldgrid\Library\Library\Plugin\Page $page
@@ -148,6 +156,10 @@ class Card {
 
 		if ( ! empty( $this->footer ) ) {
 			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';
+		}
+
+		if ( ! empty( $this->links ) ) {
+			$markup .= '<div class="bglib-card-links">' . $this->links . '</div>';
 		}
 
 		$markup .= '</div>';
