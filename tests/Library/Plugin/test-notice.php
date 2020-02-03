@@ -48,15 +48,17 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		$this->notice = $this->page->getNotices()[0];
 		$this->getFirstVersion();
 		$this->getPluginsChecked();
+
+		$this->makeFakePlugin();
 	}
 
 	/**
 	 * Set settings versions.
-	 * 
+	 *
 	 * Sets the version information in the boldgrid_settings option.
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @param string @first_version
 	 * @param string @current_version
 	 */
@@ -70,15 +72,15 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	}
 	/**
 	 * Get the Plugin Config and / or change it
-	 * 
+	 *
 	 * Gets the plugin config file set here for testing
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @param string $version notice version number for testing.
 	 * @param array $add_pages optional. an array of page_slug strings.
 	 * @param array $add_notices optional. an array of page_notices to add.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getPluginConfig( $version = '1.12.16', array $add_pages = [], array  $add_notices = [] ) {
@@ -112,7 +114,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 			$config['page_notices'][] = $notice;
 		}
 		return $config;
-	} 
+	}
 
 	/**
 	 * getFirstVersion.
@@ -176,6 +178,98 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		$this->plugin->getPluginsChecked();
 	}
 
+	/**
+	 * Make a fake plugin to test this class against.
+	 *
+	 * @since SINCEVERSION
+	 */
+	public function makeFakePlugin() {
+		$path =  ABSPATH . 'wp-content/plugins/fake-plugin';
+
+		// Make the plugin's directory.
+		if ( file_exists( $path ) ) {
+			exec( 'rm -rf ' . ABSPATH . 'wp-content/plugins/fake-plugin' );
+		}
+		mkdir( $path );
+
+		// Add the plugin's main file.
+		file_put_contents(
+			$path . '/fake-plugin.php',
+			'<?php
+			/**
+			 * File: fake-plugin.php
+			 *
+			 * @link https://www.domain.com
+			 * @since 1.0.0
+			 * @package Fake_Plugin
+			 *
+			 *          @wordpress-plugin
+			 *          Plugin Name: Fake Plugin
+			 *          Plugin URI: https://www.domain.com
+			 *          Description: Description goes here.
+			 *          Version: 1.5.0
+			 *          Author: Me
+			 *          Author URI: https://www.me.com
+			 *          License: GPL-2.0+
+			 *          License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+			 *          Text Domain: fake-plugin
+			 *          Domain Path: /languages
+			 */'
+		);
+
+		$configs = [
+			'pages' => [
+				'boldgrid-backup-premium-features',
+			],
+			'page_notices' => [
+				[
+					'id'      => 'notice-1',
+					'page'    => 'boldgrid-backup-premium-features',
+					'version' => '1.1.0',
+				]
+			],
+		];
+
+		$this->fakePlugin = new Boldgrid\Library\Library\Plugin\Plugin( 'fake-plugin', $configs );
+
+		// Configure this plugin's version info (IE first version installed).
+		$boldgrid_settings = get_option( 'boldgrid_settings', [] );
+		$boldgrid_settings['plugins_checked']['fake-plugin/fake-plugin.php'] = [
+			'1.0.0' => 946684800,
+			'1.3.0' => 946685800,
+			'1.5.0' => 946686800,
+		];
+		update_option( 'boldgrid_settings', $boldgrid_settings );
+	}
+
+	/**
+	 * Test setIsUnread.
+	 *
+	 * @since SINCEVERSION
+	 */
+	public function testSetIsUnread() {
+		// Create a new notice.
+		$notice = new Boldgrid\Library\Library\Plugin\Notice(
+			$this->fakePlugin,
+			[
+				'id'      => 'notice-testSetUnread',
+				'page'    => 'page-slug',
+				'version' => '1.5.0',
+			]
+		);
+
+		// By default, it should be unread.
+		$this->assertTrue( $notice->getIsUnread() );
+
+		// After we set it as being read, it should be read.
+		$notice->setIsUnread( false );
+		$this->assertFalse( $notice->getIsUnread() );
+
+		// If for some reason we mark it as unread, it should be unread.
+		$notice->setIsUnread( true );
+		$this->assertTrue( $notice->getIsUnread() );
+	}
+
 	//Test Notice::setNoticeId.
 	public function testSetNoticeId() {
 		$original_notice_id = $this->notice->getId();
@@ -214,10 +308,117 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		$this->assertEquals( true, $this->notice->getIsUnread() );
 	}
 
+	/**
+	 * Test alreadyExists.
+	 *
+	 * @since SINCEVERSION
+	 */
+	public function testAlreadyExists() {
+		// Create a new notice.
+		$notice = new Boldgrid\Library\Library\Plugin\Notice(
+			$this->fakePlugin,
+			[
+				'id'      => 'notice-testAlreadyExists',
+				'page'    => 'page-slug',
+				'version' => '1.5.0',
+			]
+		);
+
+		// By default, it should not exist.
+		$this->assertFalse( $notice->alreadyExists() );
+
+		// After we set the notice as being read, it should exist.
+		$notice->setIsUnread( false );
+		$this->assertTrue( $notice->alreadyExists() );
+	}
+
 	//Test Notice::getPlugin().
 	public function testGetPlugin() {
 		$plugin = $this->notice->getPlugin();
 		$this->assertEquals( $this->plugin, $plugin );
+	}
+
+	/**
+	 * Test maybeShow.
+	 *
+	 * @since SINCEVERSION
+	 */
+	public function testMaybeShow() {
+		/*
+		 * The notice should show in this scenario.
+		 *
+		 * We are on the version that this new feature is for.
+		 *
+		 * Plugin's first version: 1.0.0
+		 * This version:           1.5.0
+		 * This notice's version:  1.5.0
+		 */
+		$notice = new Boldgrid\Library\Library\Plugin\Notice(
+			$this->fakePlugin,
+			[
+				'id'      => 'notice-1',
+				'page'    => 'page-slug',
+				'version' => '1.5.0',
+			]
+		);
+		$this->assertTrue( $notice->maybeShow() );
+
+		/*
+		 * The notice should show in this scenario.
+		 *
+		 * Maybe we upgrade from 1.3.0 to 1.5.0, and this notice is for 1.4.0.
+		 *
+		 * Plugin's first version: 1.0.0
+		 * This version:           1.5.0
+		 * This notice's version:  1.4.0
+		 */
+		$notice = new Boldgrid\Library\Library\Plugin\Notice(
+			$this->fakePlugin,
+			[
+				'id'      => 'notice-2',
+				'page'    => 'page-slug',
+				'version' => '1.4.0',
+			]
+		);
+		$this->assertTrue( $notice->maybeShow() );
+
+		/*
+		 * The notice should NOT show in this scenario.
+		 *
+		 * The notice is for a version prior to what we installed.
+		 *
+		 * Plugin's first version: 1.0.0
+		 * This version:           1.5.0
+		 * This notice's version:  0.9.0
+		 */
+		$notice = new Boldgrid\Library\Library\Plugin\Notice(
+			$this->fakePlugin,
+			[
+				'id'      => 'notice-3',
+				'page'    => 'page-slug',
+				'version' => '0.9.0',
+			]
+		);
+		$this->assertFalse( $notice->maybeShow() );
+
+		/*
+		 * The notice should NOT show in this scenario.
+		 *
+		 * They just installed a plugin so essentially they shouldn't be seeing anything new.
+		 *
+		 * Plugin's first version: 1.0.0
+		 * This version:           1.5.0
+		 * This notice's version:  1.0.0
+		 */
+		$notice = new Boldgrid\Library\Library\Plugin\Notice(
+			$this->fakePlugin,
+			[
+				'id'      => 'notice-3',
+				'page'    => 'page-slug',
+				'version' => '1.0.0',
+			]
+		);
+		$this->assertFalse( $notice->maybeShow() );
 	}
 
 	//Test Notice::noticeVersionChanged().

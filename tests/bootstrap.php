@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Debug to console.
+ *
+ * @since SINCEVERSION
+ *
+ * @param mixed $var Message to write to STDERR.
+ */
+function bglib_phpunit_error_log( $var ) {
+	fwrite( // phpcs:ignore
+		STDERR,
+		"\n\n## --------------------\n" .
+		print_r( $var, 1 ) . // phpcs:ignore
+		"\n## ------------------\n\n"
+	);
+}
+
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 if ( ! $_tests_dir ) {
 	$_tests_dir = '/tmp/wordpress-tests-lib';

@@ -87,7 +87,9 @@ class Notice {
 	 * }
 	 */
 	public function __construct( Plugin $plugin, array $notice ) {
-		if ( $this->alreadyExists( $notice['id'] ) ) {
+		$this->setId( $notice['id'] );
+
+		if ( $this->alreadyExists() ) {
 			$originalNotice = $this->getFromOptions( $notice['id'] )[0];
 			$this->id       = $originalNotice->id;
 			$this->pageSlug = $originalNotice->pageSlug;
@@ -172,9 +174,6 @@ class Notice {
 	/**
 	 * Maybe the notice count should show.
 	 *
-	 * Returns true if this plugin's version number is greater than the first installed version,
-	 * and feature's version number is greater than or equal to current version.
-	 *
 	 * @since SINCEVERSION
 	 *
 	 * @return bool
@@ -182,7 +181,8 @@ class Notice {
 	public function maybeShow() {
 		$pluginVersion     = $this->plugin->getPluginData()['Version'];
 		$versionIsNotFirst = $this->plugin->firstVersionCompare( $pluginVersion, '<' );
-		$featureIsNewer    = version_compare( $this->version, $pluginVersion, 'ge' );
+		$featureIsNewer    = $this->plugin->firstVersionCompare( $this->version, '<' );
+
 		return ( $featureIsNewer && $versionIsNotFirst );
 	}
 
@@ -219,8 +219,8 @@ class Notice {
 	 *
 	 * @return bool true if noticeId exists.
 	 */
-	public function alreadyExists( $noticeId ) {
-		return ! empty( $this->getFromOptions( $noticeId ) );
+	public function alreadyExists() {
+		return ! empty( $this->getFromOptions( $this->id ) );
 	}
 
 	/**
@@ -257,7 +257,7 @@ class Notice {
 	 */
 	public function updateNoticeOption() {
 		$option = get_option( 'boldgrid_plugin_page_notices', [] );
-		if ( $this->alreadyExists( $this->id ) ) {
+		if ( $this->alreadyExists() ) {
 			$option[ $this->getFromOptions( $this->id )[1] ] = $this;
 		} else {
 			$option[] = $this;
