@@ -462,8 +462,8 @@ class Plugin {
 	 * @since 2.10.0
 	 */
 	public function setIsInstalled() {
-			$wp_filesystem = \Boldgrid\Library\Util\Version::getWpFilesystem();
-			$this->isInstalled = $wp_filesystem->exists( $this->path );
+		$wp_filesystem = \Boldgrid\Library\Util\Version::getWpFilesystem();
+		$this->isInstalled = $wp_filesystem->exists( $this->path );
 	}
 
 	/**
