@@ -91,9 +91,9 @@ class Notice {
 
 		if ( $this->alreadyExists() ) {
 			$originalNotice = $this->getFromOptions( $notice['id'] )[0];
-			$this->id       = $originalNotice->id;
-			$this->pageSlug = $originalNotice->pageSlug;
-			$this->plugin   = $originalNotice->plugin;
+			$this->id       = $originalNotice['id'];
+			$this->pageSlug = $originalNotice['page'];
+			$this->plugin   = $plugin;
 			$this->noticeVersionChanged( $originalNotice, $notice );
 			$this->updateNoticeOption( $this );
 		} else {
@@ -234,11 +234,12 @@ class Notice {
 	 *     @type int Index of Notice in Options array.
 	 */
 	private function getFromOptions( $noticeId ) {
-		$option = get_option( 'boldgrid_plugin_page_notices', [] );
+		$option      = get_option( 'boldgrid_plugin_page_notices', [] );
 		$optionCount = count( $option );
+
 		$i = 0;
-		foreach( $option as $notice ) {
-			if ( $option[ $i ]->id === $noticeId ) {
+		foreach ( $option as $notice ) {
+			if ( $option[ $i ]['id'] === $noticeId ) {
 				return [ $option[ $i ], $i ];
 			}
 			$i++;
@@ -258,9 +259,19 @@ class Notice {
 	public function updateNoticeOption() {
 		$option = get_option( 'boldgrid_plugin_page_notices', [] );
 		if ( $this->alreadyExists() ) {
-			$option[ $this->getFromOptions( $this->id )[1] ] = $this;
+			$option[ $this->getFromOptions( $this->id )[1] ] = [
+				'id'       => $this->id,
+				'isUnread' => $this->isUnread,
+				'version'  => $this->version,
+				'page'     => $this->pageSlug,
+			];
 		} else {
-			$option[] = $this;
+			$option[] = [
+				'id'       => $this->id,
+				'isUnread' => $this->isUnread,
+				'version'  => $this->version,
+				'page'     => $this->pageSlug,
+			];
 		}
 		update_option( 'boldgrid_plugin_page_notices', $option );
 	}
@@ -304,13 +315,13 @@ class Notice {
 	 * @param Notice $originalNotice
 	 * @param array $newNotice
 	 */
-	private function noticeVersionChanged( Notice $originalNotice, array $newNotice ) {
-		if ( version_compare( $originalNotice->version, $newNotice['version'], 'ne' ) ) {
+	private function noticeVersionChanged( array $originalNotice, array $newNotice ) {
+		if ( version_compare( $originalNotice['version'], $newNotice['version'], 'ne' ) ) {
 			$this->version  = $newNotice['version'];
 			$this->isUnread = true;
 		} else {
-			$this->version  = $originalNotice->getVersion();
-			$this->isUnread = $originalNotice->isUnread;
+			$this->version  = $originalNotice['version'];
+			$this->isUnread = $originalNotice['isUnread'];
 		}
 	}
 }
