@@ -43,7 +43,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	public function setUp() {
 		// Setup our configs.
 		$this->config = $this->getPluginConfig();
-		$this->plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config, $this->plugin_data );
+		$this->plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config );
 		$this->page   = $this->plugin->getPageBySlug( $this->config['pages'][0] );
 		$this->notice = $this->page->getNotices()[0];
 		$this->getFirstVersion();
@@ -302,6 +302,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 
 	//Test that notices return as read if this is first install.
 	public function testNoticeIfFirstInstall() {
+		$this->plugin->pluginData = $this->plugin_data;
 		$this->set_settings_versions('1.12.0', '1.12.0');
 		$this->assertEquals( false, $this->notice->getIsUnread() );
 		$this->set_settings_versions( $this->default_first_version, $this->default_newest_version );
@@ -423,14 +424,17 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 
 	//Test Notice::noticeVersionChanged().
 	public function testNoticeVersionChanged() {
+		$this->plugin->pluginData = $this->plugin_data;
 		$this->assertEquals( true, $this->notice->getIsUnread() );
 		$this->notice->setIsUnread( false );
 		$new_plugin = new Boldgrid\Library\Library\Plugin\Plugin(
 			'boldgrid-backup',
-			$this->getPluginConfig( $version = '2.12.16' ),
-			$this->plugin_data
+			$this->getPluginConfig( $version = '2.12.16' )
 		);
-		$this->page = $new_plugin->getPageBySlug( $this->config['pages'][0] );
+
+		$new_plugin->pluginData = $this->plugin_data;
+
+		$this->page   = $new_plugin->getPageBySlug( $this->config['pages'][0] );
 		$this->notice = $this->page->getNotices()[0];
 		$this->assertEquals( true, $this->notice->getIsUnread() );
 

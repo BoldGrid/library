@@ -114,28 +114,14 @@ class Plugin {
 	protected $slug;
 
 	/**
-	 * Testing plugin_data
-	 * 
-	 * When running phpUnit Tests, this plugin is unable to access
-	 * the data from get_plugin_data() . Therefore it must be passed during construction
-	 * 
-	 * @since SINCEVERSION
-	 * 
-	 * @var bool
-	 */
-	public $testing;
-
-	/**
 	 * Constructor.
 	 *
 	 * @since 2.7.7
 	 *
 	 * @param string $slug For example: "plugin" from plugin/plugin.php
 	 */
-	public function __construct( $slug, $pluginConfig = null, $testing = null ) {
+	public function __construct( $slug, $pluginConfig = null) {
 		$this->slug = $slug;
-
-		$this->testing = $testing;
 
 		$this->setFile();
 
@@ -351,12 +337,8 @@ class Plugin {
 	 * @return array
 	 */
 	public function getPluginData() {
-		if ( $this->testing ) {
-			$this->pluginData = $this->testing;
-		}
-
 		if ( empty( $this->pluginData ) && $this->isInstalled ) {
-			$this->pluginData = get_plugin_data($this->path );
+			$this->pluginData = get_plugin_data( $this->path );
 		}
 		return $this->pluginData;
 	}
@@ -480,12 +462,8 @@ class Plugin {
 	 * @since 2.10.0
 	 */
 	public function setIsInstalled() {
-		if ( $this->testing ) { 
-			$this->isInstalled = true;
-		} else {
 			$wp_filesystem = \Boldgrid\Library\Util\Version::getWpFilesystem();
 			$this->isInstalled = $wp_filesystem->exists( $this->path );
-		}
 	}
 
 	/**

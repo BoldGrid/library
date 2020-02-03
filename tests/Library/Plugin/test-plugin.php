@@ -204,6 +204,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	}
 
 	public function testNoNoticesMarkup() {
+		$this->backup->pluginData = $this->plugin_data;
 		$expected_markup = '<span class="bglib-unread-notice-count hidden"></span>';
 		$this->backup->setAllNoticesRead();
 		$this->assertEquals( $this->backup->getUnreadMarkup(), $expected_markup );
