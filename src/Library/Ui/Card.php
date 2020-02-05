@@ -79,12 +79,12 @@ class Card {
 	public $title;
 
 	/**
-	 * Links.
+	 * Setup Guide URL.
 	 *
 	 * @since 2.12.0
 	 * @var string
 	 */
-	public $links;
+	public $setup_guide;
 
 	/**
 	 * Constructor
@@ -157,8 +157,13 @@ class Card {
 			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';
 		}
 
-		if ( ! empty( $this->links ) ) {
-			$markup .= '<div class="bglib-card-links">' . $this->links . '</div>';
+		if ( ! empty( $this->setup_guide ) ) {
+			$markup .= '
+			<div class="bglib-card-links">
+				<p style="text-align:right;">
+					<a target="_blank" href="' . esc_url( $this->setup_guide ) . '">Setup Guide</a>
+				</p>
+			</div>';
 		}
 
 		$markup .= '</div>';
