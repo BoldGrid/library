@@ -46,7 +46,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 		$this->getPluginsChecked();
 	}
 
-	public function getPluginConfig( array $add_pages = [], array  $add_notices = [] ) {
+	public function getPluginConfig( array $add_pages = [], array $add_notices = [] ) {
 		$config = [
 			'pages'        => [
 				'boldgrid-backup-premium-features',
@@ -77,7 +77,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 			$config['page_notices'][] = $notice;
 		}
 		return $config;
-	} 
+	}
 
 	/**
 	 * Test getFirstVersion.
@@ -94,7 +94,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 		// Make sure good data gets us good data.
 		$settings = [
 			'plugins_checked' => [
-				'other-plugin/other-plugin.php' => [
+				'other-plugin/other-plugin.php'       => [
 					'1.0.0' => 12345,
 					'1.1.0' => 12346,
 				],
@@ -130,7 +130,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 		// Make sure good data gets us good data.
 		$settings = [
 			'plugins_checked' => [
-				'other-plugin/other-plugin.php' => [
+				'other-plugin/other-plugin.php'       => [
 					'1.0.0' => 12345,
 					'1.1.0' => 12346,
 				],
@@ -155,23 +155,23 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 			}
 		}
 		sort( $expected_notice_ids );
-		$notices = $this->page->getNotices();
+		$notices    = $this->page->getNotices();
 		$notice_ids = [];
-		foreach ($notices as $notice ) {
+		foreach ( $notices as $notice ) {
 			$notice_ids[] = $notice->getId();
 		}
 		sort( $notice_ids );
-		$this->assertEquals($expected_notice_ids, $notice_ids );
+		$this->assertEquals( $expected_notice_ids, $notice_ids );
 	}
 
 	//Test Page::getPlugin() to be sure it matches $this->plugin
 	public function testGetPlugin() {
-		$this->assertEquals($this->plugin, $this->page->getPlugin() );
+		$this->assertEquals( $this->plugin, $this->page->getPlugin() );
 	}
 
 	//Test Page:getPluginConfig() to be sure it matchees the supplied config file.
 	public function testGetPluginConfig() {
-		$this->assertEquals($this->config, $this->page->getPluginConfig() );
+		$this->assertEquals( $this->config, $this->page->getPluginConfig() );
 	}
 
 	//Test that the UnreadCount for the page is correct.
@@ -187,13 +187,16 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	}
 	//Test that the UnreadCountMarkup for the page is correct.
 	public function testGetUnreadCountMarkup() {
-		$expected_count = 0;
+		$expected_count  = 0;
+
 		foreach ( $this->config['page_notices'] as $config_notice ) {
 			if ( $config_notice['page'] === $this->page->getSlug() ) {
 				$expected_count++;
 			}
 		}
+
 		$expected_markup = '<span class="bglib-unread-notice-count">' . $expected_count . '</span>';
+
 		$this->plugin->pluginData = $this->plugin_data;
 		$this->assertEquals( $expected_markup, $this->page->getUnreadMarkup() );
 	}
@@ -201,6 +204,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	//Tests that all notices on page can be set to read
 	public function testSetAllNoticesRead() {
 		$expected_markup = '<span class="bglib-unread-notice-count hidden"></span>';
+
 		$this->plugin->pluginData = $this->plugin_data;
 		$this->page->setAllNoticesRead();
 		$this->assertEquals( $expected_markup, $this->page->getUnreadMarkup() );
@@ -211,5 +215,4 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 		$expected_id = null;
 		$this->assertEquals( $expected_id, $this->page->getNoticeById( 'non_existant_notice' ) );
 	}
-
 }

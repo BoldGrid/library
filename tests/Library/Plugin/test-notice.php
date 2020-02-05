@@ -22,7 +22,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		$page,
 		$config,
 		$notice,
-		$plugin_data = [
+		$plugin_data            = [
 			'Name'        => 'Total Upkeep',
 			'PluginURI'   => 'https://www.boldgrid.com/boldgrid-backup/',
 			'Version'     => '1.12.0',
@@ -32,7 +32,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 			'TextDomain'  => 'boldgrid-backup',
 			'DomainPath'  => '/languages',
 		],
-		$default_first_version = '1.0.0',
+		$default_first_version  = '1.0.0',
 		$default_newest_version = '1.12.0';
 
 	/**
@@ -83,7 +83,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	 *
 	 * @return array
 	 */
-	public function getPluginConfig( $version = '1.12.16', array $add_pages = [], array  $add_notices = [] ) {
+	public function getPluginConfig( $version = '1.12.16', array $add_pages = [], array $add_notices = [] ) {
 		$config = [
 			'pages'        => [
 				'boldgrid-backup-premium-features',
@@ -131,7 +131,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		// Make sure good data gets us good data.
 		$settings = [
 			'plugins_checked' => [
-				'other-plugin/other-plugin.php' => [
+				'other-plugin/other-plugin.php'       => [
 					'1.0.0' => 12345,
 					'1.1.0' => 12346,
 				],
@@ -167,7 +167,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		// Make sure good data gets us good data.
 		$settings = [
 			'plugins_checked' => [
-				'other-plugin/other-plugin.php' => [
+				'other-plugin/other-plugin.php'       => [
 					'1.0.0' => 12345,
 					'1.1.0' => 12346,
 				],
@@ -184,16 +184,16 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	 * @since 2.12.0
 	 */
 	public function makeFakePlugin() {
-		$path =  ABSPATH . 'wp-content/plugins/fake-plugin';
+		$path = ABSPATH . 'wp-content/plugins/fake-plugin';
 
 		// Make the plugin's directory.
 		if ( file_exists( $path ) ) {
-			exec( 'rm -rf ' . ABSPATH . 'wp-content/plugins/fake-plugin' );
+			exec( 'rm -rf ' . ABSPATH . 'wp-content/plugins/fake-plugin' ); //phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec
 		}
 		mkdir( $path );
 
 		// Add the plugin's main file.
-		file_put_contents(
+		file_put_contents( //phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_file_put_contents
 			$path . '/fake-plugin.php',
 			'<?php
 			/**
@@ -218,7 +218,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		);
 
 		$configs = [
-			'pages' => [
+			'pages'        => [
 				'boldgrid-backup-premium-features',
 			],
 			'page_notices' => [
@@ -226,7 +226,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 					'id'      => 'notice-1',
 					'page'    => 'boldgrid-backup-premium-features',
 					'version' => '1.1.0',
-				]
+				],
 			],
 		];
 
@@ -273,7 +273,8 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	//Test Notice::setNoticeId.
 	public function testSetNoticeId() {
 		$original_notice_id = $this->notice->getId();
-		$new_notice_id = 'test_set_new_id';
+		$new_notice_id      = 'test_set_new_id';
+
 		$this->notice->setId( $new_notice_id );
 		$this->assertEquals( $new_notice_id, $this->notice->getId() );
 		$this->notice->setId( $original_notice_id );
@@ -293,7 +294,8 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	//Test Notice::setVersion().
 	public function testSetNoticeVersion() {
 		$original_version = $this->notice->getVersion();
-		$new_version = '9.9.9';
+		$new_version      = '9.9.9';
+
 		$this->notice->setVersion( $new_version );
 		$this->assertEquals( $new_version, $this->notice->getVersion() );
 		$this->notice->setVersion( $original_version );
@@ -303,7 +305,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	//Test that notices return as read if this is first install.
 	public function testNoticeIfFirstInstall() {
 		$this->plugin->pluginData = $this->plugin_data;
-		$this->set_settings_versions('1.12.0', '1.12.0');
+		$this->set_settings_versions( '1.12.0', '1.12.0' );
 		$this->assertEquals( false, $this->notice->getIsUnread() );
 		$this->set_settings_versions( $this->default_first_version, $this->default_newest_version );
 		$this->assertEquals( true, $this->notice->getIsUnread() );
@@ -429,7 +431,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		$this->notice->setIsUnread( false );
 		$new_plugin = new Boldgrid\Library\Library\Plugin\Plugin(
 			'boldgrid-backup',
-			$this->getPluginConfig( $version = '2.12.16' )
+			$this->getPluginConfig( '2.12.16' )
 		);
 
 		$new_plugin->pluginData = $this->plugin_data;

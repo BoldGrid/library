@@ -13,7 +13,7 @@ namespace Boldgrid\Library\Library\Plugin;
 /**
  * Generic page class.
  *
- * This class represents a specific page used by the 
+ * This class represents a specific page used by the
  * Boldgrid\Library\Library\Plugin\Plugin class.
  *
  * @since 2.12.0
@@ -40,7 +40,7 @@ class Page {
 	 * @access protected
 	 */
 	protected $slug;
-	
+
 	/**
 	 * Plugin Config
 	 *
@@ -60,7 +60,7 @@ class Page {
 	 * @var array
 	 */
 	protected $notices;
-	
+
 	/**
 	 * Constructor.
 	 *
@@ -90,7 +90,7 @@ class Page {
 	public function getPlugin() {
 		return $this->plugin;
 	}
-	
+
 	/**
 	 * Set Plugin.
 	 *
@@ -120,20 +120,20 @@ class Page {
 	 * @access private
 	 */
 	private function setPluginConfig() {
-		$pluginConfig = $this->getPlugin()->getPluginConfig();
+		$pluginConfig       = $this->getPlugin()->getPluginConfig();
 		$this->pluginConfig = $pluginConfig;
 	}
 
 	/**
 	 * Get an array of Notice Counts for this page.
-	 * 
+	 *
 	 * @since 2.12.0
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getNotices() {
 		$notices = [];
-		foreach( $this->notices as $notice ) {
+		foreach ( $this->notices as $notice ) {
 			if ( $notice->getPageSlug() === $this->slug ) {
 				$notices[] = $notice;
 			}
@@ -143,9 +143,9 @@ class Page {
 
 	/**
 	 * Get Notice by ID.
-	 * 
+	 *
 	 * @since 2.12.0
-	 * 
+	 *
 	 * @param string $id
 	 * @return NoticeCount
 	 */

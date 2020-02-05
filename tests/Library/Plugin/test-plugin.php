@@ -20,7 +20,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	private
 		$backup,
 		$backup_premium,
-		$key    = 'CONNECT-KEY',
+		$key         = 'CONNECT-KEY',
 		$config,
 		$plugin_data = [
 			'Name'        => 'Total Upkeep',
@@ -56,11 +56,11 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	public function resetConfigs() {
 		$configsFile = dirname( dirname( dirname( __DIR__ ) ) ) . '/src/library.global.php';
 
-		$defaults = include( $configsFile );
+		$defaults = include $configsFile;
 		Configs::set( $defaults );
 	}
 
-	public function getPluginConfig( array $add_pages = [], array  $add_notices = [] ) {
+	public function getPluginConfig( array $add_pages = [], array $add_notices = [] ) {
 		$config = [
 			'pages'        => [
 				'boldgrid-backup-premium-features',
@@ -80,7 +80,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 			$config['page_notices'][] = $notice;
 		}
 		return $config;
-	} 
+	}
 
 	/**
 	 * Test getDownloadUrl.
@@ -110,7 +110,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 		// Make sure good data gets us good data.
 		$settings = [
 			'plugins_checked' => [
-				'other-plugin/other-plugin.php' => [
+				'other-plugin/other-plugin.php'       => [
 					'1.0.0' => 12345,
 					'1.1.0' => 12346,
 				],
@@ -138,7 +138,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 		// Make sure good data gets us good data.
 		$settings = [
 			'plugins_checked' => [
-				'other-plugin/other-plugin.php' => [
+				'other-plugin/other-plugin.php'       => [
 					'1.0.0' => 12345,
 					'1.1.0' => 12346,
 				],
@@ -175,7 +175,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 		// Make sure good data gets us good data.
 		$settings = [
 			'plugins_checked' => [
-				'other-plugin/other-plugin.php' => [
+				'other-plugin/other-plugin.php'       => [
 					'1.0.0' => 12345,
 					'1.1.0' => 12346,
 				],
@@ -193,34 +193,39 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	// Ensure that the initial getUnreadCount is correct
 	public function testGetUnreadCount() {
 		$expected_count = count( $this->config['page_notices'] );
+
 		$this->backup->pluginData = $this->plugin_data;
 		$this->assertEquals( $this->backup->getUnreadCount(), $expected_count );
 	}
 	// Ensure that the getUnreadMarkup is correct
 	public function testGetUnreadMarkup() {
 		$expected_markup = '<span class="bglib-unread-notice-count">' . count( $this->config['page_notices'] ) . '</span>';
+
 		$this->backup->pluginData = $this->plugin_data;
 		$this->assertEquals( $this->backup->getUnreadMarkup(), $expected_markup );
 	}
 
 	public function testNoNoticesMarkup() {
-		$this->backup->pluginData = $this->plugin_data;
 		$expected_markup = '<span class="bglib-unread-notice-count hidden"></span>';
+
+		$this->backup->pluginData = $this->plugin_data;
 		$this->backup->setAllNoticesRead();
 		$this->assertEquals( $this->backup->getUnreadMarkup(), $expected_markup );
-		$this->backup->setAllNoticesRead( $setToUnread = true );
+		$this->backup->setAllNoticesRead( true );
 	}
 
 	public function testTwoPagesWithNotices() {
 		$two_page_config = $this->getPluginConfig(
-			$add_pages   = ['boldgrid-backup-settings'],
-			$add_notices = [
+			[ 'boldgrid-backup-settings' ],
+			[
 				[
 					'id'      => 'bgbkup_backup_settings_test',
 					'page'    => 'boldgrid-backup-settings',
 					'version' => '1.12.16',
 				],
-			]);
+			]
+		);
+
 		$expected_markup    = '<span class="bglib-unread-notice-count">' . count( $two_page_config['page_notices'] ) . '</span>';
 		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config, $this->plugin_data );
 		$plugin->pluginData = $this->plugin_data;
@@ -229,14 +234,16 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 
 	public function testGetPageBySlug() {
 		$two_page_config = $this->getPluginConfig(
-			$add_pages   = ['boldgrid-backup-settings'],
-			$add_notices = [
+			[ 'boldgrid-backup-settings' ],
+			[
 				[
 					'id'      => 'bgbkup_backup_settings_test',
 					'page'    => 'boldgrid-backup-settings',
 					'version' => '1.12.16',
 				],
-			]);
+			]
+		);
+
 		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config, $this->plugin_data );
 		$plugin->pluginData = $this->plugin_data;
 		$success_count      = 0;

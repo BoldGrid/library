@@ -46,7 +46,7 @@ class Plugin {
 	 * Plugin specific config array.
 	 *
 	 * @since 2.12.0
-	 * 
+	 *
 	 * @var array
 	 */
 	public $pluginConfig = [];
@@ -107,7 +107,7 @@ class Plugin {
 	 * Examples: boldgrid-backup, boldgrid-backup-premium, etc.
 	 *
 	 * @since 2.7.7
-	 * 
+	 *
 	 * @var string
 	 * @access protected
 	 */
@@ -120,7 +120,7 @@ class Plugin {
 	 *
 	 * @param string $slug For example: "plugin" from plugin/plugin.php
 	 */
-	public function __construct( $slug, $pluginConfig = null) {
+	public function __construct( $slug, $pluginConfig = null ) {
 		$this->slug = $slug;
 
 		$this->setFile();
@@ -387,9 +387,9 @@ class Plugin {
 
 	/**
 	 * Set all plugin notices as read
-	 * 
+	 *
 	 * @since 2.12.0
-	 * 
+	 *
 	 * @param bool $setToUnread if set to true, marks all items unread instead
 	 */
 	public function setAllNoticesRead( $setToUnread = false ) {
@@ -402,7 +402,7 @@ class Plugin {
 	 * Get Plugin Pages.
 	 *
 	 * @since 2.12.0
-	 * 
+	 *
 	 * @return array
 	 * @access public
 	 */
@@ -412,20 +412,20 @@ class Plugin {
 
 	/**
 	 * Get Page by Slug.
-	 * 
+	 *
 	 * @since 2.12.0
-	 * 
+	 *
 	 * @param string $slug
 	 * @return Page
 	 */
 	public function getPageBySlug( $slug ) {
 		foreach ( $this->getPages() as $page ) {
-			if ( $page->getSlug() == $slug ) {
+			if ( $page->getSlug() === $slug ) {
 				return $page;
 			}
 		}
 	}
-	
+
 	/**
 	 * Set our child plugins.
 	 *
@@ -462,7 +462,7 @@ class Plugin {
 	 * @since 2.10.0
 	 */
 	public function setIsInstalled() {
-		$wp_filesystem = \Boldgrid\Library\Util\Version::getWpFilesystem();
+		$wp_filesystem     = \Boldgrid\Library\Util\Version::getWpFilesystem();
 		$this->isInstalled = $wp_filesystem->exists( $this->path );
 	}
 
@@ -546,28 +546,28 @@ class Plugin {
 
 	/**
 	 * Get Unread Count.
-	 * 
+	 *
 	 * Get unread count integer.
 	 *
 	 * @since 2.12.0
-	 * 
+	 *
 	 * @return int
 	 */
-    public function getUnreadCount() {
+	public function getUnreadCount() {
 		$unreadCount = 0;
 		foreach ( $this->getPages() as $page ) {
 			$unreadCount += $page->getUnreadCount();
 		}
-        return $unreadCount;
+		return $unreadCount;
 	}
-	
+
 	/**
 	 * Get Unread markup.
-	 * 
+	 *
 	 * Get unread count with html markup.
-	 * 
+	 *
 	 * @since 2.12.0
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getUnreadMarkup() {
@@ -577,5 +577,5 @@ class Plugin {
 		} else {
 			return '<span class="bglib-unread-notice-count hidden"></span>';
 		}
-	} 
+	}
 }

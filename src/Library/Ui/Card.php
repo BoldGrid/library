@@ -153,7 +153,6 @@ class Card {
 			$markup .= '<div class="bglib-card-icon">' . $this->icon . '</div>';
 		}
 
-
 		if ( ! empty( $this->footer ) ) {
 			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';
 		}
