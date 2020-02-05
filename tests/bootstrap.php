@@ -3,7 +3,7 @@
 /**
  * Debug to console.
  *
- * @since SINCEVERSION
+ * @since 2.12.0
  *
  * @param mixed $var Message to write to STDERR.
  */

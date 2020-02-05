@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Plugin
  *
- * @since SINCEVERSION
+ * @since 2.12.0
  *
  * @author BoldGrid <wpb@boldgrid.com>
  */
@@ -16,7 +16,7 @@ namespace Boldgrid\Library\Library\Plugin;
  * This class represents a specific page used by the 
  * Boldgrid\Library\Library\Plugin\Plugin class.
  *
- * @since SINCEVERSION
+ * @since 2.12.0
  */
 class Page {
 
@@ -26,7 +26,7 @@ class Page {
 	 * The Boldgrid\Library\Library\Plugin\Plugin Object
 	 * that this page belongs to.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var Plugin
 	 * @access protected
 	 */
@@ -35,7 +35,7 @@ class Page {
 	/**
 	 * Page Slug
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var string
 	 * @access protected
 	 */
@@ -46,7 +46,7 @@ class Page {
 	 *
 	 * The Config array passed to this page.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var array
 	 */
 	protected $pluginConfig = [];
@@ -56,7 +56,7 @@ class Page {
 	 *
 	 * An array of Notices for this page.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var array
 	 */
 	protected $notices;
@@ -64,7 +64,7 @@ class Page {
 	/**
 	 * Constructor.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 
 	* @param Plugin $plugin object that this page belongs to.
 	* @param string $slug For example: "plugin" from plugin/plugin.php.
@@ -83,7 +83,7 @@ class Page {
 	/**
 	 * Get Plugin.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return Plugin
 	 */
@@ -94,7 +94,7 @@ class Page {
 	/**
 	 * Set Plugin.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	private function setPlugin( $plugin ) {
 		$this->plugin = $plugin;
@@ -103,7 +103,7 @@ class Page {
 	/**
 	 * Get plugin Config.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return array
 	 */
@@ -114,7 +114,7 @@ class Page {
 	/**
 	 * Set plugin Config.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param array $pluginConfig Plugin Config.
 	 * @access private
@@ -127,7 +127,7 @@ class Page {
 	/**
 	 * Get an array of Notice Counts for this page.
 	 * 
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * 
 	 * @return array
 	 */
@@ -144,7 +144,7 @@ class Page {
 	/**
 	 * Get Notice by ID.
 	 * 
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * 
 	 * @param string $id
 	 * @return NoticeCount
@@ -160,7 +160,7 @@ class Page {
 	/**
 	 * Set an array of Notice Counts for this page.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function setNotices() {
 		$notices = [];
@@ -175,7 +175,7 @@ class Page {
 	/**
 	 * Set Page Notices to Read.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function setAllNoticesRead( $setToUnread = false ) {
 		foreach ( $this->getNotices() as $notice ) {
@@ -186,7 +186,7 @@ class Page {
 	/**
 	 * Get Unread Count.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return int
 	 */
@@ -205,7 +205,7 @@ class Page {
 	 *
 	 * Returns UnreadCount with html markup.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return string
 	 */
@@ -221,7 +221,7 @@ class Page {
 	/**
 	 * Get page Slug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return string
 	 */
@@ -232,7 +232,7 @@ class Page {
 	/**
 	 * Set page Slug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param string $slug Page Slug.
 	 */

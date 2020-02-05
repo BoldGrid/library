@@ -57,7 +57,7 @@ class Card {
 	/**
 	 * Page.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var Boldgrid\Library\Library\Plugin\Page
 	 */
 	public $page;
@@ -81,7 +81,7 @@ class Card {
 	/**
 	 * Links.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var string
 	 */
 	public $links;
@@ -90,7 +90,7 @@ class Card {
 	 * Constructor
 	 *
 	 * @param Boldgrid\Library\Library\Plugin\Page $page
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function __construct( $page = null ) {
 		$this->page = $page;
@@ -99,7 +99,7 @@ class Card {
 	/**
 	 * Determine whether or not we need to show the ribbon.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return bool
 	 */

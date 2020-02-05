@@ -45,7 +45,7 @@ class Plugin {
 	/**
 	 * Plugin specific config array.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * 
 	 * @var array
 	 */
@@ -77,7 +77,7 @@ class Plugin {
 	 * If no plugin config is passed during instantiation,
 	 * this will be an empty array.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var array
 	 * @access protected
 	 */
@@ -323,7 +323,7 @@ class Plugin {
 	 * Get plugin specific config array
 	 *
 	 * @return array
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function getPluginConfig() {
 		return $this->pluginConfig;
@@ -372,7 +372,7 @@ class Plugin {
 	/**
 	 * Create page objects based on $this->config parameter.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @access private
 	 */
 	public function setPages() {
@@ -388,7 +388,7 @@ class Plugin {
 	/**
 	 * Set all plugin notices as read
 	 * 
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * 
 	 * @param bool $setToUnread if set to true, marks all items unread instead
 	 */
@@ -401,7 +401,7 @@ class Plugin {
 	/**
 	 * Get Plugin Pages.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * 
 	 * @return array
 	 * @access public
@@ -413,7 +413,7 @@ class Plugin {
 	/**
 	 * Get Page by Slug.
 	 * 
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * 
 	 * @param string $slug
 	 * @return Page
@@ -549,7 +549,7 @@ class Plugin {
 	 * 
 	 * Get unread count integer.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * 
 	 * @return int
 	 */
@@ -566,7 +566,7 @@ class Plugin {
 	 * 
 	 * Get unread count with html markup.
 	 * 
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * 
 	 * @return string
 	 */

@@ -29,7 +29,7 @@ class Dashboard {
 	/**
 	 * Additional classes to add to the main container.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var string
 	 */
 	public $class;

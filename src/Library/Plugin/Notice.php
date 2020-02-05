@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Plugin
  *
- * @since SINCEVERSION
+ * @since 2.12.0
  * @author BoldGrid <wpb@boldgrid.com>
  */
 namespace Boldgrid\Library\Library\Plugin;
@@ -16,14 +16,14 @@ namespace Boldgrid\Library\Library\Plugin;
  * used by the Boldgrid\Library\Library\Plugin\Page
  * and Boldgrid\Library\Library\Plugin\Plugin classes.
  *
- * @since SINCEVERSION
+ * @since 2.12.0
  */
 class Notice {
 
 	/**
 	 * Notice ID
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var string
 	 * @access protected
 	 */
@@ -32,7 +32,7 @@ class Notice {
 	/**
 	 * Notice Page slug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var string
 	 * @access protected
 	 */
@@ -43,7 +43,7 @@ class Notice {
 	 *
 	 * Version of plugin this notice was added on.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var string
 	 * @access protected
 	 */
@@ -54,7 +54,7 @@ class Notice {
 	 *
 	 * Plugin Object this belongs to.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var Plugin
 	 * @access protected
 	 */
@@ -65,7 +65,7 @@ class Notice {
 	 *
 	 * Specifies if the Notice is Unread or not.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 * @var bool
 	 * @access protected
 	 */
@@ -75,7 +75,7 @@ class Notice {
 	 * Constructor
 	 *
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param Plugin $plugin Plugin instance that this Notice belongs to.
 	 * @param array $notice {
@@ -108,7 +108,7 @@ class Notice {
 	/**
 	 * Get notice ID.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return string
 	 */
@@ -119,7 +119,7 @@ class Notice {
 	/**
 	 * Set notice ID.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param string $id Notice ID.
 	 */
@@ -130,7 +130,7 @@ class Notice {
 	/**
 	 * Get slug of the page this feature is on.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return string
 	 */
@@ -141,7 +141,7 @@ class Notice {
 	/**
 	 * Sets the pageSlug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param string $pageSlug Notice Page.
 	 */
@@ -152,7 +152,7 @@ class Notice {
 	/**
 	 * Get version of plugin this notice was added on.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return string
 	 */
@@ -163,7 +163,7 @@ class Notice {
 	/**
 	 * Set version of plugin this notice was added on.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param string $version Version of plugin this notice was added on.
 	 */
@@ -174,7 +174,7 @@ class Notice {
 	/**
 	 * Maybe the notice count should show.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return bool
 	 */
@@ -189,7 +189,7 @@ class Notice {
 	/**
 	 * Get isUnread Value.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return bool
 	 */
@@ -203,7 +203,7 @@ class Notice {
 	/**
 	 * Set the notice as read or unread.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param bool $isUnread Specifies if the Notice is Unread or not.
 	 */
@@ -215,7 +215,7 @@ class Notice {
 	/**
 	 * Determine if Notice Exists in Options Table.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return bool true if noticeId exists.
 	 */
@@ -226,7 +226,7 @@ class Notice {
 	/**
 	 * Get Notice instance from wp_options row.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param string $noticeId
 	 * @return array
@@ -254,7 +254,7 @@ class Notice {
 	 * already exists, then it's object is replaced with $this.
 	 * Otherwise, $this is appended to the array.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function updateNoticeOption() {
 		$option = get_option( 'boldgrid_plugin_page_notices', [] );
@@ -281,7 +281,7 @@ class Notice {
 	 *
 	 * Get plugin instance that this notice belongs to
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @return Plugin
 	 */
@@ -294,7 +294,7 @@ class Notice {
 	 *
 	 * Set plugin Instance that this notice belongs to
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param Plugin $plugin Plugin Object this belongs to.
 	 */
@@ -310,7 +310,7 @@ class Notice {
 	 * the notice unread again. This will help bring attention to old notices
 	 * that may have been revised.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param Notice $originalNotice
 	 * @param array $newNotice

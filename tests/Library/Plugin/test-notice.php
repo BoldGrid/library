@@ -13,7 +13,7 @@ use Boldgrid\Library\Library\Configs;
 /**
  * BoldGrid Library Library Plugin Notice Test class.
  *
- * @since SINCEVERSION
+ * @since 2.12.0
  */
 class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 
@@ -38,7 +38,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Setup.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function setUp() {
 		// Setup our configs.
@@ -57,7 +57,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	 *
 	 * Sets the version information in the boldgrid_settings option.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param string @first_version
 	 * @param string @current_version
@@ -75,7 +75,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	 *
 	 * Gets the plugin config file set here for testing
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 *
 	 * @param string $version notice version number for testing.
 	 * @param array $add_pages optional. an array of page_slug strings.
@@ -119,7 +119,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * getFirstVersion.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function getFirstVersion() {
 		// Good data we will be testing against.
@@ -145,7 +145,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * getPluginsChecked.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function getPluginsChecked() {
 		// Good data we will be testing against.
@@ -181,7 +181,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Make a fake plugin to test this class against.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function makeFakePlugin() {
 		$path =  ABSPATH . 'wp-content/plugins/fake-plugin';
@@ -245,7 +245,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test setIsUnread.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function testSetIsUnread() {
 		// Create a new notice.
@@ -312,7 +312,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test alreadyExists.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function testAlreadyExists() {
 		// Create a new notice.
@@ -342,7 +342,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test maybeShow.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.0
 	 */
 	public function testMaybeShow() {
 		/*
