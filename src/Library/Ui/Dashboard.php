@@ -27,6 +27,14 @@ class Dashboard {
 	public $cards = [];
 
 	/**
+	 * Additional classes to add to the main container.
+	 *
+	 * @since 2.12.0
+	 * @var string
+	 */
+	public $class;
+
+	/**
 	 * Enqueue scripts.
 	 *
 	 * @since 2.10.0
@@ -43,7 +51,8 @@ class Dashboard {
 	 * @since 2.10.0
 	 */
 	public function printCards() {
-		echo '<div class="bglib-card-container">';
+		echo '<div class="bglib-card-container' .
+			( ! empty( $this->classes ) ? ' ' . $this->classes : '' ) . '">';
 
 		foreach ( $this->cards as $card ) {
 			$card->init();
