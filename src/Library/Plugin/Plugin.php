@@ -7,7 +7,6 @@
  * @since 2.7.7
  * @author BoldGrid <wpb@boldgrid.com>
  */
-
 namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library\Configs;
@@ -44,6 +43,15 @@ class Plugin {
 	protected $file;
 
 	/**
+	 * Plugin specific config array.
+	 *
+	 * @since 2.12.0
+	 *
+	 * @var array
+	 */
+	public $pluginConfig = [];
+
+	/**
 	 * Whether or not this plugin is installed.
 	 *
 	 * @since 2.10.0
@@ -62,13 +70,27 @@ class Plugin {
 	protected $path;
 
 	/**
+	 * Plugin pages.
+	 *
+	 * This is an array of Boldgrid\Library\Library\Plugin\Page
+	 * objects based on the 'pages' list in the plugin Config
+	 * If no plugin config is passed during instantiation,
+	 * this will be an empty array.
+	 *
+	 * @since 2.12.0
+	 * @var array
+	 * @access protected
+	 */
+	protected $pages = [];
+
+	/**
 	 * Plugin data, as retrieved from get_plugin_data().
 	 *
 	 * @since 2.9.0
 	 * @var array
 	 * @access protected
 	 */
-	protected $pluginData = [];
+	public $pluginData = [];
 
 	/**
 	 * Update plugin data, as retrieved from 'update_plugins' site transient.
@@ -84,8 +106,9 @@ class Plugin {
 	 *
 	 * Examples: boldgrid-backup, boldgrid-backup-premium, etc.
 	 *
-	 * @var string
 	 * @since 2.7.7
+	 *
+	 * @var string
 	 * @access protected
 	 */
 	protected $slug;
@@ -97,7 +120,7 @@ class Plugin {
 	 *
 	 * @param string $slug For example: "plugin" from plugin/plugin.php
 	 */
-	public function __construct( $slug ) {
+	public function __construct( $slug, $pluginConfig = null ) {
 		$this->slug = $slug;
 
 		$this->setFile();
@@ -107,6 +130,10 @@ class Plugin {
 		$this->setIsInstalled();
 
 		$this->setChildPlugins();
+
+		$this->pluginConfig = ! empty( $pluginConfig ) ? $pluginConfig : [];
+
+		$this->setPages();
 	}
 
 	/**
@@ -181,13 +208,13 @@ class Plugin {
 		$config = [];
 
 		$plugins = Configs::get( 'plugins' );
-
-		foreach ( $plugins as $plugin ) {
-			if ( $plugin['file'] === $this->file ) {
-				$config = $plugin;
+		if ( $plugins ) {
+			foreach ( $plugins as $plugin ) {
+				if ( $plugin['file'] === $this->file ) {
+					$config = $plugin;
+				}
 			}
 		}
-
 		return $config;
 	}
 
@@ -293,6 +320,16 @@ class Plugin {
 	}
 
 	/**
+	 * Get plugin specific config array
+	 *
+	 * @return array
+	 * @since 2.12.0
+	 */
+	public function getPluginConfig() {
+		return $this->pluginConfig;
+	}
+
+	/**
 	 * Get plugin data.
 	 *
 	 * @since 2.9.0
@@ -303,7 +340,6 @@ class Plugin {
 		if ( empty( $this->pluginData ) && $this->isInstalled ) {
 			$this->pluginData = get_plugin_data( $this->path );
 		}
-
 		return $this->pluginData;
 	}
 
@@ -331,6 +367,63 @@ class Plugin {
 	 */
 	public function getSlug() {
 		return $this->slug;
+	}
+
+	/**
+	 * Create page objects based on $this->config parameter.
+	 *
+	 * @since 2.12.0
+	 * @access private
+	 */
+	public function setPages() {
+		$pages = [];
+		if ( isset( $this->pluginConfig['pages'] ) ) {
+			foreach ( $this->pluginConfig['pages'] as $page ) {
+				$pages[] = new Page( $this, $page );
+			}
+		}
+		$this->pages = $pages;
+	}
+
+	/**
+	 * Set all plugin notices as read
+	 *
+	 * @since 2.12.0
+	 *
+	 * @param bool $setToUnread if set to true, marks all items unread instead
+	 */
+	public function setAllNoticesRead( $setToUnread = false ) {
+		foreach ( $this->getPages() as $page ) {
+			$page->setAllNoticesRead( $setToUnread );
+		}
+	}
+
+	/**
+	 * Get Plugin Pages.
+	 *
+	 * @since 2.12.0
+	 *
+	 * @return array
+	 * @access public
+	 */
+	public function getPages() {
+		return $this->pages;
+	}
+
+	/**
+	 * Get Page by Slug.
+	 *
+	 * @since 2.12.0
+	 *
+	 * @param string $slug
+	 * @return Page
+	 */
+	public function getPageBySlug( $slug ) {
+		foreach ( $this->getPages() as $page ) {
+			if ( $page->getSlug() === $slug ) {
+				return $page;
+			}
+		}
 	}
 
 	/**
@@ -369,8 +462,7 @@ class Plugin {
 	 * @since 2.10.0
 	 */
 	public function setIsInstalled() {
-		$wp_filesystem = \Boldgrid\Library\Util\Version::getWpFilesystem();
-
+		$wp_filesystem     = \Boldgrid\Library\Util\Version::getWpFilesystem();
 		$this->isInstalled = $wp_filesystem->exists( $this->path );
 	}
 
@@ -449,7 +541,41 @@ class Plugin {
 			// If the data is missing for some reason, return the plugin's current version.
 			$firstVersion = $this->getData( 'Version' );
 		}
-
 		return $firstVersion;
+	}
+
+	/**
+	 * Get Unread Count.
+	 *
+	 * Get unread count integer.
+	 *
+	 * @since 2.12.0
+	 *
+	 * @return int
+	 */
+	public function getUnreadCount() {
+		$unreadCount = 0;
+		foreach ( $this->getPages() as $page ) {
+			$unreadCount += $page->getUnreadCount();
+		}
+		return $unreadCount;
+	}
+
+	/**
+	 * Get Unread markup.
+	 *
+	 * Get unread count with html markup.
+	 *
+	 * @since 2.12.0
+	 *
+	 * @return string
+	 */
+	public function getUnreadMarkup() {
+		$count = $this->getUnreadCount();
+		if ( $count > 0 ) {
+			return '<span class="bglib-unread-notice-count">' . esc_html( $count ) . '</span>';
+		} else {
+			return '<span class="bglib-unread-notice-count hidden"></span>';
+		}
 	}
 }

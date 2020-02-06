@@ -35,7 +35,7 @@ class Plugins {
 
 		// Then filter that array of plugins to get our active plugins.
 		$activePlugins = array();
-		foreach( $plugins as $plugin ) {
+		foreach ( $plugins as $plugin ) {
 			if ( $plugin->isActive() ) {
 				$activePlugins[] = $plugin;
 			}

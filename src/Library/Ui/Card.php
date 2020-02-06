@@ -44,7 +44,7 @@ class Card {
 	 * @since 2.10.0
 	 * @var array
 	 */
-	public $features;
+	public $features = [];
 
 	/**
 	 * Id.
@@ -53,6 +53,14 @@ class Card {
 	 * @var string
 	 */
 	public $id;
+
+	/**
+	 * Page.
+	 *
+	 * @since 2.12.0
+	 * @var Boldgrid\Library\Library\Plugin\Page
+	 */
+	public $page;
 
 	/**
 	 * Sub title.
@@ -69,6 +77,40 @@ class Card {
 	 * @var string
 	 */
 	public $title;
+
+	/**
+	 * Links.
+	 *
+	 * Used to add links to a sub-footer links div.
+	 *
+	 * @since 2.12.0
+	 * @var string
+	 */
+	public $links;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Boldgrid\Library\Library\Plugin\Page $page
+	 * @since 2.12.0
+	 */
+	public function __construct( $page = null ) {
+		$this->page = $page;
+	}
+
+	/**
+	 * Determine whether or not we need to show the ribbon.
+	 *
+	 * @since 2.12.0
+	 *
+	 * @return bool
+	 */
+	public function maybeShowRibbon() {
+		// Not all cards area assigned to a page.
+		return ! empty( $this->page ) &&
+			$this->page->getNoticeById( $this->id ) &&
+			$this->page->getNoticeById( $this->id )->getIsUnread();
+	}
 
 	/**
 	 * Print the card.
@@ -92,6 +134,11 @@ class Card {
 		}
 		$markup .= '>';
 
+		// If we need to, add a "new" banner.
+		if ( $this->maybeShowRibbon() ) {
+			$markup .= '<div class="card-ribbon"><span>' . esc_html__( 'NEW!', 'boldgrid-backup' ) . '</span></div>';
+		}
+
 		if ( ! empty( $this->title ) ) {
 			$markup .= '<div class="bglib-card-title">';
 
@@ -108,9 +155,17 @@ class Card {
 			$markup .= '<div class="bglib-card-icon">' . $this->icon . '</div>';
 		}
 
-
 		if ( ! empty( $this->footer ) ) {
 			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';
+		}
+
+		// Links can be placed in footer, but when displaying multiple cards, if you want the links
+		// To be uniform, add them to the $this->links section.
+		if ( ! empty( $this->links ) ) {
+			$markup .= '
+			<div class="bglib-card-links">' .
+				$this->links .
+			'</div>';
 		}
 
 		$markup .= '</div>';
