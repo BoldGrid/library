@@ -79,12 +79,14 @@ class Card {
 	public $title;
 
 	/**
-	 * Setup Guide URL.
+	 * Links.
+	 *
+	 * Used to add links to a sub-footer links div.
 	 *
 	 * @since 2.12.0
 	 * @var string
 	 */
-	public $setup_guide;
+	public $links;
 
 	/**
 	 * Constructor
@@ -157,13 +159,13 @@ class Card {
 			$markup .= '<div class="bglib-card-footer">' . $this->footer . '</div>';
 		}
 
-		if ( ! empty( $this->setup_guide ) ) {
+		// Links can be placed in footer, but when displaying multiple cards, if you want the links
+		// To be uniform, add them to the $this->links section.
+		if ( ! empty( $this->links ) ) {
 			$markup .= '
-			<div class="bglib-card-links">
-				<p style="text-align:right;">
-					<a target="_blank" href="' . esc_url( $this->setup_guide ) . '">Setup Guide</a>
-				</p>
-			</div>';
+			<div class="bglib-card-links">' .
+				$this->links .
+			'</div>';
 		}
 
 		$markup .= '</div>';
