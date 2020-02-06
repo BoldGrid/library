@@ -240,3 +240,16 @@ a.wp-menu-open .bglib-unread-notice-count {
 .bglib-unread-notice-count.hidden {
 	display: none;
 }
+
+/**
+ * 1.7 Footer Links
+ */
+
+/* Links below Footer . */
+
+.bglib-card-links {
+	display: flex;
+	justify-content: right;
+	align-items: baseline;
+	margin: 0 1em;
+}
