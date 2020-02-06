@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.12.0 ###
+
+Release date: February 6th, 2020
+
+* Update: Added plugin notifications.
+
 ### 2.11.1 ###
 
 Release date: January 14th, 2019
