@@ -33,7 +33,9 @@ class Dashboard {
 	 */
 	public static function enqueueScripts() {
 		wp_enqueue_style( 'bglib-dashboard',
-			Configs::get( 'libraryUrl' ) . 'src/assets/css/dashboard.css'
+			Configs::get( 'libraryUrl' ) . 'src/assets/css/dashboard.css',
+			[],
+			Configs::get( 'libraryVersion' )
 		);
 	}
 
