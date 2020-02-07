@@ -6,7 +6,7 @@
 defined( 'WPFORMS_SHAREASALE_ID' ) || define( 'WPFORMS_SHAREASALE_ID', '1581233' );
 
 return array(
-	'libraryVersion' => '2.12.0',
+	'libraryVersion' => '2.12.1',
 	'api' => 'https://api.boldgrid.com',
 	'option' => 'license',
 	'key' => get_site_option( 'boldgrid_api_key', null ),
