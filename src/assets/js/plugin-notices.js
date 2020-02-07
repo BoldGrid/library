@@ -23,6 +23,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	 * @since SINCEVERSION
 	 */
 	BOLDGRID.LIBRARY.PluginNotices = {
+
 		/**
 		 * Add notice counts to the menus.
 		 *
@@ -40,9 +41,12 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				 * It is either a top menu item, or a sub menu item.
 				 */
 				$item = $( '#adminmenu a[href="' + self.i18n.counts[i].href + '"] .wp-menu-name' );
-				$item = $item.length > 0 ? $item : $( '#adminmenu a[href="' + self.i18n.counts[i].href + '"]' );
+				$item =
+					0 < $item.length ? $item : $( '#adminmenu a[href="' + self.i18n.counts[i].href + '"]' );
 
-				$item.append( '<span class="bglib-unread-notice-count">' + self.i18n.counts[i].count + '</span>' );
+				$item.append(
+					'<span class="bglib-unread-notice-count">' + self.i18n.counts[i].count + '</span>'
+				);
 			}
 		},
 
