@@ -3,7 +3,7 @@
  *
  * @summary This file handles plugin notices.
  *
- * @since SINCEVERSION
+ * @since 2.12.1
  */
 
 /* global jQuery,ajaxurl */
@@ -20,14 +20,14 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 	/**
 	 * Plugin Notices.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.1
 	 */
 	BOLDGRID.LIBRARY.PluginNotices = {
 
 		/**
 		 * Add notice counts to the menus.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.12.1
 		 */
 		addNoticeCounts: function() {
 			var i;
@@ -53,7 +53,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * i18n.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.12.1
 		 *
 		 * @type object
 		 */
@@ -62,7 +62,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * Init.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.12.1
 		 */
 		init: function() {
 			self._onReady();
@@ -71,7 +71,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * On ready.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.12.1
 		 */
 		_onReady: function() {
 			$( function() {

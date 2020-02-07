@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Library
  *
- * @version SINCEVERSION
+ * @version 2.12.1
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -16,7 +16,7 @@ use Boldgrid\Library\Library\Filter;
 /**
  * BoldGrid Library Plugin Notices Class.
  *
- * @since SINCEVERSION
+ * @since 2.12.1
  */
 class Notices {
 	/**
@@ -24,7 +24,7 @@ class Notices {
 	 *
 	 * Filters only need to be added once.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.1
 	 * @access private
 	 * @var bool
 	 */
@@ -33,7 +33,7 @@ class Notices {
 	/**
 	 * Construct.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.1
 	 */
 	public function __construct() {
 		// Only add the filters once.
@@ -46,7 +46,7 @@ class Notices {
 	/**
 	 * Admin enqueue scripts.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.1
 	 */
 	public static function admin_enqueue_scripts() {
 		$handle = 'bglib-plugin-notices';
@@ -65,7 +65,7 @@ class Notices {
 		/**
 		 * Allow other plugins to add notice counts.
 		 *
-		 * @since SINCEVERSION
+		 * @since 2.12.1
 		 *
 		 * @param array $translation An array of translation data.
 		 */
