@@ -87,7 +87,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			// Configure license.
 			params.license = self.i18n.license;
-			if ( self.i18n.plugin == 'Total Upkeep' ) {
+			if ( 'Total Upkeep' === self.i18n.plugin ) {
 				params.version = self.i18n.version;
 			} else {
 				params.version = '';
