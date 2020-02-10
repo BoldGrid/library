@@ -250,5 +250,8 @@ a.wp-menu-open .bglib-unread-notice-count {
 	display: flex;
 	justify-content: flex-end;
 	align-items: baseline;
-	margin: 0 1em;
+	padding: 10px 10px 15px 10px;
+}
+.bglib-smaller .bglib-card-links a {
+	margin: 0;
 }
