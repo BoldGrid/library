@@ -140,6 +140,5 @@ return array(
 
 
 	// Google Analytics ID, used by the Usage class.
-	// Set to for testing 'UA-114844436-2'. For production set back to 'UA-1501988-42'
-	'gaId' => 'UA-114844436-2',
+	'gaId' => 'UA-1501988-42',
 );

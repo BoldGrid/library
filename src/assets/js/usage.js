@@ -94,7 +94,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			}
 			params.custom_map = {
 				dimension7: 'license',
-				dimension3: 'version'
+				dimension8: 'version'
 			};
 
 			// Configure linker. This will add client id, on click, to all boldgrid.com links.
