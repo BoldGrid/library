@@ -46,7 +46,6 @@
 .bglib-card {
 	border: 1px solid #ddd;
 	background: #fff;
-	height: fit-content;
 	position: relative;
 }
 
@@ -249,7 +248,7 @@ a.wp-menu-open .bglib-unread-notice-count {
 
 .bglib-card-links {
 	display: flex;
-	justify-content: right;
+	justify-content: flex-end;
 	align-items: baseline;
 	margin: 0 1em;
 }
