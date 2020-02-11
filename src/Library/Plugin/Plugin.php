@@ -114,16 +114,25 @@ class Plugin {
 	protected $slug;
 
 	/**
+	 * Plugin Update Data.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @var Response
+	 */
+	public $updateData;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.7.7
 	 *
 	 * @param string $slug For example: "plugin" from plugin/plugin.php
 	 */
-	public function __construct( $slug, $pluginConfig = null ) {
-		$this->slug = $slug;
+	public function __construct( $slug, $pluginConfig = null, $file = null ) {
+		$this->setFile( $file );
 
-		$this->setFile();
+		$this->setSlug( $slug );
 
 		$this->setPath();
 
@@ -132,6 +141,10 @@ class Plugin {
 		$this->setChildPlugins();
 
 		$this->pluginConfig = ! empty( $pluginConfig ) ? $pluginConfig : [];
+
+		if ( $this->getSlug() ) {
+			$this->updateData = new UpdateData( $this );
+		}
 
 		$this->setPages();
 	}
@@ -454,6 +467,17 @@ class Plugin {
 	 */
 	public function setFile( $file = null ) {
 		$this->file = ! empty( $file ) ? $file : $this->slug . '/' . $this->slug . '.php';
+	}
+
+	/**
+	 * Set Slug.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param string $slug A plugin's slug.
+	 */
+	public function setSlug( $slug = null ) {
+		$this->slug = ! empty( $slug ) ? $slug : explode( '/' , $this->file)[0];
 	}
 
 	/**
