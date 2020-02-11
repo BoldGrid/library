@@ -44,4 +44,15 @@ class Plugins {
 
 		return $activePlugins;
 	}
+
+	public static function getAllActivePlugins() {
+		$active_plugins_list = get_option('active_plugins');
+
+		$active_plugins = [];
+		foreach( $active_plugins_list as $active_plugin ) {
+			$active_plugins[] = new Plugin( null, null, $active_plugin );
+		}
+
+		return $active_plugins;
+	}
 }
