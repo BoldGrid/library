@@ -149,7 +149,7 @@ class UpdateData {
 	 * @return array
 	 */
 	public function getInformationTransient() {
-		$transient = get_transient( 'theme_information' );
+		$transient = get_transient( 'boldgrid_theme_information' );
 		if ( false === $transient ) {
 			return false;
 		}
@@ -167,7 +167,7 @@ class UpdateData {
 	 * @since SINCEVERSION
 	 */
 	public function setInformationTransient() {
-		$transient = get_transient( 'theme_information' );
+		$transient = get_transient( 'boldgrid_theme_information' );
 		if ( false === $transient ) {
 			$transient = array();
 		}
@@ -178,6 +178,6 @@ class UpdateData {
 			'releaseDate' => $this->releaseDate,
 		);
 
-		set_transient( 'theme_information', $transient, 60 );
+		set_transient( 'boldgrid_theme_information', $transient, 60 );
 	}
 }
