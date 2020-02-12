@@ -97,4 +97,12 @@ class Plugins {
 			}
 		}
 	}
+
+	public static function getActivePluginBySlug( $active_plugins, $slug ) {
+		foreach ( $active_plugins as $plugin ) {
+			if ( $plugin->getSlug() === $slug ) {
+				return $plugin;
+			}
+		}
+	}
 }
