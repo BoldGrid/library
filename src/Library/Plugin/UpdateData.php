@@ -36,6 +36,14 @@ class UpdateData {
 	public $activeInstalls;
 
 	/**
+	 * Minor Version Installs
+	 *
+	 * @since SINCEVERSION
+	 * @var string
+	 */
+	public $minorVersionInstalls;
+
+	/**
 	 * Release Date
 	 *
 	 * @since SINCEVERSION
@@ -52,13 +60,29 @@ class UpdateData {
 	public $version;
 
 	/**
+	 * Minor Version
+	 *
+	 * @since SINCEVERSION
+	 * @var string
+	 */
+	public $minorVersion;
+
+	/**
 	 * Stats
 	 *
 	 * @since SINCEVERSION
 	 * @var string
 	 */
 	public $stats;
-	
+
+	/**
+	 * Days Since Release
+	 *
+	 * @since SINCEVERSION
+	 * @var int
+	 */
+	public $days;
+
 	/**
 	 * Response Data
 	 *
@@ -85,24 +109,46 @@ class UpdateData {
 		$responseTransient = $this->getInformationTransient();
 
 		if ( false !== $responseTransient ) {
-			error_log( $this->plugin->getSlug() . ' is getting data from transient');
 			$this->activeInstalls = $responseTransient['activeInstalls'];
 			$this->version        = $responseTransient['version'];
 			$this->downloaded     = $responseTransient['downloaded'];
 			$this->releaseDate    = $responseTransient['releaseDate'];
 			$this->stats          = $responseTransient['stats'];
 		}  else {
-			error_log( $this->plugin->getSlug() . ' is getting data from API Calls');
 			$responseData = $this->fetchResponseData();
 			$this->activeInstalls = $responseData->active_installs;
 			$this->version        = $responseData->version;
 			$this->downloaded     = $responseData->downloaded;
-			$this->releaseDate    = $responseData->last_updated;
+			$this->releaseDate    = new \DateTime( $responseData->last_updated );
 			$this->stats          = $this->fetchPluginStats();
 		}
 		$this->setInformationTransient();
+
+		$version_array      = explode( '.', $this->version );
+		
+		$this->minorVersion = implode( '.', [ $version_array[0], $version_array[1] ] );
+
+		$this->minorVersionInstalls = $this->getMinorVersionInstalls();
+
+		$now = new \DateTime();
+
+		$this->days = date_diff($now, $this->releaseDate )->d;
 	}
 
+	/**
+	 * Get Minor Version Installs.
+	 *
+	 * @since SINCEVERSON
+	 * @return int
+	 */
+	public function getMinorVersionInstalls() {
+		foreach ( $this->stats as $minorVersion => $percentInstalls ) {
+			if ( $minorVersion === $this->minorVersion ) {
+				$x = $percentInstalls / 100;
+				return $this->activeInstalls * $x;
+			}
+		}
+	}
 	/**
 	 * Get Response Data
 	 *
