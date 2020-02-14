@@ -132,7 +132,9 @@ class UpdateData {
 
 		$now = new \DateTime();
 
-		$this->days = date_diff($now, $this->releaseDate )->d;
+		$this->days = date_diff( $now, $this->releaseDate )->format('%a');
+		
+		error_log($this->plugin->getSlug() . ' : ' . serialize($this->releaseDate));
 	}
 
 	/**
