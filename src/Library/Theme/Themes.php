@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Theme Themes.
@@ -6,6 +7,12 @@
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
+=======
+<?php
+/**
+ * BoldGrid Library Theme Themes.
+ *
+>>>>>>> added theme functionality
  * @package Boldgrid\Theme
  *
  * @since SINCEVERSION
@@ -14,6 +21,7 @@
 
 namespace Boldgrid\Library\Library\Theme;
 
+<<<<<<< HEAD
 /**
  * Themes Class.
  *
@@ -25,12 +33,18 @@ namespace Boldgrid\Library\Library\Theme;
 class Themes {
 	/**
 	 * Themes array
+=======
+class Themes {
+	/**
+	 * Themes
+>>>>>>> added theme functionality
 	 *
 	 * @since SINCEVERSION
 	 * @var array
 	 */
 	public $themes;
 
+<<<<<<< HEAD
 	/**
 	 * Constructor
 	 *
@@ -39,11 +53,17 @@ class Themes {
 	public function __construct() {
 		$this->themes = array();
 		$wp_themes    = wp_get_themes();
+=======
+	public function __construct() {
+		$this->themes = [];
+		$wp_themes = wp_get_themes();
+>>>>>>> added theme functionality
 		foreach ( $wp_themes as $wp_theme ) {
 			$this->themes[] = new Theme( $wp_theme );
 		}
 	}
 
+<<<<<<< HEAD
 	/**
 	 * Returns an array of Theme objects
 	 *
@@ -65,12 +85,21 @@ class Themes {
 	 */
 	public function getFromStylesheet( $stylesheet ) {
 		foreach ( $this->getList() as $theme ) {
+=======
+	public function list() {
+		return $this->themes;
+	}
+
+	public function getFromStylesheet( $stylesheet ) {
+		foreach ( $this->list() as $theme ) {
+>>>>>>> added theme functionality
 			if ( $theme->stylesheet === $stylesheet ) {
 				return $theme;
 			}
 		}
 	}
 
+<<<<<<< HEAD
 	/**
 	 * Get the Active Theme
 	 *
@@ -82,3 +111,9 @@ class Themes {
 		return new Theme( wp_get_theme() );
 	}
 }
+=======
+	public function getActive() {
+		return new Theme( wp_get_theme() );
+	}
+}
+>>>>>>> added theme functionality

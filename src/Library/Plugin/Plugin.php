@@ -252,7 +252,7 @@ class Plugin {
 	 */
 	public function getData( $key = null ) {
 		$data = $this->getPluginData();
-
+	
 		return empty( $key ) ? $data : $data[ $key ];
 	}
 
@@ -493,12 +493,21 @@ class Plugin {
 	 * @param string $slug A plugin's slug.
 	 */
 	public function setSlug( $slug = null ) {
+<<<<<<< HEAD
 		if ( ! empty( $slug ) && false === strpos( $slug, '/' ) ) {
 			$this->slug = $slug;
 		} elseif ( ! empty( $slug ) && false !== strpos( $slug, '/' ) ) {
 			$this->slug = explode( '/', $slug )[0];
 		} else {
 			$this->slug = explode( '/', $this->file )[0];
+=======
+		if ( ! empty( $slug ) && false === strpos( $slug, '/' ) ) { 
+			$this->slug = $slug;
+		} elseif ( ! empty( $slug) && false !== strpos( $slug, '/') ) {
+			$this->slug = explode( '/' , $slug )[0];
+		} else {
+			$this->slug = explode( '/' , $this->file)[0];
+>>>>>>> added theme functionality
 		}
 	}
 

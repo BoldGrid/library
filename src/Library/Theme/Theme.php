@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Theme Theme.
@@ -6,6 +7,12 @@
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
+=======
+<?php
+/**
+ * BoldGrid Library Theme Theme.
+ *
+>>>>>>> added theme functionality
  * @package Boldgrid\Theme
  *
  * @since SINCEVERSION
@@ -13,6 +20,7 @@
  */
 namespace Boldgrid\Library\Library\Theme;
 
+<<<<<<< HEAD
 /**
  * Theme Class.
  *
@@ -103,11 +111,25 @@ class Theme {
 	 *
 	 * @return string
 	 */
+=======
+class Theme {
+
+	public function __construct( \WP_Theme $wp_theme ) {
+		$this->wp_theme = $wp_theme;
+		$this->stylesheet = $this->wp_theme->__get( 'stylesheet' );
+		$this->version = $this->wp_theme->__get( 'version' );
+		$this->parentIs();
+		$this->hasUpdate();
+		$this->isActive();
+	}
+
+>>>>>>> added theme functionality
 	public function parentIs() {
 		$this->parent = $this->wp_theme->parent();
 		return $this->parent;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * Determine if this is the active theme or not.
 	 *
@@ -116,6 +138,9 @@ class Theme {
 	 * @return bool
 	 */
 	public function getIsActive() {
+=======
+	public function isActive() {
+>>>>>>> added theme functionality
 		$active_theme = wp_get_theme();
 		if ( $active_theme->__get( 'stylesheet' ) === $this->stylesheet ) {
 			$this->isActive = true;
@@ -126,6 +151,7 @@ class Theme {
 		return $this->isActive;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * Determine if this theme has an update available.
 	 *
@@ -143,10 +169,19 @@ class Theme {
 		$transient = null !== $transient ? $transient : array();
 
 		if ( array_key_exists( $this->stylesheet, $transient ) ) {
+=======
+	public function hasUpdate() {
+		$transient = get_site_transient( 'update_themes' )->response;
+		if ( array_key_exists( $this->stylesheet, $transient) ) {
+>>>>>>> added theme functionality
 			$this->hasUpdate = true;
 		} else {
 			$this->hasUpdate = false;
 		}
 		return $this->hasUpdate;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> added theme functionality

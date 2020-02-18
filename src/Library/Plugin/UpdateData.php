@@ -120,13 +120,8 @@ class UpdateData {
 			$this->downloaded     = $responseTransient['downloaded'];
 			$this->releaseDate    = $responseTransient['releaseDate'];
 			$this->stats          = $responseTransient['stats'];
-<<<<<<< HEAD
 		} else {
 			$responseData         = $this->fetchResponseData();
-=======
-		}  else {
-			$responseData = $this->fetchResponseData();
->>>>>>> added filters and actions
 			$this->activeInstalls = $responseData->active_installs;
 			$this->version        = $responseData->version;
 			$this->downloaded     = $responseData->downloaded;
@@ -135,21 +130,13 @@ class UpdateData {
 		}
 		$this->setInformationTransient();
 
-<<<<<<< HEAD
-		$version_array = explode( '.', $this->version );
-
-		$this->minorVersion = implode( '.', array( $version_array[0], $version_array[1] ) );
-=======
 		$version_array      = explode( '.', $this->version );
-		
+
 		$this->minorVersion = implode( '.', [ $version_array[0], $version_array[1] ] );
->>>>>>> added filters and actions
 
 		$this->minorVersionInstalls = $this->getMinorVersionInstalls();
 
 		$now = new \DateTime();
-
-<<<<<<< HEAD
 		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
 	}
 
@@ -166,25 +153,10 @@ class UpdateData {
 				return $this->activeInstalls * $x;
 			}
 		}
-=======
 		$this->days = date_diff($now, $this->releaseDate )->d;
->>>>>>> added filters and actions
+		$this->days = date_diff( $now, $this->releaseDate )->format('%a');
 	}
 
-	/**
-	 * Get Minor Version Installs.
-	 *
-	 * @since SINCEVERSON
-	 * @return int
-	 */
-	public function getMinorVersionInstalls() {
-		foreach ( $this->stats as $minorVersion => $percentInstalls ) {
-			if ( $minorVersion === $this->minorVersion ) {
-				$x = $percentInstalls / 100;
-				return $this->activeInstalls * $x;
-			}
-		}
-	}
 	/**
 	 * Get Response Data
 	 *
