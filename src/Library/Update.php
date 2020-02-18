@@ -41,8 +41,6 @@ class Update {
 	 * @see \Boldgrid\Library\Util\Option::get()
 	 */
 	public function __construct() {
-		Filter::add( $this );
-
 		$this->settings = (array) \Boldgrid\Library\Util\Option::get( 'autoupdate' );
 	}
 
@@ -152,6 +150,8 @@ class Update {
 	 * @return bool
 	 */
 	public function auto_update_plugin( $update, $item ) {
+		$boldgrid_backup_settings = get_site_option( 'boldgrid_backup_settings', array() );
+		error_log( serialize( $boldgrid_backup_settings ) );
 		if ( ! apply_filters( 'Boldgrid\Library\Update\isEnalbed', false ) ) {
 			return $update;
 		}
