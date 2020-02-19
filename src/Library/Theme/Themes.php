@@ -27,6 +27,10 @@ class Themes {
 		}
 	}
 
+	public function __invoke() {
+		return $this->themes;
+	}
+
 	public function list() {
 		return $this->themes;
 	}

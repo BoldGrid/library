@@ -76,10 +76,10 @@ class UpdateData {
 	 * @param Theme $theme
 	 * @param string $slug
 	 */
-	public function __construct( $theme = null, $slug = null ) {
+	public function __construct( $theme = null, $stylesheet = null ) {
 
 		// If a plugin object is passed in constructer, use that, or else create a new one from slug.
-		$this->theme = ( null !== $theme ) ? $theme : new Theme( $slug );
+		$this->theme = ( null !== $theme ) ? $theme : new Theme( $stylesheet );
 
 		$responseTransient = $this->getInformationTransient();
 
@@ -119,10 +119,11 @@ class UpdateData {
 	 * @return Response
 	 */
 	public function fetchResponseData() {
+		include_once( ABSPATH . 'wp-admin/includes/theme.php' );
 		$theme_information = themes_api(
 			'theme_information',
 			[
-				'slug' => $this->theme->getSlug(),
+				'slug' => $this->theme->stylesheet,
 				'fields' => [
 					'downloaded',
 					'last_updated',
@@ -147,8 +148,8 @@ class UpdateData {
 			return false;
 		}
 
-		if ( array_key_exists( $this->theme->getSlug(), $transient ) ) {
-			return $transient[$this->theme->getSlug()];
+		if ( array_key_exists( $this->theme->stylesheet, $transient ) ) {
+			return $transient[$this->theme->stylesheet];
 		}
 
 		return false;
@@ -165,7 +166,7 @@ class UpdateData {
 			$transient = [];
 		}
 
-		$transient[$this->theme->getSlug()] = [
+		$transient[$this->theme->stylesheet] = [
 			'version'        => $this->version,
 			'downloaded'     => $this->downloaded,
 			'releaseDate'    => $this->releaseDate,
