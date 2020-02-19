@@ -21,7 +21,6 @@
 
 namespace Boldgrid\Library\Library\Theme;
 
-<<<<<<< HEAD
 /**
  * Themes Class.
  *
@@ -33,18 +32,12 @@ namespace Boldgrid\Library\Library\Theme;
 class Themes {
 	/**
 	 * Themes array
-=======
-class Themes {
-	/**
-	 * Themes
->>>>>>> added theme functionality
 	 *
 	 * @since SINCEVERSION
 	 * @var array
 	 */
 	public $themes;
 
-<<<<<<< HEAD
 	/**
 	 * Constructor
 	 *
@@ -53,16 +46,12 @@ class Themes {
 	public function __construct() {
 		$this->themes = array();
 		$wp_themes    = wp_get_themes();
-=======
-	public function __construct() {
-		$this->themes = [];
-		$wp_themes = wp_get_themes();
->>>>>>> added theme functionality
 		foreach ( $wp_themes as $wp_theme ) {
 			$this->themes[] = new Theme( $wp_theme );
 		}
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/**
 	 * Returns an array of Theme objects
@@ -86,6 +75,12 @@ class Themes {
 	public function getFromStylesheet( $stylesheet ) {
 		foreach ( $this->getList() as $theme ) {
 =======
+=======
+	public function __invoke() {
+		return $this->themes;
+	}
+
+>>>>>>> added additional theme update functionality
 	public function list() {
 		return $this->themes;
 	}

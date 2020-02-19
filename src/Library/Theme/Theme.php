@@ -114,6 +114,8 @@ class Theme {
 =======
 class Theme {
 
+	public $stylesheet;
+
 	public function __construct( \WP_Theme $wp_theme ) {
 		$this->wp_theme = $wp_theme;
 		$this->stylesheet = $this->wp_theme->__get( 'stylesheet' );
@@ -121,6 +123,7 @@ class Theme {
 		$this->parentIs();
 		$this->hasUpdate();
 		$this->isActive();
+		$this->updateData = new UpdateData( $this );
 	}
 
 >>>>>>> added theme functionality
@@ -171,7 +174,8 @@ class Theme {
 		if ( array_key_exists( $this->stylesheet, $transient ) ) {
 =======
 	public function hasUpdate() {
-		$transient = get_site_transient( 'update_themes' )->response;
+		$transient = get_site_transient( 'update_themes', [] )->response;
+		$transient = null !== $transient ? $transient : [];
 		if ( array_key_exists( $this->stylesheet, $transient) ) {
 >>>>>>> added theme functionality
 			$this->hasUpdate = true;

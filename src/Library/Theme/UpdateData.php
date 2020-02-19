@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Update Data.
@@ -7,12 +6,6 @@
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
-=======
-<?php
-/**
- * BoldGrid Library Update Data.
- *
->>>>>>> added theme functionality
  * @package Boldgrid\Theme
  *
  * @since SINCEVERSION
@@ -21,11 +14,8 @@
  */
 namespace Boldgrid\Library\Library\Theme;
 
-<<<<<<< HEAD
 use Boldgrid\Library\Library\Theme\Theme;
 
-=======
->>>>>>> added theme functionality
 /**
  * Update Data Class.
  *
@@ -101,11 +91,15 @@ class UpdateData {
 	 * @param Theme $theme
 	 * @param string $slug
 	 */
-	public function __construct( $theme = null, $slug = null ) {
+	public function __construct( $theme = null, $stylesheet = null ) {
 
 		// If a plugin object is passed in constructer, use that, or else create a new one from slug.
+<<<<<<< HEAD
 		$this->theme = ( null !== $theme ) ? $theme : new Theme( $slug );
 >>>>>>> added theme functionality
+=======
+		$this->theme = ( null !== $theme ) ? $theme : new Theme( $stylesheet );
+>>>>>>> added additional theme update functionality
 
 		$responseTransient = $this->getInformationTransient();
 
@@ -173,16 +167,17 @@ class UpdateData {
 				),
 			)
 =======
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @return Response
 	 */
 	public function fetchResponseData() {
+		include_once( ABSPATH . 'wp-admin/includes/theme.php' );
 		$theme_information = themes_api(
 			'theme_information',
 			[
-				'slug' => $this->theme->getSlug(),
+				'slug' => $this->theme->stylesheet,
 				'fields' => [
 					'downloaded',
 					'last_updated',
@@ -206,9 +201,9 @@ class UpdateData {
 	public function getInformationTransient() {
 		$transient = get_transient( 'boldgrid_theme_information' );
 =======
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getInformationTransient() {
@@ -219,12 +214,17 @@ class UpdateData {
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ( array_key_exists( $this->theme->stylesheet, $transient ) ) {
 			return $transient[ $this->theme->stylesheet ];
 =======
 		if ( array_key_exists( $this->theme->getSlug(), $transient ) ) {
 			return $transient[$this->theme->getSlug()];
 >>>>>>> added theme functionality
+=======
+		if ( array_key_exists( $this->theme->stylesheet, $transient ) ) {
+			return $transient[$this->theme->stylesheet];
+>>>>>>> added additional theme update functionality
 		}
 
 		return false;
@@ -252,7 +252,7 @@ class UpdateData {
 	}
 }
 =======
-	 * 
+	 *
 	 * @since SINCEVERSION
 	 */
 	public function setInformationTransient() {
@@ -261,7 +261,7 @@ class UpdateData {
 			$transient = [];
 		}
 
-		$transient[$this->theme->getSlug()] = [
+		$transient[$this->theme->stylesheet] = [
 			'version'        => $this->version,
 			'downloaded'     => $this->downloaded,
 			'releaseDate'    => $this->releaseDate,
