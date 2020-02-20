@@ -84,20 +84,20 @@ class UpdateData {
 		$responseTransient = $this->getInformationTransient();
 
 		if ( false !== $responseTransient ) {
-			$this->version        = $responseTransient['version'];
-			$this->downloaded     = $responseTransient['downloaded'];
-			$this->releaseDate    = $responseTransient['releaseDate'];
-		}  else {
-			$responseData = $this->fetchResponseData();
-			$this->version        = $responseData->version;
-			$this->downloaded     = $responseData->downloaded;
-			$this->releaseDate    = new \DateTime( $responseData->last_updated );
+			$this->version     = $responseTransient['version'];
+			$this->downloaded  = $responseTransient['downloaded'];
+			$this->releaseDate = $responseTransient['releaseDate'];
+		} else {
+			$responseData      = $this->fetchResponseData();
+			$this->version     = $responseData->version;
+			$this->downloaded  = $responseData->downloaded;
+			$this->releaseDate = new \DateTime( $responseData->last_updated );
 		}
 		$this->setInformationTransient();
 
 		$now = new \DateTime();
 
-		$this->days = date_diff( $now, $this->releaseDate )->format('%a');
+		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
 	}
 
 	/**
@@ -113,17 +113,17 @@ class UpdateData {
 
 	/**
 	 * Set Response Data
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @return Response
 	 */
 	public function fetchResponseData() {
-		include_once( ABSPATH . 'wp-admin/includes/theme.php' );
+		include_once ABSPATH . 'wp-admin/includes/theme.php';
 		$theme_information = themes_api(
 			'theme_information',
 			[
-				'slug' => $this->theme->stylesheet,
+				'slug'   => $this->theme->stylesheet,
 				'fields' => [
 					'downloaded',
 					'last_updated',
@@ -137,19 +137,19 @@ class UpdateData {
 
 	/**
 	 * Get Theme Information from Transient.
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getInformationTransient() {
-		$transient = get_transient('theme_information');
+		$transient = get_transient( 'theme_information' );
 		if ( false === $transient ) {
 			return false;
 		}
 
 		if ( array_key_exists( $this->theme->stylesheet, $transient ) ) {
-			return $transient[$this->theme->stylesheet];
+			return $transient[ $this->theme->stylesheet ];
 		}
 
 		return false;
@@ -157,21 +157,21 @@ class UpdateData {
 
 	/**
 	 * Set Theme Information Transient
-	 * 
+	 *
 	 * @since SINCEVERSION
 	 */
 	public function setInformationTransient() {
-		$transient = get_transient('theme_information');
+		$transient = get_transient( 'theme_information' );
 		if ( false === $transient ) {
 			$transient = [];
 		}
 
-		$transient[$this->theme->stylesheet] = [
-			'version'        => $this->version,
-			'downloaded'     => $this->downloaded,
-			'releaseDate'    => $this->releaseDate,
+		$transient[ $this->theme->stylesheet ] = [
+			'version'     => $this->version,
+			'downloaded'  => $this->downloaded,
+			'releaseDate' => $this->releaseDate,
 		];
 
-		set_transient( 'theme_information', $transient, 60);
+		set_transient( 'theme_information', $transient, 60 );
 	}
 }

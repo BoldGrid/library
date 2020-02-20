@@ -46,9 +46,9 @@ class Plugins {
 	}
 
 	public static function getAllActivePlugins() {
-		$active_plugins_list = get_option('active_plugins');
-		$active_plugins = [];
-		foreach( $active_plugins_list as $active_plugin ) {
+		$active_plugins_list = get_option( 'active_plugins' );
+		$active_plugins      = [];
+		foreach ( $active_plugins_list as $active_plugin ) {
 			$active_plugins[] = new Plugin( $active_plugin, null );
 		}
 		return $active_plugins;

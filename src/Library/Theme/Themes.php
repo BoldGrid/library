@@ -21,7 +21,7 @@ class Themes {
 
 	public function __construct() {
 		$this->themes = [];
-		$wp_themes = wp_get_themes();
+		$wp_themes    = wp_get_themes();
 		foreach ( $wp_themes as $wp_theme ) {
 			$this->themes[] = new Theme( $wp_theme );
 		}
