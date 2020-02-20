@@ -12,13 +12,18 @@ namespace Boldgrid\Library\Library\Theme;
 
 class Themes {
 	/**
-	 * Themes
+	 * Themes array
 	 *
 	 * @since SINCEVERSION
 	 * @var array
 	 */
 	public $themes;
 
+	/**
+	 * Constructor
+	 *
+	 * @since SINCEVERSION
+	 */
 	public function __construct() {
 		$this->themes = [];
 		$wp_themes    = wp_get_themes();
@@ -27,14 +32,25 @@ class Themes {
 		}
 	}
 
-	public function __invoke() {
-		return $this->themes;
-	}
-
+	/**
+	 * Returns an array of Theme objects
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @return array
+	 */
 	public function list() {
 		return $this->themes;
 	}
 
+	/**
+	 * Get Theme from Stylesheet
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param string $stylesheet
+	 * @return Theme
+	 */
 	public function getFromStylesheet( $stylesheet ) {
 		foreach ( $this->list() as $theme ) {
 			if ( $theme->stylesheet === $stylesheet ) {
@@ -43,6 +59,13 @@ class Themes {
 		}
 	}
 
+	/**
+	 * Get the Active Theme
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @return Theme
+	 */
 	public function getActive() {
 		return new Theme( wp_get_theme() );
 	}
