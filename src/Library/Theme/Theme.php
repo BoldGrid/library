@@ -113,26 +113,99 @@ class Theme {
 	 */
 =======
 class Theme {
+	/**
+	 * WP_Theme Object
+	 *
+	 * @since SINCEVERSION
+	 * @var WP_Theme
+	 */
+	public $wp_theme;
 
+	/**
+	 * Stylesheet
+	 *
+	 * @since SINCEVERSION
+	 * @var string
+	 */
 	public $stylesheet;
 
+	/**
+	 * Version
+	 *
+	 * @since SINCEVERSION
+	 * @var string
+	 */
+	public $version;
+
+	/**
+	 * Parent Theme
+	 *
+	 * @since SINCEVERSION
+	 * @var string
+	 */
+	public $parent;
+
+	/**
+	 * Is Active
+	 *
+	 * @since SINCEVERSION
+	 * @var bool
+	 */
+	public $isActive;
+
+	/**
+	 * Has Update
+	 *
+	 * @since SINCEVERSION
+	 * @var bool
+	 */
+	public $hasUpdate;
+
+	/**
+	 * UpdateData
+	 *
+	 * @since SINCEVERSION
+	 * @var UpdateData
+	 */
+	public $updateData;
+
+	/**
+	 * Constructor
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param WP_Theme
+	 */
 	public function __construct( \WP_Theme $wp_theme ) {
 		$this->wp_theme   = $wp_theme;
 		$this->stylesheet = $this->wp_theme->__get( 'stylesheet' );
 		$this->version    = $this->wp_theme->__get( 'version' );
 		$this->parentIs();
-		$this->hasUpdate();
-		$this->isActive();
+		$this->getHasUpdate();
+		$this->getIsActive();
 		$this->updateData = new UpdateData( $this );
 	}
 
+<<<<<<< HEAD
 >>>>>>> added theme functionality
+=======
+	/**
+	 * Determines the parent theme if this theme is a child theme.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @return string
+	 */
+>>>>>>> made php-cs changes and added missing docstrings
 	public function parentIs() {
 		$this->parent = $this->wp_theme->parent();
 		return $this->parent;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> made php-cs changes and added missing docstrings
 	/**
 	 * Determine if this is the active theme or not.
 	 *
@@ -141,9 +214,12 @@ class Theme {
 	 * @return bool
 	 */
 	public function getIsActive() {
+<<<<<<< HEAD
 =======
 	public function isActive() {
 >>>>>>> added theme functionality
+=======
+>>>>>>> made php-cs changes and added missing docstrings
 		$active_theme = wp_get_theme();
 		if ( $active_theme->__get( 'stylesheet' ) === $this->stylesheet ) {
 			$this->isActive = true;
@@ -155,6 +231,9 @@ class Theme {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> made php-cs changes and added missing docstrings
 	/**
 	 * Determine if this theme has an update available.
 	 *
@@ -163,6 +242,7 @@ class Theme {
 	 * @return bool
 	 */
 	public function getHasUpdate() {
+<<<<<<< HEAD
 		if ( get_site_transient( 'update_themes' ) ) {
 			$transient = get_site_transient( 'update_themes' )->response;
 		} else {
@@ -174,6 +254,8 @@ class Theme {
 		if ( array_key_exists( $this->stylesheet, $transient ) ) {
 =======
 	public function hasUpdate() {
+=======
+>>>>>>> made php-cs changes and added missing docstrings
 		$transient = get_site_transient( 'update_themes', [] )->response;
 		$transient = null !== $transient ? $transient : [];
 <<<<<<< HEAD

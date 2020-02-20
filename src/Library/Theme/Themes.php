@@ -44,8 +44,6 @@ class Themes {
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	/**
 	 * Returns an array of Theme objects
 	 *
@@ -62,32 +60,17 @@ class Themes {
 	 *
 	 * @since SINCEVERSION
 	 *
-	 * @param string $stylesheet Theme's Stylesheet.
+	 * @param string $stylesheet
 	 * @return Theme
 	 */
 	public function getFromStylesheet( $stylesheet ) {
-		foreach ( $this->getList() as $theme ) {
-=======
-=======
-	public function __invoke() {
-		return $this->themes;
-	}
-
->>>>>>> added additional theme update functionality
-	public function list() {
-		return $this->themes;
-	}
-
-	public function getFromStylesheet( $stylesheet ) {
 		foreach ( $this->list() as $theme ) {
->>>>>>> added theme functionality
 			if ( $theme->stylesheet === $stylesheet ) {
 				return $theme;
 			}
 		}
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Get the Active Theme
 	 *
@@ -99,12 +82,3 @@ class Themes {
 		return new Theme( wp_get_theme() );
 	}
 }
-=======
-	public function getActive() {
-		return new Theme( wp_get_theme() );
-	}
-}
-<<<<<<< HEAD
->>>>>>> added theme functionality
-=======
->>>>>>> made php-cs changes

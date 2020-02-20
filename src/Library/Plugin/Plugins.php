@@ -46,9 +46,14 @@ class Plugins {
 
 		return $activePlugins;
 	}
+<<<<<<< HEAD
 
 	/**
 	 * Get All Active Plugins.
+=======
+	/**
+	 * Get All Active Plugins
+>>>>>>> made php-cs changes and added missing docstrings
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -113,7 +118,17 @@ class Plugins {
 >>>>>>> added theme functionality
 	}
 
-	public static function getActivePluginBySlug( $active_plugins, $slug ) {
+	/**
+	 * Get Active Plugin by Slug
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param array $active_plugins. List of Plugin objects.
+	 * @param string $slug.
+	 *
+	 * @return Plugin
+	 */
+	public static function getActivePluginBySlug( array $active_plugins, $slug ) {
 		foreach ( $active_plugins as $plugin ) {
 			if ( $plugin->getSlug() === $slug ) {
 				return $plugin;
