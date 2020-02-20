@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Theme Themes.
@@ -7,12 +6,6 @@
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
-=======
-<?php
-/**
- * BoldGrid Library Theme Themes.
- *
->>>>>>> added theme functionality
  * @package Boldgrid\Theme
  *
  * @since SINCEVERSION
@@ -111,4 +104,7 @@ class Themes {
 		return new Theme( wp_get_theme() );
 	}
 }
+<<<<<<< HEAD
 >>>>>>> added theme functionality
+=======
+>>>>>>> made php-cs changes

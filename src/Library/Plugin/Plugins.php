@@ -56,6 +56,7 @@ class Plugins {
 	 */
 	public static function getAllActivePlugins() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$active_plugins_list = get_option( 'active_plugins' );
 		$active_plugins      = array();
 		foreach ( $active_plugins_list as $active_plugin ) {
@@ -101,6 +102,11 @@ class Plugins {
 		$active_plugins_list = get_option('active_plugins');
 		$active_plugins = [];
 		foreach( $active_plugins_list as $active_plugin ) {
+=======
+		$active_plugins_list = get_option( 'active_plugins' );
+		$active_plugins      = [];
+		foreach ( $active_plugins_list as $active_plugin ) {
+>>>>>>> made php-cs changes
 			$active_plugins[] = new Plugin( $active_plugin, null );
 		}
 		return $active_plugins;
