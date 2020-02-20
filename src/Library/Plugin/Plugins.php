@@ -44,7 +44,13 @@ class Plugins {
 
 		return $activePlugins;
 	}
-
+	/**
+	 * Get All Active Plugins
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @return array
+	 */
 	public static function getAllActivePlugins() {
 		$active_plugins_list = get_option( 'active_plugins' );
 		$active_plugins      = [];
@@ -54,7 +60,17 @@ class Plugins {
 		return $active_plugins;
 	}
 
-	public static function getActivePluginBySlug( $active_plugins, $slug ) {
+	/**
+	 * Get Active Plugin by Slug
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param array $active_plugins. List of Plugin objects.
+	 * @param string $slug.
+	 *
+	 * @return Plugin
+	 */
+	public static function getActivePluginBySlug( array $active_plugins, $slug ) {
 		foreach ( $active_plugins as $plugin ) {
 			if ( $plugin->getSlug() === $slug ) {
 				return $plugin;
