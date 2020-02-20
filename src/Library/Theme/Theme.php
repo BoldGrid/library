@@ -121,8 +121,14 @@ class Theme {
 	 * @return bool
 	 */
 	public function getHasUpdate() {
-		$transient = get_site_transient( 'update_themes', [] )->response;
+		if ( get_site_transient( 'update_themes' ) ) {
+			$transient = get_site_transient( 'update_themes' )->response;
+		} else {
+			$transient = null;
+		}
+
 		$transient = null !== $transient ? $transient : [];
+		
 		if ( array_key_exists( $this->stylesheet, $transient ) ) {
 			$this->hasUpdate = true;
 		} else {

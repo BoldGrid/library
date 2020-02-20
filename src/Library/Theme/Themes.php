@@ -39,7 +39,7 @@ class Themes {
 	 *
 	 * @return array
 	 */
-	public function list() {
+	public function getList() {
 		return $this->themes;
 	}
 
@@ -52,7 +52,7 @@ class Themes {
 	 * @return Theme
 	 */
 	public function getFromStylesheet( $stylesheet ) {
-		foreach ( $this->list() as $theme ) {
+		foreach ( $this->getList() as $theme ) {
 			if ( $theme->stylesheet === $stylesheet ) {
 				return $theme;
 			}
