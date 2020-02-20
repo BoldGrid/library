@@ -114,8 +114,8 @@ class UpdateData {
 			$this->downloaded     = $responseTransient['downloaded'];
 			$this->releaseDate    = $responseTransient['releaseDate'];
 			$this->stats          = $responseTransient['stats'];
-		}  else {
-			$responseData = $this->fetchResponseData();
+		} else {
+			$responseData         = $this->fetchResponseData();
 			$this->activeInstalls = $responseData->active_installs;
 			$this->version        = $responseData->version;
 			$this->downloaded     = $responseData->downloaded;
@@ -124,15 +124,15 @@ class UpdateData {
 		}
 		$this->setInformationTransient();
 
-		$version_array      = explode( '.', $this->version );
-		
+		$version_array = explode( '.', $this->version );
+
 		$this->minorVersion = implode( '.', [ $version_array[0], $version_array[1] ] );
 
 		$this->minorVersionInstalls = $this->getMinorVersionInstalls();
 
 		$now = new \DateTime();
 
-		$this->days = date_diff( $now, $this->releaseDate )->format('%a');
+		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
 	}
 
 	/**
@@ -149,6 +149,7 @@ class UpdateData {
 			}
 		}
 	}
+
 	/**
 	 * Get Response Data
 	 *
@@ -162,16 +163,16 @@ class UpdateData {
 
 	/**
 	 * Set Response Data
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @return Response
 	 */
 	public function fetchResponseData() {
 		$plugin_information = plugins_api(
 			'plugin_information',
 			[
-				'slug' => $this->plugin->getSlug(),
+				'slug'   => $this->plugin->getSlug(),
 				'fields' => [
 					'downloaded',
 					'last_updated',
@@ -182,9 +183,9 @@ class UpdateData {
 		if ( is_a( $plugin_information, 'WP_Error' ) ) {
 			$plugin_information = [
 				'active_installs' => '40000',
-				'version'        => '1.13.1',
-				'downloaded'     => '123456789',
-				'last_updated'   => date('Y-m-d H:i:s'),
+				'version'         => '1.13.1',
+				'downloaded'      => '123456789',
+				'last_updated'    => date( 'Y-m-d H:i:s' ),
 			];
 			return (object) $plugin_information;
 		}
@@ -194,46 +195,47 @@ class UpdateData {
 
 	/**
 	 * Get Plugin Stats
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @return Array
 	 */
 	public function fetchPluginStats() {
 
-		$response = wp_remote_get('https://api.wordpress.org/stats/plugin/1.0/' . $this->plugin->getSlug() );
+		$response = wp_remote_get( 'https://api.wordpress.org/stats/plugin/1.0/' . $this->plugin->getSlug() );
 
-		if ( array_key_exists('body', $response) ) {
+		if ( array_key_exists( 'body', $response ) ) {
 			$response = $response['body'];
 		} else {
 			$response = false;
 		}
-		
-		$stats = [];
-		if (false !== $response) {
-			$response = json_decode($response, true);
 
-			if (json_last_error() === JSON_ERROR_NONE && is_array($response)) {
+		$stats = [];
+		if ( false !== $response ) {
+			$response = json_decode( $response, true );
+
+			if ( json_last_error() === JSON_ERROR_NONE && is_array( $response ) ) {
 				$stats = $response;
 			}
 		}
 		return $stats;
 	}
+
 	/**
 	 * Get Plugin Information from Transient.
-	 * 
+	 *
 	 * @since SINCEVERSION
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getInformationTransient() {
-		$transient = get_transient('plugin_information');
+		$transient = get_transient( 'plugin_information' );
 		if ( false === $transient ) {
 			return false;
 		}
 
 		if ( array_key_exists( $this->plugin->getSlug(), $transient ) ) {
-			return $transient[$this->plugin->getSlug()];
+			return $transient[ $this->plugin->getSlug() ];
 		}
 
 		return false;
@@ -241,16 +243,16 @@ class UpdateData {
 
 	/**
 	 * Set Plugin Information Transient
-	 * 
+	 *
 	 * @since SINCEVERSION
 	 */
 	public function setInformationTransient() {
-		$transient = get_transient('plugin_information');
+		$transient = get_transient( 'plugin_information' );
 		if ( false === $transient ) {
 			$transient = [];
 		}
 
-		$transient[$this->plugin->getSlug()] = [
+		$transient[ $this->plugin->getSlug() ] = [
 			'activeInstalls' => $this->activeInstalls,
 			'version'        => $this->version,
 			'downloaded'     => $this->downloaded,
@@ -258,6 +260,6 @@ class UpdateData {
 			'stats'          => $this->stats,
 		];
 
-		set_transient( 'plugin_information', $transient, 60);
+		set_transient( 'plugin_information', $transient, 60 );
 	}
 }

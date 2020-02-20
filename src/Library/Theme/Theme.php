@@ -14,9 +14,9 @@ class Theme {
 	public $stylesheet;
 
 	public function __construct( \WP_Theme $wp_theme ) {
-		$this->wp_theme = $wp_theme;
+		$this->wp_theme   = $wp_theme;
 		$this->stylesheet = $this->wp_theme->__get( 'stylesheet' );
-		$this->version = $this->wp_theme->__get( 'version' );
+		$this->version    = $this->wp_theme->__get( 'version' );
 		$this->parentIs();
 		$this->hasUpdate();
 		$this->isActive();
@@ -42,7 +42,7 @@ class Theme {
 	public function hasUpdate() {
 		$transient = get_site_transient( 'update_themes', [] )->response;
 		$transient = null !== $transient ? $transient : [];
-		if ( array_key_exists( $this->stylesheet, $transient) ) {
+		if ( array_key_exists( $this->stylesheet, $transient ) ) {
 			$this->hasUpdate = true;
 		} else {
 			$this->hasUpdate = false;
