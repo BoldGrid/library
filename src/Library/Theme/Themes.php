@@ -60,7 +60,7 @@ class Themes {
 	 *
 	 * @since SINCEVERSION
 	 *
-	 * @param string $stylesheet
+	 * @param string $stylesheet Theme's Stylesheet.
 	 * @return Theme
 	 */
 	public function getFromStylesheet( $stylesheet ) {
