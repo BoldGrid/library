@@ -1,6 +1,10 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Plugin Page.
+ *
+ * Library package uses different naming convention
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Plugin
  *
@@ -9,6 +13,8 @@
  * @author BoldGrid <wpb@boldgrid.com>
  */
 namespace Boldgrid\Library\Library\Plugin;
+
+use Boldgrid\Library\Library\Plugin\Notice;
 
 /**
  * Generic page class.
@@ -65,10 +71,9 @@ class Page {
 	 * Constructor.
 	 *
 	 * @since 2.12.0
-
-	* @param Plugin $plugin object that this page belongs to.
-	* @param string $slug For example: "plugin" from plugin/plugin.php.
-	*/
+	 * @param Plugin $plugin object that this page belongs to.
+	 * @param string $slug For example: "plugin" from plugin/plugin.php.
+	 */
 	public function __construct( Plugin $plugin, $slug ) {
 
 		$this->setPlugin( $plugin );
@@ -95,6 +100,8 @@ class Page {
 	 * Set Plugin.
 	 *
 	 * @since 2.12.0
+	 *
+	 * @param Plugin $plugin Plugin Object.
 	 */
 	private function setPlugin( $plugin ) {
 		$this->plugin = $plugin;
@@ -116,7 +123,6 @@ class Page {
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param array $pluginConfig Plugin Config.
 	 * @access private
 	 */
 	private function setPluginConfig() {
@@ -146,7 +152,7 @@ class Page {
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param string $id
+	 * @param string $id ID of the notice.
 	 * @return NoticeCount
 	 */
 	public function getNoticeById( $id ) {
@@ -176,6 +182,8 @@ class Page {
 	 * Set Page Notices to Read.
 	 *
 	 * @since 2.12.0
+	 *
+	 * @param bool $setToUnread If true, then this sets the notice to Unread.
 	 */
 	public function setAllNoticesRead( $setToUnread = false ) {
 		foreach ( $this->getNotices() as $notice ) {

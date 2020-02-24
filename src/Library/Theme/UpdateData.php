@@ -1,6 +1,10 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Update Data.
+ *
+ * Library package uses different naming convention
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Theme
  *
@@ -9,6 +13,8 @@
  * @author BoldGrid <wpb@boldgrid.com>
  */
 namespace Boldgrid\Library\Library\Theme;
+
+use Boldgrid\Library\Library\Theme\Theme;
 
 /**
  * Update Data Class.
@@ -73,8 +79,8 @@ class UpdateData {
 	 *
 	 * @since SINCEVERSION
 	 *
-	 * @param Theme $theme
-	 * @param string $slug
+	 * @param Theme  $theme The Theme Object.
+	 * @param string $stylesheet Theme's Stylesheet.
 	 */
 	public function __construct( $theme = null, $stylesheet = null ) {
 

@@ -1,6 +1,10 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Update Data.
+ *
+ * Library package uses different naming convention
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Plugin
  *
@@ -9,6 +13,8 @@
  * @author BoldGrid <wpb@boldgrid.com>
  */
 namespace Boldgrid\Library\Library\Plugin;
+
+use Boldgrid\Library\Library\Plugin\Plugin;
 
 /**
  * Update Data Class.
@@ -97,8 +103,8 @@ class UpdateData {
 	 *
 	 * @since SINCEVERSION
 	 *
-	 * @param Plugin $plugin
-	 * @param string $slug
+	 * @param Plugin $plugin The plugin we are getting data for.
+	 * @param string $slug Optional slug of plugin if plugin object not given.
 	 */
 	public function __construct( $plugin = null, $slug = null ) {
 		include_once ABSPATH . 'wp-admin/includes/plugin-install.php';

@@ -1,6 +1,10 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Theme Themes.
+ *
+ * Library package uses different naming convention
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Theme
  *
@@ -10,6 +14,14 @@
 
 namespace Boldgrid\Library\Library\Theme;
 
+/**
+ * Themes Class.
+ *
+ * This class stores all Theme objects and helps retrieve them.
+ * Boldgrid\Library\Library\Theme\Theme class.
+ *
+ * @since 2.12.0
+ */
 class Themes {
 	/**
 	 * Themes array
@@ -48,7 +60,7 @@ class Themes {
 	 *
 	 * @since SINCEVERSION
 	 *
-	 * @param string $stylesheet
+	 * @param string $stylesheet Theme's Stylesheet.
 	 * @return Theme
 	 */
 	public function getFromStylesheet( $stylesheet ) {
