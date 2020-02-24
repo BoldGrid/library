@@ -1,6 +1,10 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Theme Theme.
+ *
+ * Library package uses different naming convention
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Theme
  *
@@ -9,6 +13,15 @@
  */
 namespace Boldgrid\Library\Library\Theme;
 
+/**
+ * Theme Class.
+ *
+ * Stores and retrieves various data for the themes on the site.
+ *
+ * Boldgrid\Library\Library\Theme\Theme class.
+ *
+ * @since 2.12.0
+ */
 class Theme {
 	/**
 	 * WP_Theme Object
@@ -71,7 +84,7 @@ class Theme {
 	 *
 	 * @since SINCEVERSION
 	 *
-	 * @param WP_Theme
+	 * @param \WP_Theme $wp_theme The WP_Theme object for this theme.
 	 */
 	public function __construct( \WP_Theme $wp_theme ) {
 		$this->wp_theme   = $wp_theme;
@@ -128,7 +141,7 @@ class Theme {
 		}
 
 		$transient = null !== $transient ? $transient : [];
-		
+
 		if ( array_key_exists( $this->stylesheet, $transient ) ) {
 			$this->hasUpdate = true;
 		} else {

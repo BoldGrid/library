@@ -1,6 +1,10 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Plugin Page Notice.
+ *
+ * Library package uses different naming convention
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Plugin
  *
@@ -74,11 +78,10 @@ class Notice {
 	/**
 	 * Constructor
 	 *
-	 *
 	 * @since 2.12.0
 	 *
 	 * @param Plugin $plugin Plugin instance that this Notice belongs to.
-	 * @param array $notice {
+	 * @param array  $notice {
 	 *     An array of notice values.
 	 *
 	 *     @type string $id notice ID.
@@ -228,7 +231,7 @@ class Notice {
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param string $noticeId
+	 * @param  string $noticeId ID of the specific notice.
 	 * @return array
 	 *     @type Notice Notice Instance.
 	 *     @type int Index of Notice in Options array.
@@ -312,8 +315,8 @@ class Notice {
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param Notice $originalNotice
-	 * @param array $newNotice
+	 * @param array $originalNotice The notice already in the DB.
+	 * @param array $newNotice The new notice pulled from config.
 	 */
 	private function noticeVersionChanged( array $originalNotice, array $newNotice ) {
 		if ( version_compare( $originalNotice['version'], $newNotice['version'], 'ne' ) ) {

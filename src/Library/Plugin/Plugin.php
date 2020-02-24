@@ -1,16 +1,22 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Plugin Plugin.
+ *
+ * Library package uses different naming convention
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Plugin
  *
  * @since 2.7.7
  * @author BoldGrid <wpb@boldgrid.com>
  */
+
 namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library\Configs;
 use Boldgrid\Library\Library\Settings;
+use Boldgrid\Library\Library\Plugin\Page;
 
 /**
  * Generic plugin class.
@@ -66,6 +72,7 @@ class Plugin {
 	 * For example, ABSPATH/wp-content/plugins/plugin/plugin.php.
 	 *
 	 * @since 2.10.0
+	 * @var string
 	 */
 	protected $path;
 
@@ -127,7 +134,8 @@ class Plugin {
 	 *
 	 * @since 2.7.7
 	 *
-	 * @param string $slug For example: "plugin" from plugin/plugin.php
+	 * @param string $slug For example: "plugin" from plugin/plugin.php.
+	 * @param array  $pluginConfig An array of plugin config data.
 	 */
 	public function __construct( $slug, $pluginConfig = null ) {
 
@@ -311,7 +319,7 @@ class Plugin {
 	 *
 	 * @since 2.10.0
 	 *
-	 * @param  string $file The plugin's file, as in plugin/plugin.php
+	 * @param  string $file The plugin's file, as in plugin/plugin.php.
 	 * @return string
 	 */
 	public static function getFileSlug( $file ) {
@@ -404,7 +412,7 @@ class Plugin {
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param bool $setToUnread if set to true, marks all items unread instead
+	 * @param bool $setToUnread if set to true, marks all items unread instead.
 	 */
 	public function setAllNoticesRead( $setToUnread = false ) {
 		foreach ( $this->getPages() as $page ) {
@@ -429,7 +437,7 @@ class Plugin {
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param string $slug
+	 * @param string $slug The Plugin slug.
 	 * @return Page
 	 */
 	public function getPageBySlug( $slug ) {
