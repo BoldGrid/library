@@ -46,22 +46,15 @@ class Plugins {
 
 		return $activePlugins;
 	}
-<<<<<<< HEAD
 
 	/**
 	 * Get All Active Plugins.
-=======
-	/**
-	 * Get All Active Plugins
->>>>>>> made php-cs changes and added missing docstrings
 	 *
 	 * @since SINCEVERSION
 	 *
 	 * @return array
 	 */
 	public static function getAllActivePlugins() {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		$active_plugins_list = get_option( 'active_plugins' );
 		$active_plugins      = array();
 		foreach ( $active_plugins_list as $active_plugin ) {
@@ -85,37 +78,6 @@ class Plugins {
 			$all_plugins[] = new Plugin( $slug );
 		}
 		return $all_plugins;
-	}
-
-	/**
-	 * Get Active Plugin by Slug
-	 *
-	 * @since SINCEVERSION
-	 *
-	 * @param array $active_plugins. List of Plugin objects.
-	 * @param string $slug.
-	 *
-	 * @return Plugin
-	 */
-	public static function getActivePluginBySlug( array $active_plugins, $slug ) {
-		foreach ( $active_plugins as $plugin ) {
-			if ( $plugin->getSlug() === $slug ) {
-				return $plugin;
-			}
-		}
-=======
-		$active_plugins_list = get_option('active_plugins');
-		$active_plugins = [];
-		foreach( $active_plugins_list as $active_plugin ) {
-=======
-		$active_plugins_list = get_option( 'active_plugins' );
-		$active_plugins      = [];
-		foreach ( $active_plugins_list as $active_plugin ) {
->>>>>>> made php-cs changes
-			$active_plugins[] = new Plugin( $active_plugin, null );
-		}
-		return $active_plugins;
->>>>>>> added theme functionality
 	}
 
 	/**
