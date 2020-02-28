@@ -128,14 +128,14 @@ class UpdateData {
 		include_once ABSPATH . 'wp-admin/includes/theme.php';
 		$theme_information = themes_api(
 			'theme_information',
-			[
+			array(
 				'slug'   => $this->theme->stylesheet,
-				'fields' => [
+				'fields' => array(
 					'downloaded',
 					'last_updated',
 					'active_installs',
-				],
-			]
+				),
+			)
 		);
 
 		return $theme_information;
@@ -169,14 +169,14 @@ class UpdateData {
 	public function setInformationTransient() {
 		$transient = get_transient( 'theme_information' );
 		if ( false === $transient ) {
-			$transient = [];
+			$transient = array();
 		}
 
-		$transient[ $this->theme->stylesheet ] = [
+		$transient[ $this->theme->stylesheet ] = array(
 			'version'     => $this->version,
 			'downloaded'  => $this->downloaded,
 			'releaseDate' => $this->releaseDate,
-		];
+		);
 
 		set_transient( 'theme_information', $transient, 60 );
 	}

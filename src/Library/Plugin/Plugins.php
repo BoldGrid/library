@@ -29,9 +29,11 @@ class Plugins {
 	 */
 	public static function getActive() {
 		// Get an array of plugins that should be within the widget.
-		$plugins = Configs::getPlugins( array(
-			'inNotificationsWidget' => true,
-		) );
+		$plugins = Configs::getPlugins(
+			array(
+				'inNotificationsWidget' => true,
+			)
+		);
 
 		// Then filter that array of plugins to get our active plugins.
 		$activePlugins = array();
@@ -54,7 +56,7 @@ class Plugins {
 	 */
 	public static function getAllActivePlugins() {
 		$active_plugins_list = get_option( 'active_plugins' );
-		$active_plugins      = [];
+		$active_plugins      = array();
 		foreach ( $active_plugins_list as $active_plugin ) {
 			$active_plugins[] = new Plugin( $active_plugin, null );
 		}
@@ -70,8 +72,8 @@ class Plugins {
 	 */
 	public static function getAllPlugins() {
 		include_once ABSPATH . 'wp-admin/includes/plugin.php';
-		$plugins = get_plugins();
-		$all_plugins = [];
+		$plugins     = get_plugins();
+		$all_plugins = array();
 		foreach ( $plugins as $slug => $plugin_data ) {
 			$all_plugins[] = new Plugin( $slug );
 		}

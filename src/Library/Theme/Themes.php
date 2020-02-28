@@ -37,7 +37,7 @@ class Themes {
 	 * @since SINCEVERSION
 	 */
 	public function __construct() {
-		$this->themes = [];
+		$this->themes = array();
 		$wp_themes    = wp_get_themes();
 		foreach ( $wp_themes as $wp_theme ) {
 			$this->themes[] = new Theme( $wp_theme );

@@ -55,7 +55,7 @@ class Page {
 	 * @since 2.12.0
 	 * @var array
 	 */
-	protected $pluginConfig = [];
+	protected $pluginConfig = array();
 
 	/**
 	 * Page Notice
@@ -138,7 +138,7 @@ class Page {
 	 * @return array
 	 */
 	public function getNotices() {
-		$notices = [];
+		$notices = array();
 		foreach ( $this->notices as $notice ) {
 			if ( $notice->getPageSlug() === $this->slug ) {
 				$notices[] = $notice;
@@ -169,7 +169,7 @@ class Page {
 	 * @since 2.12.0
 	 */
 	public function setNotices() {
-		$notices = [];
+		$notices = array();
 		if ( isset( $this->getPluginConfig()['page_notices'] ) ) {
 			foreach ( $this->getPluginConfig()['page_notices'] as $notice ) {
 				$notices[] = new Notice( $this->plugin, $notice );
