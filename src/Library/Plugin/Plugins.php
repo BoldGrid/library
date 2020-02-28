@@ -44,8 +44,9 @@ class Plugins {
 
 		return $activePlugins;
 	}
+
 	/**
-	 * Get All Active Plugins
+	 * Get All Active Plugins.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -58,6 +59,23 @@ class Plugins {
 			$active_plugins[] = new Plugin( $active_plugin, null );
 		}
 		return $active_plugins;
+	}
+
+	/**
+	 * Get All Plugins.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @return array
+	 */
+	public static function getAllPlugins() {
+		include_once ABSPATH . 'wp-admin/includes/plugin.php';
+		$plugins = get_plugins();
+		$all_plugins = [];
+		foreach ( $plugins as $slug => $plugin_data ) {
+			$all_plugins[] = new Plugin( $slug );
+		}
+		return $all_plugins;
 	}
 
 	/**
