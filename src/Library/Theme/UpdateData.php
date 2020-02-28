@@ -127,14 +127,14 @@ class UpdateData {
 		include_once( ABSPATH . 'wp-admin/includes/theme.php' );
 		$theme_information = themes_api(
 			'theme_information',
-			[
-				'slug' => $this->theme->stylesheet,
-				'fields' => [
+			array(
+				'slug'   => $this->theme->stylesheet,
+				'fields' => array(
 					'downloaded',
 					'last_updated',
 					'active_installs',
-				],
-			]
+				),
+			)
 		);
 
 		return $theme_information;

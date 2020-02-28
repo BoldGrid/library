@@ -132,7 +132,7 @@ class UpdateData {
 
 		$version_array      = explode( '.', $this->version );
 
-		$this->minorVersion = implode( '.', [ $version_array[0], $version_array[1] ] );
+		$this->minorVersion = implode( '.', array( $version_array[0], $version_array[1] ) );
 
 		$this->minorVersionInstalls = $this->getMinorVersionInstalls();
 

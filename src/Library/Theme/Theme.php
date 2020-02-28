@@ -140,6 +140,8 @@ class Theme {
 			$transient = null;
 		}
 
+		$transient = null !== $transient ? $transient : array();
+
 		if ( array_key_exists( $this->stylesheet, $transient ) ) {
 			$this->hasUpdate = true;
 		} else {
