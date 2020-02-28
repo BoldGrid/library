@@ -35,7 +35,7 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	protected $childPlugins = [];
+	protected $childPlugins = array();
 
 	/**
 	 * Plugin file.
@@ -55,7 +55,7 @@ class Plugin {
 	 *
 	 * @var array
 	 */
-	public $pluginConfig = [];
+	public $pluginConfig = array();
 
 	/**
 	 * Whether or not this plugin is installed.
@@ -88,7 +88,7 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	protected $pages = [];
+	protected $pages = array();
 
 	/**
 	 * Plugin data, as retrieved from get_plugin_data().
@@ -97,7 +97,7 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	public $pluginData = [];
+	public $pluginData = array();
 
 	/**
 	 * Update plugin data, as retrieved from 'update_plugins' site transient.
@@ -149,7 +149,7 @@ class Plugin {
 
 		$this->setChildPlugins();
 
-		$this->pluginConfig = ! empty( $pluginConfig ) ? $pluginConfig : [];
+		$this->pluginConfig = ! empty( $pluginConfig ) ? $pluginConfig : array();
 
 		if ( $this->getSlug() ) {
 			$this->updateData = new UpdateData( $this );
@@ -227,7 +227,7 @@ class Plugin {
 	 * @return array
 	 */
 	public function getConfig() {
-		$config = [];
+		$config = array();
 
 		$plugins = Configs::get( 'plugins' );
 		if ( $plugins ) {
@@ -373,9 +373,9 @@ class Plugin {
 	 * @return array
 	 */
 	public function getPluginsChecked() {
-		$pluginsChecked = Settings::getKey( 'plugins_checked', [] );
+		$pluginsChecked = Settings::getKey( 'plugins_checked', array() );
 
-		$pluginsChecked = ! empty( $pluginsChecked[ $this->file ] ) ? $pluginsChecked[ $this->file ] : [];
+		$pluginsChecked = ! empty( $pluginsChecked[ $this->file ] ) ? $pluginsChecked[ $this->file ] : array();
 
 		return $pluginsChecked;
 	}
@@ -398,7 +398,7 @@ class Plugin {
 	 * @access private
 	 */
 	public function setPages() {
-		$pages = [];
+		$pages = array();
 		if ( isset( $this->pluginConfig['pages'] ) ) {
 			foreach ( $this->pluginConfig['pages'] as $page ) {
 				$pages[] = new Page( $this, $page );

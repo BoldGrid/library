@@ -30,9 +30,12 @@ class Checker {
 	private $pluginPattern = '^(boldgrid-|post-and-page-builder)';
 
 	public function __construct() {
-		add_action( 'upgrader_process_complete', function() {
-			delete_site_transient( 'boldgrid_plugins_filtered' );
-		} );
+		add_action(
+			'upgrader_process_complete',
+			function() {
+				delete_site_transient( 'boldgrid_plugins_filtered' );
+			}
+		);
 	}
 
 	/**
@@ -42,7 +45,8 @@ class Checker {
 	 */
 	public function run() {
 
-		add_action( 'boldgrid_plugins_updated',
+		add_action(
+			'boldgrid_plugins_updated',
 			array(
 				'Boldgrid\Library\Util\Option',
 				'deletePluginTransients',

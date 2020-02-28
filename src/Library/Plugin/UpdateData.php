@@ -132,7 +132,7 @@ class UpdateData {
 
 		$version_array = explode( '.', $this->version );
 
-		$this->minorVersion = implode( '.', [ $version_array[0], $version_array[1] ] );
+		$this->minorVersion = implode( '.', array( $version_array[0], $version_array[1] ) );
 
 		$this->minorVersionInstalls = $this->getMinorVersionInstalls();
 
@@ -177,22 +177,22 @@ class UpdateData {
 	public function fetchResponseData() {
 		$plugin_information = plugins_api(
 			'plugin_information',
-			[
+			array(
 				'slug'   => $this->plugin->getSlug(),
-				'fields' => [
+				'fields' => array(
 					'downloaded',
 					'last_updated',
 					'active_installs',
-				],
-			]
+				),
+			)
 		);
 		if ( is_a( $plugin_information, 'WP_Error' ) ) {
-			$plugin_information = [
+			$plugin_information = array(
 				'active_installs' => '40000',
 				'version'         => '1.13.1',
 				'downloaded'      => '123456789',
-				'last_updated'    => date( 'Y-m-d H:i:s' ),
-			];
+				'last_updated'    => gmdate( 'Y-m-d H:i:s' ),
+			);
 			return (object) $plugin_information;
 		}
 
@@ -216,7 +216,7 @@ class UpdateData {
 			$response = false;
 		}
 
-		$stats = [];
+		$stats = array();
 		if ( false !== $response ) {
 			$response = json_decode( $response, true );
 
@@ -255,16 +255,16 @@ class UpdateData {
 	public function setInformationTransient() {
 		$transient = get_transient( 'plugin_information' );
 		if ( false === $transient ) {
-			$transient = [];
+			$transient = array();
 		}
 
-		$transient[ $this->plugin->getSlug() ] = [
+		$transient[ $this->plugin->getSlug() ] = array(
 			'activeInstalls' => $this->activeInstalls,
 			'version'        => $this->version,
 			'downloaded'     => $this->downloaded,
 			'releaseDate'    => $this->releaseDate,
 			'stats'          => $this->stats,
-		];
+		);
 
 		set_transient( 'plugin_information', $transient, 60 );
 	}

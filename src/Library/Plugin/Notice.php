@@ -237,17 +237,17 @@ class Notice {
 	 *     @type int Index of Notice in Options array.
 	 */
 	private function getFromOptions( $noticeId ) {
-		$option      = get_option( 'boldgrid_plugin_page_notices', [] );
+		$option      = get_option( 'boldgrid_plugin_page_notices', array() );
 		$optionCount = count( $option );
 
 		$i = 0;
 		foreach ( $option as $notice ) {
 			if ( $option[ $i ]['id'] === $noticeId ) {
-				return [ $option[ $i ], $i ];
+				return array( $option[ $i ], $i );
 			}
 			$i++;
 		}
-		return [];
+		return array();
 	}
 
 	/**
@@ -260,21 +260,21 @@ class Notice {
 	 * @since 2.12.0
 	 */
 	public function updateNoticeOption() {
-		$option = get_option( 'boldgrid_plugin_page_notices', [] );
+		$option = get_option( 'boldgrid_plugin_page_notices', array() );
 		if ( $this->alreadyExists() ) {
-			$option[ $this->getFromOptions( $this->id )[1] ] = [
+			$option[ $this->getFromOptions( $this->id )[1] ] = array(
 				'id'       => $this->id,
 				'isUnread' => $this->isUnread,
 				'version'  => $this->version,
 				'page'     => $this->pageSlug,
-			];
+			);
 		} else {
-			$option[] = [
+			$option[] = array(
 				'id'       => $this->id,
 				'isUnread' => $this->isUnread,
 				'version'  => $this->version,
 				'page'     => $this->pageSlug,
-			];
+			);
 		}
 		update_option( 'boldgrid_plugin_page_notices', $option );
 	}

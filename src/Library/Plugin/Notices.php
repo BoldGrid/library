@@ -55,12 +55,13 @@ class Notices {
 			$handle,
 			Library\Configs::get( 'libraryUrl' ) . 'src/assets/js/plugin-notices.js',
 			'jquery',
-			Library\Configs::get( 'libraryVersion' )
+			Library\Configs::get( 'libraryVersion' ),
+			false
 		);
 
-		$translation = [
-			'counts' => [],
-		];
+		$translation = array(
+			'counts' => array(),
+		);
 
 		/**
 		 * Allow other plugins to add notice counts.
