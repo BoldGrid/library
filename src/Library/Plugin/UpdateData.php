@@ -153,6 +153,7 @@ class UpdateData {
 				return $this->activeInstalls * $x;
 			}
 		}
+		$now = new \DateTime();
 		$this->days = date_diff($now, $this->releaseDate )->d;
 		$this->days = date_diff( $now, $this->releaseDate )->format('%a');
 	}

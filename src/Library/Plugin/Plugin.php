@@ -493,29 +493,12 @@ class Plugin {
 	 * @param string $slug A plugin's slug.
 	 */
 	public function setSlug( $slug = null ) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		if ( ! empty( $slug ) && false === strpos( $slug, '/' ) ) {
 			$this->slug = $slug;
 		} elseif ( ! empty( $slug ) && false !== strpos( $slug, '/' ) ) {
 			$this->slug = explode( '/', $slug )[0];
 		} else {
 			$this->slug = explode( '/', $this->file )[0];
-=======
-		if ( ! empty( $slug ) && false === strpos( $slug, '/' ) ) { 
-=======
-		if ( ! empty( $slug ) && false === strpos( $slug, '/' ) ) {
->>>>>>> made php-cs changes
-			$this->slug = $slug;
-		} elseif ( ! empty( $slug ) && false !== strpos( $slug, '/' ) ) {
-			$this->slug = explode( '/', $slug )[0];
-		} else {
-<<<<<<< HEAD
-			$this->slug = explode( '/' , $this->file)[0];
->>>>>>> added theme functionality
-=======
-			$this->slug = explode( '/', $this->file )[0];
->>>>>>> made php-cs changes
 		}
 	}
 
