@@ -115,18 +115,19 @@ class UpdateData {
 		$responseTransient = $this->getInformationTransient();
 
 		if ( false !== $responseTransient ) {
-			$this->activeInstalls = $responseTransient['activeInstalls'];
+			$this->responseData = ( object ) $responseTransient;
+			$this->activeInstalls = $responseTransient['active_installs'];
 			$this->version        = $responseTransient['version'];
 			$this->downloaded     = $responseTransient['downloaded'];
-			$this->releaseDate    = $responseTransient['releaseDate'];
+			$this->releaseDate    = $responseTransient['last_updated'];
 			$this->stats          = $responseTransient['stats'];
 		} else {
-			$responseData         = $this->fetchResponseData();
-			$this->activeInstalls = $responseData->active_installs;
-			$this->version        = $responseData->version;
-			$this->downloaded     = $responseData->downloaded;
-			$this->releaseDate    = new \DateTime( $responseData->last_updated );
-			$this->stats          = $this->fetchPluginStats();
+			$this->responseData   = $this->fetchResponseData();
+			$this->activeInstalls = $this->responseData->active_installs;
+			$this->version        = $this->responseData->version;
+			$this->downloaded     = $this->responseData->downloaded;
+			$this->releaseDate    = new \DateTime( $this->responseData->last_updated );
+			$this->stats          = ( $this->fetchPluginStats() ) ? $this->fetchPluginStats() : array();
 		}
 		$this->setInformationTransient();
 
@@ -212,10 +213,10 @@ class UpdateData {
 
 		$response = wp_remote_get( 'https://api.wordpress.org/stats/plugin/1.0/' . $this->plugin->getSlug() );
 
-		if ( array_key_exists( 'body', $response ) ) {
+		if ( $response && array_key_exists( 'body', $response ) ) {
 			$response = $response['body'];
 		} else {
-			$response = false;
+			return false;
 		}
 
 		$stats = array();
@@ -261,10 +262,10 @@ class UpdateData {
 		}
 
 		$transient[ $this->plugin->getSlug() ] = array(
-			'activeInstalls' => $this->activeInstalls,
+			'active_installs' => $this->activeInstalls,
 			'version'        => $this->version,
 			'downloaded'     => $this->downloaded,
-			'releaseDate'    => $this->releaseDate,
+			'last_updated'    => $this->releaseDate,
 			'stats'          => $this->stats,
 		);
 

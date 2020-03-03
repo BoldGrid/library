@@ -257,4 +257,18 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 
 		$this->assertTrue( empty( $plugin->getPageBySlug( 'not_a_real_page_slug' ) ) );
 	}
+
+	public function test_getUpdatePlugins() {
+		global $wpdb;
+		wp_update_plugins();
+		$updatePlugins = unserialize(
+			$wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT option_value FROM {$wpdb->prefix}options WHERE option_name = %s",
+					"_site_transient_update_plugins"
+					)
+				)
+			);
+		$this->assertEquals( $updatePlugins->last_checked, $this->backup->getUpdatePlugins()->last_checked );
+	}
 }

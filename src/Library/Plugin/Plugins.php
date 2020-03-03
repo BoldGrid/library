@@ -96,5 +96,6 @@ class Plugins {
 				return $plugin;
 			}
 		}
+		return new \WP_Error( 'boldgrid_plugin_not_found', __( sprintf( 'No plugin could be found with the slug %s.', $slug ), 'boldgrid_library' ) );
 	}
 }

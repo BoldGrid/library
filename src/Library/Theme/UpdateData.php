@@ -89,14 +89,15 @@ class UpdateData {
 		$responseTransient = $this->getInformationTransient();
 
 		if ( false !== $responseTransient ) {
+			$this->responseData = ( object ) $responseTransient;
 			$this->version        = $responseTransient['version'];
 			$this->downloaded     = $responseTransient['downloaded'];
-			$this->releaseDate    = $responseTransient['releaseDate'];
+			$this->releaseDate    = $responseTransient['last_updated'];
 		}  else {
-			$responseData = $this->fetchResponseData();
-			$this->version        = $responseData->version;
-			$this->downloaded     = $responseData->downloaded;
-			$this->releaseDate    = new \DateTime( $responseData->last_updated );
+			$this->responseData = $this->fetchResponseData();
+			$this->version        = $this->responseData->version;
+			$this->downloaded     = $this->responseData->downloaded;
+			$this->releaseDate    = new \DateTime( $this->responseData->last_updated );
 		}
 		$this->setInformationTransient();
 
@@ -148,7 +149,7 @@ class UpdateData {
 	 * @return array
 	 */
 	public function getInformationTransient() {
-		$transient = get_transient('theme_information');
+		$transient = get_transient('boldgrid_theme_information');
 		if ( false === $transient ) {
 			return false;
 		}
@@ -172,7 +173,7 @@ class UpdateData {
 		$transient[ $this->theme->stylesheet ] = array(
 			'version'     => $this->version,
 			'downloaded'  => $this->downloaded,
-			'releaseDate' => $this->releaseDate,
+			'last_updated' => $this->releaseDate,
 		);
 
 		set_transient( 'boldgrid_theme_information', $transient, 60 );
