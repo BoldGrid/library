@@ -69,7 +69,7 @@ class Themes {
 				return $theme;
 			}
 		}
-		return new \WP_Error( 'boldgrid_theme_not_found', __( sprintf( 'No theme could be found with the stylesheet %s.', $stylesheet ), 'boldgrid_library' ) );
+		return new \WP_Error( 'boldgrid_theme_not_found', sprintf( 'No theme could be found with the stylesheet %s.', $stylesheet ) );
 	}
 
 	/**

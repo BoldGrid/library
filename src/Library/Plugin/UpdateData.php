@@ -115,7 +115,7 @@ class UpdateData {
 		$responseTransient = $this->getInformationTransient();
 
 		if ( false !== $responseTransient ) {
-			$this->responseData = ( object ) $responseTransient;
+			$this->responseData   = (object) $responseTransient;
 			$this->activeInstalls = $responseTransient['active_installs'];
 			$this->version        = $responseTransient['version'];
 			$this->downloaded     = $responseTransient['downloaded'];
@@ -131,13 +131,13 @@ class UpdateData {
 		}
 		$this->setInformationTransient();
 
-		$version_array      = explode( '.', $this->version );
+		$version_array = explode( '.', $this->version );
 
 		$this->minorVersion = implode( '.', array( $version_array[0], $version_array[1] ) );
 
 		$this->minorVersionInstalls = $this->getMinorVersionInstalls();
 
-		$now = new \DateTime();
+		$now        = new \DateTime();
 		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
 	}
 
@@ -154,9 +154,8 @@ class UpdateData {
 				return $this->activeInstalls * $x;
 			}
 		}
-		$now = new \DateTime();
-		$this->days = date_diff($now, $this->releaseDate )->d;
-		$this->days = date_diff( $now, $this->releaseDate )->format('%a');
+		$now        = new \DateTime();
+		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
 	}
 
 	/**
@@ -263,10 +262,10 @@ class UpdateData {
 
 		$transient[ $this->plugin->getSlug() ] = array(
 			'active_installs' => $this->activeInstalls,
-			'version'        => $this->version,
-			'downloaded'     => $this->downloaded,
+			'version'         => $this->version,
+			'downloaded'      => $this->downloaded,
 			'last_updated'    => $this->releaseDate,
-			'stats'          => $this->stats,
+			'stats'           => $this->stats,
 		);
 
 		set_transient( 'boldgrid_plugin_information', $transient, 60 );

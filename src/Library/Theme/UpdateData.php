@@ -89,21 +89,21 @@ class UpdateData {
 		$responseTransient = $this->getInformationTransient();
 
 		if ( false !== $responseTransient ) {
-			$this->responseData = ( object ) $responseTransient;
-			$this->version        = $responseTransient['version'];
-			$this->downloaded     = $responseTransient['downloaded'];
-			$this->releaseDate    = $responseTransient['last_updated'];
-		}  else {
+			$this->responseData = (object) $responseTransient;
+			$this->version      = $responseTransient['version'];
+			$this->downloaded   = $responseTransient['downloaded'];
+			$this->releaseDate  = $responseTransient['last_updated'];
+		} else {
 			$this->responseData = $this->fetchResponseData();
-			$this->version        = $this->responseData->version;
-			$this->downloaded     = $this->responseData->downloaded;
-			$this->releaseDate    = new \DateTime( $this->responseData->last_updated );
+			$this->version      = $this->responseData->version;
+			$this->downloaded   = $this->responseData->downloaded;
+			$this->releaseDate  = new \DateTime( $this->responseData->last_updated );
 		}
 		$this->setInformationTransient();
 
 		$now = new \DateTime();
 
-		$this->days = date_diff( $now, $this->releaseDate )->format('%a');
+		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
 	}
 
 	/**
@@ -125,7 +125,7 @@ class UpdateData {
 	 * @return Response
 	 */
 	public function fetchResponseData() {
-		include_once( ABSPATH . 'wp-admin/includes/theme.php' );
+		include_once ABSPATH . 'wp-admin/includes/theme.php';
 		$theme_information = themes_api(
 			'theme_information',
 			array(
@@ -149,7 +149,7 @@ class UpdateData {
 	 * @return array
 	 */
 	public function getInformationTransient() {
-		$transient = get_transient('boldgrid_theme_information');
+		$transient = get_transient( 'boldgrid_theme_information' );
 		if ( false === $transient ) {
 			return false;
 		}
@@ -171,8 +171,8 @@ class UpdateData {
 		}
 
 		$transient[ $this->theme->stylesheet ] = array(
-			'version'     => $this->version,
-			'downloaded'  => $this->downloaded,
+			'version'      => $this->version,
+			'downloaded'   => $this->downloaded,
 			'last_updated' => $this->releaseDate,
 		);
 

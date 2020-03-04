@@ -478,7 +478,7 @@ class Plugin {
 		$this->file = ! empty( $file ) ? $file : $this->slug . '/' . $this->slug . '.php';
 		if ( ! empty( $file ) ) {
 			$this->file = $file;
-		} elseif ( false !== strpos($this->slug, '.php' ) ) {
+		} elseif ( false !== strpos( $this->slug, '.php' ) ) {
 			$this->file = $this->slug;
 		} else {
 			$this->file = $this->slug . '/' . $this->slug . '.php';
