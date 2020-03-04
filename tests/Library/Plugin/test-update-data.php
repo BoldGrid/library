@@ -11,7 +11,6 @@
 namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library\Configs;
-use Boldgrid\Library\Library\Plugin;
 
 function wp_remote_get( $url ) {
 	if ( false === strpos( $url, 'FakeFake' ) ) {
@@ -44,7 +43,7 @@ class Test_BoldGrid_Library_Library_Plugin_UpdateData extends \WP_UnitTestCase {
 	}
 
 	public function test_getResponseData() {
-		$updateData  = new Plugin\UpdateData( null, 'akismet' );
+		$updateData  = new UpdateData( null, 'akismet' );
 		$responseData = $updateData->getResponseData();
 		$responseData_props = array_keys( ( array ) $responseData );
 		sort( $responseData_props );
@@ -60,7 +59,7 @@ class Test_BoldGrid_Library_Library_Plugin_UpdateData extends \WP_UnitTestCase {
 	}
 
 	public function test_fetchPluginStats() {
-		$updateData = new Plugin\UpdateData( null, 'FakeFake' );
+		$updateData = new UpdateData( null, 'FakeFake' );
 		$this->assertFalse( $updateData->fetchPluginStats() );
 	}
 }
