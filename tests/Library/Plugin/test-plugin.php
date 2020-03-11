@@ -44,7 +44,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 
 		$this->resetConfigs();
 		$this->config         = $this->getPluginConfig();
-		$this->backup         = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config, $this->plugin_data );
+		$this->backup         = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config );
 		$this->backup_premium = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup-premium' );
 	}
 
@@ -227,7 +227,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 		);
 
 		$expected_markup    = '<span class="bglib-unread-notice-count">' . count( $two_page_config['page_notices'] ) . '</span>';
-		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config, $this->plugin_data );
+		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config );
 		$plugin->pluginData = $this->plugin_data;
 		$this->assertEquals( $plugin->getUnreadMarkup(), $expected_markup );
 	}
@@ -244,7 +244,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 			]
 		);
 
-		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config, $this->plugin_data );
+		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config );
 		$plugin->pluginData = $this->plugin_data;
 		$success_count      = 0;
 		foreach ( $two_page_config['pages'] as $config_page ) {
