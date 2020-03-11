@@ -137,11 +137,11 @@ class Plugin {
 	 * @param string $slug For example: "plugin" from plugin/plugin.php.
 	 * @param array  $pluginConfig An array of plugin config data.
 	 */
-	public function __construct( $slug, $pluginConfig = null ) {
+	public function __construct( $slug = null, $pluginConfig = null, $file = null ) {
 
 		$this->setSlug( $slug );
 
-		$this->setFile();
+		$this->setFile( $file );
 
 		$this->setPath();
 

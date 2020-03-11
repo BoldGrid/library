@@ -74,8 +74,8 @@ class Plugins {
 		include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		$plugins     = get_plugins();
 		$all_plugins = array();
-		foreach ( $plugins as $slug => $plugin_data ) {
-			$all_plugins[] = new Plugin( $slug );
+		foreach ( $plugins as $file => $plugin_data ) {
+			$all_plugins[] = new Plugin( plugin_basename( $file ), null, $file );
 		}
 		return $all_plugins;
 	}
@@ -91,6 +91,7 @@ class Plugins {
 	 * @return Plugin
 	 */
 	public static function getActivePluginBySlug( array $active_plugins, $slug ) {
+		$active_plugins = self::getAllPlugins();
 		foreach ( $active_plugins as $plugin ) {
 			if ( $plugin->getSlug() === $slug ) {
 				return $plugin;
