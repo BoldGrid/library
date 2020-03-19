@@ -493,10 +493,19 @@ class Plugin {
 	 * @param string $slug A plugin's slug.
 	 */
 	public function setSlug( $slug = null ) {
-		if ( ! empty( $slug ) && false === strpos( $slug, '/' ) ) {
-			$this->slug = $slug;
-		} elseif ( ! empty( $slug ) && false !== strpos( $slug, '/' ) ) {
+		if ( ! empty( $slug ) && false !== strpos( $slug, '/' ) ) {
 			$this->slug = explode( '/', $slug )[0];
+		} elseif ( ! empty( $slug ) && false !== strpos( $slug, '.' ) ) {
+			$file_contents = file_get_contents( WP_PLUGIN_DIR . '/' . $slug );
+			$lines = explode("\n", $file_contents);
+			foreach ( $lines as $line ) {
+				if ( false !== strpos( $line, '@package' ) ) {
+					$package = strtolower( explode( ' ', $line )[3] );
+					$this->slug = str_replace( '_', '-', $package);
+				}
+			}
+		} elseif ( ! empty( $slug ) && false === strpos( $slug, '/' ) ) {
+				$this->slug = $slug;
 		} else {
 			$this->slug = explode( '/', $this->file )[0];
 		}

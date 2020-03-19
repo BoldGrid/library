@@ -184,6 +184,7 @@ class UpdateData {
 				),
 			)
 		);
+
 		if ( is_a( $plugin_information, 'WP_Error' ) ) {
 			$plugin_information = $this->pluginsApiFailed( $plugin_information );
 			return (object) $plugin_information;
@@ -271,22 +272,17 @@ class UpdateData {
 	 * @param WP_Error $error Wordpress error returned by plugins_api().
 	 */
 	public function pluginsApiFailed( \WP_Error $errors ) {
-		$plugin_information = array();
-		foreach( $errors->get_error_messages() as $error )
-			error_log( $this->plugin->getFile() . ':: ' . json_encode( $error ) );
-			if ( "Plugin not found." === $error ) {
-				$current         = get_site_transient( 'update_plugins' );
-				if ( isset( $current->response[ $this->plugin->getFile() ] ) ) {
-					$update_data = $current->response[ $this->plugin->getFile() ];
-					$plugin_information = array(
-						'active_installs' => '0',
-						'version'         => $current->response[ $this->plugin->getFile() ]->new_version,
-						'downloaded'      => '000000',
-						'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
-						'third_party'     => true,
-					);
-				}
-			}
+		$current     = get_site_transient( 'update_plugins' );
+		$new_version = isset( $current->response[ $this->plugin->getFile() ] ) ? $current->response[ $this->plugin->getFile() ]->new_version : '';
+
+		$plugin_information = array(
+			'active_installs' => '0',
+			'version'         => $new_version,
+			'downloaded'      => '000000',
+			'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
+			'third_party'     => true,
+		);
+
 		return $plugin_information;
 	}
 }
