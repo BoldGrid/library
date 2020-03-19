@@ -273,7 +273,6 @@ class UpdateData {
 	public function pluginsApiFailed( \WP_Error $errors ) {
 		$plugin_information = array();
 		foreach( $errors->get_error_messages() as $error )
-			error_log( $this->plugin->getFile() . ':: ' . json_encode( $error ) );
 			if ( "Plugin not found." === $error ) {
 				$current         = get_site_transient( 'update_plugins' );
 				if ( isset( $current->response[ $this->plugin->getFile() ] ) ) {
