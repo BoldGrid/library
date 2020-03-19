@@ -121,21 +121,17 @@ class UpdateData {
 			$this->downloaded     = $responseTransient['downloaded'];
 			$this->releaseDate    = $responseTransient['last_updated'];
 			$this->stats          = $responseTransient['stats'];
+			$this->thirdParty     = $responseTransient['third_party'];
 		} else {
 			$this->responseData   = $this->fetchResponseData();
-			$this->activeInstalls = $this->responseData->active_installs;
-			$this->version        = $this->responseData->version;
-			$this->downloaded     = $this->responseData->downloaded;
-			$this->releaseDate    = new \DateTime( $this->responseData->last_updated );
+			$this->activeInstalls = isset( $this->responseData->active_installs ) ? $this->responseData->active_installs : '0';
+			$this->version        = isset( $this->responseData->version ) ? $this->responseData->version : null;
+			$this->downloaded     = isset( $this->responseData->downloaded ) ? $this->responseData->downloaded : '0';
+			$this->releaseDate    = isset( $this->responseData->last_updated ) ? new \DateTime( $this->responseData->last_updated ) : new \DateTime( gmdate( 'Y-m-d H:i:s', 1 ) );
 			$this->stats          = ( $this->fetchPluginStats() ) ? $this->fetchPluginStats() : array();
+			$this->thirdParty     = isset( $this->responseData->third_party ) ? $this->responseData->third_party : false;
 		}
 		$this->setInformationTransient();
-
-		$version_array = explode( '.', $this->version );
-
-		$this->minorVersion = implode( '.', array( $version_array[0], $version_array[1] ) );
-
-		$this->minorVersionInstalls = $this->getMinorVersionInstalls();
 
 		$now        = new \DateTime();
 		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
@@ -189,12 +185,7 @@ class UpdateData {
 			)
 		);
 		if ( is_a( $plugin_information, 'WP_Error' ) ) {
-			$plugin_information = array(
-				'active_installs' => '40000',
-				'version'         => '1.13.1',
-				'downloaded'      => '123456789',
-				'last_updated'    => gmdate( 'Y-m-d H:i:s' ),
-			);
+			$plugin_information = $this->pluginsApiFailed( $plugin_information );
 			return (object) $plugin_information;
 		}
 
@@ -266,8 +257,36 @@ class UpdateData {
 			'downloaded'      => $this->downloaded,
 			'last_updated'    => $this->releaseDate,
 			'stats'           => $this->stats,
+			'third_party'     => $this->thirdParty,
 		);
 
 		set_transient( 'boldgrid_plugin_information', $transient, 60 );
+	}
+
+	/**
+	 * Plugins Api Failed.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param WP_Error $error Wordpress error returned by plugins_api().
+	 */
+	public function pluginsApiFailed( \WP_Error $errors ) {
+		$plugin_information = array();
+		foreach( $errors->get_error_messages() as $error )
+			error_log( $this->plugin->getFile() . ':: ' . json_encode( $error ) );
+			if ( "Plugin not found." === $error ) {
+				$current         = get_site_transient( 'update_plugins' );
+				if ( isset( $current->response[ $this->plugin->getFile() ] ) ) {
+					$update_data = $current->response[ $this->plugin->getFile() ];
+					$plugin_information = array(
+						'active_installs' => '0',
+						'version'         => $current->response[ $this->plugin->getFile() ]->new_version,
+						'downloaded'      => '000000',
+						'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
+						'third_party'     => true,
+					);
+				}
+			}
+		return $plugin_information;
 	}
 }

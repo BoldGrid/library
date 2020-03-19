@@ -112,7 +112,7 @@ div .dashicons {
 	transform: rotateZ(0deg);
 }
 
-.bglib-collapsible-open .dashicons {
+.bglib-collapsible-open .dashicons-arrow-down-alt2 {
 	transform: rotateZ(-180deg);
 }
 
