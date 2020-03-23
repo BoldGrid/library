@@ -66,6 +66,17 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 			self.triggerPageview( pageviewParams );
 		},
 
+		onVideoClick: function() {
+			ga( 'create', self.i18n.ga_id, 'auto' );
+			ga( 'send', {
+				hitType: 'event',
+				eventCategory: 'Videos',
+				eventAction: 'play',
+				eventLabel: $( this ).attr( 'data-id' )
+			} );
+
+		},
+
 		/**
 		 * Trigger a pageview.
 		 *
@@ -110,6 +121,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 				// Listen to clicks on the bglib UI's nav.
 				$( '.bg-left-nav li' ).on( 'click', self.onNavClick );
+				$( '.video.button.thickbox' ).on( 'click', self.onVideoClick );
 			} );
 		}
 	};
