@@ -90,9 +90,9 @@ class Theme {
 		$this->wp_theme   = $wp_theme;
 		$this->stylesheet = $this->wp_theme->__get( 'stylesheet' );
 		$this->version    = $this->wp_theme->__get( 'version' );
-		$this->parentIs();
-		$this->getHasUpdate();
-		$this->getIsActive();
+		$this->getParent();
+		$this->setHasUpdate();
+		$this->setIsActive();
 		$this->updateData = new UpdateData( $this );
 	}
 
@@ -103,8 +103,7 @@ class Theme {
 	 *
 	 * @return string
 	 */
-
-	public function parentIs() {
+	public function getParent() {
 		$this->parent = $this->wp_theme->parent();
 		return $this->parent;
 	}
@@ -113,27 +112,22 @@ class Theme {
 	 * Determine if this is the active theme or not.
 	 *
 	 * @since SINCEVERSION
-	 *
-	 * @return bool
 	 */
-	public function getIsActive() {
+	private function setIsActive() {
 		$active_theme = wp_get_theme();
 		if ( $active_theme->__get( 'stylesheet' ) === $this->stylesheet ) {
 			$this->isActive = true;
 		} else {
 			$this->isActive = false;
 		}
-
-		return $this->isActive;
 	}
+
 	/**
 	 * Determine if this theme has an update available.
 	 *
 	 * @since SINCEVERSION
-	 *
-	 * @return bool
 	 */
-	public function getHasUpdate() {
+	public function setHasUpdate() {
 		if ( get_site_transient( 'update_themes' ) ) {
 			$transient = get_site_transient( 'update_themes' )->response;
 		} else {
@@ -147,6 +141,5 @@ class Theme {
 		} else {
 			$this->hasUpdate = false;
 		}
-		return $this->hasUpdate;
 	}
 }

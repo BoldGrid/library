@@ -475,7 +475,6 @@ class Plugin {
 	 * @param string $file A plugin's file.
 	 */
 	public function setFile( $file = null ) {
-		$this->file = ! empty( $file ) ? $file : $this->slug . '/' . $this->slug . '.php';
 		if ( ! empty( $file ) ) {
 			$this->file = $file;
 		} elseif ( false !== strpos( $this->slug, '.php' ) ) {
@@ -492,7 +491,7 @@ class Plugin {
 	 *
 	 * @param string $slug A plugin's slug.
 	 */
-	public function setSlug( $slug = null ) {
+	public function setSlug( $slug ) {
 		if ( ! empty( $slug ) && false !== strpos( $slug, '/' ) ) {
 			$this->slug = explode( '/', $slug )[0];
 		} elseif ( ! empty( $slug ) && false !== strpos( $slug, '.' ) ) {

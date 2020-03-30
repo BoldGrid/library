@@ -115,9 +115,6 @@ class Start {
 		// Registration class runs Filter::add($this) in __construct.
 		$registration = new \Boldgrid\Library\Library\Registration();
 
-		// Update class runs Filter::add($this) in __construct.
-		// $update = new \Boldgrid\Library\Library\Update();
-
 		// PostNewKey class runs Filter::add($this) in __construct.
 		$postNewKey = new \Boldgrid\Library\Library\Key\PostNewKey();
 

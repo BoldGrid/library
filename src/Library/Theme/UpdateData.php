@@ -83,7 +83,7 @@ class UpdateData {
 	 * @param string $stylesheet Theme's Stylesheet.
 	 */
 	public function __construct( $theme = null, $stylesheet = null ) {
-		// If a plugin object is passed in constructer, use that, or else create a new one from slug.
+		// If a theme object is passed in constructer, use that, or else create a new one from stylesheet.
 		$this->theme = ( null !== $theme ) ? $theme : new Theme( $stylesheet );
 
 		$responseTransient = $this->getInformationTransient();

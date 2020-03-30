@@ -51,7 +51,7 @@ class Themes {
 	 *
 	 * @return array
 	 */
-	public function getList() {
+	public function get() {
 		return $this->themes;
 	}
 
@@ -64,7 +64,7 @@ class Themes {
 	 * @return Theme
 	 */
 	public function getFromStylesheet( $stylesheet ) {
-		foreach ( $this->getList() as $theme ) {
+		foreach ( $this->get() as $theme ) {
 			if ( $theme->stylesheet === $stylesheet ) {
 				return $theme;
 			}

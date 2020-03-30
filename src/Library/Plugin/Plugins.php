@@ -1,6 +1,8 @@
 <?php
 /**
  * BoldGrid Library Plugin Plugins.
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Plugin
  *
@@ -55,12 +57,12 @@ class Plugins {
 	 * @return array
 	 */
 	public static function getAllActivePlugins() {
-		$active_plugins_list = get_option( 'active_plugins' );
-		$active_plugins      = array();
-		foreach ( $active_plugins_list as $active_plugin ) {
-			$active_plugins[] = new Plugin( $active_plugin, null );
+		$activePluginsList  = get_option( 'active_plugins' );
+		$activePlugins      = array();
+		foreach ( $activePluginsList as $activePlugin ) {
+			$activePlugins[] = new Plugin( $activePlugin, null );
 		}
-		return $active_plugins;
+		return $activePlugins;
 	}
 
 	/**
@@ -81,18 +83,18 @@ class Plugins {
 	}
 
 	/**
-	 * Get Active Plugin by Slug
+	 * Get Active Plugin by Slug.
 	 *
 	 * @since SINCEVERSION
 	 *
-	 * @param array $active_plugins. List of Plugin objects.
-	 * @param string $slug.
+	 * @param array  $activePlugins List of Plugin objects.
+	 * @param string $slug Slug string.
 	 *
 	 * @return Plugin
 	 */
-	public static function getActivePluginBySlug( array $active_plugins, $slug ) {
-		$active_plugins = self::getAllPlugins();
-		foreach ( $active_plugins as $plugin ) {
+	public static function getBySlug( array $activePlugins, $slug ) {
+		$activePlugins = self::getAllPlugins();
+		foreach ( $activePlugins as $plugin ) {
 			if ( $plugin->getSlug() === $slug ) {
 				return $plugin;
 			}

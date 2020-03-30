@@ -186,7 +186,7 @@ class UpdateData {
 		);
 
 		if ( is_a( $plugin_information, 'WP_Error' ) ) {
-			$plugin_information = $this->pluginsApiFailed( $plugin_information );
+			$plugin_information = $this->getGenericInfo( $plugin_information );
 			return (object) $plugin_information;
 		}
 
@@ -271,7 +271,7 @@ class UpdateData {
 	 *
 	 * @param WP_Error $error Wordpress error returned by plugins_api().
 	 */
-	public function pluginsApiFailed( \WP_Error $errors ) {
+	public function getGenericInfo( \WP_Error $errors ) {
 		$current     = get_site_transient( 'update_plugins' );
 		$new_version = isset( $current->response[ $this->plugin->getFile() ] ) ? $current->response[ $this->plugin->getFile() ]->new_version : '';
 
