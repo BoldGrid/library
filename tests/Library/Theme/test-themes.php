@@ -31,7 +31,7 @@ class Test_BoldGrid_Library_Library_Theme_Themes extends WP_UnitTestCase {
 	 */
 	public function setUp() {
 		global $wpdb;
-		
+
 		$this->themes = new Theme\Themes();
 		$this->wp_themes = wp_get_themes();
 		$theme_dirs = scandir( ABSPATH . '/wp-content/themes/' );
@@ -55,7 +55,7 @@ class Test_BoldGrid_Library_Library_Theme_Themes extends WP_UnitTestCase {
 
 	public function test_getList() {
 		$stylesheet_list = [];
-		$themes_list = $this->themes->getList();
+		$themes_list = $this->themes->get();
 		foreach ( $themes_list as $theme ) {
 			$stylesheet_list[] = $theme->stylesheet;
 		}

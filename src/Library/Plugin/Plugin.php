@@ -177,7 +177,7 @@ class Plugin {
 			$this->slug = $pluginName;
 		} else {
 			// If the $pluginName does contain a '.' then it is a file, so the slug must be derived from that.
-			$this->slugFromFile( $pluginName );
+			$this->slug = $this->slugFromFile( $pluginName );
 		}
 	}
 
@@ -197,7 +197,7 @@ class Plugin {
 	public function determineFile( $pluginName ) {
 		if ( false === strpos( $pluginName, '.' ) ) {
 			// If the $pluginName does not contain a '.' then this is a slug, not a file.
-			$this->fileFromSlug( $pluginName );
+			$this->file = $this->fileFromSlug( $pluginName );
 		} else {
 			// If the $pluginName does contain a '.' then it is a file, so the slug must be derived from that.
 			$this->file = $pluginName;
@@ -213,10 +213,10 @@ class Plugin {
 	 *
 	 * @param string $file Filename passed in construction.
 	 */
-	public function slugFromFile( $file ) {
+	public static function slugFromFile( $file ) {
 		if ( false !== strpos( $file, '/' ) ) {
 			// If the filename has a '/' in it, the slug should be the first part of the string.
-			$this->slug = explode( '/', $file )[0];
+			return explode( '/', $file )[0];
 		} else {
 			/*
 			 * If the filename does not have a '/' then the slug will ahve to be pulled from the plugin's
@@ -228,7 +228,7 @@ class Plugin {
 			foreach ( $lines as $line ) {
 				if ( false !== strpos( $line, '@package' ) ) {
 					$package    = strtolower( explode( ' ', $line )[3] );
-					$this->slug = str_replace( '_', '-', $package );
+					return str_replace( '_', '-', $package );
 				}
 			}
 		}
@@ -243,11 +243,11 @@ class Plugin {
 	 *
 	 * @param string $slug Slug passed in construction.
 	 */
-	public function fileFromSlug( $slug ) {
+	public static function fileFromSlug( $slug ) {
 		if ( file_exists( WP_PLUGIN_DIR . '/' . $slug . '/' . $slug . '.php' ) ) {
-			$this->file = $slug . '/' . $slug . '.php';
+			return $slug . '/' . $slug . '.php';
 		} elseif ( file_exists( WP_PLUGIN_DIR . '/' . $slug . '.php' ) ) {
-			$this->file = $slug . '.php';
+			return $slug . '.php';
 		}
 	}
 
@@ -558,6 +558,17 @@ class Plugin {
 	 */
 	public function setPath() {
 		$this->path = ABSPATH . 'wp-content/plugins/' . $this->file;
+	}
+
+	/**
+	 * Set PluginData.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param array $pluginData Plugin Data Array.
+	 */
+	public function setPluginData( $pluginData ) {
+		$this->pluginData = $pluginData;
 	}
 
 	/**

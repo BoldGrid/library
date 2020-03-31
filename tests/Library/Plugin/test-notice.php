@@ -25,15 +25,15 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		$plugin_data            = [
 			'Name'        => 'Total Upkeep',
 			'PluginURI'   => 'https://www.boldgrid.com/boldgrid-backup/',
-			'Version'     => '1.12.0',
+			'Version'     => '1.13.2',
 			'Description' => 'Automated backups, remote backup to Amazon S3 and Google Drive, stop website crashes before they happen and more. Total Upkeep is the backup solution you need. By BoldGrid.',
 			'Author'      => 'BoldGrid',
 			'AuthorURI'   => 'https://www.boldgrid.com/',
 			'TextDomain'  => 'boldgrid-backup',
 			'DomainPath'  => '/languages',
 		],
-		$default_first_version  = '1.0.0',
-		$default_newest_version = '1.12.0';
+		$default_first_version  = '1.10.0',
+		$default_newest_version = '2.12.0';
 
 	/**
 	 * Setup.
@@ -65,7 +65,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	public function set_settings_versions( $first_version, $current_version ) {
 		$boldgrid_settings = get_option( 'boldgrid_settings', [] );
 		$boldgrid_settings['plugins_checked']['boldgrid-backup/boldgrid-backup.php'] = [
-			$first_version   => 123456,
+			$first_version   => 123455,
 			$current_version => 123456,
 		];
 		update_option( 'boldgrid_settings', $boldgrid_settings );
@@ -302,15 +302,6 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 		$this->assertEquals( $original_version, $this->notice->getVersion() );
 	}
 
-	//Test that notices return as read if this is first install.
-	public function testNoticeIfFirstInstall() {
-		$this->plugin->pluginData = $this->plugin_data;
-		$this->set_settings_versions( '1.12.0', '1.12.0' );
-		$this->assertEquals( false, $this->notice->getIsUnread() );
-		$this->set_settings_versions( $this->default_first_version, $this->default_newest_version );
-		$this->assertEquals( true, $this->notice->getIsUnread() );
-	}
-
 	/**
 	 * Test alreadyExists.
 	 *
@@ -422,25 +413,6 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 			]
 		);
 		$this->assertFalse( $notice->maybeShow() );
-	}
-
-	//Test Notice::noticeVersionChanged().
-	public function testNoticeVersionChanged() {
-		$this->plugin->pluginData = $this->plugin_data;
-		$this->assertEquals( true, $this->notice->getIsUnread() );
-		$this->notice->setIsUnread( false );
-		$new_plugin = new Boldgrid\Library\Library\Plugin\Plugin(
-			'boldgrid-backup',
-			$this->getPluginConfig( '2.12.16' )
-		);
-
-		$new_plugin->pluginData = $this->plugin_data;
-
-		$this->page   = $new_plugin->getPageBySlug( $this->config['pages'][0] );
-		$this->notice = $this->page->getNotices()[0];
-		$this->assertEquals( true, $this->notice->getIsUnread() );
-
-		$this->assertEquals( true, true );
 	}
 
 	//Test Notice::setPlugin().

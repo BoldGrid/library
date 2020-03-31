@@ -182,7 +182,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 				$expected_count++;
 			}
 		}
-		$this->plugin->pluginData = $this->plugin_data;
+		$this->plugin->setPluginData( $this->plugin_data );
 		$this->assertEquals( $expected_count, $this->page->getUnreadCount() );
 	}
 	//Test that the UnreadCountMarkup for the page is correct.

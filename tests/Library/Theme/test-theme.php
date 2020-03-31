@@ -47,31 +47,4 @@ class Test_BoldGrid_Library_Library_Theme_Theme extends WP_UnitTestCase {
 		$this->assertEquals( $wp_theme, $theme->wp_theme );
 		$this->assertEquals( $this->stylesheet, $theme->stylesheet );
 	}
-
-	public function test_getIsActive() {
-		$theme = new Theme\Theme( wp_get_theme( $this->stylesheet ) );
-		switch_theme( 'twentynineteen' );
-		$this->assertFalse( $theme->getIsActive() );
-		switch_theme( $this->stylesheet );
-		$this->assertTrue( $theme->getIsActive() );
-	}
-
-	public function test_getHasUpdate() {
-		$wp_theme = wp_get_theme( $this->stylesheet );
-		$theme = new Theme\Theme( $wp_theme );
-
-		$this->assertFalse( $theme->getHasUpdate() );
-
-		switch_theme( 'twentynineteen' );
-		$deleted = delete_theme( $this->stylesheet );
-		$unzip = unzip_file( download_url( $this->old_theme_url ), ABSPATH . '/wp-content/themes/' );
-		switch_theme( 'twentytwenty' );
-		delete_transient( 'boldgrid_theme_information' );
-		wp_cache_flush();
-		$old_wp_theme = wp_get_theme( $this->stylesheet );
-		$old_theme = new Theme\Theme( wp_get_theme( $this->stylesheet ) );
-		wp_update_themes();
-
-		$this->assertTrue( $old_theme->getHasUpdate() );
-	}
 }
