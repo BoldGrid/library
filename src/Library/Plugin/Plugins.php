@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName
 /**
  * BoldGrid Library Plugin Plugins.
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
@@ -57,8 +57,8 @@ class Plugins {
 	 * @return array
 	 */
 	public static function getAllActivePlugins() {
-		$activePluginsList  = get_option( 'active_plugins' );
-		$activePlugins      = array();
+		$activePluginsList = get_option( 'active_plugins' );
+		$activePlugins     = array();
 		foreach ( $activePluginsList as $activePlugin ) {
 			$activePlugins[] = new Plugin( $activePlugin, null );
 		}
@@ -77,7 +77,7 @@ class Plugins {
 		$plugins     = get_plugins();
 		$all_plugins = array();
 		foreach ( $plugins as $file => $plugin_data ) {
-			$all_plugins[] = new Plugin( plugin_basename( $file ), null, $file );
+			$all_plugins[] = new Plugin( plugin_basename( $file ), null );
 		}
 		return $all_plugins;
 	}

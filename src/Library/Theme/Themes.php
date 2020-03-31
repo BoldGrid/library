@@ -2,7 +2,7 @@
 /**
  * BoldGrid Library Theme Themes.
  *
- * Library package uses different naming convention
+ * Library package uses different naming convention.
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
@@ -24,7 +24,7 @@ namespace Boldgrid\Library\Library\Theme;
  */
 class Themes {
 	/**
-	 * Themes array
+	 * Themes array.
 	 *
 	 * @since SINCEVERSION
 	 * @var array
@@ -32,7 +32,7 @@ class Themes {
 	public $themes;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since SINCEVERSION
 	 */
@@ -45,7 +45,7 @@ class Themes {
 	}
 
 	/**
-	 * Returns an array of Theme objects
+	 * Returns an array of Theme objects.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -56,7 +56,7 @@ class Themes {
 	}
 
 	/**
-	 * Get Theme from Stylesheet
+	 * Get Theme from Stylesheet.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -73,7 +73,7 @@ class Themes {
 	}
 
 	/**
-	 * Get the Active Theme
+	 * Get the Active Theme.
 	 *
 	 * @since SINCEVERSION
 	 *

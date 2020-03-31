@@ -2,7 +2,7 @@
 /**
  * BoldGrid Library Plugin Plugin.
  *
- * Library package uses different naming convention
+ * Library package uses different naming convention.
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
@@ -40,7 +40,7 @@ class Plugin {
 	/**
 	 * Plugin file.
 	 *
-	 * For example: plugin/plugin.php
+	 * For example: plugin/plugin.php.
 	 *
 	 * @since 2.9.0
 	 * @var string
@@ -79,8 +79,8 @@ class Plugin {
 	/**
 	 * Plugin pages.
 	 *
-	 * This is an array of Boldgrid\Library\Library\Plugin\Page
-	 * objects based on the 'pages' list in the plugin Config
+	 * This is an array of Boldgrid\Library\Library\Plugin\Page.
+	 * objects based on the 'pages' list in the plugin Config.
 	 * If no plugin config is passed during instantiation,
 	 * this will be an empty array.
 	 *
@@ -134,14 +134,14 @@ class Plugin {
 	 *
 	 * @since 2.7.7
 	 *
-	 * @param string $slug For example: "plugin" from plugin/plugin.php.
+	 * @param string $pluginName This can be either a slug or plugin file depending on how this was called.
 	 * @param array  $pluginConfig An array of plugin config data.
 	 */
-	public function __construct( $slug = null, $pluginConfig = null, $file = null ) {
+	public function __construct( $pluginName, $pluginConfig = null ) {
 
-		$this->setSlug( $slug );
+		$this->determineSlug( $pluginName );
 
-		$this->setFile( $file );
+		$this->determineFile( $pluginName );
 
 		$this->setPath();
 
@@ -156,6 +156,99 @@ class Plugin {
 		}
 
 		$this->setPages();
+	}
+
+	/**
+	 * Determine the Slug of this plugin.
+	 *
+	 * Depending on how this class constructor is called.
+	 * It may be passed a file such as 'plugin/plugin.php'.
+	 * Or it may be passed the plugin slug such as 'plugin'.
+	 * This method determines which it was, and then derives the correct.
+	 * property.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param string $pluginName The string passed to constructor.
+	 */
+	public function determineSlug( $pluginName ) {
+		if ( false === strpos( $pluginName, '.' ) ) {
+			// If the $pluginName does not contain a '.' then this is a slug, not a file.
+			$this->slug = $pluginName;
+		} else {
+			// If the $pluginName does contain a '.' then it is a file, so the slug must be derived from that.
+			$this->slugFromFile( $pluginName );
+		}
+	}
+
+	/**
+	 * Determine the File of this plugin.
+	 *
+	 * Depending on how this class constructor is called.
+	 * It may be passed a file such as 'plugin/plugin.php'.
+	 * Or it may be passed the plugin slug such as 'plugin'.
+	 * This method determines which it was, and then derives the correct.
+	 * property.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param string $pluginName The string passed to constructor.
+	 */
+	public function determineFile( $pluginName ) {
+		if ( false === strpos( $pluginName, '.' ) ) {
+			// If the $pluginName does not contain a '.' then this is a slug, not a file.
+			$this->fileFromSlug( $pluginName );
+		} else {
+			// If the $pluginName does contain a '.' then it is a file, so the slug must be derived from that.
+			$this->file = $pluginName;
+		}
+	}
+
+	/**
+	 * Gets the plugin's slug from the file name passed in construction.
+	 *
+	 * If a filename was passed, not a slug, then this will find the slug for us.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param string $file Filename passed in construction.
+	 */
+	public function slugFromFile( $file ) {
+		if ( false !== strpos( $file, '/' ) ) {
+			// If the filename has a '/' in it, the slug should be the first part of the string.
+			$this->slug = explode( '/', $file )[0];
+		} else {
+			/*
+			 * If the filename does not have a '/' then the slug will ahve to be pulled from the plugin's
+			 * file contents. This is because the plugins with just a name, such as hello.php, do not
+			 * always match their slug.
+			 */
+			$file_contents = file_get_contents( WP_PLUGIN_DIR . '/' . $file );
+			$lines         = explode( "\n", $file_contents );
+			foreach ( $lines as $line ) {
+				if ( false !== strpos( $line, '@package' ) ) {
+					$package    = strtolower( explode( ' ', $line )[3] );
+					$this->slug = str_replace( '_', '-', $package );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Gets the plugin's file from the slug passed in construction.
+	 *
+	 * If a slug was passed, not a file, then this will find the file for us.
+	 *
+	 * @since SINCEVERSION
+	 *
+	 * @param string $slug Slug passed in construction.
+	 */
+	public function fileFromSlug( $slug ) {
+		if ( file_exists( WP_PLUGIN_DIR . '/' . $slug . '/' . $slug . '.php' ) ) {
+			$this->file = $slug . '/' . $slug . '.php';
+		} elseif ( file_exists( WP_PLUGIN_DIR . '/' . $slug . '.php' ) ) {
+			$this->file = $slug . '.php';
+		}
 	}
 
 	/**
@@ -219,7 +312,7 @@ class Plugin {
 	/**
 	 * Get config for this particular plugin.
 	 *
-	 * Within library.global.php, there is a config option called "plugins". This method loops through
+	 * Within library.global.php, there is a config option called "plugins". This method loops through.
 	 * those plugins and returns the configs for this particular plugin.
 	 *
 	 * @since 2.10.0
@@ -310,25 +403,6 @@ class Plugin {
 	}
 
 	/**
-	 * Get a plugin's slug from its file.
-	 *
-	 * For example, if the plugin's file is:
-	 * boldgrid-backup-premium/boldgrid-backup-premium.php
-	 * The plugin's slug is:
-	 * boldgrid-backup-premium
-	 *
-	 * @since 2.10.0
-	 *
-	 * @param  string $file The plugin's file, as in plugin/plugin.php.
-	 * @return string
-	 */
-	public static function getFileSlug( $file ) {
-		$slug = explode( '/', $file );
-
-		return $slug[0];
-	}
-
-	/**
 	 * If a new version of a plugin is available, return the new version.
 	 *
 	 * @since 2.9.0
@@ -342,7 +416,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get plugin specific config array
+	 * Get plugin specific config array.
 	 *
 	 * @return array
 	 * @since 2.12.0
@@ -408,7 +482,7 @@ class Plugin {
 	}
 
 	/**
-	 * Set all plugin notices as read
+	 * Set all plugin notices as read.
 	 *
 	 * @since 2.12.0
 	 *
@@ -461,52 +535,9 @@ class Plugin {
 		}
 
 		foreach ( $config['childPlugins'] as $file ) {
-			$slug = $this->getFileSlug( $file );
+			$slug = $this->slugFromFile( $file );
 
 			$this->childPlugins[] = new Plugin( $slug );
-		}
-	}
-
-	/**
-	 * Set file.
-	 *
-	 * @since 2.9.0
-	 *
-	 * @param string $file A plugin's file.
-	 */
-	public function setFile( $file = null ) {
-		if ( ! empty( $file ) ) {
-			$this->file = $file;
-		} elseif ( false !== strpos( $this->slug, '.php' ) ) {
-			$this->file = $this->slug;
-		} else {
-			$this->file = $this->slug . '/' . $this->slug . '.php';
-		}
-	}
-
-	/**
-	 * Set Slug.
-	 *
-	 * @since SINCEVERSION
-	 *
-	 * @param string $slug A plugin's slug.
-	 */
-	public function setSlug( $slug ) {
-		if ( ! empty( $slug ) && false !== strpos( $slug, '/' ) ) {
-			$this->slug = explode( '/', $slug )[0];
-		} elseif ( ! empty( $slug ) && false !== strpos( $slug, '.' ) ) {
-			$file_contents = file_get_contents( WP_PLUGIN_DIR . '/' . $slug );
-			$lines = explode("\n", $file_contents);
-			foreach ( $lines as $line ) {
-				if ( false !== strpos( $line, '@package' ) ) {
-					$package = strtolower( explode( ' ', $line )[3] );
-					$this->slug = str_replace( '_', '-', $package);
-				}
-			}
-		} elseif ( ! empty( $slug ) && false === strpos( $slug, '/' ) ) {
-				$this->slug = $slug;
-		} else {
-			$this->slug = explode( '/', $this->file )[0];
 		}
 	}
 

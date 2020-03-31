@@ -2,7 +2,7 @@
 /**
  * BoldGrid Library Update Data.
  *
- * Library package uses different naming convention
+ * Library package uses different naming convention.
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
@@ -19,14 +19,14 @@ use Boldgrid\Library\Library\Theme\Theme;
 /**
  * Update Data Class.
  *
- * This class stores the update data for a given theme
+ * This class stores the update data for a given theme.
  * Boldgrid\Library\Library\Theme\Theme class.
  *
  * @since 2.12.0
  */
 class UpdateData {
 	/**
-	 * Theme
+	 * Theme.
 	 *
 	 * @since SINCEVERSION
 	 * @var Theme
@@ -34,7 +34,7 @@ class UpdateData {
 	public $theme;
 
 	/**
-	 * Themes
+	 * Themes.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -42,7 +42,7 @@ class UpdateData {
 	public $themes;
 
 	/**
-	 * Release Date
+	 * Release Date.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -50,7 +50,7 @@ class UpdateData {
 	public $releaseDate;
 
 	/**
-	 * Version
+	 * Version.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -58,7 +58,7 @@ class UpdateData {
 	public $version;
 
 	/**
-	 * Days Since Release
+	 * Days Since Release.
 	 *
 	 * @since SINCEVERSION
 	 * @var int
@@ -66,7 +66,7 @@ class UpdateData {
 	public $days;
 
 	/**
-	 * Response Data
+	 * Response Data.
 	 *
 	 * @since SINCEVERSION
 	 * @var Response
@@ -75,7 +75,7 @@ class UpdateData {
 	private $responseData;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -107,7 +107,7 @@ class UpdateData {
 	}
 
 	/**
-	 * Get Response Data
+	 * Get Response Data.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -118,7 +118,7 @@ class UpdateData {
 	}
 
 	/**
-	 * Set Response Data
+	 * Set Response Data.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -160,7 +160,7 @@ class UpdateData {
 	}
 
 	/**
-	 * Set Theme Information Transient
+	 * Set Theme Information Transient.
 	 *
 	 * @since SINCEVERSION
 	 */

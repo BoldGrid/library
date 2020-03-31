@@ -2,7 +2,7 @@
 /**
  * BoldGrid Library Theme Theme.
  *
- * Library package uses different naming convention
+ * Library package uses different naming convention.
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
@@ -24,7 +24,7 @@ namespace Boldgrid\Library\Library\Theme;
  */
 class Theme {
 	/**
-	 * WP_Theme Object
+	 * WP_Theme Object.
 	 *
 	 * @since SINCEVERSION
 	 * @var WP_Theme
@@ -32,7 +32,7 @@ class Theme {
 	public $wp_theme;
 
 	/**
-	 * Stylesheet
+	 * Stylesheet.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -40,7 +40,7 @@ class Theme {
 	public $stylesheet;
 
 	/**
-	 * Version
+	 * Version.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -48,7 +48,7 @@ class Theme {
 	public $version;
 
 	/**
-	 * Parent Theme
+	 * Parent Theme.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -56,7 +56,7 @@ class Theme {
 	public $parent;
 
 	/**
-	 * Is Active
+	 * Is Active.
 	 *
 	 * @since SINCEVERSION
 	 * @var bool
@@ -64,7 +64,7 @@ class Theme {
 	public $isActive;
 
 	/**
-	 * Has Update
+	 * Has Update.
 	 *
 	 * @since SINCEVERSION
 	 * @var bool
@@ -72,7 +72,7 @@ class Theme {
 	public $hasUpdate;
 
 	/**
-	 * UpdateData
+	 * UpdateData.
 	 *
 	 * @since SINCEVERSION
 	 * @var UpdateData
@@ -80,7 +80,7 @@ class Theme {
 	public $updateData;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since SINCEVERSION
 	 *

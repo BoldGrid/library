@@ -2,7 +2,7 @@
 /**
  * BoldGrid Library Update Data.
  *
- * Library package uses different naming convention
+ * Library package uses different naming convention.
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
@@ -19,14 +19,14 @@ use Boldgrid\Library\Library\Plugin\Plugin;
 /**
  * Update Data Class.
  *
- * This class stores the update data for a given plugin
+ * This class stores the update data for a given plugin.
  * Boldgrid\Library\Library\Plugin\Plugin class.
  *
  * @since 2.12.0
  */
 class UpdateData {
 	/**
-	 * Plugin
+	 * Plugin.
 	 *
 	 * @since SINCEVERSION
 	 * @var Plugin
@@ -34,7 +34,7 @@ class UpdateData {
 	public $plugin;
 
 	/**
-	 * Active Installs
+	 * Active Installs.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -42,7 +42,7 @@ class UpdateData {
 	public $activeInstalls;
 
 	/**
-	 * Minor Version Installs
+	 * Minor Version Installs.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -50,7 +50,7 @@ class UpdateData {
 	public $minorVersionInstalls;
 
 	/**
-	 * Release Date
+	 * Release Date.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -58,7 +58,7 @@ class UpdateData {
 	public $releaseDate;
 
 	/**
-	 * Version
+	 * Version.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -66,7 +66,7 @@ class UpdateData {
 	public $version;
 
 	/**
-	 * Minor Version
+	 * Minor Version.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -74,7 +74,7 @@ class UpdateData {
 	public $minorVersion;
 
 	/**
-	 * Stats
+	 * Stats.
 	 *
 	 * @since SINCEVERSION
 	 * @var string
@@ -82,7 +82,7 @@ class UpdateData {
 	public $stats;
 
 	/**
-	 * Days Since Release
+	 * Days Since Release.
 	 *
 	 * @since SINCEVERSION
 	 * @var int
@@ -90,7 +90,7 @@ class UpdateData {
 	public $days;
 
 	/**
-	 * Response Data
+	 * Response Data.
 	 *
 	 * @since SINCEVERSION
 	 * @var Response
@@ -99,7 +99,7 @@ class UpdateData {
 	private $responseData;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -155,7 +155,7 @@ class UpdateData {
 	}
 
 	/**
-	 * Get Response Data
+	 * Get Response Data.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -166,7 +166,7 @@ class UpdateData {
 	}
 
 	/**
-	 * Set Response Data
+	 * Set Response Data.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -194,7 +194,7 @@ class UpdateData {
 	}
 
 	/**
-	 * Get Plugin Stats
+	 * Get Plugin Stats.
 	 *
 	 * @since SINCEVERSION
 	 *
@@ -242,7 +242,7 @@ class UpdateData {
 	}
 
 	/**
-	 * Set Plugin Information Transient
+	 * Set Plugin Information Transient.
 	 *
 	 * @since SINCEVERSION
 	 */
@@ -269,7 +269,7 @@ class UpdateData {
 	 *
 	 * @since SINCEVERSION
 	 *
-	 * @param WP_Error $error Wordpress error returned by plugins_api().
+	 * @param \WP_Error $errors WordPress error returned by plugins_api().
 	 */
 	public function getGenericInfo( \WP_Error $errors ) {
 		$current     = get_site_transient( 'update_plugins' );
