@@ -40,7 +40,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	public function setUp() {
 		// Setup our configs.
 		$this->config = $this->getPluginConfig();
-		$this->plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config );
+		$this->plugin = Boldgrid\Library\Library\Plugin\Factory::create( 'boldgrid-backup', $this->config );
 		$this->page   = $this->plugin->getPageBySlug( $this->config['pages'][0] );
 		$this->getFirstVersion();
 		$this->getPluginsChecked();

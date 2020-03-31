@@ -43,7 +43,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	public function setUp() {
 		// Setup our configs.
 		$this->config = $this->getPluginConfig();
-		$this->plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config );
+		$this->plugin = Boldgrid\Library\Library\Plugin\Factory::create( 'boldgrid-backup', $this->config );
 		$this->page   = $this->plugin->getPageBySlug( $this->config['pages'][0] );
 		$this->notice = $this->page->getNotices()[0];
 		$this->getFirstVersion();
@@ -230,7 +230,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 			],
 		];
 
-		$this->fakePlugin = new Boldgrid\Library\Library\Plugin\Plugin( 'fake-plugin', $configs );
+		$this->fakePlugin = Boldgrid\Library\Library\Plugin\Factory::create( 'fake-plugin', $configs );
 
 		// Configure this plugin's version info (IE first version installed).
 		$boldgrid_settings = get_option( 'boldgrid_settings', [] );
@@ -417,7 +417,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 
 	//Test Notice::setPlugin().
 	public function testSetPlugin() {
-		$new_plugin = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup' );
+		$new_plugin = Boldgrid\Library\Library\Plugin\Factory::create( 'boldgrid-backup' );
 		$this->notice->setPlugin( $new_plugin );
 		$plugin = $this->notice->getPlugin();
 		$this->assertNotEquals( $this->plugin, $plugin );

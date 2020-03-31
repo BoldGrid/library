@@ -60,7 +60,7 @@ class Plugins {
 		$activePluginsList = get_option( 'active_plugins' );
 		$activePlugins     = array();
 		foreach ( $activePluginsList as $activePlugin ) {
-			$activePlugins[] = new Plugin( $activePlugin, null );
+			$activePlugins[] = Factory::create( $activePlugin );
 		}
 		return $activePlugins;
 	}
@@ -77,7 +77,7 @@ class Plugins {
 		$plugins     = get_plugins();
 		$all_plugins = array();
 		foreach ( $plugins as $file => $plugin_data ) {
-			$all_plugins[] = new Plugin( plugin_basename( $file ), null );
+			$all_plugins[] = Factory::create( $file );
 		}
 		return $all_plugins;
 	}

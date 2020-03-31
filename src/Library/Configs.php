@@ -133,12 +133,10 @@ class Configs {
 	public static function getPlugins( $filters = array() ) {
 		$plugins = array();
 
-		foreach( self::get( 'plugins' ) as $plugin ) {
-			$slug = Plugin::slugFromFile( $plugin['file'] );
-
+		foreach ( self::get( 'plugins' ) as $plugin ) {
 			// If no filters, add the plugin. Else, only add the plugin if all filters match.
 			if ( empty( $filters ) ) {
-				$plugins[] = new Plugin( $slug );
+				$plugins[] = Factory::create( $plugin['file'] );
 			} else {
 				$addPlugin = true;
 
@@ -149,7 +147,7 @@ class Configs {
 				}
 
 				if ( $addPlugin ) {
-					$plugins[] = new Plugin( $slug );
+					$plugins[] = Factory::create( $plugin['file'] );
 				}
 			}
 		}

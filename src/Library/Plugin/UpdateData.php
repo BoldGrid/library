@@ -110,7 +110,7 @@ class UpdateData {
 		include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
 		// If a plugin object is passed in constructer, use that, or else create a new one from slug.
-		$this->plugin = ( null !== $plugin ) ? $plugin : new Plugin( $slug );
+		$this->plugin = ( null !== $plugin ) ? $plugin : Factory::create( $slug );
 
 		$responseTransient = $this->getInformationTransient();
 
