@@ -2,7 +2,7 @@
 /**
  * BoldGrid Library Plugin Page Notice.
  *
- * Library package uses different naming convention
+ * Library package uses different naming convention.
  * phpcs:disable WordPress.NamingConventions.ValidVariableName
  * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
@@ -16,8 +16,8 @@ namespace Boldgrid\Library\Library\Plugin;
 /**
  * Notice class for Plugin\Page.
  *
- * This class is a specific Notice
- * used by the Boldgrid\Library\Library\Plugin\Page
+ * This class is a specific Notice.
+ * used by the Boldgrid\Library\Library\Plugin\Page.
  * and Boldgrid\Library\Library\Plugin\Plugin classes.
  *
  * @since 2.12.0
@@ -25,7 +25,7 @@ namespace Boldgrid\Library\Library\Plugin;
 class Notice {
 
 	/**
-	 * Notice ID
+	 * Notice ID.
 	 *
 	 * @since 2.12.0
 	 * @var string
@@ -43,7 +43,7 @@ class Notice {
 	protected $pageSlug;
 
 	/**
-	 * Notice Version
+	 * Notice Version.
 	 *
 	 * Version of plugin this notice was added on.
 	 *
@@ -54,7 +54,7 @@ class Notice {
 	protected $version;
 
 	/**
-	 * Plugin Object
+	 * Plugin Object.
 	 *
 	 * Plugin Object this belongs to.
 	 *
@@ -65,7 +65,7 @@ class Notice {
 	protected $plugin;
 
 	/**
-	 * Notice Is Unread
+	 * Notice Is Unread.
 	 *
 	 * Specifies if the Notice is Unread or not.
 	 *
@@ -76,7 +76,7 @@ class Notice {
 	protected $isUnread;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since 2.12.0
 	 *
@@ -236,7 +236,7 @@ class Notice {
 	 *     @type Notice Notice Instance.
 	 *     @type int Index of Notice in Options array.
 	 */
-	private function getFromOptions( $noticeId ) {
+	public function getFromOptions( $noticeId ) {
 		$option      = get_option( 'boldgrid_plugin_page_notices', array() );
 		$optionCount = count( $option );
 
@@ -253,7 +253,7 @@ class Notice {
 	/**
 	 * Update Notice Option.
 	 *
-	 * Updates option row in wp_options table. If The NoticeId
+	 * Updates option row in wp_options table. If The NoticeId.
 	 * already exists, then it's object is replaced with $this.
 	 * Otherwise, $this is appended to the array.
 	 *
@@ -282,7 +282,7 @@ class Notice {
 	/**
 	 * Get Plugin.
 	 *
-	 * Get plugin instance that this notice belongs to
+	 * Get plugin instance that this notice belongs to.
 	 *
 	 * @since 2.12.0
 	 *
@@ -295,7 +295,7 @@ class Notice {
 	/**
 	 * Set Plugin.
 	 *
-	 * Set plugin Instance that this notice belongs to
+	 * Set plugin Instance that this notice belongs to.
 	 *
 	 * @since 2.12.0
 	 *
@@ -308,9 +308,9 @@ class Notice {
 	/**
 	 * Notice Version Changed.
 	 *
-	 * Determines if an existing Notice's version number has changed
-	 * since it was placed in options table. If it has changed, then it marks
-	 * the notice unread again. This will help bring attention to old notices
+	 * Determines if an existing Notice's version number has changed.
+	 * since it was placed in options table. If it has changed, then it marks.
+	 * the notice unread again. This will help bring attention to old notices.
 	 * that may have been revised.
 	 *
 	 * @since 2.12.0

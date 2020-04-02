@@ -12,6 +12,12 @@ namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library\Configs;
 
+/**
+ * WP Remote Get Override.
+ *
+ * @param string $url URL to get.
+ * @since SINCEVERSION
+ */
 function wp_remote_get( $url ) {
 	if ( false === strpos( $url, 'FakeFake' ) ) {
 		return \wp_remote_get( $url );
@@ -23,13 +29,13 @@ function wp_remote_get( $url ) {
 /**
  * BoldGrid Library Library Plugin Plugin Test class.
  *
- * @since 2.7.7
+ * @since SINCEVERSION
  */
 class Test_BoldGrid_Library_Library_Plugin_UpdateData extends \WP_UnitTestCase {
 	/**
 	 * Setup.
 	 *
-	 * @since 1.7.7
+	 * @since SINCEVERSION
 	 */
 	public function setUp() {
 		// Setup our configs.
@@ -37,29 +43,18 @@ class Test_BoldGrid_Library_Library_Plugin_UpdateData extends \WP_UnitTestCase {
 			'twentytwenty' => array(
 				'version'      => '1.1',
 				'downloaded'   => 482251,
-				'last_updated' => new \DateTime('2020-02-05'),
+				'last_updated' => new \DateTime( '2020-02-05' ),
 			),
 		);
 	}
 
-	public function test_getResponseData() {
-		$updateData  = new UpdateData( null, 'akismet' );
-		$responseData = $updateData->getResponseData();
-		$responseData_props = array_keys( ( array ) $responseData );
-		sort( $responseData_props );
-		$expected_data = array(
-			'active_installs',
-			'version',
-			'downloaded',
-			'last_updated',
-			'stats',
-		);
-		sort( $expected_data );
-		$this->assertEquals( $expected_data, $responseData_props );
-	}
-
+	/**
+	 * Test FetchPluginStats.
+	 *
+	 * @since SINCEVERSION
+	 */
 	public function test_fetchPluginStats() {
-		$updateData = new UpdateData( null, 'FakeFake' );
-		$this->assertFalse( $updateData->fetchPluginStats() );
+		$update_data = new UpdateData( null, 'FakeFake' );
+		$this->assertFalse( $update_data->fetchPluginStats() );
 	}
 }

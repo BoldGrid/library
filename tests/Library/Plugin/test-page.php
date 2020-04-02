@@ -1,6 +1,6 @@
 <?php
 /**
- * BoldGrid Source Code
+ * BoldGrid Source Code.
  *
  * @package Boldgrid_Plugintest
  * @copyright BoldGrid.com
@@ -9,210 +9,107 @@
  */
 
 use Boldgrid\Library\Library\Configs;
+use Boldgrid\Library\Library\Plugin;
 
 /**
  * BoldGrid Library Library Plugin Page Test class.
  *
- * @since 2.7.7
+ * @since SINCEVERSION
  */
 class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
-
-	private
-		$plugin,
-		$page,
-		$config,
-		$plugin_data = [
-			'Name'        => 'Total Upkeep',
-			'PluginURI'   => 'https://www.boldgrid.com/boldgrid-backup/',
-			'Version'     => '1.12.16',
-			'Description' => 'Automated backups, remote backup to Amazon S3 and Google Drive, stop website crashes before they happen and more. Total Upkeep is the backup solution you need. By BoldGrid.',
-			'Author'      => 'BoldGrid',
-			'AuthorURI'   => 'https://www.boldgrid.com/',
-			'TextDomain'  => 'boldgrid-backup',
-			'DomainPath'  => '/languages',
-		];
-
 	/**
 	 * Setup.
 	 *
-	 * @since 1.7.7
+	 * @since SINCEVERSION
 	 */
 	public function setUp() {
-		// Setup our configs.
-		$this->config = $this->getPluginConfig();
-		$this->plugin = Boldgrid\Library\Library\Plugin\Factory::create( 'boldgrid-backup', $this->config );
-		$this->page   = $this->plugin->getPageBySlug( $this->config['pages'][0] );
-		$this->getFirstVersion();
-		$this->getPluginsChecked();
-	}
-
-	public function getPluginConfig( array $add_pages = [], array $add_notices = [] ) {
-		$config = [
-			'pages'        => [
+		$this->config = array(
+			'pages'        => array(
 				'boldgrid-backup-premium-features',
 				'boldgrid-backup-settings',
-			],
-			'page_notices' => [
-				[
+			),
+			'page_notices' => array(
+				array(
 					'id'      => 'bgbkup_database_encryption',
 					'page'    => 'boldgrid-backup-premium-features',
 					'version' => '1.12.16',
-				],
-				[
+				),
+				array(
 					'id'      => 'bgbkup_google_drive',
 					'page'    => 'boldgrid-backup-premium-features',
 					'version' => '1.12.16',
-				],
-				[
+				),
+				array(
 					'id'      => 'bgbkup_new_settings_feature',
 					'page'    => 'boldgrid-backup-settings',
 					'version' => '1.12.16',
-				],
-			],
-		];
-		foreach ( $add_pages as $page ) {
-			$config['pages'][] = $page;
-		}
-		foreach ( $add_notices as $notice ) {
-			$config['page_notices'][] = $notice;
-		}
-		return $config;
+				),
+			),
+		);
+
+		$this->sample_plugin = Plugin\Factory::create( 'boldgrid-backup/boldgrid-backup.php', $this->config );
+
+		$this->mock_plugin = $this->getMockBuilder( \Boldgrid\Library\Library\Plugin\Plugin::class )
+			->setMethods( array( 'getPluginData', 'firstVersionCompare' ) )
+			->disableOriginalConstructor()
+			->getMock();
+		$this->mock_plugin->method( 'getPluginData' )
+			->will( $this->returnValue( array( 'Version' => '0.0.0' ) ) );
+		$this->mock_plugin->method( 'firstVersionCompare' )
+			->will( $this->returnValue( true ) );
 	}
 
 	/**
-	 * Test getFirstVersion.
+	 * Test Construct.
 	 *
-	 * @since 2.11.0
+	 * @since SINCEVERSION
 	 */
-	public function getFirstVersion() {
-		// Good data we will be testing against.
-		$backupPluginsChecked = [
-			'1.11.0' => 123456,
-			'1.12.0' => 123456,
-		];
+	public function test_construct() {
+		$plugin = $this->sample_plugin;
+		$page   = new \Boldgrid\Library\Library\Plugin\Page( $plugin, 'boldgrid-backup-premium-features' );
 
-		// Make sure good data gets us good data.
-		$settings = [
-			'plugins_checked' => [
-				'other-plugin/other-plugin.php'       => [
-					'1.0.0' => 12345,
-					'1.1.0' => 12346,
-				],
-				'boldgrid-backup/boldgrid-backup.php' => $backupPluginsChecked,
-			],
-		];
-		update_option( 'boldgrid_settings', $settings );
-		$this->plugin->getFirstVersion();
+		$this->assertTrue( $page instanceof \Boldgrid\Library\Library\Plugin\Page );
 	}
 
 	/**
-	 * Test getPluginsChecked.
+	 * Test getNotices.
 	 *
-	 * @since 2.11.0
+	 * @since SINCEVERSION
 	 */
-	public function getPluginsChecked() {
-		// Good data we will be testing against.
-		$backupPluginsChecked = [
-			'1.11.0' => 123456,
-			'1.12.0' => 123456,
-		];
+	public function test_getNotices() {
+		$plugin = $this->sample_plugin;
+		$page   = new \Boldgrid\Library\Library\Plugin\Page( $plugin, 'boldgrid-backup-premium-features' );
 
-		// Make sure wrong data gives us an empty array.
-		update_option( 'boldgrid_settings', false );
-
-		// Make sure wrong data gives us an empty array.
-		$settings = [
-			'plugins_checked' => [],
-		];
-		update_option( 'boldgrid_settings', $settings );
-		$this->plugin->getPluginsChecked();
-
-		// Make sure good data gets us good data.
-		$settings = [
-			'plugins_checked' => [
-				'other-plugin/other-plugin.php'       => [
-					'1.0.0' => 12345,
-					'1.1.0' => 12346,
-				],
-				'boldgrid-backup/boldgrid-backup.php' => $backupPluginsChecked,
-			],
-		];
-		update_option( 'boldgrid_settings', $settings );
-		$this->plugin->getPluginsChecked();
+		$this->assertTrue( $page->getNotices()[0] instanceof \Boldgrid\Library\Library\Plugin\Notice );
 	}
-	//Test Page::getNoticeById()
-	public function testGetNoticeById() {
+
+	/**
+	 * Test getNoticeById.
+	 *
+	 * @since SINCEVERSION
+	 */
+	public function test_getNoticeById() {
+		$plugin = $this->sample_plugin;
+		$page   = new \Boldgrid\Library\Library\Plugin\Page( $plugin, 'boldgrid-backup-premium-features' );
+
 		$expected_id = $this->config['page_notices'][0]['id'];
-		$this->assertEquals( $expected_id, $this->page->getNoticeById( $expected_id )->getId() );
+
+		$retrieved_notice = $page->getNoticeById( $expected_id );
+
+		$this->assertEquals( $expected_id, $retrieved_notice->getId() );
+
+		$this->assertNull( $page->getNoticeById( 'fake-id' ) );
 	}
 
-	//Test Page::getNotices() to be sure it matches the config contents.
-	public function testGetNotices() {
-		$expected_notice_ids = [];
-		foreach ( $this->config['page_notices'] as $config_notice ) {
-			if ( $config_notice['page'] === $this->page->getSlug() ) {
-				$expected_notice_ids[] = $config_notice['id'];
-			}
-		}
-		sort( $expected_notice_ids );
-		$notices    = $this->page->getNotices();
-		$notice_ids = [];
-		foreach ( $notices as $notice ) {
-			$notice_ids[] = $notice->getId();
-		}
-		sort( $notice_ids );
-		$this->assertEquals( $expected_notice_ids, $notice_ids );
-	}
+	/**
+	 * Test getSlug.
+	 *
+	 * @since SINCEVERSION
+	 */
+	public function test_getSlug() {
+		$plugin = $this->sample_plugin;
+		$page   = new \Boldgrid\Library\Library\Plugin\Page( $plugin, 'boldgrid-backup-premium-features' );
 
-	//Test Page::getPlugin() to be sure it matches $this->plugin
-	public function testGetPlugin() {
-		$this->assertEquals( $this->plugin, $this->page->getPlugin() );
-	}
-
-	//Test Page:getPluginConfig() to be sure it matchees the supplied config file.
-	public function testGetPluginConfig() {
-		$this->assertEquals( $this->config, $this->page->getPluginConfig() );
-	}
-
-	//Test that the UnreadCount for the page is correct.
-	public function testGetUnreadCount() {
-		$expected_count = 0;
-		foreach ( $this->config['page_notices'] as $config_notice ) {
-			if ( $config_notice['page'] === $this->page->getSlug() ) {
-				$expected_count++;
-			}
-		}
-		$this->plugin->setPluginData( $this->plugin_data );
-		$this->assertEquals( $expected_count, $this->page->getUnreadCount() );
-	}
-	//Test that the UnreadCountMarkup for the page is correct.
-	public function testGetUnreadCountMarkup() {
-		$expected_count  = 0;
-
-		foreach ( $this->config['page_notices'] as $config_notice ) {
-			if ( $config_notice['page'] === $this->page->getSlug() ) {
-				$expected_count++;
-			}
-		}
-
-		$expected_markup = '<span class="bglib-unread-notice-count">' . $expected_count . '</span>';
-
-		$this->plugin->pluginData = $this->plugin_data;
-		$this->assertEquals( $expected_markup, $this->page->getUnreadMarkup() );
-	}
-
-	//Tests that all notices on page can be set to read
-	public function testSetAllNoticesRead() {
-		$expected_markup = '<span class="bglib-unread-notice-count hidden"></span>';
-
-		$this->plugin->pluginData = $this->plugin_data;
-		$this->page->setAllNoticesRead();
-		$this->assertEquals( $expected_markup, $this->page->getUnreadMarkup() );
-		$this->page->setAllNoticesRead( true );
-	}
-	//Tests trying to get a Notice that does not exist
-	public function testGetNonExistNotice() {
-		$expected_id = null;
-		$this->assertEquals( $expected_id, $this->page->getNoticeById( 'non_existant_notice' ) );
+		$this->assertEquals( 'boldgrid-backup-premium-features', $page->getSlug() );
 	}
 }

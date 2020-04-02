@@ -54,7 +54,7 @@ class Factory {
 	 *
 	 * @return Plugin
 	 */
-	private static function createFromSlug( $slug, $pluginConfig ) {
+	public static function createFromSlug( $slug, $pluginConfig ) {
 
 		$slug = ! empty( $slug ) ? $slug : '';
 
@@ -125,12 +125,21 @@ class Factory {
 	 *
 	 * @return string
 	 */
-	private static function fileFromSlug( $slug ) {
+	public static function fileFromSlug( $slug ) {
+		$plugin_file = '';
 		if ( file_exists( WP_PLUGIN_DIR . '/' . $slug . '/' . $slug . '.php' ) ) {
-			return $slug . '/' . $slug . '.php';
+			$plugin_file = $slug . '/' . $slug . '.php';
 		} elseif ( file_exists( WP_PLUGIN_DIR . '/' . $slug . '.php' ) ) {
-			return $slug . '.php';
+			$plugin_file = $slug . '.php';
+		} else {
+			$file_list = scandir( WP_PLUGIN_DIR );
+			foreach ( $file_list as $file ) {
+				if ( false !== strpos( $file, '.php' ) && false !== strpos( $slug, explode( '.', $file )[0] ) ) {
+					$plugin_file = $file;
+				}
+			}
 		}
+		return $plugin_file;
 	}
 
 	/**
@@ -143,9 +152,10 @@ class Factory {
 	 * @param string $file Filename passed in construction.
 	 */
 	public static function slugFromFile( $file ) {
+		$slug = '';
 		if ( false !== strpos( $file, '/' ) ) {
 			// If the filename has a '/' in it, the slug should be the first part of the string.
-			return explode( '/', $file )[0];
+			$slug = explode( '/', $file )[0];
 		} else {
 			/*
 			 * If the filename does not have a '/' then the slug will ahve to be pulled from the plugin's
@@ -156,11 +166,12 @@ class Factory {
 			$lines         = explode( "\n", $file_contents );
 			foreach ( $lines as $line ) {
 				if ( false !== strpos( $line, '@package' ) ) {
-					$package    = strtolower( explode( ' ', $line )[3] );
-					return str_replace( '_', '-', $package );
+					$package = strtolower( explode( ' ', $line )[3] );
+					$slug    = str_replace( '_', '-', $package );
 				}
 			}
 		}
+		return $slug;
 	}
 
 	/**
@@ -168,7 +179,7 @@ class Factory {
 	 *
 	 * @since SINCEVERSION
 	 */
-	private static function isPluginInstalled( $path ) {
+	public static function isPluginInstalled( $path ) {
 		$wp_filesystem = \Boldgrid\Library\Util\Version::getWpFilesystem();
 		return $wp_filesystem->exists( $path );
 	}
@@ -177,18 +188,16 @@ class Factory {
 	 * Set our child plugins.
 	 *
 	 * @since SINCEVERSION
-	 * @access private
 	 *
 	 * @param string $file Filename.
 	 *
 	 * @return array.
 	 */
-	private static function getChildPlugins( $file ) {
+	public static function getChildPlugins( $file ) {
 		$child_plugins = array();
-		$config = array();
 
+		$config  = array();
 		$plugins = Configs::get( 'plugins' );
-
 		if ( $plugins ) {
 			foreach ( $plugins as $plugin ) {
 				if ( $plugin['file'] === $file ) {
