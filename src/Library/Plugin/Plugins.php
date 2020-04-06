@@ -23,7 +23,9 @@ use Boldgrid\Library\Library\Configs;
  */
 class Plugins {
 	/**
-	 * Get our active plugins.
+	 * Get active BoldGrid plugins only ( based on the Configs data ).
+	 *
+	 * This is used for obtaining BoldGrid plugins for the Dashboard Notifications Widget.
 	 *
 	 * @since 2.10.0
 	 *
