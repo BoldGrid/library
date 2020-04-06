@@ -136,7 +136,7 @@ class Configs {
 		foreach ( self::get( 'plugins' ) as $plugin ) {
 			// If no filters, add the plugin. Else, only add the plugin if all filters match.
 			if ( empty( $filters ) ) {
-				$plugins[] = Factory::create( $plugin['file'] );
+				$plugins[] = \Boldgrid\Library\Library\Plugin\Factory::create( $plugin['file'] );
 			} else {
 				$addPlugin = true;
 
@@ -147,7 +147,7 @@ class Configs {
 				}
 
 				if ( $addPlugin ) {
-					$plugins[] = Factory::create( $plugin['file'] );
+					$plugins[] = \Boldgrid\Library\Library\Plugin\Factory::create( $plugin['file'] );
 				}
 			}
 		}
