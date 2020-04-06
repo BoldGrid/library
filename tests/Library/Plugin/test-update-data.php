@@ -15,6 +15,11 @@ use Boldgrid\Library\Library\Configs;
 /**
  * WP Remote Get Override.
  *
+ * This is a function written to override the default wp_remote_get function.
+ * It is outsite of the class , but within the same namespace as the class.
+ * This is necessary for the class to override the existing wp_remote_get().
+ * function during testing.
+ *
  * @param string $url URL to get.
  * @since SINCEVERSION
  */
