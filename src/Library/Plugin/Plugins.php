@@ -52,22 +52,6 @@ class Plugins {
 	}
 
 	/**
-	 * Get All Active Plugins.
-	 *
-	 * @since SINCEVERSION
-	 *
-	 * @return array
-	 */
-	public static function getAllActivePlugins() {
-		$activePluginsList = get_option( 'active_plugins' );
-		$activePlugins     = array();
-		foreach ( $activePluginsList as $activePlugin ) {
-			$activePlugins[] = Factory::create( $activePlugin );
-		}
-		return $activePlugins;
-	}
-
-	/**
 	 * Get All Plugins.
 	 *
 	 * @since SINCEVERSION

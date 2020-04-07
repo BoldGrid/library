@@ -59,22 +59,6 @@ class Test_BoldGrid_Library_Library_Plugin_Plugins extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test getAllActivePlugins.
-	 *
-	 * @since SINCEVERSION
-	 */
-	public function test_getAllActivePlugins() {
-		wp_cache_flush();
-		$all_active_plugins  = $this->plugins->getAllActivePlugins();
-		$active_plugins_list = array();
-		foreach ( $all_active_plugins as $active_plugin ) {
-			$active_plugins_list[] = $active_plugin->getFile();
-		}
-		sort( $active_plugins_list );
-		$this->assertEquals( $this->expected_active, $active_plugins_list );
-	}
-
-	/**
 	 * Test getAllPlugins.
 	 *
 	 * @since SINCEVERSIOn
