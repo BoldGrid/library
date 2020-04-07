@@ -14,13 +14,13 @@ use Boldgrid\Library\Library\Plugin;
 /**
  * BoldGrid Library Library Plugin Plugin Test class.
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  */
 class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Setup.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function setUp() {
 		$this->config = array(
@@ -62,7 +62,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test firstVersionCompare.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_firstVersionCompare() {
 		$version_compare = $this->mock_plugin->firstVersionCompare( '1.1.0', '<=' );
@@ -72,7 +72,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test firstVersionCompare.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getActivateUrl() {
 		$plugin            = $this->sample_plugin;
@@ -85,7 +85,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getIcons.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getIcons() {
 		$plugin = $this->sample_plugin;
@@ -97,7 +97,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getChildPlugins.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getChildPlugins() {
 		$plugin        = $this->sample_plugin;
@@ -109,7 +109,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getData.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getData() {
 		$plugin  = $this->mock_plugin;
@@ -121,7 +121,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getInstallUrl.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getInstallUrl() {
 		$plugin            = $this->sample_plugin;
@@ -134,7 +134,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getIsInstalled.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getIsInstalled() {
 		$plugin       = Plugin\Factory::create( 'akismet/akismet.php' );
@@ -146,7 +146,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getFile.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getFile() {
 		$plugin = $this->sample_plugin;
@@ -158,7 +158,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getNewVersion.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getNewVersion() {
 		$plugin      = $this->sample_plugin;
@@ -170,7 +170,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getPluginData.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getPlugindata() {
 		$plugin      = Plugin\Factory::create( 'akismet/akismet.php', $this->config );
@@ -183,7 +183,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getPluginsChecked.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getPluginsChecked() {
 		$plugin          = $this->sample_plugin;
@@ -195,7 +195,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getPages.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getPages() {
 		$plugin = $this->sample_plugin;
@@ -209,7 +209,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getPageBySlug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getPageBySlug() {
 		$plugin = $this->sample_plugin;
@@ -225,7 +225,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test hasUpdate.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_hasUpdate() {
 		$plugin     = $this->sample_plugin;
@@ -237,7 +237,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	/**
 	 * Test getPluginData.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_isActive() {
 		$plugin    = Plugin\Factory::create( 'akismet/akismet.php', $this->config );

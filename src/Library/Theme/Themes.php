@@ -8,7 +8,7 @@
  *
  * @package Boldgrid\Theme
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -26,7 +26,7 @@ class Themes {
 	/**
 	 * Themes array.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var array
 	 */
 	public $themes;
@@ -34,7 +34,7 @@ class Themes {
 	/**
 	 * Constructor.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function __construct() {
 		$this->themes = array();
@@ -47,7 +47,7 @@ class Themes {
 	/**
 	 * Returns an array of Theme objects.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return array
 	 */
@@ -58,7 +58,7 @@ class Themes {
 	/**
 	 * Get Theme from Stylesheet.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param string $stylesheet Theme's Stylesheet.
 	 * @return Theme
@@ -75,7 +75,7 @@ class Themes {
 	/**
 	 * Get the Active Theme.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return Theme
 	 */

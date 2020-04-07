@@ -61,7 +61,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugins extends WP_UnitTestCase {
 	/**
 	 * Test getAllPlugins.
 	 *
-	 * @since SINCEVERSIOn
+	 * @since 2.12.2
 	 */
 	public function test_getAllPlugins() {
 		$all_plugins      = $this->plugins->getAllPlugins();
@@ -77,7 +77,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugins extends WP_UnitTestCase {
 	/**
 	 * Test getBySlug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getBySlug() {
 		$all_plugins = $this->plugins->getAllPlugins();

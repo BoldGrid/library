@@ -8,7 +8,7 @@
  *
  * @package Boldgrid\Plugin
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  * @author BoldGrid <wpb@boldgrid.com>
  */
 
@@ -21,14 +21,14 @@ use Boldgrid\Library\Library\Plugin\Page;
 /**
  * Plugin Factory
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  */
 class Factory {
 
 	/**
 	 * Class Constructor.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param string $pluginName Plugin slug or filename passed from constructor.
 	 * @param array  $pluginConfig Array of plugin config data.
@@ -119,7 +119,7 @@ class Factory {
 	 *
 	 * If a slug was passed, not a file, then this will find the file for us.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param string $slug Slug passed in construction.
 	 *
@@ -147,7 +147,7 @@ class Factory {
 	 *
 	 * If a filename was passed, not a slug, then this will find the slug for us.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param string $file Filename passed in construction.
 	 */
@@ -177,7 +177,7 @@ class Factory {
 	/**
 	 * Set whether or not the plugin is installed (different from activated).
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public static function isPluginInstalled( $path ) {
 		$wp_filesystem = \Boldgrid\Library\Util\Version::getWpFilesystem();
@@ -187,7 +187,7 @@ class Factory {
 	/**
 	 * Set our child plugins.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param string $file Filename.
 	 *

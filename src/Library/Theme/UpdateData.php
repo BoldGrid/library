@@ -8,7 +8,7 @@
  *
  * @package Boldgrid\Theme
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  *
  * @author BoldGrid <wpb@boldgrid.com>
  */
@@ -28,7 +28,7 @@ class UpdateData {
 	/**
 	 * Theme.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var Theme
 	 */
 	public $theme;
@@ -36,7 +36,7 @@ class UpdateData {
 	/**
 	 * Themes.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $themes;
@@ -44,7 +44,7 @@ class UpdateData {
 	/**
 	 * Release Date.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $releaseDate;
@@ -52,7 +52,7 @@ class UpdateData {
 	/**
 	 * Version.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $version;
@@ -60,7 +60,7 @@ class UpdateData {
 	/**
 	 * Days Since Release.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var int
 	 */
 	public $days;
@@ -68,7 +68,7 @@ class UpdateData {
 	/**
 	 * Response Data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var Response
 	 * @access private
 	 */
@@ -77,7 +77,7 @@ class UpdateData {
 	/**
 	 * Constructor.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param Theme  $theme The Theme Object.
 	 * @param string $stylesheet Theme's Stylesheet.
@@ -109,7 +109,7 @@ class UpdateData {
 	/**
 	 * Get Response Data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return Response
 	 */
@@ -120,7 +120,7 @@ class UpdateData {
 	/**
 	 * Set Response Data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return Response
 	 */
@@ -144,7 +144,7 @@ class UpdateData {
 	/**
 	 * Get Theme Information from Transient.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return array
 	 */
@@ -162,7 +162,7 @@ class UpdateData {
 	/**
 	 * Set Theme Information Transient.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function setInformationTransient() {
 		$transient = get_transient( 'boldgrid_theme_information' );

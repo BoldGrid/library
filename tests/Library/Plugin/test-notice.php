@@ -20,7 +20,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Setup.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function setUp() {
 		$this->sample_plugin       = Plugin\Factory::create( 'boldgrid-backup/boldgrid-backup.php' );
@@ -44,7 +44,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test construct.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_construct() {
 		$plugin        = $this->sample_plugin;
@@ -60,7 +60,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test getId.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getId() {
 		$plugin        = $this->sample_plugin;
@@ -73,7 +73,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test getPageSlug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getPageSlug() {
 		$plugin        = $this->sample_plugin;
@@ -86,7 +86,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test setPageSlug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_setPageSlug() {
 		$plugin        = $this->sample_plugin;
@@ -100,7 +100,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test getVersion.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getVersion() {
 		$plugin        = $this->sample_plugin;
@@ -113,7 +113,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test setVersion.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_setVersion() {
 		$plugin        = $this->sample_plugin;
@@ -127,7 +127,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test MaybeShow.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_maybeShow() {
 		$sample_notice = $this->sample_notice_array;
@@ -139,7 +139,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test getIsUnread.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getIsUnread() {
 		$sample_notice = $this->sample_notice_array;
@@ -163,7 +163,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test setIsUnread.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_setIsUnread() {
 		$sample_notice = $this->sample_notice_array;
@@ -177,7 +177,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test getFromOptions.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getFromOptions() {
 		$sample_notice_array = $this->sample_notice_array;
@@ -201,7 +201,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test getPlugin.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getPlugin() {
 		$sample_notice = $this->sample_notice_array;
@@ -213,7 +213,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	/**
 	 * Test setPlugin.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_setPlugin() {
 		$sample_notice = $this->sample_notice_array;

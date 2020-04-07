@@ -4,7 +4,7 @@
  *
  * @package Boldgrid\Plugin
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  *
  * @author BoldGrid <wpb@boldgrid.com>
  */
@@ -15,13 +15,13 @@ use Boldgrid\Library\Library;
 /**
  * Generic page class.
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  */
 class Page {
 	/**
 	 * Enqueue scripts.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public static function enqueueScripts() {
 		$handle = 'bglib-page';

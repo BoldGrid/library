@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.12.2 ###
+
+Release date: February 7th, 2020
+
+* Update: Added plugin Factory class and added auto update functionality.
+
 ### 2.12.1 ###
 
 Release date: February 7th, 2020
