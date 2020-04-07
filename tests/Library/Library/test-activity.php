@@ -91,19 +91,6 @@ class Test_Activty extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Get the configs for a particular activity.
-	 *
-	 * @since 2.7.7
-	 *
-	 * @var    string $activity    The name of the activity.
-	 * @var    string $config_path The full path to the config file.
-	 * @return array               An array of configs.
-	 */
-	public function testGetActivityConfigs() {
-		// NOT TESTED.
-	}
-
-	/**
 	 * Get the count for an activity.
 	 *
 	 * @since 2.7.7
@@ -130,18 +117,6 @@ class Test_Activty extends WP_UnitTestCase {
 		$this->assertEquals( $this->activity['boldgrid-backup'], $this->activityClass->getPluginActivities() );
 	}
 
-	/**
-	 * Maybe add a rating prompt for an activity.
-	 *
-	 * @since 2.7.7
-	 *
-	 * @param  string $activity    The name of an activity
-	 * @param  string $config_path The path to our plugin's rating prompt configs.
-	 * @return bool                Whether or not we added a rating prompt.
-	 */
-	public function testMaybeAddRatingPrompt() {
-		// NOT TESTED.
-	}
 
 	/**
 	 * Save all activities.

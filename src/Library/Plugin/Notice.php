@@ -1,6 +1,10 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Plugin Page Notice.
+ *
+ * Library package uses different naming convention.
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Plugin
  *
@@ -12,8 +16,8 @@ namespace Boldgrid\Library\Library\Plugin;
 /**
  * Notice class for Plugin\Page.
  *
- * This class is a specific Notice
- * used by the Boldgrid\Library\Library\Plugin\Page
+ * This class is a specific Notice.
+ * used by the Boldgrid\Library\Library\Plugin\Page.
  * and Boldgrid\Library\Library\Plugin\Plugin classes.
  *
  * @since 2.12.0
@@ -21,7 +25,7 @@ namespace Boldgrid\Library\Library\Plugin;
 class Notice {
 
 	/**
-	 * Notice ID
+	 * Notice ID.
 	 *
 	 * @since 2.12.0
 	 * @var string
@@ -39,7 +43,7 @@ class Notice {
 	protected $pageSlug;
 
 	/**
-	 * Notice Version
+	 * Notice Version.
 	 *
 	 * Version of plugin this notice was added on.
 	 *
@@ -50,7 +54,7 @@ class Notice {
 	protected $version;
 
 	/**
-	 * Plugin Object
+	 * Plugin Object.
 	 *
 	 * Plugin Object this belongs to.
 	 *
@@ -61,7 +65,7 @@ class Notice {
 	protected $plugin;
 
 	/**
-	 * Notice Is Unread
+	 * Notice Is Unread.
 	 *
 	 * Specifies if the Notice is Unread or not.
 	 *
@@ -72,13 +76,12 @@ class Notice {
 	protected $isUnread;
 
 	/**
-	 * Constructor
-	 *
+	 * Constructor.
 	 *
 	 * @since 2.12.0
 	 *
 	 * @param Plugin $plugin Plugin instance that this Notice belongs to.
-	 * @param array $notice {
+	 * @param array  $notice {
 	 *     An array of notice values.
 	 *
 	 *     @type string $id notice ID.
@@ -228,50 +231,50 @@ class Notice {
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param string $noticeId
+	 * @param  string $noticeId ID of the specific notice.
 	 * @return array
 	 *     @type Notice Notice Instance.
 	 *     @type int Index of Notice in Options array.
 	 */
-	private function getFromOptions( $noticeId ) {
-		$option      = get_option( 'boldgrid_plugin_page_notices', [] );
+	public function getFromOptions( $noticeId ) {
+		$option      = get_option( 'boldgrid_plugin_page_notices', array() );
 		$optionCount = count( $option );
 
 		$i = 0;
 		foreach ( $option as $notice ) {
 			if ( $option[ $i ]['id'] === $noticeId ) {
-				return [ $option[ $i ], $i ];
+				return array( $option[ $i ], $i );
 			}
 			$i++;
 		}
-		return [];
+		return array();
 	}
 
 	/**
 	 * Update Notice Option.
 	 *
-	 * Updates option row in wp_options table. If The NoticeId
+	 * Updates option row in wp_options table. If The NoticeId.
 	 * already exists, then it's object is replaced with $this.
 	 * Otherwise, $this is appended to the array.
 	 *
 	 * @since 2.12.0
 	 */
 	public function updateNoticeOption() {
-		$option = get_option( 'boldgrid_plugin_page_notices', [] );
+		$option = get_option( 'boldgrid_plugin_page_notices', array() );
 		if ( $this->alreadyExists() ) {
-			$option[ $this->getFromOptions( $this->id )[1] ] = [
+			$option[ $this->getFromOptions( $this->id )[1] ] = array(
 				'id'       => $this->id,
 				'isUnread' => $this->isUnread,
 				'version'  => $this->version,
 				'page'     => $this->pageSlug,
-			];
+			);
 		} else {
-			$option[] = [
+			$option[] = array(
 				'id'       => $this->id,
 				'isUnread' => $this->isUnread,
 				'version'  => $this->version,
 				'page'     => $this->pageSlug,
-			];
+			);
 		}
 		update_option( 'boldgrid_plugin_page_notices', $option );
 	}
@@ -279,7 +282,7 @@ class Notice {
 	/**
 	 * Get Plugin.
 	 *
-	 * Get plugin instance that this notice belongs to
+	 * Get plugin instance that this notice belongs to.
 	 *
 	 * @since 2.12.0
 	 *
@@ -292,7 +295,7 @@ class Notice {
 	/**
 	 * Set Plugin.
 	 *
-	 * Set plugin Instance that this notice belongs to
+	 * Set plugin Instance that this notice belongs to.
 	 *
 	 * @since 2.12.0
 	 *
@@ -305,15 +308,15 @@ class Notice {
 	/**
 	 * Notice Version Changed.
 	 *
-	 * Determines if an existing Notice's version number has changed
-	 * since it was placed in options table. If it has changed, then it marks
-	 * the notice unread again. This will help bring attention to old notices
+	 * Determines if an existing Notice's version number has changed.
+	 * since it was placed in options table. If it has changed, then it marks.
+	 * the notice unread again. This will help bring attention to old notices.
 	 * that may have been revised.
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param Notice $originalNotice
-	 * @param array $newNotice
+	 * @param array $originalNotice The notice already in the DB.
+	 * @param array $newNotice The new notice pulled from config.
 	 */
 	private function noticeVersionChanged( array $originalNotice, array $newNotice ) {
 		if ( version_compare( $originalNotice['version'], $newNotice['version'], 'ne' ) ) {

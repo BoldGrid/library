@@ -205,26 +205,6 @@ class Test_Rating_Prompt extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Add admin notices.
-	 *
-	 * @since 2.7.7
-	 */
-	public function testAdminNotices() {
-		// NOT TESTED.
-	}
-
-	/**
-	 * Dismiss a rating prompt via ajax.
-	 *
-	 * @since 2.7.7
-	 *
-	 * @hook wp_ajax_blib_rating_prompt_dismiss
-	 */
-	public function testAjaxDismiss() {
-		// NOT TESTED.
-	}
-
-	/**
 	 * Get an array of attributes for a decision's <a> tag.
 	 *
 	 * @since 2.7.7
@@ -301,33 +281,6 @@ class Test_Rating_Prompt extends WP_UnitTestCase {
 
 		$lastDismissed = $this->ratingPrompt->getLastDismissal();
 		$this->assertEquals( 3, $lastDismissed );
-	}
-
-	/**
-	 * Admin enqueue scripts.
-	 *
-	 * @since 2.7.7
-	 */
-	public function testAdminEnqueueScripts() {
-		// NOT TESTED.
-	}
-
-	/**
-	 * Return the markup of a prompt's slides.
-	 *
-	 * @since 2.7.7
-	 */
-	public function testGetPromptSlides() {
-		// NOT TESTED.
-	}
-
-	/**
-	 * Get the markup for an individual slide.
-	 *
-	 * @since 2.7.7
-	 */
-	public function testGetSlideMarkup() {
-		// NOT TESTED.
 	}
 
 	/**
