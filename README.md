@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.12.2 ###
+
+Release date: TBD
+
+* Update: Expanded Plugins class and added Themes class.
+
 ### 2.12.1 ###
 
 Release date: February 7th, 2020
