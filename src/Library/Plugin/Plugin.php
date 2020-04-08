@@ -123,7 +123,7 @@ class Plugin {
 	/**
 	 * Plugin Update Data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @var Response
 	 */
@@ -397,7 +397,7 @@ class Plugin {
 	/**
 	 * Set PluginData.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param array $pluginData Plugin Data Array.
 	 */

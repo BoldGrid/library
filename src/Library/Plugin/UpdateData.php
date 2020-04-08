@@ -8,7 +8,7 @@
  *
  * @package Boldgrid\Plugin
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  *
  * @author BoldGrid <wpb@boldgrid.com>
  */
@@ -28,7 +28,7 @@ class UpdateData {
 	/**
 	 * Plugin.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var Plugin
 	 */
 	public $plugin;
@@ -36,7 +36,7 @@ class UpdateData {
 	/**
 	 * Active Installs.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $activeInstalls;
@@ -44,7 +44,7 @@ class UpdateData {
 	/**
 	 * Minor Version Installs.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $minorVersionInstalls;
@@ -52,7 +52,7 @@ class UpdateData {
 	/**
 	 * Release Date.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $releaseDate;
@@ -60,7 +60,7 @@ class UpdateData {
 	/**
 	 * Version.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $version;
@@ -68,7 +68,7 @@ class UpdateData {
 	/**
 	 * Minor Version.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $minorVersion;
@@ -76,7 +76,7 @@ class UpdateData {
 	/**
 	 * Stats.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $stats;
@@ -84,7 +84,7 @@ class UpdateData {
 	/**
 	 * Days Since Release.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var int
 	 */
 	public $days;
@@ -92,7 +92,7 @@ class UpdateData {
 	/**
 	 * Response Data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var Response
 	 * @access private
 	 */
@@ -101,7 +101,7 @@ class UpdateData {
 	/**
 	 * Constructor.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param Plugin $plugin The plugin we are getting data for.
 	 * @param string $slug Optional slug of plugin if plugin object not given.
@@ -157,7 +157,7 @@ class UpdateData {
 	/**
 	 * Get Response Data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return Response
 	 */
@@ -168,7 +168,7 @@ class UpdateData {
 	/**
 	 * Set Response Data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return Response
 	 */
@@ -196,7 +196,7 @@ class UpdateData {
 	/**
 	 * Get Plugin Stats.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return Array
 	 */
@@ -224,7 +224,7 @@ class UpdateData {
 	/**
 	 * Get Plugin Information from Transient.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return array
 	 */
@@ -244,7 +244,7 @@ class UpdateData {
 	/**
 	 * Set Plugin Information Transient.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function setInformationTransient() {
 		$transient = get_transient( 'boldgrid_plugin_information' );
@@ -267,7 +267,7 @@ class UpdateData {
 	/**
 	 * Plugins Api Failed.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param \WP_Error $errors WordPress error returned by plugins_api().
 	 */

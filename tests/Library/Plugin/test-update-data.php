@@ -21,7 +21,7 @@ use Boldgrid\Library\Library\Configs;
  * function during testing.
  *
  * @param string $url URL to get.
- * @since SINCEVERSION
+ * @since 2.12.2
  */
 function wp_remote_get( $url ) {
 	if ( false === strpos( $url, 'FakeFake' ) ) {
@@ -34,13 +34,13 @@ function wp_remote_get( $url ) {
 /**
  * BoldGrid Library Library Plugin Plugin Test class.
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  */
 class Test_BoldGrid_Library_Library_Plugin_UpdateData extends \WP_UnitTestCase {
 	/**
 	 * Setup.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function setUp() {
 		// Setup our configs.
@@ -56,7 +56,7 @@ class Test_BoldGrid_Library_Library_Plugin_UpdateData extends \WP_UnitTestCase {
 	/**
 	 * Test FetchPluginStats.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_fetchPluginStats() {
 		$update_data = new UpdateData( null, 'FakeFake' );

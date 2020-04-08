@@ -14,21 +14,21 @@ use Boldgrid\Library\Library\Plugin;
 /**
  * BoldGrid Library Library Plugin Factory Test class.
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  */
 class Test_BoldGrid_Library_Library_Plugin_Factory extends WP_UnitTestCase {
 
 	/**
 	 * Plugin Data.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public $plugin_data;
 
 	/**
 	 * Setup Function.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function setUp() {
 		$plugin_data = array(
@@ -48,7 +48,7 @@ class Test_BoldGrid_Library_Library_Plugin_Factory extends WP_UnitTestCase {
 	/**
 	 * Test Create.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_create() {
 		$expected_class = 'Boldgrid\Library\Library\Plugin\Plugin';
@@ -61,7 +61,7 @@ class Test_BoldGrid_Library_Library_Plugin_Factory extends WP_UnitTestCase {
 	/**
 	 * Test fileFromSlug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_fileFromSlug() {
 		$file = Plugin\Factory::fileFromSlug( 'hello-dolly' );
@@ -73,7 +73,7 @@ class Test_BoldGrid_Library_Library_Plugin_Factory extends WP_UnitTestCase {
 	/**
 	 * Test slugFromFile.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_slugFromFile() {
 		$slug = Plugin\Factory::slugFromFile( 'hello.php' );

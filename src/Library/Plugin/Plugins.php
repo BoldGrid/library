@@ -54,7 +54,7 @@ class Plugins {
 	/**
 	 * Get All Plugins.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return array
 	 */
@@ -71,7 +71,7 @@ class Plugins {
 	/**
 	 * Get Active Plugin by Slug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param array  $activePlugins List of Plugin objects.
 	 * @param string $slug Slug string.

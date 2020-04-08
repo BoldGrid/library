@@ -14,13 +14,13 @@ use Boldgrid\Library\Library\Plugin;
 /**
  * BoldGrid Library Library Plugin Page Test class.
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  */
 class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	/**
 	 * Setup.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function setUp() {
 		$this->config = array(
@@ -62,7 +62,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	/**
 	 * Test Construct.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_construct() {
 		$plugin = $this->sample_plugin;
@@ -74,7 +74,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	/**
 	 * Test getNotices.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getNotices() {
 		$plugin = $this->sample_plugin;
@@ -86,7 +86,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	/**
 	 * Test getNoticeById.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getNoticeById() {
 		$plugin = $this->sample_plugin;
@@ -104,7 +104,7 @@ class Test_BoldGrid_Library_Library_Plugin_Page extends WP_UnitTestCase {
 	/**
 	 * Test getSlug.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function test_getSlug() {
 		$plugin = $this->sample_plugin;

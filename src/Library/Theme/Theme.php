@@ -8,7 +8,7 @@
  *
  * @package Boldgrid\Theme
  *
- * @since SINCEVERSION
+ * @since 2.12.2
  * @author BoldGrid <wpb@boldgrid.com>
  */
 namespace Boldgrid\Library\Library\Theme;
@@ -26,7 +26,7 @@ class Theme {
 	/**
 	 * WP_Theme Object.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var WP_Theme
 	 */
 	public $wp_theme;
@@ -34,7 +34,7 @@ class Theme {
 	/**
 	 * Stylesheet.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $stylesheet;
@@ -42,7 +42,7 @@ class Theme {
 	/**
 	 * Version.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $version;
@@ -50,7 +50,7 @@ class Theme {
 	/**
 	 * Parent Theme.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var string
 	 */
 	public $parent;
@@ -58,7 +58,7 @@ class Theme {
 	/**
 	 * Is Active.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var bool
 	 */
 	public $isActive;
@@ -66,7 +66,7 @@ class Theme {
 	/**
 	 * Has Update.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var bool
 	 */
 	public $hasUpdate;
@@ -74,7 +74,7 @@ class Theme {
 	/**
 	 * UpdateData.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 * @var UpdateData
 	 */
 	public $updateData;
@@ -82,7 +82,7 @@ class Theme {
 	/**
 	 * Constructor.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @param \WP_Theme $wp_theme The WP_Theme object for this theme.
 	 */
@@ -99,7 +99,7 @@ class Theme {
 	/**
 	 * Determines the parent theme if this theme is a child theme.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 *
 	 * @return string
 	 */
@@ -111,7 +111,7 @@ class Theme {
 	/**
 	 * Determine if this is the active theme or not.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	private function setIsActive() {
 		$active_theme = wp_get_theme();
@@ -125,7 +125,7 @@ class Theme {
 	/**
 	 * Determine if this theme has an update available.
 	 *
-	 * @since SINCEVERSION
+	 * @since 2.12.2
 	 */
 	public function setHasUpdate() {
 		if ( get_site_transient( 'update_themes' ) ) {
