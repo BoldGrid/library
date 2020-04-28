@@ -130,8 +130,9 @@ class UpdateData {
 			$this->releaseDate    = isset( $this->responseData->last_updated ) ? new \DateTime( $this->responseData->last_updated ) : new \DateTime( gmdate( 'Y-m-d H:i:s', 1 ) );
 			$this->stats          = ( $this->fetchPluginStats() ) ? $this->fetchPluginStats() : array();
 			$this->thirdParty     = isset( $this->responseData->third_party ) ? $this->responseData->third_party : false;
+
+			$this->setInformationTransient();
 		}
-		$this->setInformationTransient();
 
 		$now        = new \DateTime();
 		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
@@ -237,7 +238,6 @@ class UpdateData {
 		if ( array_key_exists( $this->plugin->getSlug(), $transient ) ) {
 			return $transient[ $this->plugin->getSlug() ];
 		}
-
 		return false;
 	}
 
@@ -261,7 +261,7 @@ class UpdateData {
 			'third_party'     => $this->thirdParty,
 		);
 
-		set_transient( 'boldgrid_plugin_information', $transient, 60 );
+		set_transient( 'boldgrid_plugin_information', $transient, 3600 );
 	}
 
 	/**
