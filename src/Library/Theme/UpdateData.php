@@ -98,8 +98,9 @@ class UpdateData {
 			$this->version      = $this->responseData->version;
 			$this->downloaded   = $this->responseData->downloaded;
 			$this->releaseDate  = new \DateTime( $this->responseData->last_updated );
+
+			$this->setInformationTransient();
 		}
-		$this->setInformationTransient();
 
 		$now = new \DateTime();
 
@@ -137,6 +138,11 @@ class UpdateData {
 				),
 			)
 		);
+
+		if ( is_a( $theme_information, 'WP_Error' ) ) {
+			$theme_information = $this->getGenericInfo( $theme_information );
+			return (object) $theme_information;
+		}
 
 		return $theme_information;
 	}
@@ -176,6 +182,28 @@ class UpdateData {
 			'last_updated' => $this->releaseDate,
 		);
 
-		set_transient( 'boldgrid_theme_information', $transient, 60 );
+		set_transient( 'boldgrid_theme_information', $transient, 3600 );
+	}
+
+	/**
+	 * Plugins Api Failed.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @param \WP_Error $errors WordPress error returned by themes_api().
+	 */
+	public function getGenericInfo( \WP_Error $errors ) {
+		$current     = get_site_transient( 'update_themes' );
+		$new_version = isset( $current->checked[ $this->theme->stylesheet ] ) ? $current->checked[ $this->theme->stylesheet ] : '';
+
+		$theme_information = array(
+			'active_installs' => '0',
+			'version'         => $new_version,
+			'downloaded'      => '000000',
+			'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
+			'third_party'     => true,
+		);
+
+		return $theme_information;
 	}
 }
