@@ -172,17 +172,24 @@ class UpdateData {
 	 * @return Response
 	 */
 	public function fetchResponseData() {
-		$plugin_information = plugins_api(
-			'plugin_information',
-			array(
-				'slug'   => $this->plugin->getSlug(),
-				'fields' => array(
-					'downloaded',
-					'last_updated',
-					'active_installs',
-				),
-			)
-		);
+		$is_timely_updates  = apply_filters( 'boldgrid_backup_is_timely_updates', false );
+		$plugin_information = array();
+		if ( $is_timely_updates ) {
+			$plugin_information = plugins_api(
+				'plugin_information',
+				array(
+					'slug'   => $this->plugin->getSlug(),
+					'fields' => array(
+						'downloaded',
+						'last_updated',
+						'active_installs',
+					),
+				)
+			);
+		} else {
+			$plugin_information = $this->getGenericInfo( new \WP_Error( 'Timely Updates Not Enabled' ) );
+			return (object) $plugin_information;
+		}
 
 		if ( is_a( $plugin_information, 'WP_Error' ) ) {
 			$plugin_information = $this->getGenericInfo( $plugin_information );
@@ -230,7 +237,11 @@ class UpdateData {
 			'third_party'     => $this->thirdParty,
 		);
 
-		set_transient( 'boldgrid_plugin_information', $transient, 3600 );
+		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
+		if ( $is_timely_updates ) {
+			set_transient( 'boldgrid_plugin_information', $transient, 3600 );
+		}
+
 	}
 
 	/**

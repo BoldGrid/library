@@ -127,18 +127,25 @@ class UpdateData {
 	 */
 	public function fetchResponseData() {
 		include_once ABSPATH . 'wp-admin/includes/theme.php';
-		$theme_information = themes_api(
-			'theme_information',
-			array(
-				'slug'   => $this->theme->stylesheet,
-				'fields' => array(
-					'downloaded',
-					'last_updated',
-					'active_installs',
-				),
-			)
-		);
 
+		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
+
+		if ( $is_timely_updates ) {
+			$theme_information = themes_api(
+				'theme_information',
+				array(
+					'slug'   => $this->theme->stylesheet,
+					'fields' => array(
+						'downloaded',
+						'last_updated',
+						'active_installs',
+					),
+				)
+			);
+		} else {
+			$theme_information = $this->getGenericInfo( new \WP_Error( 'Timely Updates Not Enabled' ) );
+			return (object) $theme_information;
+		}
 		if ( is_a( $theme_information, 'WP_Error' ) ) {
 			$theme_information = $this->getGenericInfo( $theme_information );
 			return (object) $theme_information;
@@ -182,7 +189,10 @@ class UpdateData {
 			'last_updated' => $this->releaseDate,
 		);
 
-		set_transient( 'boldgrid_theme_information', $transient, 3600 );
+		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
+		if ( $is_timely_updates ) {
+			set_transient( 'boldgrid_theme_information', $transient, 3600 );
+		}
 	}
 
 	/**
