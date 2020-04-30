@@ -99,6 +99,24 @@ class UpdateData {
 	private $responseData;
 
 	/**
+	 * Current Transient.
+	 *
+	 * @since 2.12.2
+	 * @var array
+	 * @access private
+	 */
+	private $currentTransient;
+
+	/**
+	 * Timeout Setting.
+	 *
+	 * @since 2.12.2
+	 * @var int
+	 * @access private
+	 */
+	private $timeoutSetting = 3600;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.12.2
@@ -128,10 +146,10 @@ class UpdateData {
 			$this->downloaded     = isset( $this->responseData->downloaded ) ? $this->responseData->downloaded : '0';
 			$this->releaseDate    = isset( $this->responseData->last_updated ) ? new \DateTime( $this->responseData->last_updated ) : new \DateTime( gmdate( 'Y-m-d H:i:s', 1 ) );
 			$this->thirdParty     = isset( $this->responseData->third_party ) ? $this->responseData->third_party : false;
+			$this->apiFetchTime   = isset( $this->responseData->api_fetch_time ) ? $this->responseData->api_fetch_time : false;
 
 			$this->setInformationTransient();
 		}
-
 		$now        = new \DateTime();
 		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
 	}
@@ -174,7 +192,8 @@ class UpdateData {
 	public function fetchResponseData() {
 		$is_timely_updates  = apply_filters( 'boldgrid_backup_is_timely_updates', false );
 		$plugin_information = array();
-		if ( $is_timely_updates ) {
+		$delayFetchingData  = ( $this->getAgeOfTransient() < 10 );
+		if ( $is_timely_updates && ! $delayFetchingData ) {
 			$plugin_information = plugins_api(
 				'plugin_information',
 				array(
@@ -186,9 +205,16 @@ class UpdateData {
 					),
 				)
 			);
-		} else {
-			$plugin_information = $this->getGenericInfo( new \WP_Error( 'Timely Updates Not Enabled' ) );
-			return (object) $plugin_information;
+
+			$plugin_information->api_fetch_time = current_time( 'timestamp' );
+		} elseif ( $is_timely_updates && $delayFetchingData ) {
+			$plugin_information = array(
+				'active_installs' => '0',
+				'version'         => '0',
+				'downloaded'      => '000000',
+				'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
+				'api_fetch_time'  => false,
+			);
 		}
 
 		if ( is_a( $plugin_information, 'WP_Error' ) ) {
@@ -209,6 +235,13 @@ class UpdateData {
 	public function getInformationTransient() {
 		$transient = get_transient( 'boldgrid_plugin_information' );
 		if ( false === $transient ) {
+			$this->currentTransient = array();
+			return false;
+		} else {
+			$this->currentTransient = $transient;
+		}
+
+		if ( array_key_exists( $this->plugin->getSlug(), $transient ) && false === $transient[ $this->plugin->getSlug() ]['api_fetch_time'] ) {
 			return false;
 		}
 
@@ -216,6 +249,20 @@ class UpdateData {
 			return $transient[ $this->plugin->getSlug() ];
 		}
 		return false;
+	}
+
+	/** Get Age of Transient.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @return string
+	 */
+	public function getAgeOfTransient() {
+		if ( $this->currentTransient ) {
+			$timeout           = get_option( '_transient_timeout_boldgrid_plugin_information' );
+			$current_timestamp = current_time( 'timestamp' );
+			return $this->timeoutSetting - ( $timeout - $current_timestamp );
+		}
 	}
 
 	/**
@@ -235,11 +282,12 @@ class UpdateData {
 			'downloaded'      => $this->downloaded,
 			'last_updated'    => $this->releaseDate,
 			'third_party'     => $this->thirdParty,
+			'api_fetch_time'  => $this->apiFetchTime,
 		);
 
 		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
 		if ( $is_timely_updates ) {
-			set_transient( 'boldgrid_plugin_information', $transient, 3600 );
+			set_transient( 'boldgrid_plugin_information', $transient, $this->timeoutSetting );
 		}
 
 	}
@@ -261,6 +309,7 @@ class UpdateData {
 			'downloaded'      => '000000',
 			'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
 			'third_party'     => true,
+			'api_fetch_time'  => current_time( 'timestamp' ),
 		);
 
 		return $plugin_information;
