@@ -120,7 +120,6 @@ class UpdateData {
 			$this->version        = $responseTransient['version'];
 			$this->downloaded     = $responseTransient['downloaded'];
 			$this->releaseDate    = $responseTransient['last_updated'];
-			$this->stats          = $responseTransient['stats'];
 			$this->thirdParty     = $responseTransient['third_party'];
 		} else {
 			$this->responseData   = $this->fetchResponseData();
@@ -128,7 +127,6 @@ class UpdateData {
 			$this->version        = isset( $this->responseData->version ) ? $this->responseData->version : null;
 			$this->downloaded     = isset( $this->responseData->downloaded ) ? $this->responseData->downloaded : '0';
 			$this->releaseDate    = isset( $this->responseData->last_updated ) ? new \DateTime( $this->responseData->last_updated ) : new \DateTime( gmdate( 'Y-m-d H:i:s', 1 ) );
-			$this->stats          = ( $this->fetchPluginStats() ) ? $this->fetchPluginStats() : array();
 			$this->thirdParty     = isset( $this->responseData->third_party ) ? $this->responseData->third_party : false;
 
 			$this->setInformationTransient();
@@ -195,34 +193,6 @@ class UpdateData {
 	}
 
 	/**
-	 * Get Plugin Stats.
-	 *
-	 * @since 2.12.2
-	 *
-	 * @return Array
-	 */
-	public function fetchPluginStats() {
-
-		$response = wp_remote_get( 'https://api.wordpress.org/stats/plugin/1.0/' . $this->plugin->getSlug() );
-
-		if ( $response && array_key_exists( 'body', $response ) ) {
-			$response = $response['body'];
-		} else {
-			return false;
-		}
-
-		$stats = array();
-		if ( false !== $response ) {
-			$response = json_decode( $response, true );
-
-			if ( json_last_error() === JSON_ERROR_NONE && is_array( $response ) ) {
-				$stats = $response;
-			}
-		}
-		return $stats;
-	}
-
-	/**
 	 * Get Plugin Information from Transient.
 	 *
 	 * @since 2.12.2
@@ -257,7 +227,6 @@ class UpdateData {
 			'version'         => $this->version,
 			'downloaded'      => $this->downloaded,
 			'last_updated'    => $this->releaseDate,
-			'stats'           => $this->stats,
 			'third_party'     => $this->thirdParty,
 		);
 
