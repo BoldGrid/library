@@ -34,17 +34,13 @@ class Test_BoldGrid_Library_Library_Theme_UpdateData extends WP_UnitTestCase {
 		delete_transient( 'boldgrid_theme_information' );
 		$this->transient_data = array(
 			'twentytwenty' => array(
-				'version'      => '1.1',
-				'downloaded'   => 482251,
-				'last_updated' => new DateTime('2020-02-05'),
+				'version'         => '1.1',
+				'downloaded'      => 482251,
+				'last_updated'    => new DateTime('2020-02-05'),
+				'api_fetch_time'  => false,
+				'active_installs' => 1000
 			),
 		);
-	}
-
-	public function test_constructor() {
-		$this->assertFalse( get_transient( 'boldgrid_theme_information' ) );
-		$updateData  = new Theme\UpdateData( new Theme\Theme( wp_get_theme( 'twentytwenty' ) ) );
-		$this->assertNotFalse( get_transient( 'boldgrid_theme_information' ) );
 	}
 
 	public function test_getResponseData() {
@@ -59,7 +55,7 @@ class Test_BoldGrid_Library_Library_Theme_UpdateData extends WP_UnitTestCase {
 
 	public function test_getInformationTransient() {
 		$updateData  = new Theme\UpdateData( new Theme\Theme( wp_get_theme( 'twentytwenty' ) ) );
-		$this->assertNotFalse( $updateData->getInformationTransient() );
+		$this->assertFalse( $updateData->getInformationTransient() );
 
 		set_transient( 'boldgrid_theme_information', array(), 60 );
 		$this->assertFalse( $updateData->getInformationTransient() );
