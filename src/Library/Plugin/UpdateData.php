@@ -139,6 +139,7 @@ class UpdateData {
 			$this->downloaded     = $responseTransient['downloaded'];
 			$this->releaseDate    = $responseTransient['last_updated'];
 			$this->thirdParty     = $responseTransient['third_party'];
+			$this->apiFetchTime   = isset( $this->responseTransient['api_fetch_time'] ) ? $this->responseTransient['api_fetch_time'] : current_time( 'timestamp' );
 		} else {
 			$this->responseData   = $this->fetchResponseData();
 			$this->activeInstalls = isset( $this->responseData->active_installs ) ? $this->responseData->active_installs : '0';
@@ -207,7 +208,7 @@ class UpdateData {
 			);
 
 			$plugin_information->api_fetch_time = current_time( 'timestamp' );
-		} elseif ( $is_timely_updates && $delayFetchingData ) {
+		} else {
 			$plugin_information = array(
 				'active_installs' => '0',
 				'version'         => '0',
@@ -222,7 +223,7 @@ class UpdateData {
 			return (object) $plugin_information;
 		}
 
-		return $plugin_information;
+		return (object) $plugin_information;
 	}
 
 	/**

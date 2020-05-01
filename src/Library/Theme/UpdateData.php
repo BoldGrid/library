@@ -75,6 +75,24 @@ class UpdateData {
 	private $responseData;
 
 	/**
+	 * Current Transient.
+	 *
+	 * @since 2.12.2
+	 * @var array
+	 * @access private
+	 */
+	private $currentTransient;
+
+	/**
+	 * Timeout Setting.
+	 *
+	 * @since 2.12.2
+	 * @var int
+	 * @access private
+	 */
+	private $timeoutSetting = 3600;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.12.2
@@ -93,11 +111,13 @@ class UpdateData {
 			$this->version      = $responseTransient['version'];
 			$this->downloaded   = $responseTransient['downloaded'];
 			$this->releaseDate  = $responseTransient['last_updated'];
+			$this->apiFetchTime = isset( $this->responseTransient['api_fetch_time'] ) ? $this->responseTransient['api_fetch_time'] : current_time( 'timestamp' );
 		} else {
 			$this->responseData = $this->fetchResponseData();
 			$this->version      = $this->responseData->version;
 			$this->downloaded   = $this->responseData->downloaded;
 			$this->releaseDate  = new \DateTime( $this->responseData->last_updated );
+			$this->apiFetchTime = isset( $this->responseData->api_fetch_time ) ? $this->responseData->api_fetch_time : false;
 
 			$this->setInformationTransient();
 		}
@@ -129,8 +149,11 @@ class UpdateData {
 		include_once ABSPATH . 'wp-admin/includes/theme.php';
 
 		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
+		
+		$theme_information = array();
+		$delayFetchingData  = ( $this->getAgeOfTransient() < 10 );
 
-		if ( $is_timely_updates ) {
+		if ( $is_timely_updates && ! $delayFetchingData ) {
 			$theme_information = themes_api(
 				'theme_information',
 				array(
@@ -142,16 +165,38 @@ class UpdateData {
 					),
 				)
 			);
+
+			$theme_information->api_fetch_time = current_time( 'timestamp' );
 		} else {
-			$theme_information = $this->getGenericInfo( new \WP_Error( 'Timely Updates Not Enabled' ) );
-			return (object) $theme_information;
+			$theme_information = array(
+				'active_installs' => '0',
+				'version'         => '0',
+				'downloaded'      => '000000',
+				'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
+				'api_fetch_time'  => false,
+			);
 		}
+
 		if ( is_a( $theme_information, 'WP_Error' ) ) {
 			$theme_information = $this->getGenericInfo( $theme_information );
 			return (object) $theme_information;
 		}
 
-		return $theme_information;
+		return (object) $theme_information;
+	}
+
+	/** Get Age of Transient.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @return string
+	 */
+	public function getAgeOfTransient() {
+		if ( $this->currentTransient ) {
+			$timeout           = get_option( '_transient_timeout_boldgrid_theme_information' );
+			$current_timestamp = current_time( 'timestamp' );
+			return $this->timeoutSetting - ( $timeout - $current_timestamp );
+		}
 	}
 
 	/**
@@ -164,8 +209,17 @@ class UpdateData {
 	public function getInformationTransient() {
 		$transient = get_transient( 'boldgrid_theme_information' );
 		if ( false === $transient ) {
+			$this->currentTransient = array();
+			return false;
+		} else {
+			$this->currentTransient = $transient;
+		}
+
+		if ( array_key_exists( $this->theme->stylesheet, $transient ) &&
+			false === $transient[ $this->theme->stylesheet ]['api_fetch_time'] ) {
 			return false;
 		}
+
 		if ( array_key_exists( $this->theme->stylesheet, $transient ) ) {
 			return $transient[ $this->theme->stylesheet ];
 		}
@@ -184,14 +238,15 @@ class UpdateData {
 		}
 
 		$transient[ $this->theme->stylesheet ] = array(
-			'version'      => $this->version,
-			'downloaded'   => $this->downloaded,
-			'last_updated' => $this->releaseDate,
+			'version'         => $this->version,
+			'downloaded'      => $this->downloaded,
+			'last_updated'    => $this->releaseDate,
+			'api_fetch_time'  => $this->apiFetchTime,
 		);
 
 		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
 		if ( $is_timely_updates ) {
-			set_transient( 'boldgrid_theme_information', $transient, 3600 );
+			set_transient( 'boldgrid_theme_information', $transient, $this->timeoutSetting );
 		}
 	}
 
@@ -212,6 +267,7 @@ class UpdateData {
 			'downloaded'      => '000000',
 			'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
 			'third_party'     => true,
+			'api_fetch_time'  => current_time( 'timestamp' ),
 		);
 
 		return $theme_information;
