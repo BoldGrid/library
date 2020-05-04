@@ -193,7 +193,7 @@ class UpdateData {
 	public function fetchResponseData() {
 		$is_timely_updates  = apply_filters( 'boldgrid_backup_is_timely_updates', false );
 		$plugin_information = array();
-		$delayFetchingData  = ( $this->getAgeOfTransient() < 10 );
+		$delayFetchingData  = ( $this->getAgeOfTransient() < 0 );
 		if ( $is_timely_updates && ! $delayFetchingData ) {
 			$plugin_information = plugins_api(
 				'plugin_information',

@@ -35,12 +35,12 @@ class Factory {
 	 *
 	 * @return Plugin
 	 */
-	public static function create( $pluginName, $pluginConfig = null ) {
+	public static function create( $pluginName, $pluginConfig = null, $getUpdatedata = false ) {
 		$plugin = null;
 		if ( false === strpos( $pluginName, '.' ) ) {
-			$plugin = self::createFromSlug( $pluginName, $pluginConfig );
+			$plugin = self::createFromSlug( $pluginName, $pluginConfig, isset( $getUpdateData ) ? $getUpdateData : false );
 		} else {
-			$plugin = self::createFromFile( $pluginName, $pluginConfig );
+			$plugin = self::createFromFile( $pluginName, $pluginConfig, isset( $getUpdateData ) ? $getUpdateData : false );
 		}
 
 		return $plugin;
@@ -54,7 +54,7 @@ class Factory {
 	 *
 	 * @return Plugin
 	 */
-	public static function createFromSlug( $slug, $pluginConfig ) {
+	public static function createFromSlug( $slug, $pluginConfig, $getUpdateData ) {
 
 		$slug = ! empty( $slug ) ? $slug : '';
 
@@ -76,6 +76,7 @@ class Factory {
 				'path'         => $path,
 				'isInstalled'  => $isInstalled,
 				'childPlugins' => $childPlugins,
+				'getUpdateData' => $getUpdateData,
 			)
 		);
 	}

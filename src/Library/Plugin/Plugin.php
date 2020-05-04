@@ -142,9 +142,18 @@ class Plugin {
 			$this->$paramKey = $paramValue;
 		}
 
-		$this->updateData = new UpdateData( $this );
+		$this->updateData = isset( $this->getUpdateData ) && $this->getUpdateData ? $this->setUpdateData() : false;
 
 		$this->setPages();
+	}
+
+	/**
+	 * Set UpdateData.
+	 *
+	 * @since 2.12.2
+	 */
+	public function setUpdateData() {
+		$this->updateData = new UpdateData( $this );
 	}
 
 	/**
