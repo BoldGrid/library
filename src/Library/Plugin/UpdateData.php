@@ -124,7 +124,7 @@ class UpdateData {
 	 * @param Plugin $plugin The plugin we are getting data for.
 	 * @param string $slug Optional slug of plugin if plugin object not given.
 	 */
-	public function __construct( $plugin = null, $slug = null ) {
+	public function __construct( $plugin = null, $slug = null, $force = false ) {
 		include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
 		// If a plugin object is passed in constructer, use that, or else create a new one from slug.
@@ -141,7 +141,7 @@ class UpdateData {
 			$this->thirdParty     = $responseTransient['third_party'];
 			$this->apiFetchTime   = isset( $this->responseTransient['api_fetch_time'] ) ? $this->responseTransient['api_fetch_time'] : current_time( 'timestamp' );
 		} else {
-			$this->responseData   = $this->fetchResponseData();
+			$this->responseData   = $this->fetchResponseData( $force );
 			$this->activeInstalls = isset( $this->responseData->active_installs ) ? $this->responseData->active_installs : '0';
 			$this->version        = isset( $this->responseData->version ) ? $this->responseData->version : null;
 			$this->downloaded     = isset( $this->responseData->downloaded ) ? $this->responseData->downloaded : '0';
@@ -190,10 +190,11 @@ class UpdateData {
 	 *
 	 * @return Response
 	 */
-	public function fetchResponseData() {
+	public function fetchResponseData( $force = false ) {
 		$is_timely_updates  = apply_filters( 'boldgrid_backup_is_timely_updates', false );
 		$plugin_information = array();
-		$delayFetchingData  = ( $this->getAgeOfTransient() < 0 );
+		$delay_time         = $force ? 0 : 3;
+		$delayFetchingData  = ( $this->getAgeOfTransient() < $delay_time );
 		if ( $is_timely_updates && ! $delayFetchingData ) {
 			$plugin_information = plugins_api(
 				'plugin_information',

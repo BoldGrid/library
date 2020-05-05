@@ -152,8 +152,8 @@ class Plugin {
 	 *
 	 * @since 2.12.2
 	 */
-	public function setUpdateData() {
-		$this->updateData = new UpdateData( $this );
+	public function setUpdateData( $force = false ) {
+		$this->updateData = new UpdateData( $this, null, $force );
 	}
 
 	/**
