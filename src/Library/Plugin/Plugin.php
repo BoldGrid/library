@@ -142,7 +142,7 @@ class Plugin {
 			$this->$paramKey = $paramValue;
 		}
 
-		$this->updateData = isset( $this->getUpdateData ) && $this->getUpdateData ? $this->setUpdateData() : false;
+		$this->updateData = ! empty( $this->getUpdateData ) ? $this->setUpdateData() : false;
 
 		$this->setPages();
 	}
@@ -151,6 +151,8 @@ class Plugin {
 	 * Set UpdateData.
 	 *
 	 * @since 2.12.2
+	 *
+	 * @param bool $force Whether or not to force fetching from API.
 	 */
 	public function setUpdateData( $force = false ) {
 		$this->updateData = new UpdateData( $this, null, $force );

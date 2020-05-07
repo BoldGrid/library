@@ -123,6 +123,7 @@ class UpdateData {
 	 *
 	 * @param Plugin $plugin The plugin we are getting data for.
 	 * @param string $slug Optional slug of plugin if plugin object not given.
+	 * @param bool   $force Whether or not to force fetching data from API.
 	 */
 	public function __construct( $plugin = null, $slug = null, $force = false ) {
 		include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
@@ -187,6 +188,8 @@ class UpdateData {
 	 * Set Response Data.
 	 *
 	 * @since 2.12.2
+	 *
+	 * @param bool $force Whether or not to force fethcing from API.
 	 *
 	 * @return Response
 	 */
