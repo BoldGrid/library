@@ -32,15 +32,16 @@ class Factory {
 	 *
 	 * @param string $pluginName Plugin slug or filename passed from constructor.
 	 * @param array  $pluginConfig Array of plugin config data.
+	 * @param bool   $getUpdateData Whether or not to get the updateData on initialization.
 	 *
 	 * @return Plugin
 	 */
-	public static function create( $pluginName, $pluginConfig = null ) {
+	public static function create( $pluginName, $pluginConfig = null, $getUpdateData = false ) {
 		$plugin = null;
 		if ( false === strpos( $pluginName, '.' ) ) {
-			$plugin = self::createFromSlug( $pluginName, $pluginConfig );
+			$plugin = self::createFromSlug( $pluginName, $pluginConfig, $getUpdateData );
 		} else {
-			$plugin = self::createFromFile( $pluginName, $pluginConfig );
+			$plugin = self::createFromFile( $pluginName, $pluginConfig, $getUpdateData );
 		}
 
 		return $plugin;
@@ -51,10 +52,11 @@ class Factory {
 	 *
 	 * @param string $slug Plugin Slug.
 	 * @param array  $pluginConfig Array of plugin config data.
+	 * @param bool   $getUpdateData Whether or not to get updateData.
 	 *
 	 * @return Plugin
 	 */
-	public static function createFromSlug( $slug, $pluginConfig ) {
+	public static function createFromSlug( $slug, $pluginConfig, $getUpdateData ) {
 
 		$slug = ! empty( $slug ) ? $slug : '';
 
@@ -76,6 +78,7 @@ class Factory {
 				'path'         => $path,
 				'isInstalled'  => $isInstalled,
 				'childPlugins' => $childPlugins,
+				'getUpdateData' => $getUpdateData,
 			)
 		);
 	}

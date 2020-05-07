@@ -99,14 +99,33 @@ class UpdateData {
 	private $responseData;
 
 	/**
+	 * Current Transient.
+	 *
+	 * @since 2.12.2
+	 * @var array
+	 * @access private
+	 */
+	private $currentTransient;
+
+	/**
+	 * Timeout Setting.
+	 *
+	 * @since 2.12.2
+	 * @var int
+	 * @access private
+	 */
+	private $timeoutSetting = 3600;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.12.2
 	 *
 	 * @param Plugin $plugin The plugin we are getting data for.
 	 * @param string $slug Optional slug of plugin if plugin object not given.
+	 * @param bool   $force Whether or not to force fetching data from API.
 	 */
-	public function __construct( $plugin = null, $slug = null ) {
+	public function __construct( $plugin = null, $slug = null, $force = false ) {
 		include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
 		// If a plugin object is passed in constructer, use that, or else create a new one from slug.
@@ -120,19 +139,19 @@ class UpdateData {
 			$this->version        = $responseTransient['version'];
 			$this->downloaded     = $responseTransient['downloaded'];
 			$this->releaseDate    = $responseTransient['last_updated'];
-			$this->stats          = $responseTransient['stats'];
 			$this->thirdParty     = $responseTransient['third_party'];
+			$this->apiFetchTime   = isset( $this->responseTransient['api_fetch_time'] ) ? $this->responseTransient['api_fetch_time'] : current_time( 'timestamp' );
 		} else {
-			$this->responseData   = $this->fetchResponseData();
+			$this->responseData   = $this->fetchResponseData( $force );
 			$this->activeInstalls = isset( $this->responseData->active_installs ) ? $this->responseData->active_installs : '0';
 			$this->version        = isset( $this->responseData->version ) ? $this->responseData->version : null;
 			$this->downloaded     = isset( $this->responseData->downloaded ) ? $this->responseData->downloaded : '0';
 			$this->releaseDate    = isset( $this->responseData->last_updated ) ? new \DateTime( $this->responseData->last_updated ) : new \DateTime( gmdate( 'Y-m-d H:i:s', 1 ) );
-			$this->stats          = ( $this->fetchPluginStats() ) ? $this->fetchPluginStats() : array();
 			$this->thirdParty     = isset( $this->responseData->third_party ) ? $this->responseData->third_party : false;
-		}
-		$this->setInformationTransient();
+			$this->apiFetchTime   = isset( $this->responseData->api_fetch_time ) ? $this->responseData->api_fetch_time : false;
 
+			$this->setInformationTransient();
+		}
 		$now        = new \DateTime();
 		$this->days = date_diff( $now, $this->releaseDate )->format( '%a' );
 	}
@@ -170,55 +189,45 @@ class UpdateData {
 	 *
 	 * @since 2.12.2
 	 *
+	 * @param bool $force Whether or not to force fethcing from API.
+	 *
 	 * @return Response
 	 */
-	public function fetchResponseData() {
-		$plugin_information = plugins_api(
-			'plugin_information',
-			array(
-				'slug'   => $this->plugin->getSlug(),
-				'fields' => array(
-					'downloaded',
-					'last_updated',
-					'active_installs',
-				),
-			)
-		);
+	public function fetchResponseData( $force = false ) {
+		$is_timely_updates  = apply_filters( 'boldgrid_backup_is_timely_updates', false );
+		$plugin_information = array();
+		$delay_time         = $force ? 0 : 3;
+		$delayFetchingData  = ( $this->getAgeOfTransient() < $delay_time );
+		if ( $is_timely_updates && ! $delayFetchingData ) {
+			$plugin_information = plugins_api(
+				'plugin_information',
+				array(
+					'slug'   => $this->plugin->getSlug(),
+					'fields' => array(
+						'downloaded',
+						'last_updated',
+						'active_installs',
+					),
+				)
+			);
+
+			$plugin_information->api_fetch_time = current_time( 'timestamp' );
+		} else {
+			$plugin_information = array(
+				'active_installs' => '0',
+				'version'         => '0',
+				'downloaded'      => '000000',
+				'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
+				'api_fetch_time'  => false,
+			);
+		}
 
 		if ( is_a( $plugin_information, 'WP_Error' ) ) {
 			$plugin_information = $this->getGenericInfo( $plugin_information );
 			return (object) $plugin_information;
 		}
 
-		return $plugin_information;
-	}
-
-	/**
-	 * Get Plugin Stats.
-	 *
-	 * @since 2.12.2
-	 *
-	 * @return Array
-	 */
-	public function fetchPluginStats() {
-
-		$response = wp_remote_get( 'https://api.wordpress.org/stats/plugin/1.0/' . $this->plugin->getSlug() );
-
-		if ( $response && array_key_exists( 'body', $response ) ) {
-			$response = $response['body'];
-		} else {
-			return false;
-		}
-
-		$stats = array();
-		if ( false !== $response ) {
-			$response = json_decode( $response, true );
-
-			if ( json_last_error() === JSON_ERROR_NONE && is_array( $response ) ) {
-				$stats = $response;
-			}
-		}
-		return $stats;
+		return (object) $plugin_information;
 	}
 
 	/**
@@ -231,14 +240,34 @@ class UpdateData {
 	public function getInformationTransient() {
 		$transient = get_transient( 'boldgrid_plugin_information' );
 		if ( false === $transient ) {
+			$this->currentTransient = array();
+			return false;
+		} else {
+			$this->currentTransient = $transient;
+		}
+
+		if ( array_key_exists( $this->plugin->getSlug(), $transient ) && false === $transient[ $this->plugin->getSlug() ]['api_fetch_time'] ) {
 			return false;
 		}
 
 		if ( array_key_exists( $this->plugin->getSlug(), $transient ) ) {
 			return $transient[ $this->plugin->getSlug() ];
 		}
-
 		return false;
+	}
+
+	/** Get Age of Transient.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @return string
+	 */
+	public function getAgeOfTransient() {
+		if ( $this->currentTransient ) {
+			$timeout           = get_option( '_transient_timeout_boldgrid_plugin_information' );
+			$current_timestamp = current_time( 'timestamp' );
+			return $this->timeoutSetting - ( $timeout - $current_timestamp );
+		}
 	}
 
 	/**
@@ -257,11 +286,15 @@ class UpdateData {
 			'version'         => $this->version,
 			'downloaded'      => $this->downloaded,
 			'last_updated'    => $this->releaseDate,
-			'stats'           => $this->stats,
 			'third_party'     => $this->thirdParty,
+			'api_fetch_time'  => $this->apiFetchTime,
 		);
 
-		set_transient( 'boldgrid_plugin_information', $transient, 60 );
+		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
+		if ( $is_timely_updates ) {
+			set_transient( 'boldgrid_plugin_information', $transient, $this->timeoutSetting );
+		}
+
 	}
 
 	/**
@@ -281,6 +314,7 @@ class UpdateData {
 			'downloaded'      => '000000',
 			'last_updated'    => gmdate( 'Y-m-d H:i:s', 1 ),
 			'third_party'     => true,
+			'api_fetch_time'  => current_time( 'timestamp' ),
 		);
 
 		return $plugin_information;
