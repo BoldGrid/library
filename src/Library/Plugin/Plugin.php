@@ -135,13 +135,14 @@ class Plugin {
 	 * @since 2.7.7
 	 *
 	 * @param array $pluginParams An array of parameters passed from Plugin Factory.
+	 * @param array $pluginConfig Optionally passed array of Plugin Configuration Options.
 	 */
-	public function __construct( $pluginParams ) {
+	public function __construct( $pluginParams, $pluginConfig = null ) {
 
 		// Backwards Compatability: Some plugins don't know they're supposed to use the Factory.
 		// So this will direct them there. Once ALL plugins are using libary > 2.12.2 this can be removed.
 		if ( is_string( $pluginParams ) ) {
-			$plugin       = Factory::create( $pluginParams );
+			$plugin       = Factory::create( $pluginParams, $pluginConfig );
 			$pluginParams = $plugin->getPluginParams();
 		}
 
