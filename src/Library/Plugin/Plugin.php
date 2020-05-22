@@ -138,6 +138,13 @@ class Plugin {
 	 */
 	public function __construct( $pluginParams ) {
 
+		// Backwards Compatability: Some plugins don't know they're supposed to use the Factory.
+		// So this will direct them there. Once ALL plugins are using libary > 2.12.2 this can be removed.
+		if ( is_string( $pluginParams ) ) {
+			$plugin       = Factory::create( $pluginParams );
+			$pluginParams = $plugin->getPluginParams();
+		}
+
 		foreach ( $pluginParams as $paramKey => $paramValue ) {
 			$this->$paramKey = $paramValue;
 		}
@@ -518,5 +525,21 @@ class Plugin {
 		} else {
 			return '<span class="bglib-unread-notice-count hidden"></span>';
 		}
+	}
+
+	/**
+	 * Get Plugin Params.
+	 *
+	 * Gets an array of all plugin property parameters.
+	 * This is useful for backwards compatibility with BoldGrid Plugins.
+	 * That do not implement the Factory methods.
+	 * Once ALL plugins are Library > 2.12.2 this can be removed.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @return array
+	 */
+	public function getPluginParams() {
+		return get_object_vars( $this );
 	}
 }
