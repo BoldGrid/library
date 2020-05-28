@@ -178,6 +178,12 @@ class Load {
 
 			// Check for highest loaded version.
 			if ( version_compare( $load, $version ) === -1 ) {
+				// Get and validate the path. It must have the library in it.
+				$path = self::determinePath( $name );
+				if ( ! $this->isValidPath( $path ) ) {
+					continue;
+				}
+
 				$load = $version;
 				$product = $name;
 			}
@@ -262,5 +268,23 @@ class Load {
 	 */
 	public function getPath() {
 		return $this->path;
+	}
+
+	/**
+	 * Determine whether or not a library path is valid.
+	 *
+	 * If you look at the docblocks for self::determinePath(), the path is, "[...] the parent directory
+	 * of the vendor folder. So, the path we return is assumed to have a vendor folder".
+	 *
+	 * This method simply ensures the path indeed has a vendor/boldgrid/library folder. This is VITAL
+	 * because if a plugin is deleted via the filesystem, the entry will still remain in the boldgrid_settings
+	 * option, and it will crash other plugins requiring it.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @return bool
+	 */
+	public function isValidPath( $path ) {
+		return Version::getWpFilesystem()->exists( trailingslashit( $path ) . 'vendor/boldgrid/library' );
 	}
 }
