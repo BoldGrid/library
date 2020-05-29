@@ -13,9 +13,10 @@ composer require boldgrid/library
 
 ### 2.12.2 ###
 
-Release date: May 28th, 2020
+Release date: May 29th, 2020
 
 * Bug fix: Do not load libraries from deleted plugins.
+* Update: Expanded Plugins class and added Themes class.
 
 ### 2.12.1 ###
 

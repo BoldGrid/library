@@ -1,16 +1,22 @@
-<?php
+<?php //phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
 /**
  * BoldGrid Library Plugin Plugin.
+ *
+ * Library package uses different naming convention.
+ * phpcs:disable WordPress.NamingConventions.ValidVariableName
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName
  *
  * @package Boldgrid\Plugin
  *
  * @since 2.7.7
  * @author BoldGrid <wpb@boldgrid.com>
  */
+
 namespace Boldgrid\Library\Library\Plugin;
 
 use Boldgrid\Library\Library\Configs;
 use Boldgrid\Library\Library\Settings;
+use Boldgrid\Library\Library\Plugin\Page;
 
 /**
  * Generic plugin class.
@@ -29,12 +35,12 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	protected $childPlugins = [];
+	protected $childPlugins = array();
 
 	/**
 	 * Plugin file.
 	 *
-	 * For example: plugin/plugin.php
+	 * For example: plugin/plugin.php.
 	 *
 	 * @since 2.9.0
 	 * @var string
@@ -49,7 +55,7 @@ class Plugin {
 	 *
 	 * @var array
 	 */
-	public $pluginConfig = [];
+	public $pluginConfig = array();
 
 	/**
 	 * Whether or not this plugin is installed.
@@ -66,14 +72,15 @@ class Plugin {
 	 * For example, ABSPATH/wp-content/plugins/plugin/plugin.php.
 	 *
 	 * @since 2.10.0
+	 * @var string
 	 */
 	protected $path;
 
 	/**
 	 * Plugin pages.
 	 *
-	 * This is an array of Boldgrid\Library\Library\Plugin\Page
-	 * objects based on the 'pages' list in the plugin Config
+	 * This is an array of Boldgrid\Library\Library\Plugin\Page.
+	 * objects based on the 'pages' list in the plugin Config.
 	 * If no plugin config is passed during instantiation,
 	 * this will be an empty array.
 	 *
@@ -81,7 +88,7 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	protected $pages = [];
+	protected $pages = array();
 
 	/**
 	 * Plugin data, as retrieved from get_plugin_data().
@@ -90,7 +97,7 @@ class Plugin {
 	 * @var array
 	 * @access protected
 	 */
-	public $pluginData = [];
+	public $pluginData = array();
 
 	/**
 	 * Update plugin data, as retrieved from 'update_plugins' site transient.
@@ -114,26 +121,49 @@ class Plugin {
 	protected $slug;
 
 	/**
+	 * Plugin Update Data.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @var Response
+	 */
+	public $updateData;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.7.7
 	 *
-	 * @param string $slug For example: "plugin" from plugin/plugin.php
+	 * @param array $pluginParams An array of parameters passed from Plugin Factory.
+	 * @param array $pluginConfig Optionally passed array of Plugin Configuration Options.
 	 */
-	public function __construct( $slug, $pluginConfig = null ) {
-		$this->slug = $slug;
+	public function __construct( $pluginParams, $pluginConfig = null ) {
 
-		$this->setFile();
+		// Backwards Compatability: Some plugins don't know they're supposed to use the Factory.
+		// So this will direct them there. Once ALL plugins are using libary > 2.12.2 this can be removed.
+		if ( is_string( $pluginParams ) ) {
+			$plugin       = Factory::create( $pluginParams, $pluginConfig );
+			$pluginParams = $plugin->getPluginParams();
+		}
 
-		$this->setPath();
+		foreach ( $pluginParams as $paramKey => $paramValue ) {
+			$this->$paramKey = $paramValue;
+		}
 
-		$this->setIsInstalled();
-
-		$this->setChildPlugins();
-
-		$this->pluginConfig = ! empty( $pluginConfig ) ? $pluginConfig : [];
+		$this->updateData = ! empty( $this->getUpdateData ) ? $this->setUpdateData() : false;
 
 		$this->setPages();
+	}
+
+	/**
+	 * Set UpdateData.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @param bool $force Whether or not to force fetching from API.
+	 */
+	public function setUpdateData( $force = false ) {
+		$this->updateData = new UpdateData( $this, null, $force );
 	}
 
 	/**
@@ -192,30 +222,6 @@ class Plugin {
 	 */
 	public function getChildPlugins() {
 		return $this->childPlugins;
-	}
-
-	/**
-	 * Get config for this particular plugin.
-	 *
-	 * Within library.global.php, there is a config option called "plugins". This method loops through
-	 * those plugins and returns the configs for this particular plugin.
-	 *
-	 * @since 2.10.0
-	 *
-	 * @return array
-	 */
-	public function getConfig() {
-		$config = [];
-
-		$plugins = Configs::get( 'plugins' );
-		if ( $plugins ) {
-			foreach ( $plugins as $plugin ) {
-				if ( $plugin['file'] === $this->file ) {
-					$config = $plugin;
-				}
-			}
-		}
-		return $config;
 	}
 
 	/**
@@ -288,25 +294,6 @@ class Plugin {
 	}
 
 	/**
-	 * Get a plugin's slug from its file.
-	 *
-	 * For example, if the plugin's file is:
-	 * boldgrid-backup-premium/boldgrid-backup-premium.php
-	 * The plugin's slug is:
-	 * boldgrid-backup-premium
-	 *
-	 * @since 2.10.0
-	 *
-	 * @param  string $file The plugin's file, as in plugin/plugin.php
-	 * @return string
-	 */
-	public static function getFileSlug( $file ) {
-		$slug = explode( '/', $file );
-
-		return $slug[0];
-	}
-
-	/**
 	 * If a new version of a plugin is available, return the new version.
 	 *
 	 * @since 2.9.0
@@ -320,7 +307,7 @@ class Plugin {
 	}
 
 	/**
-	 * Get plugin specific config array
+	 * Get plugin specific config array.
 	 *
 	 * @return array
 	 * @since 2.12.0
@@ -351,9 +338,9 @@ class Plugin {
 	 * @return array
 	 */
 	public function getPluginsChecked() {
-		$pluginsChecked = Settings::getKey( 'plugins_checked', [] );
+		$pluginsChecked = Settings::getKey( 'plugins_checked', array() );
 
-		$pluginsChecked = ! empty( $pluginsChecked[ $this->file ] ) ? $pluginsChecked[ $this->file ] : [];
+		$pluginsChecked = ! empty( $pluginsChecked[ $this->file ] ) ? $pluginsChecked[ $this->file ] : array();
 
 		return $pluginsChecked;
 	}
@@ -376,7 +363,7 @@ class Plugin {
 	 * @access private
 	 */
 	public function setPages() {
-		$pages = [];
+		$pages = array();
 		if ( isset( $this->pluginConfig['pages'] ) ) {
 			foreach ( $this->pluginConfig['pages'] as $page ) {
 				$pages[] = new Page( $this, $page );
@@ -386,11 +373,11 @@ class Plugin {
 	}
 
 	/**
-	 * Set all plugin notices as read
+	 * Set all plugin notices as read.
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param bool $setToUnread if set to true, marks all items unread instead
+	 * @param bool $setToUnread if set to true, marks all items unread instead.
 	 */
 	public function setAllNoticesRead( $setToUnread = false ) {
 		foreach ( $this->getPages() as $page ) {
@@ -415,7 +402,7 @@ class Plugin {
 	 *
 	 * @since 2.12.0
 	 *
-	 * @param string $slug
+	 * @param string $slug The Plugin slug.
 	 * @return Page
 	 */
 	public function getPageBySlug( $slug ) {
@@ -427,52 +414,14 @@ class Plugin {
 	}
 
 	/**
-	 * Set our child plugins.
+	 * Set PluginData.
 	 *
-	 * @since 2.10.0
+	 * @since 2.12.2
+	 *
+	 * @param array $pluginData Plugin Data Array.
 	 */
-	public function setChildPlugins() {
-		$config = $this->getConfig();
-
-		if ( empty( $config['childPlugins'] ) ) {
-			return;
-		}
-
-		foreach ( $config['childPlugins'] as $file ) {
-			$slug = $this->getFileSlug( $file );
-
-			$this->childPlugins[] = new Plugin( $slug );
-		}
-	}
-
-	/**
-	 * Set file.
-	 *
-	 * @since 2.9.0
-	 *
-	 * @param string $file A plugin's file.
-	 */
-	public function setFile( $file = null ) {
-		$this->file = ! empty( $file ) ? $file : $this->slug . '/' . $this->slug . '.php';
-	}
-
-	/**
-	 * Set whether or not the plugin is installed (different from activated).
-	 *
-	 * @since 2.10.0
-	 */
-	public function setIsInstalled() {
-		$wp_filesystem     = \Boldgrid\Library\Util\Version::getWpFilesystem();
-		$this->isInstalled = $wp_filesystem->exists( $this->path );
-	}
-
-	/**
-	 * Set the plugin's path.
-	 *
-	 * @since 2.10.0
-	 */
-	public function setPath() {
-		$this->path = ABSPATH . 'wp-content/plugins/' . $this->file;
+	public function setPluginData( $pluginData ) {
+		$this->pluginData = $pluginData;
 	}
 
 	/**
@@ -577,5 +526,21 @@ class Plugin {
 		} else {
 			return '<span class="bglib-unread-notice-count hidden"></span>';
 		}
+	}
+
+	/**
+	 * Get Plugin Params.
+	 *
+	 * Gets an array of all plugin property parameters.
+	 * This is useful for backwards compatibility with BoldGrid Plugins.
+	 * That do not implement the Factory methods.
+	 * Once ALL plugins are Library > 2.12.2 this can be removed.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @return array
+	 */
+	public function getPluginParams() {
+		return get_object_vars( $this );
 	}
 }

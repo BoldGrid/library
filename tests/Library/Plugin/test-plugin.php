@@ -1,6 +1,6 @@
 <?php
 /**
- * BoldGrid Source Code
+ * BoldGrid Source Code.
  *
  * @package Boldgrid_Plugintest
  * @copyright BoldGrid.com
@@ -9,252 +9,243 @@
  */
 
 use Boldgrid\Library\Library\Configs;
+use Boldgrid\Library\Library\Plugin;
 
 /**
  * BoldGrid Library Library Plugin Plugin Test class.
  *
- * @since 2.7.7
+ * @since 2.12.2
  */
 class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
-
-	private
-		$backup,
-		$backup_premium,
-		$key         = 'CONNECT-KEY',
-		$config,
-		$plugin_data = [
-			'Name'        => 'Total Upkeep',
-			'PluginURI'   => 'https://www.boldgrid.com/boldgrid-backup/',
-			'Version'     => '1.12.16',
-			'Description' => 'Automated backups, remote backup to Amazon S3 and Google Drive, stop website crashes before they happen and more. Total Upkeep is the backup solution you need. By BoldGrid.',
-			'Author'      => 'BoldGrid',
-			'AuthorURI'   => 'https://www.boldgrid.com/',
-			'TextDomain'  => 'boldgrid-backup',
-			'DomainPath'  => '/languages',
-		];
-
 	/**
 	 * Setup.
 	 *
-	 * @since 1.7.7
+	 * @since 2.12.2
 	 */
 	public function setUp() {
-		// Setup our configs.
-		update_site_option( 'boldgrid_api_key', $this->key );
-
-		$this->resetConfigs();
-		$this->config         = $this->getPluginConfig();
-		$this->backup         = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $this->config, $this->plugin_data );
-		$this->backup_premium = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup-premium' );
-	}
-
-	/**
-	 * Reset library configs.
-	 *
-	 * @since 2.11.0
-	 */
-	public function resetConfigs() {
-		$configsFile = dirname( dirname( dirname( __DIR__ ) ) ) . '/src/library.global.php';
-
-		$defaults = include $configsFile;
-		Configs::set( $defaults );
-	}
-
-	public function getPluginConfig( array $add_pages = [], array $add_notices = [] ) {
-		$config = [
-			'pages'        => [
+		$this->config = array(
+			'pages'        => array(
 				'boldgrid-backup-premium-features',
-			],
-			'page_notices' => [
-				[
+				'boldgrid-backup-settings',
+			),
+			'page_notices' => array(
+				array(
 					'id'      => 'bgbkup_database_encryption',
 					'page'    => 'boldgrid-backup-premium-features',
 					'version' => '1.12.16',
-				],
-			],
-		];
-		foreach ( $add_pages as $page ) {
-			$config['pages'][] = $page;
-		}
-		foreach ( $add_notices as $notice ) {
-			$config['page_notices'][] = $notice;
-		}
-		return $config;
-	}
+				),
+				array(
+					'id'      => 'bgbkup_google_drive',
+					'page'    => 'boldgrid-backup-premium-features',
+					'version' => '1.12.16',
+				),
+				array(
+					'id'      => 'bgbkup_new_settings_feature',
+					'page'    => 'boldgrid-backup-settings',
+					'version' => '1.12.16',
+				),
+			),
+		);
 
-	/**
-	 * Test getDownloadUrl.
-	 *
-	 * @since 2.7.7
-	 */
-	public function testGetDownloadUrl() {
-		$this->resetConfigs();
+		$this->sample_plugin = Plugin\Factory::create( 'boldgrid-backup/boldgrid-backup.php', $this->config );
 
-		$this->assertEquals( $this->backup->getDownloadUrl(), 'https://api.boldgrid.com/v1/plugins/boldgrid-backup/download?key=' . $this->key );
-
-		$this->assertEquals( $this->backup_premium->getDownloadUrl(), 'https://api.boldgrid.com/v1/plugins/boldgrid-backup-premium/download?key=' . $this->key );
+		$this->mock_plugin = $this->getMockBuilder( \Boldgrid\Library\Library\Plugin\Plugin::class )
+			->setMethods( array( 'getPluginData', 'getFirstVersion' ) )
+			->disableOriginalConstructor()
+			->getMock();
+		$this->mock_plugin->method( 'getPluginData' )
+			->will( $this->returnValue( array( 'Version' => '0.0.0' ) ) );
+		$this->mock_plugin->method( 'getFirstVersion' )
+			->will( $this->returnValue( '1.0.0' ) );
 	}
 
 	/**
 	 * Test firstVersionCompare.
 	 *
-	 * @since 2.11.0
+	 * @since 2.12.2
 	 */
-	public function testFirstVersionCompare() {
-		// Good data we will be testing against.
-		$backupPluginsChecked = [
-			'1.11.0' => 123456,
-			'1.12.0' => 123456,
-		];
-
-		// Make sure good data gets us good data.
-		$settings = [
-			'plugins_checked' => [
-				'other-plugin/other-plugin.php'       => [
-					'1.0.0' => 12345,
-					'1.1.0' => 12346,
-				],
-				'boldgrid-backup/boldgrid-backup.php' => $backupPluginsChecked,
-			],
-		];
-		update_option( 'boldgrid_settings', $settings );
-		$this->assertTrue( $this->backup->firstVersionCompare( '1.10.0', '>=' ) );
-		$this->assertTrue( $this->backup->firstVersionCompare( '1.11.0', '==' ) );
-		$this->assertTrue( $this->backup->firstVersionCompare( '1.12.0', '<=' ) );
+	public function test_firstVersionCompare() {
+		$version_compare = $this->mock_plugin->firstVersionCompare( '1.1.0', '<=' );
+		$this->assertTrue( $version_compare );
 	}
 
 	/**
-	 * Test getFirstVersion.
+	 * Test firstVersionCompare.
 	 *
-	 * @since 2.11.0
+	 * @since 2.12.2
 	 */
-	public function testGetFirstVersion() {
-		// Good data we will be testing against.
-		$backupPluginsChecked = [
-			'1.11.0' => 123456,
-			'1.12.0' => 123456,
-		];
+	public function test_getActivateUrl() {
+		$plugin            = $this->sample_plugin;
+		$expected_base_url = 'http://example.org/wp-admin/plugins.php?action=activate&amp;plugin=boldgrid-backup%2Fboldgrid-backup.php';
+		$is_correct        = strpos( $plugin->getActivateUrl(), $expected_base_url );
 
-		// Make sure good data gets us good data.
-		$settings = [
-			'plugins_checked' => [
-				'other-plugin/other-plugin.php'       => [
-					'1.0.0' => 12345,
-					'1.1.0' => 12346,
-				],
-				'boldgrid-backup/boldgrid-backup.php' => $backupPluginsChecked,
-			],
-		];
-		update_option( 'boldgrid_settings', $settings );
-		$this->assertEquals( $this->backup->getFirstVersion(), '1.11.0' );
+		$this->assertNotFalse( $is_correct );
+	}
+
+	/**
+	 * Test getIcons.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getIcons() {
+		$plugin = $this->sample_plugin;
+		$icons  = $plugin->getIcons();
+
+		$this->assertTrue( is_array( $icons ) );
+	}
+
+	/**
+	 * Test getChildPlugins.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getChildPlugins() {
+		$plugin        = $this->sample_plugin;
+		$child_plugins = $plugin->getChildPlugins();
+
+		$this->assertTrue( is_array( $child_plugins ) );
+	}
+
+	/**
+	 * Test getData.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getData() {
+		$plugin  = $this->mock_plugin;
+		$version = $plugin->getData( 'Version' );
+
+		$this->assertEquals( '0.0.0', $version );
+	}
+
+	/**
+	 * Test getInstallUrl.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getInstallUrl() {
+		$plugin            = $this->sample_plugin;
+		$expected_base_url = $plugin->getInstallUrl();
+		$is_correct        = strpos( $plugin->getInstallUrl(), $expected_base_url );
+
+		$this->assertNotFalse( $is_correct );
+	}
+
+	/**
+	 * Test getIsInstalled.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getIsInstalled() {
+		$plugin       = Plugin\Factory::create( 'akismet/akismet.php' );
+		$is_installed = $plugin->getIsInstalled();
+
+		$this->assertTrue( $is_installed );
+	}
+
+	/**
+	 * Test getFile.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getFile() {
+		$plugin = $this->sample_plugin;
+		$file   = $plugin->getFile();
+
+		$this->assertEquals( 'boldgrid-backup/boldgrid-backup.php', $file );
+	}
+
+	/**
+	 * Test getNewVersion.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getNewVersion() {
+		$plugin      = $this->sample_plugin;
+		$new_version = $plugin->getNewVersion();
+
+		$this->assertEquals( '0', $new_version );
+	}
+
+	/**
+	 * Test getPluginData.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getPlugindata() {
+		$plugin      = Plugin\Factory::create( 'akismet/akismet.php', $this->config );
+		$plugin_data = $plugin->getPluginData();
+		$text_domain = $plugin_data['TextDomain'];
+
+		$this->assertEquals( 'akismet', $text_domain );
 	}
 
 	/**
 	 * Test getPluginsChecked.
 	 *
-	 * @since 2.11.0
+	 * @since 2.12.2
 	 */
-	public function testGetPluginsChecked() {
-		// Good data we will be testing against.
-		$backupPluginsChecked = [
-			'1.11.0' => 123456,
-			'1.12.0' => 123456,
-		];
+	public function test_getPluginsChecked() {
+		$plugin          = $this->sample_plugin;
+		$plugins_checked = $plugin->getPluginsChecked();
 
-		// Make sure wrong data gives us an empty array.
-		update_option( 'boldgrid_settings', false );
-		$this->assertEquals( $this->backup->getPluginsChecked(), [] );
-
-		// Make sure wrong data gives us an empty array.
-		$settings = [
-			'plugins_checked' => [],
-		];
-		update_option( 'boldgrid_settings', $settings );
-		$this->assertEquals( $this->backup->getPluginsChecked(), [] );
-
-		// Make sure good data gets us good data.
-		$settings = [
-			'plugins_checked' => [
-				'other-plugin/other-plugin.php'       => [
-					'1.0.0' => 12345,
-					'1.1.0' => 12346,
-				],
-				'boldgrid-backup/boldgrid-backup.php' => $backupPluginsChecked,
-			],
-		];
-		update_option( 'boldgrid_settings', $settings );
-		$this->assertEquals( $this->backup->getPluginsChecked(), $backupPluginsChecked );
-	}
-	// Make sure that the Plugin::getPages and Plugin::setPages are working from passed $config array
-	public function testGetSetPages() {
-		$page_count = count( $this->config['pages'] );
-		$this->assertEquals( count( $this->backup->getPages() ), $page_count );
-	}
-	// Ensure that the initial getUnreadCount is correct
-	public function testGetUnreadCount() {
-		$expected_count = count( $this->config['page_notices'] );
-
-		$this->backup->pluginData = $this->plugin_data;
-		$this->assertEquals( $this->backup->getUnreadCount(), $expected_count );
-	}
-	// Ensure that the getUnreadMarkup is correct
-	public function testGetUnreadMarkup() {
-		$expected_markup = '<span class="bglib-unread-notice-count">' . count( $this->config['page_notices'] ) . '</span>';
-
-		$this->backup->pluginData = $this->plugin_data;
-		$this->assertEquals( $this->backup->getUnreadMarkup(), $expected_markup );
+		$this->assertTrue( is_array( $plugins_checked ) );
 	}
 
-	public function testNoNoticesMarkup() {
-		$expected_markup = '<span class="bglib-unread-notice-count hidden"></span>';
+	/**
+	 * Test getPages.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getPages() {
+		$plugin = $this->sample_plugin;
+		$pages  = $plugin->getPages();
 
-		$this->backup->pluginData = $this->plugin_data;
-		$this->backup->setAllNoticesRead();
-		$this->assertEquals( $this->backup->getUnreadMarkup(), $expected_markup );
-		$this->backup->setAllNoticesRead( true );
-	}
-
-	public function testTwoPagesWithNotices() {
-		$two_page_config = $this->getPluginConfig(
-			[ 'boldgrid-backup-settings' ],
-			[
-				[
-					'id'      => 'bgbkup_backup_settings_test',
-					'page'    => 'boldgrid-backup-settings',
-					'version' => '1.12.16',
-				],
-			]
-		);
-
-		$expected_markup    = '<span class="bglib-unread-notice-count">' . count( $two_page_config['page_notices'] ) . '</span>';
-		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config, $this->plugin_data );
-		$plugin->pluginData = $this->plugin_data;
-		$this->assertEquals( $plugin->getUnreadMarkup(), $expected_markup );
-	}
-
-	public function testGetPageBySlug() {
-		$two_page_config = $this->getPluginConfig(
-			[ 'boldgrid-backup-settings' ],
-			[
-				[
-					'id'      => 'bgbkup_backup_settings_test',
-					'page'    => 'boldgrid-backup-settings',
-					'version' => '1.12.16',
-				],
-			]
-		);
-
-		$plugin             = new Boldgrid\Library\Library\Plugin\Plugin( 'boldgrid-backup', $two_page_config, $this->plugin_data );
-		$plugin->pluginData = $this->plugin_data;
-		$success_count      = 0;
-		foreach ( $two_page_config['pages'] as $config_page ) {
-			$pageSlug = $plugin->getPageBySlug( $config_page );
-			if ( $pageSlug ) {
-				$success_count++;
-			}
+		foreach ( $pages as $page ) {
+			$this->assertTrue( $page instanceof \Boldgrid\Library\Library\Plugin\Page );
 		}
-		$this->assertEquals( $success_count, count( $two_page_config['pages'] ) );
+	}
 
-		$this->assertTrue( empty( $plugin->getPageBySlug( 'not_a_real_page_slug' ) ) );
+	/**
+	 * Test getPageBySlug.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_getPageBySlug() {
+		$plugin = $this->sample_plugin;
+		$page   = $plugin->getPageBySlug( 'boldgrid-backup-premium-features' );
+
+		$this->assertEquals( 'boldgrid-backup-premium-features', $page->getSlug() );
+
+		$page = $plugin->getPageBySlug( 'non-existant-page' );
+
+		$this->assertNull( $page );
+	}
+
+	/**
+	 * Test hasUpdate.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_hasUpdate() {
+		$plugin     = $this->sample_plugin;
+		$has_update = $plugin->hasUpdate();
+
+		$this->assertFalse( $has_update );
+	}
+
+	/**
+	 * Test getPluginData.
+	 *
+	 * @since 2.12.2
+	 */
+	public function test_isActive() {
+		$plugin    = Plugin\Factory::create( 'akismet/akismet.php', $this->config );
+		$is_active = $plugin->isActive();
+		$this->assertFalse( $is_active );
+
+		activate_plugin( $plugin->getFile() );
+		$is_active = $plugin->isActive();
+		$this->assertTrue( $is_active );
 	}
 }
