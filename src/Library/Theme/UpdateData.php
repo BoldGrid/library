@@ -93,6 +93,15 @@ class UpdateData {
 	private $timeoutSetting = 3600;
 
 	/**
+	 * Is Timely Updates Enabled.
+	 *
+	 * @since 2.12.3
+	 * @var bool
+	 * @access private
+	 */
+	private $is_timely_updates;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.12.2
@@ -103,6 +112,9 @@ class UpdateData {
 	public function __construct( $theme = null, $stylesheet = null ) {
 		// If a theme object is passed in constructer, use that, or else create a new one from stylesheet.
 		$this->theme = ( null !== $theme ) ? $theme : new Theme( $stylesheet );
+
+		$settings                = get_option( 'boldgrid_backup_settings' );
+		$this->is_timely_updates = ! empty( $settings['auto_update']['timely-updates-enabled'] );
 
 		$responseTransient = $this->getInformationTransient();
 
@@ -148,12 +160,9 @@ class UpdateData {
 	public function fetchResponseData() {
 		include_once ABSPATH . 'wp-admin/includes/theme.php';
 
-		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
-		
 		$theme_information = array();
-		$delayFetchingData  = ( $this->getAgeOfTransient() < 10 );
 
-		if ( $is_timely_updates && ! $delayFetchingData ) {
+		if ( $this->is_timely_updates ) {
 			$theme_information = themes_api(
 				'theme_information',
 				array(
@@ -185,20 +194,6 @@ class UpdateData {
 		return (object) $theme_information;
 	}
 
-	/** Get Age of Transient.
-	 *
-	 * @since 2.12.2
-	 *
-	 * @return string
-	 */
-	public function getAgeOfTransient() {
-		if ( $this->currentTransient ) {
-			$timeout           = get_option( '_transient_timeout_boldgrid_theme_information' );
-			$current_timestamp = current_time( 'timestamp' );
-			return $this->timeoutSetting - ( $timeout - $current_timestamp );
-		}
-	}
-
 	/**
 	 * Get Theme Information from Transient.
 	 *
@@ -208,6 +203,7 @@ class UpdateData {
 	 */
 	public function getInformationTransient() {
 		$transient = get_transient( 'boldgrid_theme_information' );
+
 		if ( false === $transient ) {
 			$this->currentTransient = array();
 			return false;
@@ -244,8 +240,7 @@ class UpdateData {
 			'api_fetch_time'  => $this->apiFetchTime,
 		);
 
-		$is_timely_updates = apply_filters( 'boldgrid_backup_is_timely_updates', false );
-		if ( $is_timely_updates ) {
+		if ( $this->is_timely_updates ) {
 			set_transient( 'boldgrid_theme_information', $transient, $this->timeoutSetting );
 		}
 	}
