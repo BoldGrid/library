@@ -93,7 +93,17 @@ class Theme {
 		$this->getParent();
 		$this->setHasUpdate();
 		$this->setIsActive();
-		$this->updateData = new UpdateData( $this );
+	}
+
+	/**
+	 * Set UpdateData.
+	 *
+	 * @since 2.12.2
+	 *
+	 * @param bool $force Whether or not to force fetching from API.
+	 */
+	public function setUpdateData( $force = false ) {
+		$this->updateData = new UpdateData( $this, null, $force );
 	}
 
 	/**
