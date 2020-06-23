@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.12.3 ###
+
+Release date: June 23rd, 2020
+
+* Bug fix: Check for Card class before using card.
+
 ### 2.12.2 ###
 
 Release date: May 29th, 2020
