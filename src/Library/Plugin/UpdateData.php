@@ -194,14 +194,16 @@ class UpdateData {
 	 * @return Response
 	 */
 	public function fetchResponseData( $force = false ) {
+		global $wp_filter;
 		$is_timely_updates  = apply_filters( 'boldgrid_backup_is_timely_updates', false );
 		$plugin_information = array();
 		$delay_time         = $force ? 0 : 3;
 		$delayFetchingData  = ( $this->getAgeOfTransient() < $delay_time );
 		if ( $is_timely_updates && ! $delayFetchingData ) {
+			\remove_all_filters( 'plugins_api' );
 			$plugin_information = plugins_api(
 				'plugin_information',
-				array(
+				(object) array(
 					'slug'   => $this->plugin->getSlug(),
 					'fields' => array(
 						'downloaded',
@@ -210,8 +212,12 @@ class UpdateData {
 					),
 				)
 			);
+			if ( isset( $plugin_information->no_update ) ) {
+				$plugin_information = new \WP_Error( 'Plugin API returns unusable data' );
+			} else {
+				$plugin_information->api_fetch_time = current_time( 'timestamp' );
+			}
 
-			$plugin_information->api_fetch_time = current_time( 'timestamp' );
 		} else {
 			$plugin_information = array(
 				'active_installs' => '0',
@@ -226,7 +232,6 @@ class UpdateData {
 			$plugin_information = $this->getGenericInfo( $plugin_information );
 			return (object) $plugin_information;
 		}
-
 		return (object) $plugin_information;
 	}
 
