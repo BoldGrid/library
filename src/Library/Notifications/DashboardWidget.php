@@ -46,6 +46,15 @@ class DashboardWidget {
 	 * @since 2.10.0
 	 */
 	public function printWidget() {
+		// Failsafe. Abort if needed.
+		if ( ! class_exists( 'Boldgrid\Library\Library\Ui\Card' ) ) {
+			echo '<div class="notice notice-warning inline"><p>' .
+				esc_html__( 'Unable to load BoldGrid Notifications.', 'boldgrid-library' ) .
+				'</p></div>';
+
+			return false;
+		}
+
 		$card = new \Boldgrid\Library\Library\Ui\Card();
 
 		// Add all of our active plugins.
