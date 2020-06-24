@@ -200,6 +200,14 @@ class UpdateData {
 		$delay_time         = $force ? 0 : 3;
 		$delayFetchingData  = ( $this->getAgeOfTransient() < $delay_time );
 		if ( $is_timely_updates && ! $delayFetchingData ) {
+			/**
+			 * Sometimes, other plugins will add filters to the 'plugins_api' hook.
+			 * Doing this can sometimes 'short-circuit' other requests to this API.
+			 * See: https://developer.wordpress.org/reference/hooks/plugins_api/
+			 * This will remove those filters so we can be sure that this API request
+			 * returns valid data. This should not affect other plugins from using those filters
+			 * since their 'add_filters()' calls will re-register their filters.
+			*/
 			\remove_all_filters( 'plugins_api' );
 			$plugin_information = plugins_api(
 				'plugin_information',
@@ -212,6 +220,11 @@ class UpdateData {
 					),
 				)
 			);
+			/**
+			 * A successful call to the WordPress.org Plugins API will NOT have a 'no_update' property.
+			 * This conditional will ensure that such calls are marked as WP_Error objects and then the
+			 * $plugin_information will be assigned the return value from $this->getGenericInfo() below.
+			 */
 			if ( isset( $plugin_information->no_update ) ) {
 				$plugin_information = new \WP_Error( 'Plugin API returns unusable data' );
 			} else {
