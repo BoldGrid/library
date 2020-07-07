@@ -11,6 +11,18 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.0 ###
+
+Release date: July 7th, 2020
+
+* Bug Fix: Fixed css inconsistency between firefox and chrome
+* Bug Fix: Fixed padding of links to match footer text.
+* Update: Removed Auto Update functionality from library and moved to Total Upkeep plugin.
+* New Feature: Added Plugin\Factory Class allowing for Plugin\Plugin objects to be generated via factory.
+* New Feature: Added new methods to Plugin\Plugins class.
+* New Feature: Added new UnitTests.
+* New Feature: Updated UI to use a fixed container layout.
+
 ### 2.12.3 ###
 
 Release date: June 23rd, 2020
