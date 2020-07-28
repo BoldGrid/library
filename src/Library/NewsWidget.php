@@ -67,7 +67,7 @@ class NewsWidget {
 
 		// If there are errors, abort.
 		if ( ! empty( $this->errors ) ) {
-			echo '<p>' . implode( $this->errors, '</p></p>' ) . '</p>';
+			echo '<p>' . implode( '</p></p>', $this->errors ) . '</p>';
 			return;
 		}
 
