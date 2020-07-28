@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.1 ###
+
+Releae date: July 28th, 2020
+
+* Bug Fix: php 7.4 compatibility issue in Dashboard News Widget.
+
 ### 2.13.0 ###
 
 Release date: July 7th, 2020
