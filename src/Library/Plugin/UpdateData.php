@@ -198,7 +198,15 @@ class UpdateData {
 		$is_timely_updates  = apply_filters( 'boldgrid_backup_is_timely_updates', false );
 		$plugin_information = array();
 		$delay_time         = $force ? 0 : 3;
-		$delayFetchingData  = ( $this->getAgeOfTransient() < $delay_time );
+		$age_of_transient   = $this->getAgeOfTransient();
+
+		/*
+		 * If the age of transient is less than 0, that transient is expired but hasn't been invalidated.
+		 * In that case, you must go ahead and fetch the data. if the age is greater than or equal to zero
+		 * and less than the delay time, then delay fetching data.
+		 */
+		$delayFetchingData = ( 0 <= $age_of_transient && $age_of_transient < $delay_time );
+
 		if ( $is_timely_updates && ! $delayFetchingData ) {
 			/*
 			 * Sometimes, other plugins will add filters to the 'plugins_api' hook.
