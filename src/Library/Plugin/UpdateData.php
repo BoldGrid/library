@@ -345,4 +345,26 @@ class UpdateData {
 
 		return $plugin_information;
 	}
+
+	/**
+	 * Get Time Till Update.
+	 *
+	 * This is used in a filter for WP5.5+ installations.
+	 * It returns a unix timestamp of when a given plugin can update.
+	 *
+	 * @return int Unix Timestamp.
+	 */
+	public function timeTillUpdate() {
+		$default_days         = 0;
+		$core                 = apply_filters( 'boldgrid_backup_get_core', null );
+		$auto_update_settings = $core->settings->get_setting( 'auto_update' );
+		$days_setting         = ! empty( $auto_update_settings['days'] ) ? $auto_update_settings['days'] : $default_days;
+		$time_till_update     = $days_setting - $this->days; //phpcs:ignore WordPress.NamingConventions.ValidVariableName
+
+		if ( ! empty( $this->thirdParty ) || 0 >= $time_till_update ) { //phpcs:ignore WordPress.NamingConventions.ValidVariableName
+			return false;
+		}
+
+		return time() + ( ( (int) $time_till_update ) * 24 * 60 * 60 );
+	}
 }
