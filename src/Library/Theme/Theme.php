@@ -138,7 +138,8 @@ class Theme {
 	 * @since 2.12.2
 	 */
 	public function setHasUpdate() {
-		if ( get_site_transient( 'update_themes' ) ) {
+		$transient = get_site_transient( 'update_themes' );
+		if ( $transient && isset( $transient->response ) ) {
 			$transient = get_site_transient( 'update_themes' )->response;
 		} else {
 			$transient = null;
