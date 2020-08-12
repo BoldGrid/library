@@ -11,9 +11,16 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.2 ###
+
+Relesae date: August 12th, 2020
+
+* Update: Various changes for WordPress 5.5
+* Bug Fix: Added transient validatiors.
+
 ### 2.13.1 ###
 
-Releae date: July 28th, 2020
+Release date: July 28th, 2020
 
 * Bug Fix: php 7.4 compatibility issue in Dashboard News Widget.
 
