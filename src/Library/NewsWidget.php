@@ -154,7 +154,7 @@ class NewsWidget {
 
 		// Get our "dashboard" posts.
 		$body  = wp_remote_retrieve_body( $request );
-		$posts = json_decode( $body );
+		$posts = (array) json_decode( $body );
 
 		if ( $limit ) {
 			$posts = array_slice( $posts, 0, $limit );
