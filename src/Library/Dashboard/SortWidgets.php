@@ -72,6 +72,18 @@ class SortWidgets {
 		foreach ( $wp_meta_boxes['dashboard'] as $container => $priorities ) {
 			foreach ( $priorities as $priority => $widgets ) {
 				foreach ( $widgets as $widget ) {
+					/*
+					 * Validate our widget.
+					 *
+					 * While we weren't able to replicate, a user did report a warning here:
+					 * Trying to access array offset on value of type bool
+					 *
+					 * @link https://github.com/BoldGrid/boldgrid-backup/issues/387
+					 */
+					if ( ! is_array( $widget ) || ! isset( $widget['id'] ) ) {
+						continue;
+					}
+
 					if ( $id === $widget['id'] ) {
 						$widget = array(
 							'container' => $container,
