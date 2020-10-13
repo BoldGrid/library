@@ -11,9 +11,16 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.3 ###
+
+Release date: October 13th, 2020
+
+* Bug Fix: Avoid PHP Warning in Dashboard/SortWidgets.php by validating widgets.
+* Bug Fix: Avoid PHP Warning in NewsWidget.php by validating posts.
+
 ### 2.13.2 ###
 
-Relesae date: August 12th, 2020
+Release date: August 12th, 2020
 
 * Update: Various changes for WordPress 5.5
 * Bug Fix: Added transient validatiors.
