@@ -156,7 +156,12 @@ class NewsWidget {
 		$body  = wp_remote_retrieve_body( $request );
 		$posts = json_decode( $body );
 
-		if ( $limit ) {
+		/*
+		 * If we're limiting the number of posts, do so now.
+		 *
+		 * Validate posts with is_array() because array_slice() expects an array as the first param.
+		 */
+		if ( $limit && is_array( $posts ) ) {
 			$posts = array_slice( $posts, 0, $limit );
 		}
 
