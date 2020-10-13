@@ -154,18 +154,13 @@ class NewsWidget {
 
 		// Get our "dashboard" posts.
 		$body  = wp_remote_retrieve_body( $request );
-		$posts = json_decode( $body );
+		$posts = (array) json_decode( $body );
 
-		/*
-		 * If we're limiting the number of posts, do so now.
-		 *
-		 * Validate posts with is_array() because array_slice() expects an array as the first param.
-		 */
-		if ( $limit && is_array( $posts ) ) {
+		if ( $limit ) {
 			$posts = array_slice( $posts, 0, $limit );
 		}
 
-		return is_array( $posts ) ? $posts : array();
+		return $posts;
 	}
 
 	/**
