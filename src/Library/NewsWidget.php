@@ -165,7 +165,7 @@ class NewsWidget {
 			$posts = array_slice( $posts, 0, $limit );
 		}
 
-		return $posts;
+		return is_array( $posts ) ? $posts : array();
 	}
 
 	/**
