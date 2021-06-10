@@ -144,6 +144,11 @@ class SortWidgets {
 	/**
 	 * Sort the widgets as containted in the global $wp_meta_boxes.
 	 *
+	 * We're not actually "sorting". This method will look in our configs and find the BoldGrid widgets
+	 * that we want to appear at the top of the dashboard, and put them there at the top. It does this
+	 * by removing the widget from wherever it is and then adding it to the beginning of the array of
+	 * widgets.
+	 *
 	 * @since 2.9.0
 	 */
 	public function sortGlobal() {
@@ -157,10 +162,44 @@ class SortWidgets {
 				continue;
 			}
 
+			/*
+			 * Avoid the following error: Fatal error: Uncaught Error: Unsupported operand types.
+			 *
+			 * This is a very edge case, and we cannot reproduce it, but we need to avoid the fatal.
+			 * It is caused when we are trying move our metabox to the beginning using:
+			 * $boxes = $our_metabox + $boxes.
+			 *
+			 * Validate $boxes in the above scenario.
+			 */
+			if ( ! is_array( $wp_meta_boxes['dashboard'][ $configs['container'] ][ $configs['priority'] ] ) ) {
+				$wp_meta_boxes['dashboard'][ $configs['container'] ][ $configs['priority'] ] = array();
+			}
+
 			// First, remove the widget from where it is now.
 			unset( $wp_meta_boxes['dashboard'][$widget['container']][$widget['priority']][$id] );
 
-			// Then, add it to the correct location.
+			/*
+			 * Then, add it to the beginning of the array.
+			 *
+			 * We can't use array_unshift because we don't want the array keys to change.
+			 *
+			 * In the example below, we are setting "boldgrid-notifications" as the first metabox in
+			 * $wp_meta_boxes['dashboard']['normal']['core']. This is how we are making it show atop
+			 * other metaboxes.
+			 *
+			 * Before: Array(
+			 * 		[dashboard_site_health]    => Array,
+			 * 		[dashboard_right_now]      => Array,
+			 * 		[dashboard_activity]       => Array,
+			 * )
+			 *
+			 * After: Array(
+			 * 		[boldgrid-notifications]   => Array,
+			 * 		[dashboard_site_health]    => Array,
+			 * 		[dashboard_right_now]      => Array,
+			 * 		[dashboard_activity]       => Array,
+			 * )
+			 */
 			$wp_meta_boxes['dashboard'][ $configs['container'] ][ $configs['priority'] ] =
 				array( $id => $widget['widget'] ) +
 				$wp_meta_boxes['dashboard'][ $configs['container'] ][ $configs['priority'] ];
