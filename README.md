@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.4 ###
+
+Release date: June 10th, 2021
+
+* Bug Fix: Avoid PHP Error in Dashboard/SortWidgets.php by validating widget containers.
+
 ### 2.13.3 ###
 
 Release date: October 13th, 2020
