@@ -19,6 +19,9 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 		/**
 		 * @summary Dismiss (or snooze) a rating prompt.
 		 *
+		 * As of 2.13.5, the nonce's ID has been changed from '_wpnonce' to
+		 * bglib_rating_prompt_nonce. This is to prevent conflicts with core nonces.
+		 *
 		 * @since 2.7.7
 		 *
 		 * @param string name
