@@ -31,7 +31,7 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 				type: type,
 				length: length,
 				name: name,
-				security: $( '.bglib-rating-prompt #_wpnonce' ).val()
+				security: $( '.bglib-rating-prompt #bglib_rating_prompt_nonce' ).val()
 			};
 
 			$.ajax( {
