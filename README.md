@@ -11,6 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.5 ###
+
+Release date: September 8, 2021
+
+* Bug Fix: Review prompt prevents admins from deleting other user accounts [#192](https://github.com/BoldGrid/post-and-page-builder/issues/192)
+
 ### 2.13.4 ###
 
 Release date: June 10th, 2021

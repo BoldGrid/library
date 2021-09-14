@@ -127,7 +127,9 @@ class RatingPrompt {
 			foreach ( $slides as $slide ) {
 				echo $slide;
 			}
-			wp_nonce_field( 'bglib-rating-prompt' );
+
+			// This Nonce was causing conflicts with core nonces. Added a prefix to the nonce name.
+			wp_nonce_field( 'bglib-rating-prompt', 'bglib_rating_prompt_nonce' );
 			echo '</div>';
 		}
 	}
