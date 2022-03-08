@@ -82,6 +82,14 @@ class Configs {
 			}
 		}
 
+		/*
+		 * Allow the default configs to be filtered via an option, bg_library_configs.
+		 *
+		 * Filtering via a actual filter (above) may be difficult due to timing / plugin load order.
+		 */
+		$option_overrides = get_option( 'bg_library_configs', array() );
+		$defaults         = wp_parse_args( $option_overrides, $defaults );
+
 		return self::$configs = wp_parse_args( $configs, $defaults );
 	}
 
