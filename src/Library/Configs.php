@@ -87,7 +87,7 @@ class Configs {
 		 *
 		 * Filtering via a actual filter (above) may be difficult due to timing / plugin load order.
 		 */
-		$option_overrides = get_option( 'bg_library_configs', array() );
+		$option_overrides = get_option( 'bglib_configs', array() );
 		$defaults         = wp_parse_args( $option_overrides, $defaults );
 
 		return self::$configs = wp_parse_args( $configs, $defaults );
