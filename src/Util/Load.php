@@ -285,6 +285,14 @@ class Load {
 	 * @return bool
 	 */
 	public function isValidPath( $path ) {
-		return Version::getWpFilesystem()->exists( trailingslashit( $path ) . 'vendor/boldgrid/library' );
+		$wp_filesystem = Version::getWpFilesystem();
+
+		// This is a band-aid. Avoid issues on the ftp filesystem.
+		$is_ftp     = 'ftpext' === get_filesystem_method() && 'WP_Filesystem_FTPext' === get_class( $wp_filesystem );
+		if ( $is_ftp && ! empty( $wp_filesystem->errors->errors ) ) {
+			return false;
+		}
+
+		return $wp_filesystem->exists( trailingslashit( $path ) . 'vendor/boldgrid/library' );
 	}
 }
