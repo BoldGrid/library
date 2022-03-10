@@ -289,8 +289,7 @@ class Load {
 
 		// This is a band-aid. Avoid issues on the ftp filesystem.
 		$is_ftp     = 'ftpext' === get_filesystem_method() && 'WP_Filesystem_FTPext' === get_class( $wp_filesystem );
-		$has_errors = $is_ftp && ! empty( $wp_filesystem->errors->errors );
-		if ( $is_ftp && $has_errors ) {
+		if ( $is_ftp && ! empty( $wp_filesystem->errors->errors ) ) {
 			return false;
 		}
 
