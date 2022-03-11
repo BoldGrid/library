@@ -4,6 +4,10 @@ language: php
 # Ubuntu Trusty does not support php8: https://docs.travis-ci.com/user/languages/php/
 dist: focal
 
+services:
+  # Specifically including MySQL was not needed with Trusty, but other environments do need it.
+  - mysql
+
 notifications:
   email:
     on_success: never
