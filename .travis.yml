@@ -39,5 +39,5 @@ matrix:
 
 
 script:
-  - phpunit --debug
+  - vendor/phpunit/phpunit/phpunit --debug
   - yarn run js-lint
