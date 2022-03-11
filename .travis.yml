@@ -2,7 +2,7 @@ language: php
 
 # Distrubution / environments: https://docs.travis-ci.com/user/reference/overview/
 # Ubuntu Trusty does not support php8: https://docs.travis-ci.com/user/languages/php/
-dist: xenial
+dist: focal
 
 notifications:
   email:
