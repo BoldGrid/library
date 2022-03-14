@@ -14,8 +14,6 @@ notifications:
     on_failure: change
 
 language: node_js
-node_js:
-  - "8.12.0"
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
