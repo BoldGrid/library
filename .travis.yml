@@ -15,6 +15,9 @@ notifications:
 
 language: node_js
 
+node_js:
+- lts/*
+
 env:
   - WP_VERSION=latest WP_MULTISITE=0
 
