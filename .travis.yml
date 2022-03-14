@@ -13,7 +13,7 @@ notifications:
     on_success: never
     on_failure: change
 
-language: node_js
+language: php, node_js
 
 node_js:
 - lts/*
