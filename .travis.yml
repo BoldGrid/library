@@ -25,23 +25,18 @@ matrix:
     - php: 7.4
       before_script:
         - yarn install
-        - ls -alh
-        - ls -alh node_modules
-        - yarn run js-lint
         # Remove phpunit and install best phpunit version based on this environment.
         - composer remove --dev phpunit/phpunit && composer require --dev phpunit/phpunit
         # A note on our composer / yarn usage:
         # Our composer post-autoload-dump script will copy files from within node_modules/* to our plugin
-        # and then delete the node_modules folder. If node_modules are needed after this point, another
-        # "yarn install" will be needed.
+        # and then delete the node_modules folder. If node_modules are needed after this point, such
+        # as for "yarn run js-lint", another "yarn install" will be needed.
         - composer install -o
         - ls -alh
         - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
     - php: 8.0
       before_script:
         - yarn install
-        - yarn run js-lint
-        # Remove phpunit and install best phpunit version based on this environment.
         - composer remove --dev phpunit/phpunit && composer require --dev phpunit/phpunit
         - composer install -o
         - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
@@ -49,3 +44,6 @@ matrix:
 
 script:
   - vendor/phpunit/phpunit/phpunit --debug
+  # Temporarily disabling js-lint. @todo This needs to be fixed.
+  # The current config used, eslint-config-wordpress, is deprecated. That packages names replacements.
+  # - yarn run js-lint
