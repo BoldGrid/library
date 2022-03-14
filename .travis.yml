@@ -24,14 +24,16 @@ matrix:
   include:
     - php: 7.4
       before_script:
-        - yarn
+        # Yarn will not install any package listed in devDependencies if the NODE_ENV environment variable is set to production.
+        - yarn install --production=false
         # Remove phpunit and install best phpunit version based on this environment.
         - composer remove --dev phpunit/phpunit && composer require --dev phpunit/phpunit
         - composer install -o
         - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
     - php: 8.0
       before_script:
-        - yarn
+        # Yarn will not install any package listed in devDependencies if the NODE_ENV environment variable is set to production.
+        - yarn install --production=false
         # Remove phpunit and install best phpunit version based on this environment.
         - composer remove --dev phpunit/phpunit && composer require --dev phpunit/phpunit
         - composer install -o
