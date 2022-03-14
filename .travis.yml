@@ -17,6 +17,10 @@ language: node_js
 node_js:
   - "8.12.0"
 
+cache:
+  directories:
+  - "node_modules"
+
 env:
   - WP_VERSION=latest WP_MULTISITE=0
 
