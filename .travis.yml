@@ -42,5 +42,7 @@ matrix:
 
 script:
   - vendor/phpunit/phpunit/phpunit --debug
-  - find / -name "*prettier*"
+  - ls -alh
+  - ls -alh node_modules/
+  - ls -alh node_modules/.bin/
   - yarn run js-lint
