@@ -27,7 +27,7 @@ matrix:
       before_script:
         - yarn install
         # Remove phpunit and install best phpunit version based on this environment.
-        - composer remove --dev phpunit/phpunit && composer require --dev phpunit/phpunit
+        - composer update phpunit/phpunit
         # A note on our composer / yarn usage:
         # Our composer post-autoload-dump script will copy files from within node_modules/* to our plugin
         # and then delete the node_modules folder. If node_modules are needed after this point, such
@@ -38,7 +38,7 @@ matrix:
     - php: 8.0
       before_script:
         - yarn install
-        - composer remove --dev phpunit/phpunit && composer require --dev phpunit/phpunit
+        - composer update phpunit/phpunit
         - composer install -o
         - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
