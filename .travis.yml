@@ -23,6 +23,12 @@ env:
 
 matrix:
   include:
+    - php: 5.6
+      before_script:
+        - yarn install
+        - composer update phpunit/phpunit
+        - composer install -o
+        - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
     - php: 7.4
       before_script:
         - yarn install
@@ -33,7 +39,6 @@ matrix:
         # and then delete the node_modules folder. If node_modules are needed after this point, such
         # as for "yarn run js-lint", another "yarn install" will be needed.
         - composer install -o
-        - ls -alh
         - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
     - php: 8.0
       before_script:
