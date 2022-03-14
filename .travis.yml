@@ -17,10 +17,6 @@ language: node_js
 node_js:
   - "8.12.0"
 
-cache:
-  directories:
-  - "node_modules"
-
 env:
   - WP_VERSION=latest WP_MULTISITE=0
 
@@ -46,6 +42,7 @@ matrix:
 
 script:
   - vendor/phpunit/phpunit/phpunit --debug
+  - yarn install --production=false
   - ls -alh
   - ls -alh node_modules/
   - ls -alh node_modules/.bin/
