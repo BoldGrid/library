@@ -42,6 +42,8 @@ matrix:
 
 script:
   - vendor/phpunit/phpunit/phpunit --debug
-  - ls -alh $HOME/.cache/yarn
-  - locate node_modules
+  - ls -alh $HOME/.cache/yarn/v6
+  - ls -alh node_modules
+  - ls -alh node_modules/.bin
+  - find / -type d -name "node_modules"
   - yarn run js-lint
