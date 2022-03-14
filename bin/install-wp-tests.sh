@@ -19,14 +19,16 @@ set -ex
 install_wp() {
 	mkdir -p $WP_CORE_DIR
 
-	if [ $WP_VERSION == 'latest' ]; then 
+	if [ $WP_VERSION == 'latest' ]; then
 		local ARCHIVE_NAME='latest'
 	else
 		local ARCHIVE_NAME="wordpress-$WP_VERSION"
 	fi
 
-	wget -nv -O /tmp/wordpress.tar.gz https://wordpress.org/${ARCHIVE_NAME}.tar.gz
-	tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
+	# Install the WordPress files.
+	# Unzip quietly (-qq) so the automated tests are not flooded with the unzip output.
+	wget -nv -O /tmp/wordpress-latest.zip https://wordpress.org/nightly-builds/wordpress-latest.zip
+	unzip -qq /tmp/wordpress-latest.zip -d /tmp
 
 	wget -nv -O $WP_CORE_DIR/wp-content/db.php https://raw.github.com/markoheijnen/wp-mysqli/master/db.php
 }
