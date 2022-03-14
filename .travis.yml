@@ -25,7 +25,7 @@ matrix:
     - php: 7.4
       before_script:
         # Yarn will not install any package listed in devDependencies if the NODE_ENV environment variable is set to production.
-        - yarn install --production=false --verbose --force
+        - yarn install --production=false
         # Remove phpunit and install best phpunit version based on this environment.
         - composer remove --dev phpunit/phpunit && composer require --dev phpunit/phpunit
         - composer install -o
@@ -33,7 +33,7 @@ matrix:
     - php: 8.0
       before_script:
         # Yarn will not install any package listed in devDependencies if the NODE_ENV environment variable is set to production.
-        - yarn install --production=false --verbose --force
+        - yarn install --production=false
         # Remove phpunit and install best phpunit version based on this environment.
         - composer remove --dev phpunit/phpunit && composer require --dev phpunit/phpunit
         - composer install -o
@@ -42,4 +42,6 @@ matrix:
 
 script:
   - vendor/phpunit/phpunit/phpunit --debug
+  - ls -alh $HOME/.cache/yarn
+  - locate node_modules
   - yarn run js-lint
