@@ -29,7 +29,7 @@ class Test_BoldGrid_Library_Library_Theme_Themes extends WP_UnitTestCase {
 	 *
 	 * @since 1.7.7
 	 */
-	public function setUp() {
+	public function set_up() {
 		global $wpdb;
 
 		$this->themes = new Theme\Themes();

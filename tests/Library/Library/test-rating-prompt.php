@@ -178,7 +178,7 @@ class Test_Rating_Prompt extends WP_UnitTestCase {
 	/**
 	 * Setup.
 	 */
-	public function setup() {
+	public function set_up() {
 		$this->ratingPrompt = new \Boldgrid\Library\Library\RatingPrompt();
 
 		$this->reset();

@@ -29,7 +29,7 @@ class Test_BoldGrid_Library_Library_Theme_UpdateData extends WP_UnitTestCase {
 	 *
 	 * @since 1.7.7
 	 */
-	public function setUp() {
+	public function set_up() {
 		// Setup our configs.
 		delete_transient( 'boldgrid_theme_information' );
 		$this->transient_data = array(
