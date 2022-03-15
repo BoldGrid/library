@@ -22,7 +22,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugin extends WP_UnitTestCase {
 	 *
 	 * @since 2.12.2
 	 */
-	public function setUp() {
+	public function set_up() {
 		$this->config = array(
 			'pages'        => array(
 				'boldgrid-backup-premium-features',

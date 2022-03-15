@@ -27,7 +27,7 @@ class Test_BoldGrid_Library_Library_Theme_Theme extends WP_UnitTestCase {
 	 *
 	 * @since 1.7.7
 	 */
-	public function setUp() {
+	public function set_up() {
 		// Setup our configs.
 		delete_site_transient( 'update_themes' );
 		$this->stylesheet = 'twentytwenty';

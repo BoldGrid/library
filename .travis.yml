@@ -1,26 +1,48 @@
 language: php
 
-dist: trusty
+# Distrubution / environments: https://docs.travis-ci.com/user/reference/overview/
+# Ubuntu Trusty does not support php8: https://docs.travis-ci.com/user/languages/php/
+dist: focal
+
+services:
+  # Specifically including MySQL was not needed with Trusty, but other environments do need it.
+  - mysql
 
 notifications:
   email:
     on_success: never
     on_failure: change
 
-php:
-  - 5.6
+language: php, node_js
 
-language: node_js
 node_js:
-  - "8.12.0"
+- lts/*
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
 
-before_script:
-  - yarn
-  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+matrix:
+  include:
+    - php: 7.4
+      before_script:
+        - yarn install
+        # Remove phpunit and install best phpunit version based on this environment.
+        - composer update phpunit/phpunit
+        # A note on our composer / yarn usage:
+        # Our composer post-autoload-dump script will copy files from within node_modules/* to our plugin
+        # and then delete the node_modules folder. If node_modules are needed after this point, such
+        # as for "yarn run js-lint", another "yarn install" will be needed.
+        - composer install -o
+        - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+    - php: 8.0
+      before_script:
+        - yarn install
+        - composer update phpunit/phpunit
+        - composer install -o
+        - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script:
-  - phpunit --debug
-  - yarn run js-lint
+  - vendor/phpunit/phpunit/phpunit --debug
+  # Temporarily disabling js-lint. @todo This needs to be fixed.
+  # The current config used, eslint-config-wordpress, is deprecated. That packages names replacements.
+  # - yarn run js-lint

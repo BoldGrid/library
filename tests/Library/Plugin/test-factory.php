@@ -30,7 +30,7 @@ class Test_BoldGrid_Library_Library_Plugin_Factory extends WP_UnitTestCase {
 	 *
 	 * @since 2.12.2
 	 */
-	public function setUp() {
+	public function set_up() {
 		$plugin_data = array(
 			'Name'        => 'Total Upkeep',
 			'PluginURI'   => 'https://www.boldgrid.com/boldgrid-backup/',

@@ -27,7 +27,7 @@ class Test_Activty extends WP_UnitTestCase {
 	/**
 	 *
 	 */
-	public function setup() {
+	public function set_up() {
 		$this->reset();
 
 		$this->activityClass = new \Boldgrid\Library\Library\Activity( 'boldgrid-backup' );

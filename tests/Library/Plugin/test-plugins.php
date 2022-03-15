@@ -29,7 +29,7 @@ class Test_BoldGrid_Library_Library_Plugin_Plugins extends WP_UnitTestCase {
 	 *
 	 * @since 1.7.7
 	 */
-	public function setUp() {
+	public function set_up() {
 		$plugin_dirs                 = scandir( ABSPATH . '/wp-content/plugins/' );
 		$this->expected_plugins      = array();
 		$this->expected_plugin_slugs = array();

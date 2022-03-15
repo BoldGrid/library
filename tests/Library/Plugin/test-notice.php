@@ -22,7 +22,7 @@ class Test_BoldGrid_Library_Library_Plugin_Notice extends WP_UnitTestCase {
 	 *
 	 * @since 2.12.2
 	 */
-	public function setUp() {
+	public function set_up() {
 		$this->sample_plugin       = Plugin\Factory::create( 'boldgrid-backup/boldgrid-backup.php' );
 		$this->sample_notice_array = array(
 			'id'       => 'bgbkup_database_encryption',
