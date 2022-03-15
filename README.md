@@ -11,6 +11,14 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.6 ###
+
+Release date: March 15th, 2022
+
+* Update: Allow configs to be updated via an option.
+* Update: Misc updates to automated tests.
+* Bug fix: Avoid issues on the ftp filesystem.
+
 ### 2.13.5 ###
 
 Release date: September 8, 2021
