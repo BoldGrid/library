@@ -23,14 +23,6 @@ env:
 
 matrix:
   include:
-    - php: 5.6
-      before_script:
-        - nvm install 10
-        - nvm use 10
-        - yarn install
-        - composer update phpunit/phpunit
-        - composer install -o
-        - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
     - php: 7.4
       before_script:
         - yarn install
@@ -48,7 +40,6 @@ matrix:
         - composer update phpunit/phpunit
         - composer install -o
         - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-
 
 script:
   - vendor/phpunit/phpunit/phpunit --debug
