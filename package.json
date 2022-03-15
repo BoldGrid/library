@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "js-lint": "node_modules/prettier-eslint/node_modules/.bin/prettier src/**/*.js --list-different",
-    "js-lint-fix": "node_modules/prettier-eslint/node_modules/.bin/prettier src/**/*.js --write",
+    "js-lint": "prettier-eslint src/**/*.js --list-different",
+    "js-lint-fix": "prettier-eslint src/**/*.js --write",
     "create-pot": "php -d xdebug.max_nesting_level=500 \"$(which wp)\" i18n make-pot src languages/boldgrid-library.pot --slug=\"boldgrid-library\""
   },
   "devDependencies": {
