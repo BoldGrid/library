@@ -45,4 +45,4 @@ script:
   - vendor/phpunit/phpunit/phpunit --debug
   # Temporarily disabling js-lint. @todo This needs to be fixed.
   # The current config used, eslint-config-wordpress, is deprecated. That packages names replacements.
-  - yarn run js-lint
+  # - yarn run js-lint
