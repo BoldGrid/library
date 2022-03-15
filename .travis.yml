@@ -25,6 +25,8 @@ matrix:
   include:
     - php: 5.6
       before_script:
+        - nvm install 10
+        - nvm use 10
         - yarn install
         - composer update phpunit/phpunit
         - composer install -o
