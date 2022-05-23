@@ -29,7 +29,7 @@ class IMH_Central {
 			return;
 		}
 
-		if ( is_plugin_active( 'plugin-directory/plugin-file.php' ) ) {
+		if ( is_plugin_active( 'boldgrid-connect/boldgrid-connect.php' ) ) {
 			return;
 		}
 
