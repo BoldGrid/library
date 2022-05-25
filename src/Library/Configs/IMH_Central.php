@@ -29,7 +29,9 @@ class IMH_Central {
 			return;
 		}
 
-		if ( is_plugin_active( 'boldgrid-connect/boldgrid-connect.php' ) ) {
+		include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		if ( \is_plugin_active( 'boldgrid-connect/boldgrid-connect.php' ) ) {
 			return;
 		}
 
@@ -42,7 +44,7 @@ class IMH_Central {
 	 * @since 1.0.0
 	 */
 	public static function imh_central_filters() {
-		$option_configs = get_option( 'bg_connect_configs', [] );
+		$option_configs = get_option( 'bg_connect_configs' );
 
 		add_filter(
 			'BoldgridDemo/configs',
@@ -108,6 +110,32 @@ class IMH_Central {
 			10,
 			2
 		);
+
+		/**
+		 * Each of these filters represents a different premium url that can be overridden.
+		 *
+		 * To override these urls using the 'bg_connect_configs' option, add the url to the option
+		 * array using the filter name as the key. For example, to override the boldgrid_editor_premium_url,
+		 * we would set the following to the bg_connect_configs option:
+		 *     $options_configs[ 'boldgrid_editor_premium_url' ] = 'https://example.com/';
+		 */
+		$premium_url_filters = array(
+			'boldgrid_editor_premium_url',
+			'boldgrid_editor_new_key_url',
+			'boldgrid_editor_premium_download_url',
+			'boldgrid_backup_premium_url',
+			'bgtfw_premium_url',
+			'boldgrid_library_new_key_url',
+		);
+
+		foreach ( $premium_url_filters as $premium_url_filter ) {
+			add_filter(
+				$premium_url_filter,
+				function( $url ) use ( $option_configs, $premium_url_filter ) {
+					return ! empty( $option_configs[ $premium_url_filter ] ) ? $option_configs[ $premium_url_filter ] : $url;
+				}
+			);
+		}
 	}
 }
 
