@@ -11,6 +11,13 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.7 ###
+
+Release date: May 25th, 2022
+
+* Update: Add filters to premium urls.
+* Update: Add fallback filters for IMH Central users when Boldgrid Connect plugin is inactive.
+
 ### 2.13.6 ###
 
 Release date: March 15th, 2022
