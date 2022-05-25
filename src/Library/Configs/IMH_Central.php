@@ -80,35 +80,6 @@ class IMH_Central {
 		);
 
 		/**
-		 * Filters the bg_connect_configs option to merge option with static configs provided.
-		 *
-		 * @param mixed       $value   Value of the option.
-		 * @param string      $option  Option name.
-		 * @return false|mixed (Maybe) filtered option value.
-		 */
-		add_filter(
-			'option_bg_connect_configs',
-			function( $value, $option ) {
-				$value = is_array( $value ) ? $value : array();
-				$conf  = \Boldgrid_Connect_Service::get( 'configs' );
-				$confs = array_merge( $conf, $value );
-
-				// Brand being passed in from install loop through and update option with correct provider.
-				if ( ! empty( $confs['brand'] ) ) {
-					foreach ( $confs['branding'] as $brand => $opts ) {
-						if ( strpos( strtolower( $brand ), $confs['brand'] ) !== false ) {
-							update_site_option( 'boldgrid_connect_provider', $brand );
-						}
-					}
-				}
-
-				return $confs;
-			},
-			10,
-			2
-		);
-
-		/**
 		 * Each of these filters represents a different premium url that can be overridden.
 		 *
 		 * To override these urls using the 'bg_connect_configs' option, add the url to the option
