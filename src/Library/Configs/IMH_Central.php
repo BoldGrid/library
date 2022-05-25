@@ -2,6 +2,10 @@
 /**
  * BoldGrid Library Configs IMH Central Class
  *
+ * This class is used to add filters for IMH Central users
+ * in the event that the Boldgrid Connect plugin is not active to
+ * run the filters itself.
+ *
  * @package Boldgrid\Library
  * @subpackage \Library\Configs
  *
@@ -12,13 +16,6 @@
 namespace Boldgrid\Library\Library\Configs;
 
 class IMH_Central {
-	/**
-	 * @access private
-	 *
-	 * @var bool $connect_plugin_active If Connect Plugin is active.
-	 */
-	private $connect_plugin_active = false;
-
 	/**
 	 * Constructor
 	 *
@@ -126,6 +123,7 @@ class IMH_Central {
 			'boldgrid_backup_premium_url',
 			'bgtfw_premium_url',
 			'boldgrid_library_new_key_url',
+			'bgtfw_upgrade_url_pro_features',
 		);
 
 		foreach ( $premium_url_filters as $premium_url_filter ) {
