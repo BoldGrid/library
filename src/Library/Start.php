@@ -136,6 +136,8 @@ class Start {
 		Configs::setItem( 'page-connect', new Page\Connect() );
 		Configs::setItem( 'assets', new Asset() );
 		new Editor();
+
+		new Configs\IMH_Central();
 	}
 
 	/**

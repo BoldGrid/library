@@ -106,12 +106,14 @@ class PostNewKey {
 
 		$returnUrl = add_query_arg( 'nonce', wp_create_nonce( 'bglib-key-prompt' ), $returnUrl );
 
+		$getNewKeyUrl = apply_filters( 'boldgrid_library_new_key_url', Configs::get( 'getNewKey' ) );
+
 		// Create the final url and return it.
 		return add_query_arg(
 			array(
 				'wp-url' => urlencode( $returnUrl ),
 			),
-			Configs::get( 'getNewKey' )
+			$getNewKeyUrl
 		);
 	}
 
