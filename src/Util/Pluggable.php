@@ -148,6 +148,6 @@ if ( ! function_exists( 'wp_generate_password' ) ) :
 		 *
 		 * @param string $password The generated password.
 		 */
-		return apply_filters( 'random_password', $password );
+		return apply_filters( 'random_password', $password, $length, $special_chars, $extra_special_chars );
 	}
 endif;
