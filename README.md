@@ -11,6 +11,11 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.8 ###
+Release date: TBD
+
+* Bug Fix: Allow premium license key on preview servers.
+
 ### 2.13.7 ###
 
 Release date: May 25th, 2022

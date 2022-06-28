@@ -335,7 +335,7 @@ class License {
 	 * @hook Boldgrid\Library\License\getApiKey
 	 */
 	public function getApiKey() {
-		return get_option( 'boldgrid_api_key' );
+		return get_site_option( 'boldgrid_api_key' );
 	}
 
 	/**
