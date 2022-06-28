@@ -94,7 +94,7 @@ class Call {
 	 * @return mixed $key The key string or false if not found.
 	 */
 	protected function setKey() {
-		return $this->key = get_option( 'boldgrid_api_key' );
+		return $this->key = get_site_option( 'boldgrid_api_key' );
 	}
 
 	/**
@@ -105,7 +105,7 @@ class Call {
 	 * @return mixed $siteHash The site hash string or false if not found.
 	 */
 	protected function setSiteHash() {
-		return $this->siteHash = get_option( 'boldgrid_site_hash' );
+		return $this->siteHash = get_site_option( 'boldgrid_site_hash' );
 	}
 
 	/**
