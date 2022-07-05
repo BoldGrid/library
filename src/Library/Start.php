@@ -137,7 +137,9 @@ class Start {
 		Configs::setItem( 'assets', new Asset() );
 		new Editor();
 
-		new Configs\IMH_Central();
+		if ( class_exists( '\Boldgrid\Library\Library\Configs\IMH_Central' ) ) {
+			new Configs\IMH_Central();
+		}
 	}
 
 	/**
