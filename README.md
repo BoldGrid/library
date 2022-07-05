@@ -11,8 +11,12 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.9 ###
+Release date: June 5th, 2022
+* Bug Fix: Fix fatal error 'IMH_Central class not found' occuring on some installs.
+
 ### 2.13.8 ###
-Release date: TBD
+Release date: June 26th, 2022
 
 * Bug Fix: Allow premium license key on preview servers.
 
