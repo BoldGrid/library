@@ -39,6 +39,10 @@ class External {
 	 * @param WP_Admin_Bar $wpAdminBar Admin Bar.
 	 */
 	public function addMenu( $wpAdminBar ) {
+		if ( get_option( 'boldgrid_connect_hide_menu', false ) ) {
+			return;
+		}
+
 		Render::adminBarNode( $wpAdminBar, $this->getMenuItems() );
 	}
 

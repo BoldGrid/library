@@ -157,6 +157,9 @@ class Connect {
 	 * @hook admin_menu
 	 */
 	public function addPage() {
+		if ( get_option( 'boldgrid_connect_hide_menu', false ) ) {
+			return;
+		}
 		add_submenu_page(
 			'options-general.php',
 			'BoldGrid Connect',
