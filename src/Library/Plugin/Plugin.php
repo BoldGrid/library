@@ -67,6 +67,15 @@ class Plugin {
 	protected $isInstalled;
 
 	/**
+	 * Whether or not to get Update Data.
+	 *
+	 * @since 2.13.11
+	 * @var bool
+	 * @access protected
+	 */
+	protected $getUpdateData = false;
+
+	/**
 	 * Path to the plugin.
 	 *
 	 * For example, ABSPATH/wp-content/plugins/plugin/plugin.php.

@@ -39,12 +39,15 @@ class Load {
 	 * @var string $path      The path to the BoldGrid Library to load.
 	 *                        Specifically, the path to the parent directory of the vendor folder.
 	 *                        Example: /home/user/public_html/wp-content/plugins/plugin
+	 *
+	 * @var object $registration The registration class.
 	 */
 	private
 		$configs,
 		$libraries,
 		$load,
-		$path;
+		$path,
+		$registration;
 
 	/**
 	 * Initialize class and set class properties.
