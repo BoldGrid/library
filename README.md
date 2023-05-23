@@ -14,7 +14,7 @@ composer require boldgrid/library
 ### 2.13.11 ###
 
 Release date: May 23rd, 2023
-* Update: Fix PHP 8.2 Deprecatio notices.
+* Update: Fix PHP 8.2 Deprecation notices.
 
 ### 2.13.10 ###
 
