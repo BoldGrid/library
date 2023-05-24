@@ -35,7 +35,7 @@ class Reseller {
 	 * @since 2.4.0
 	 */
 	public function __construct() {
-		$this->resellerOption = get_option( 'boldgrid_reseller' );
+		$this->resellerOption = get_option( 'boldgrid_reseller', array() );
 
 		if ( ! empty( $this->resellerOption['reseller_identifier'] ) ) {
 			Filter::add( $this );
@@ -64,7 +64,7 @@ class Reseller {
 	 * @return array Reseller information.
 	 */
 	public function getData() {
-		$data = $this->resellerOption;
+		$data = $this->resellerOption ? $this->resellerOption : array();
 
 		$data['reseller_identifier'] = ! empty( $data['reseller_identifier'] ) ?
 			strtolower( $data['reseller_identifier'] ) : null;
