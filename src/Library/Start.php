@@ -179,10 +179,8 @@ class Start {
 	 */
 	public function filterConfigs( $configs ) {
 		if ( ! empty( $configs['libraryDir'] ) ) {
-			$configs['libraryUrl'] = str_replace(
-				ABSPATH,
-				get_site_url() . '/',
-				$configs['libraryDir']
+			$configs['libraryUrl'] = plugin_dir_url(
+				$configs['libraryDir'] . '/src'
 			);
 		}
 
