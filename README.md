@@ -11,6 +11,11 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.13 ###
+
+Release Date: Apr 19, 2024
+* Bug Fix: Fixed issue with invalid application of the 'random_password' filter [#117](https://github.com/BoldGrid/library/issues/117)
+
 ### 2.13.12 ###
 
 Release date: Feb 7th, 2024
