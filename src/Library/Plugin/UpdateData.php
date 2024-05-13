@@ -117,6 +117,33 @@ class UpdateData {
 	private $timeoutSetting = 3600;
 
 	/**
+	 * Downloaded
+	 * 
+	 * @since 2.12.2
+	 * 
+	 * @var string
+	 */
+	private $downloaded;
+
+	/**
+	 * Third Party
+	 * 
+	 * @since 2.12.2
+	 *
+	 * @var bool
+	 */
+	public $thirdParty;
+
+	/**
+	 * API Fetch Time
+	 * 
+	 * @since 2.12.2
+	 *
+	 * @var string
+	 */
+	private $apiFetchTime;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 2.12.2
