@@ -123,7 +123,7 @@ class UpdateData {
 	 * 
 	 * @var string
 	 */
-	private $downloaded;
+	public $downloaded;
 
 	/**
 	 * Third Party
@@ -141,7 +141,7 @@ class UpdateData {
 	 *
 	 * @var string
 	 */
-	private $apiFetchTime;
+	public $apiFetchTime;
 
 	/**
 	 * Constructor.
