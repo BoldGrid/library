@@ -35,6 +35,14 @@ class Dashboard {
 	public $class;
 
 	/**
+	 * Classes.
+	 * 
+	 * @since 2.10.0
+	 * @var   string
+	 */
+	public $classes;
+
+	/**
 	 * Enqueue scripts.
 	 *
 	 * @since 2.10.0
