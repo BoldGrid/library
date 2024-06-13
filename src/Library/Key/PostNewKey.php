@@ -60,12 +60,12 @@ class PostNewKey {
 		switch( $afterKeyAdded ) {
 			case 'success':
 				echo '<div class="notice notice-success is-dismissible bglib-key-added"><p>' .
-					esc_html( 'Your new BoldGrid Connect Key has been successfully added!', 'boldgrid-library' ) .
+					esc_html__( 'Your new BoldGrid Connect Key has been successfully added!', 'boldgrid-library' ) .
 					'</p></div>';
 				break;
 			case 'fail':
 				echo '<div class="notice notice-error is-dismissible bglib-key-added"><p>' .
-					esc_html( 'An unknown error occurred adding your new BoldGrid Connect Key.', 'boldgrid-library' ) .
+					esc_html__( 'An unknown error occurred adding your new BoldGrid Connect Key.', 'boldgrid-library' ) .
 					'</p></div>';
 				break;
 		}
