@@ -21,7 +21,7 @@ $sections = array(
 	<div id="settings-notice" class="notice notice-success is-dismissible inline"></div>
 	<p class="submit">
 			<input name="submit" id="submit" class="button button-primary" value="' .
-		esc_attr( 'Save Changes', 'boldgrid-library' ) . '" type="submit">
+		esc_attr__( 'Save Changes', 'boldgrid-library' ) . '" type="submit">
 			<span class="spinner"></span>
 		</p>
 	',
