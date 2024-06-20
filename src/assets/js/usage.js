@@ -87,8 +87,14 @@ BOLDGRID.LIBRARY = BOLDGRID.LIBRARY || {};
 
 			// Configure license.
 			params.license = self.i18n.license;
+			if ( 'Total Upkeep' === self.i18n.plugin ) {
+				params.version = self.i18n.version;
+			} else {
+				params.version = '';
+			}
 			params.custom_map = {
-				dimension7: 'license'
+				dimension7: 'license',
+				dimension8: 'version'
 			};
 
 			// Configure linker. This will add client id, on click, to all boldgrid.com links.

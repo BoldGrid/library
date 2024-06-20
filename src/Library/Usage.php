@@ -104,10 +104,30 @@ class Usage {
 				date( 'Ymd' )
 			);
 
+			$plugins_data = [];
+			foreach ( \Boldgrid\Library\Library\Util\Plugin::getFiltered( 'boldgrid' ) as $plugin ) {
+				$plugins_data[] = [
+					'plugin'  => $plugin['TextDomain'],
+					'name'    => $plugin['Name'],
+					'version' => $plugin['Version'],
+				];
+			}
+			error_log(serialize(\Boldgrid\Library\Library\Util\Plugin::getFiltered()));
+			$plugin  = '';
+			$version = '';
+			foreach ($plugins_data as $plugin_data) {
+				if (false !== strpos( $_GET['page'], $plugin_data['plugin'] ) ) {
+					$plugin  = $plugin_data['name'];
+					$version = $plugin_data['version'];
+				}
+			}
+
 			$translation = [
 				'page'    => ! empty ( $_GET['page'] ) ? $_GET['page'] : '',
 				'ga_id'   => $this->gaId,
 				'license' => json_encode( $licenseData ),
+				'plugin'  => $plugin,
+                'version' => $version,
 			];
 
 			wp_localize_script( $handle, 'BglibUsage', $translation );
