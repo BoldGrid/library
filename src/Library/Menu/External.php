@@ -54,71 +54,142 @@ class External {
 	 * @return array Menu Items.
 	 */
 	protected function getMenuItems() {
-		return array(
-			'topLevel' => array(
-				'id' => 'boldgrid-adminbar-icon',
-				'title' => '<span aria-hidden="true" class="boldgrid-icon ab-icon"></span>',
-				'href' => 'https://www.boldgrid.com/',
-				'meta' => array(
-					'class' => 'boldgrid-node-icon',
-				),
-			),
-			'items' => array(
-				array(
-					'id'     => 'boldgrid-site-url',
-					'parent' => 'boldgrid-adminbar-icon',
-					'title'  => 'BoldGrid.com',
-					'href'   => 'https://www.boldgrid.com/',
-					'meta'   => array(
-						'class'  => 'boldgrid-dropdown',
-						'target' => '_blank',
-						'title'  => 'BoldGrid.com',
-					),
-				),
-				array(
-					'id'     => 'boldgrid-site-documentation',
-					'parent' => 'boldgrid-adminbar-icon',
-					'title'  => __( 'Documentation', 'boldgrid-library' ),
-					'href'   => 'https://www.boldgrid.com/docs',
-					'meta'   => array(
-						'class'  => 'boldgrid-dropdown',
-						'target' => '_blank',
-						'title'  => __( 'Documentation', 'boldgrid-library' ),
-					),
-				),
-				array(
-					'id'     => 'boldgrid-central-url',
-	 				'parent' => 'boldgrid-adminbar-icon',
-					'title'  => 'BoldGrid Central',
-					'href'   => 'https://www.boldgrid.com/central',
-					'meta'   => array(
-						'class'  => 'boldgrid-dropdown',
-						'target' => '_blank',
-						'title'  => 'BoldGrid Central',
-					),
-				),
-				array(
-					'id'     => 'boldgrid-connect-url',
-					'parent' => 'boldgrid-adminbar-icon',
-					'title'  => 'BoldGrid Connect',
-					'href'   => get_admin_url( null, 'options-general.php?page=boldgrid-connect.php' ),
-					'meta'   => array(
-						'class' => 'boldgrid-dropdown',
-						'title' => 'BoldGrid Connect',
-					),
-				),
-				array(
-					'id'     => 'boldgrid-feedback-url',
-					'parent' => 'boldgrid-adminbar-icon',
-					'title'  => __( 'Feedback', 'boldgrid-library' ),
-					'href' => 'https://www.boldgrid.com/feedback',
+		$provider = get_option( 'boldgrid_connect_provider', 'BoldGrid' );
+
+		if ($provider === 'InMotion Hosting') {
+			return array(
+				'topLevel' => array(
+					'id' => 'boldgrid-adminbar-icon',
+					'title' => '<span aria-hidden="true" class="imh-icon ab-icon"></span>',
+					'href' => 'https://www.inmotionhosting.com/',
 					'meta' => array(
-						'class'  => 'boldgrid-dropdown',
-						'target' => '_blank',
-						'title'  => __( 'Feedback', 'boldgrid-library' ),
+						'class' => 'boldgrid-node-icon',
 					),
 				),
-			),
-		);
+				'items' => array(
+					array(
+						'id'     => 'boldgrid-site-url',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => 'InMotionHosting.com',
+						'href'   => 'https://www.inmotionhosting.com/',
+						'meta'   => array(
+							'class'  => 'boldgrid-dropdown',
+							'target' => '_blank',
+							'title'  => 'InMotionHosting.com',
+						),
+					),
+					array(
+						'id'     => 'boldgrid-site-documentation',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => __( 'Documentation', 'boldgrid-library' ),
+						'href'   => 'https://www.inmotionhosting.com/support/product-guides/wordpress-hosting/central/',
+						'meta'   => array(
+							'class'  => 'boldgrid-dropdown',
+							'target' => '_blank',
+							'title'  => __( 'Documentation', 'boldgrid-library' ),
+						),
+					),
+					array(
+						'id'     => 'boldgrid-central-url',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => 'InMotion Central',
+						'href'   => 'https://central.inmotionhosting.com/wordpress/',
+						'meta'   => array(
+							'class'  => 'boldgrid-dropdown',
+							'target' => '_blank',
+							'title'  => 'InMotion Central',
+						),
+					),
+					array(
+						'id'     => 'boldgrid-connect-url',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => 'BoldGrid Connect',
+						'href'   => get_admin_url( null, 'options-general.php?page=boldgrid-connect.php' ),
+						'meta'   => array(
+							'class' => 'boldgrid-dropdown',
+							'title' => 'BoldGrid Connect',
+						),
+					),
+					array(
+						'id'     => 'boldgrid-feedback-url',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => __( 'Feedback', 'boldgrid-library' ),
+						'href' => 'https://www.inmotionhosting.com/feedback',
+						'meta' => array(
+							'class'  => 'boldgrid-dropdown',
+							'target' => '_blank',
+							'title'  => __( 'Feedback', 'boldgrid-library' ),
+						),
+					),
+				),
+			);
+		} else {
+			return array(
+				'topLevel' => array(
+					'id' => 'boldgrid-adminbar-icon',
+					'title' => '<span aria-hidden="true" class="boldgrid-icon ab-icon"></span>',
+					'href' => 'https://www.boldgrid.com/',
+					'meta' => array(
+						'class' => 'boldgrid-node-icon',
+					),
+				),
+				'items' => array(
+					array(
+						'id'     => 'boldgrid-site-url',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => 'BoldGrid.com',
+						'href'   => 'https://www.boldgrid.com/',
+						'meta'   => array(
+							'class'  => 'boldgrid-dropdown',
+							'target' => '_blank',
+							'title'  => 'BoldGrid.com',
+						),
+					),
+					array(
+						'id'     => 'boldgrid-site-documentation',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => __( 'Documentation', 'boldgrid-library' ),
+						'href'   => 'https://www.boldgrid.com/docs',
+						'meta'   => array(
+							'class'  => 'boldgrid-dropdown',
+							'target' => '_blank',
+							'title'  => __( 'Documentation', 'boldgrid-library' ),
+						),
+					),
+					array(
+						'id'     => 'boldgrid-central-url',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => 'BoldGrid Central',
+						'href'   => 'https://www.boldgrid.com/central',
+						'meta'   => array(
+							'class'  => 'boldgrid-dropdown',
+							'target' => '_blank',
+							'title'  => 'BoldGrid Central',
+						),
+					),
+					array(
+						'id'     => 'boldgrid-connect-url',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => 'BoldGrid Connect',
+						'href'   => get_admin_url( null, 'options-general.php?page=boldgrid-connect.php' ),
+						'meta'   => array(
+							'class' => 'boldgrid-dropdown',
+							'title' => 'BoldGrid Connect',
+						),
+					),
+					array(
+						'id'     => 'boldgrid-feedback-url',
+						'parent' => 'boldgrid-adminbar-icon',
+						'title'  => __( 'Feedback', 'boldgrid-library' ),
+						'href' => 'https://www.boldgrid.com/feedback',
+						'meta' => array(
+							'class'  => 'boldgrid-dropdown',
+							'target' => '_blank',
+							'title'  => __( 'Feedback', 'boldgrid-library' ),
+						),
+					),
+				),
+			);
+		}
 	}
 }
