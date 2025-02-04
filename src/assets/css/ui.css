@@ -77,6 +77,15 @@
 	transition: background-color .3s linear, color .3s linear;
 }
 
+.bg-left-nav li.bgui-navigation-divider,
+.bg-left-nav li.bgui-navigation-divider:hover,
+.bg-left-nav li.bgui-navigation-divider.active {
+	background: transparent;
+	color: inherit;
+	padding-top:25px;
+	cursor: default;
+}
+
 /**
 * 1.3 Columns
 *
