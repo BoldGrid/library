@@ -11,6 +11,10 @@ composer require boldgrid/library
 
 ## Changelog ##
 
+### 2.13.15 ###
+Release Date: Mar 12, 2025
+* Update: UI fixes to support new Direct Transfer feature in Total Upkeep.
+
 ### 2.13.14 ###
 Release Date: May 13, 2024
 * Update: Fix additional PHP 8.2 Deprecation notices.

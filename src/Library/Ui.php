@@ -159,6 +159,16 @@ class Ui {
 				$section_style = '';
 			}
 
+			if ( ! empty( $section['divider'] ) ) {
+				$navigation .= sprintf( '
+					<li class="bgui-navigation-divider"><strong>%1$s:</strong> %2$s</li>',
+					$section['title'],
+					$section['subtitle']
+				);
+				continue;
+			}
+
+
 			$navigation .= sprintf( '
 				<li class="%3$s" data-section-id="%1$s">%2$s</li>',
 				$section['id'],

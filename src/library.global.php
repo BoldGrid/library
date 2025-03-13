@@ -7,7 +7,7 @@ defined( 'WPFORMS_SHAREASALE_ID' ) || define( 'WPFORMS_SHAREASALE_ID', '1581233'
 
 return array(
 	// libraryVersion is used to put the version number on js/css files.
-	'libraryVersion' => '2.13.14',
+	'libraryVersion' => '2.13.15',
 	'api' => 'https://api.boldgrid.com',
 	'option' => 'license',
 	'key' => get_site_option( 'boldgrid_api_key', null ),
