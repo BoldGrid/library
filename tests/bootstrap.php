@@ -29,6 +29,7 @@ require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Api/Call.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Api/Availability.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Configs.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Filter.php';
+require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Menu/Reseller.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Reseller.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Util/Plugin.php';
 require_once dirname( dirname( __FILE__ ) ) . '/src/Library/Plugin/Plugin.php';

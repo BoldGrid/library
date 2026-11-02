@@ -35,11 +35,27 @@ class Reseller {
 	 * @since 2.4.0
 	 */
 	public function __construct() {
-		$this->resellerOption = get_option( 'boldgrid_reseller' );
+		$this->resellerOption = $this->read_reseller_option();
 
 		if ( ! empty( $this->resellerOption['reseller_identifier'] ) ) {
 			Filter::add( $this );
 		}
+	}
+
+	/**
+	 * Reseller settings stored in the database.
+	 *
+	 * A missing boldgrid_reseller option comes back as false.
+	 * PHP 8 warns if that value is used as an array.
+	 *
+	 * @since 2.13.16
+	 *
+	 * @return array
+	 */
+	protected function read_reseller_option() {
+		$option = get_option( 'boldgrid_reseller' );
+
+		return is_array( $option ) ? $option : array();
 	}
 
 	/**
@@ -64,7 +80,7 @@ class Reseller {
 	 * @return array Reseller information.
 	 */
 	public function getData() {
-		$data = $this->resellerOption;
+		$data = is_array( $this->resellerOption ) ? $this->resellerOption : array();
 
 		$data['reseller_identifier'] = ! empty( $data['reseller_identifier'] ) ?
 			strtolower( $data['reseller_identifier'] ) : null;
