@@ -26,19 +26,17 @@ matrix:
     - php: 7.4
       before_script:
         - yarn install
-        # Remove phpunit and install best phpunit version based on this environment.
-        - composer update phpunit/phpunit
         # A note on our composer / yarn usage:
         # Our composer post-autoload-dump script will copy files from within node_modules/* to our plugin
         # and then delete the node_modules folder. If node_modules are needed after this point, such
         # as for "yarn run js-lint", another "yarn install" will be needed.
-        - composer install -o
+        - composer install --prefer-source -o
         - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
     - php: 8.0
       before_script:
         - yarn install
-        - composer update phpunit/phpunit
-        - composer install -o
+        - composer config preferred-install source
+        - composer install --prefer-source -o
         - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script:
